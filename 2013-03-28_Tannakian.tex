@@ -1,0 +1,114 @@
+\documentclass{article}
+
+\title{Artin motives and the Tannakian formalism}
+\author{Daniel Miller}
+
+\usepackage{amsmath,amssymb,fullpage}
+\usepackage[all]{xy}
+\DeclareMathOperator{\gl}{GL}
+\DeclareMathOperator{\spec}{Spec}
+\newcommand{\aff}[1]{\mathsf{Aff}_{#1}}
+\newcommand{\rep}{\mathsf{Rep}}
+\newcommand{\cC}{\mathcal{C}}
+
+\begin{document}
+\maketitle
+
+
+
+
+
+\section{Finite groups and group schemes}
+
+Let $k$ be a field, $\Gamma$ a (finite) abstract group. Let $\aff k$ be the 
+category of affine schemes over $k$. We can think of $\Gamma$ as a presheaf on 
+$\aff k$ via 
+\[
+  \underline\Gamma : A \mapsto 
+  \begin{cases} 
+    \Gamma & \text{if $A\ne 0$} \\ 
+    1 & \text{if $A=0$.} 
+  \end{cases}
+\]
+It is easily seen that $\underline\Gamma$ is not a sheaf. However, it is a 
+separated presheaf, and it is easy to check that its (Zariski) sheafification 
+is represented by the affine group scheme 
+\[
+  \Gamma=\spec\left(k[\Gamma]^\vee\right) \text{.}
+\]
+Consider the general linear group $\gl(n)$ over $k$. As a group-valued functor, 
+this is $A\mapsto \gl(n,A)$. We claim that to give a representation 
+$\rho:\Gamma\to \gl(n)$ over $k$ (i.e. a homomorphism $\Gamma\to \gl(n)$ of 
+$k$-group schemes), it is equivalent to give a homomorphism of honest groups 
+\[
+  \rho:\Gamma\to \gl(n,k) \text{.}
+\]
+This is not hard to check. Since sheafification is the left-adjoint to the 
+inclusion functor from presheaves to sheaves, we have 
+\[
+  \hom(\Gamma,\gl(n)) = \hom_{\widehat{\aff k}}\left(\underline\Gamma,\gl(n)\right) = \hom(\Gamma,\gl(n,k))\text{,}
+\]
+whence the result. It follows that a $k$-representation of $\Gamma$ in the 
+scheme-theoretic sense is the same thing as a $k$-representation of $\Gamma$ in 
+the group-theoretic sense. We denote both categories by $\rep_k(\Gamma)$. 
+
+Incidentally, much of this can be generalized. Let $\cC$ be a site, and let 
+$\widehat\cC$ and $\widetilde\cC$ denote the category of presheaves (resp.\ 
+sheaves) on $\cC$. There is a diagram of functors. 
+\[\xymatrix@=1.5cm{
+  \mathsf{Set} \ar@<2pt>[r]^-{(-)_c}
+    & \ar@<2pt>[l]^-{\hom(1,-)} \widehat\cC \ar@<2pt>[r]^-{(-)^+}
+    & \ar@<2pt>[l]^-i \widetilde\cC
+}\]
+Here, $X_c$ is the constant presheaf $C\mapsto X$, $(-)^+$ is sheafification, 
+and $i$ is the natural embedding. There are adjunctions $(-)_c\dashv \hom(1,-)$ 
+and $(-)^+\dashv i$. Our result above is a special case of the fact that if 
+$\Gamma$ is a group and $G\in \widetilde\cC$ a group object, then 
+\[
+  \hom_{\widetilde\cC}(\Gamma_c^+,G) = \hom_{\widehat\cC}(\Gamma_c,i G) = \hom(\Gamma,\hom(1,i G)) = \hom(\Gamma,G(1)) \text{.}
+\]
+It's worth noting that $X_c^+=\coprod_X 1$, which can be seen via 
+\[
+  \hom_{\widetilde\cC}(X_c^+,F) = \hom_{\widehat\cC}(X_c,i F) = \hom(X,\hom(1,i F)) = \prod_X \hom(1,F) = \hom_{\widetilde\cC}\left(\coprod_X 1,F\right) \text{.}
+\]
+From this, we see that if $\Gamma$ is an arbitrary (abstract) group, the 
+associated (Zariski) sheaf $\Gamma_c^+$ is represented by the scheme 
+$\coprod_\Gamma \spec(k)$, which is only affine if $\Gamma$ is finite. 
+
+
+
+
+
+\section{Profinite groups and group schemes}
+
+Homomorphisms between topological groups and abstract groups will always be 
+assumed continuous, and similarly for topological spaces. Let 
+$X=\varprojlim X_\alpha$ be a profinite set, $Y$ an affine scheme over $k$. We 
+have 
+\[
+  \hom(X,Y(1)) = \varinjlim \hom_\mathsf{cts}(X_\alpha,Y(1)) = \varinjlim \hom(X_{\alpha,c}^+,Y) \text{.}
+\]
+In other words, $Y\mapsto \hom(X,Y(1))$ is ``represented'' by the 
+pro-scheme $\varprojlim X_{\alpha,c}^+$. We will write $X$ for this pro-scheme, 
+keeping in mind that $\varprojlim X_{\alpha,c}^+$ is not actually a scheme. 
+
+The main application is that if $\Gamma$ is a profinite group and $G$ is a 
+group scheme over $k$, then 
+\[
+  \hom_\mathsf{cts}(\Gamma,G(k)) = \hom(\Gamma,G) \text{,}
+\]
+where in the latter hom-set, $\Gamma$ is interpreted as the formal projective 
+limit 
+\[
+  \Gamma = \varprojlim_U \spec\left(k[\Gamma/U]^\vee\right) \text{.}
+\]
+So the categories of ``scheme-theoretic $k$-representations of $\Gamma$'' and 
+``continuous $k$-representations of $\Gamma$'' are equivalent, and we will 
+write $\rep_k(\Gamma)$ for both. Note that ``continuous representations'' means 
+continuous when $k$ is given the discrete topology. 
+
+
+
+
+
+\end{document}
