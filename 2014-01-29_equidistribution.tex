@@ -1,0 +1,74 @@
+\documentclass{article}
+
+\title{Equidistribution for function fields}
+\author{Daniel Miller}
+
+\usepackage{amsmath,amssymb}
+\DeclareMathOperator{\gl}{GL}
+\newcommand{\dC}{\mathbf{C}}
+\newcommand{\dF}{\mathbf{F}}
+\newcommand{\dQ}{\mathbf{Q}}
+
+\begin{document}
+\maketitle
+
+
+
+
+We mostly follow chapter 3 of \cite{ka}.
+
+Let $k$ be a function field of characteristic $p$. Let $\dF_q$ be the field of 
+constants of $k$. We interpret $k$ as the function field of a unique (up to 
+isomorphism) smooth proper geometrically connected curve $C$ over $\dF_q$. Let 
+$S\subset C$ be a finite set of closed points, and let $U=C\smallsetminus S$. 
+We pick a generic point $\eta$ of $U$, and let $\bar\eta$ be the corresponding 
+geometric point. The group $\pi_1(U,\bar\eta)$ is the Galois group of the 
+maximal extension of $k$ unramified outside $S$, i.e. 
+$\pi_1(U,\bar\eta)=G_{k,S}$. 
+
+Following \cite[2.2.4]{de}, a \emph{lisse $\overline{\dQ_\ell}$-sheaf} on $U$ 
+corresponds (uniquely) to a continuous representation 
+$\rho:\pi_1(U,\bar\eta) \to \gl(n,E_\lambda)$ for a finite extension 
+$E_\lambda/\dQ_\ell$. We will start with such a sheaf. In other words, we have 
+a continuous representation $\rho:G_k \to \gl(n,E_\lambda)$ that is unramified 
+outside $S$. Let $k^g$ be the function field of $U_{\overline{\dF_q}}$; note 
+that there is a natural embedding $G_{k^g}\hookrightarrow G_k$, corresponding 
+to the sequence:
+\[
+  1 \to \pi_1^g(U) \to \pi_1^a(U) \to G_{\dF_q} \to 1\text{,}
+\]
+where $\pi_1^g(U)=\pi_1(U_{\overline{\dF_q}},\bar\eta)$ is the \emph{geometric 
+fundamental group} of $U$, and $\pi_1^a(U)=\pi_1(U,\bar\eta)$ is the 
+\emph{arithmetic fundamental group} of $U$. 
+
+Let $G\subset \gl(n)_{\overline{\dQ_\ell}}$ be the Zariski closure 
+of $\rho(\pi_1^g)$. After fixing an embedding 
+$\overline{\dQ_\ell}\hookrightarrow\dC$, we regard $G$ as a algebraic group 
+over $\dC$. As such, $G(\dC)$ is a complex Lie group. 
+
+It is easy to construct an example. Let $A$ be a $d$-dimensional abelian variety 
+over $k$, and let $\rho=\rho_{A,\ell}:G_k \to \gl(2 d,\dQ_\ell)$ be the 
+associated $\ell$-adic representation. If, for example $A=E$ is an elliptic 
+curve without complex multiplication, then for all $\ell$, we have 
+$G=\overline{\rho_{E,\ell}(\pi_1^g)}=\gl(2)$. 
+
+Let $K$ be a maximal compact subgroup of $G(\dC)$. Katz claims that restriction 
+induces an equivalence of categories 
+\[
+  \mathsf{Rep}_\dC^\text{alg}(G) \xrightarrow\sim \mathsf{Rep}_\dC^\text{top}(K) \text{.}
+\]
+\[
+  \left|\sum_{\deg(v)\mid n} \deg(v) \operatorname{tr} \psi\left(\theta(v)^{n/\deg v}\right)\right| \leqslant \left(2 g-2+N-\sum r_i\right) \dim(\psi) q^{n/2}
+\]
+
+
+
+
+
+
+\begin{thebibliography}{9}
+  \bibitem[De77]{de} Deligne, Pierre. \emph{Cohomologie \'etale (SGA $4\frac 1 2$)}. 
+  \bibitem[Ka88]{ka} Katz, Nick. \emph{Gauss sums, Kloosterman sums and monodromy groups}. 
+\end{thebibliography}
+
+\end{document}
