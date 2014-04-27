@@ -1,0 +1,90 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb,fullpage,mathpazo}
+\usepackage[all]{xy}
+\DeclareMathOperator{\gal}{Gal}
+\DeclareMathOperator{\h}{H}
+\DeclareMathOperator{\genlin}{GL}
+\DeclareMathOperator{\lie}{Lie}
+\newcommand{\ab}{\textnormal{ab}}
+\newcommand{\dA}{\mathbf{A}}
+\newcommand{\dC}{\mathbf{C}}
+\newcommand{\dG}{\mathbf{G}}
+\newcommand{\dQ}{\mathbf{Q}}
+\newcommand{\dZ}{\mathbf{Z}}
+
+\title{On computable elements of $\gal(\overline\dQ/\dQ)$}
+\author{Daniel Miller}
+
+\begin{document}
+\maketitle
+
+
+
+
+
+Let $G_\dQ=\gal(\overline\dQ/\dQ)$. Our goal is to prove that ``computable 
+elements'' of $G_\dQ$ are dense. 
+
+First note that for each place $v$ of $\dQ$, there is a canonical algebraically 
+closed field $\Omega_v$, which has valuation extending $v$, and which is 
+spherically complete. For example, $\Omega_\infty=\dC$, and 
+$\Omega_p$ is the field of ``generalized Hahn series'' considered by Poonen. 
+There are canonical embeddings $\dQ_v\hookrightarrow \Omega_v$, so we can 
+consider $\overline\dQ\subset \overline\dQ_v\subset \Omega_v$ for any $v$, 
+giving a canonical system of embeddings embedding 
+$G_{\dQ_v}\hookrightarrow G_{\dQ,v}$, where 
+\[
+  G_{\dQ,v} = \gal((\overline\dQ\cap \Omega_v)/\dQ) .
+\]
+As topological groups, the $G_{\dQ,v}$ are all isomorphic, but the isomorphisms 
+do not seem to be computable in any reasonable sense. 
+
+Each $G_{\dQ,v}$ should have a distinguished ``Frobenius element.'' 
+
+By writing $\overline\dQ$ as a ``computable inductive limit of finite 
+extensions of $\dQ$,'' the hope would be to write elements of 
+$G_\dQ$ as ``computable compatible sequences of automorphisms.'' 
+
+
+
+
+
+
+
+
+
+\section{Conjectures in explicit class field theory}
+
+Let $k$ be a local or global field. Class field theory (CFT) gives an explicit 
+description of the abelianized absolute Galois group $G_k^\ab$. This is 
+\emph{not} explicit class field theory. Explicit class field theory (ECFT) 
+attempts to construct the field $k^\ab=(k^s)^{G_k^\ab}$. For example, if 
+$k=\dQ$, let $\chi:G_\dQ \to \widehat\dZ^\times$ be the cyclotomic character 
+coming from torsion points on $\dG_m$. The map $\chi$ induces an isomorphism 
+$G_\dQ^\ab \xrightarrow\sim \widehat\dZ^\times$. In other words, 
+$\dQ^\ab = \dQ(\operatorname{Tors}\dG_m)$. 
+
+Similarly, let $k$ be a CM field of degree $2 g$ over $\dQ$, and let $A$ be a 
+$2 g$-dimensional abelian variety over $k$ with 
+$\operatorname{End}_k^\circ(A)=k$. Let $V(A)$ be the ``total rational Tate 
+module of $k$.'' This is a free $\dA_k^f$-module of rank one, the action of 
+$G_k$ commutes with that of $\dA_k^f$, so we get a homomorphism 
+$G_k \to \genlin_1(\dA_k^f)$. 
+
+The problem with the functor 
+$\lie:\{\text{algebraic groups}\} \to \{\text{Lie algebras}\}$ is that it only 
+retains information about the connected component. We would also like to retain 
+some information about the (nilpotent) completion of the connected components 
+of an algebraic group. $G^0=G^\circ$
+
+There should be a functor 
+\[
+  \{\text{pro-algebraic groups over $k$}\} \to 
+\]
+
+
+
+
+
+\end{document}

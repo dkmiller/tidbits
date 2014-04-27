@@ -1,0 +1,148 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb,fullpage,mathpazo}
+\usepackage[all]{xy}
+\DeclareMathOperator{\h}{H}
+\DeclareMathOperator{\genlin}{GL}
+\DeclareMathOperator{\lie}{Lie}
+\DeclareMathOperator{\ortho}{O}
+\DeclareMathOperator{\pin}{Pin}
+\newcommand{\dA}{\mathbf{A}}
+\newcommand{\dC}{\mathbf{C}}
+\newcommand{\dG}{\mathbf{G}}
+\newcommand{\dQ}{\mathbf{Q}}
+\newcommand{\dZ}{\mathbf{Z}}
+
+\title{Division algebras and spin groups}
+\author{Daniel Miller}
+
+\begin{document}
+\maketitle
+
+
+\section{Totally unrelated but possibly interesting question}
+
+Let $k$ be a field, $D$ a division algebra with center $k$. One can define a 
+norm map $N:D\to k$ that is multiplicative. Clearly 
+$N(k^\times) = (k^\times)^n$, where $n=\dim_k D$. So 
+$N(D^\times)\supset (k^\times)^n$, and it is natural to ask 
+whether they are equal. Put 
+$\operatorname{H}(D) = N(D^\times) / N(k^\times)$. 
+The question is: when is $\operatorname{H}(D)=0$?
+
+This is essentially the same question as the following. Put 
+$D^{(1)}=\ker(N:D^\times \to k^\times)$. There is a natural isomorphism 
+$D^\times / k^\times \xrightarrow\sim \operatorname{Aut}(D)$, sending 
+$a\in D^\times$ to $b\mapsto a b a^{-1}$. Hubbard asked whether 
+$D^{(1)} \to \operatorname{Aut}(D)$ is surjective, i.e. whether 
+$D^{(1)} \to D^\times / k^\times$ is surjective. Choosing $a\in D^\times$, we 
+see that the only way that $a$ can be in the image of 
+$D^{(1)}$ is for $N(a)\in (k^\times)^n$. So we could say that the failure of 
+$D^{(1)} \to D^\times / k^\times$ to be surjective is measured by 
+$N(D^\times) / N(k^\times)$. Alternatively, we could think of 
+$D^{(1)}$ and $D^\times$ as affine group schemes over $k$. The image of 
+$D^{(1)} \to D^\times / \dG_m$ is normal, so the quotient 
+$D^{(1)}\backslash D^\times / \dG_m$ exists as a variety over $k$, and we could 
+ask about its structure. 
+
+Even better, the quotient $D^\times / \dG_m D^{(1)}$ exists as a commutative 
+group scheme over $k$. It should have dimension zero, so if it is \'etale, 
+it will correspond to a $G_k$-module. 
+
+I think there is an easy solution. Write $D^1$ instead of $D^{(1)}$ and consider 
+both $D^1$ and $D^\times$ as algebraic groups over $k$. The sequence 
+\[\xymatrix{
+  1 \ar[r] 
+    & D^1 \ar[r] 
+    & D^\times \ar[r]^-N 
+    & \dG_m \ar[r] 
+    & 1
+}\]
+of algebraic groups over $k$ is exact in the \'etale topology, so we get a 
+long exact sequence in cohomology. 
+\[\xymatrix{
+  1 \ar[r] 
+    & D^1 \ar[r] 
+    & D^\times \ar[r]^-N 
+    & k^\times \ar[r] 
+    & \h^1(k,D^1) \ar[r] 
+    & \h^1(k,D^\times) \ar[r] 
+    & 0
+}\]
+It follows that $N(D^\times) = \ker(k^\times \to \h^1(k,D^1))$. That kernel is 
+actually computable. Recall that $\h^1(k, D^1) = \h^1(G_k, D^1(k^s))$. An 
+element $\lambda\in k^\times$ is send to the cocycle 
+$\varphi_\lambda:G_k \to D^1(k^s)$ defined as follows. Choose a lift 
+$\widetilde\lambda\in D^1(k^s)$ of $\lambda$, and put 
+$\varphi_\lambda(\sigma) = \sigma(\widetilde\lambda) / \widetilde\lambda$. 
+It is easy to check that $\varphi_\lambda=0$ in $\h^1(k, D^1)$ if and only if 
+there exists $\widetilde\lambda$ with $\sigma(\widetilde\lambda)=\widetilde\lambda$, 
+i.e. if and only if $\lambda$ is in the image of $N(D^1)$, i.e. I'm not sure 
+where this proof is going\ldots it turns out to be a rather sophisticated proof 
+that $N(D^\times) = N(D^\times)$. 
+
+
+
+
+
+\section{A problem of Hubbard}
+
+John Hubbard suggested the following problem to me. Let $k$ be a field (the 
+main example I have in mind is a number fields, but the problem can be stated 
+in much greater generality). Let $(V,q)$ be a ``quadratic space over $k$,'' 
+i.e. $V$ is a finite-dimensional $k$-vector space and $q$ is a quadratic form 
+on $V$. For example, we could have $k=\dQ$, $V=\dQ^{\oplus 4}$, and 
+$q(x_1,\dots,x_4) = x_1^2 + x_2^2 + x_3^2 - 7 x_4^2$. We can form the 
+\emph{orthogonal group} of $q$, $\ortho(q)\subset \genlin(V)$; this is an 
+algebraic group over $k$. The subgroup $\ortho^+(q)\subset \ortho(q)$ of 
+``isometries'' with determinant one is called the special orthogonal group of 
+$q$. It turns out that there is a natural embedding of $\ortho^+(q)$ into the 
+group of units of a particular associative algebra. 
+
+Let $C(V,q)$ be the \emph{Clifford algebra} of $(V,q)$, i.e. the quotient 
+\[
+  C(V,q) = T(V) / \langle v\otimes v-q(v):x\in V\rangle 
+\]
+where $T(V)=\bigoplus_{n\geqslant 0} V^{\otimes n}$ is the Tensor algebra of 
+$V$. The involution $-1:V\to V$ induces an involution $\gamma$ of $C(V,q)$, and 
+we put 
+\[
+  C^\circ(V,q) = C(V,q)^\gamma .
+\]
+
+Key fact: $k^\times / (k^\times)^2 = \h^2(k, \mu_2) = \h^2(k, \dG_m)[2]$. 
+Moreover, all division algebras associated to elements of 
+$\h^2(k, \mu_2)$ are quaternion algebras. We have the following exact sequences: 
+\[\xymatrix{
+  1 \ar[r] 
+    & \ortho^+(q) \ar[r] 
+    & \ortho(q) \ar[r]^-{\det} 
+    & \mu_2 \ar[r] 
+    & 1 \\
+  1 \ar[r] 
+    & \dG_m \ar[r] 
+    & \Gamma(q) \ar[r]^-\alpha 
+    & \ortho(q) \ar[r] 
+    & 1 \\
+  1 \ar[r] 
+    & \pin(q) \ar[r] 
+    & \Gamma(q) \ar[r]^-N 
+    & \dG_m \ar[r] 
+    & 1 \\
+  1 \ar[r] 
+    & \mu_2 \ar[r] 
+    & \pin(q) \ar[r]^-\alpha 
+    & \ortho(q) \ar[r] 
+    & 1
+}\]
+From the last sequence, we get $\h^1(\ortho_n) \to \h^2(\mu_2)$, which will 
+associate a division algebra to each $n$-dimensional quadratic form over $k$. 
+
+In general, if $D$ is an $n^2$-dimensional division algebra over $k$, then 
+the map $N:D^\times \to k^\times$ will factor through the $n$-th power map, 
+i.e. $N=(-)^n\circ N_{rd}$, where $N_{rd}$ is the so-called \emph{reduced norm}. 
+
+
+
+
+\end{document}
