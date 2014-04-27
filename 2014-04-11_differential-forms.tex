@@ -1,0 +1,89 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb,fullpage,mathpazo,mathrsfs,mathtools}
+\usepackage[all]{xy}
+\DeclareMathOperator{\curl}{curl}
+\DeclareMathOperator{\grad}{grad}
+\DeclareMathOperator{\sym}{Sym}
+\renewcommand{\div}{\operatorname{div}}
+\newcommand{\ii}{\mathbf{i}}
+\newcommand{\jj}{\mathbf{j}}
+\newcommand{\kk}{\mathbf{k}}
+\newcommand{\df}{\mathbf{f}}
+\newcommand{\dR}{\mathbf{R}}
+\newcommand{\sO}{\mathscr{O}}
+\newcommand{\sE}{\mathscr{E}}
+\newcommand{\sX}{\mathscr{X}}
+\newcommand{\hodge}[1]{\prescript{\star}{}{#1}}
+
+\title{Multivariable calculus and differential forms}
+\author{Daniel Miller}
+
+\begin{document}
+\maketitle
+
+
+
+
+
+Let $U$ be a connected, simply-connected subset of the smooth manifold $\dR^3$. 
+We have the de Rham sheaf $\Omega^\bullet$ on $U$. Let $\sO$ be the structure 
+sheaf of $U$, and let $\sX=(\Omega^1)^\vee$ be the sheaf of vector fields on 
+$U$. We identify $\sX$ with $\sO^3$ in the usual way, i.e. 
+$X=f \partial_x + g \partial_y + h\partial_z$ corresponds to 
+$f\ii + g \jj + h \kk$. One defines maps 
+\begin{align*}
+  \grad: \sO&\to \sX \qquad f\mapsto \nabla f = f_x \ii + f_y \jj + f_z \kk \\
+  \curl:\sX&\to \sX \qquad \df \mapsto \nabla\times \df = \det\begin{pmatrix} \ii & \jj & \kk \\ \partial_x & \partial_y & \partial_z \\ f_1 & f_2 & f_3\end{pmatrix} = (\partial_x f_2 - \partial_y f_1) \ii\\
+  \div:\sX &\to \sO \qquad \df\mapsto \nabla \cdot \df = \partial_x f_1  + \partial_y f_2  + \partial_z f_3  
+\end{align*}
+The key fact is that we have a commutative diagram:
+\[\xymatrix{
+   \sO \ar[r]^-\grad \ar@{=}[d] 
+    & \sX \ar[r]^-\curl \ar[d]^-{(-)^\flat} 
+    & \sX \ar[r]^-\div \ar[d]^-\alpha 
+    & \sO \ar[d]^-\beta \\
+  \sO \ar[r]^-d 
+    & \Omega^1 \ar[r]^-d 
+    & \Omega^2 \ar[r]^-d 
+    & \Omega^3 
+}\]
+
+Since $U$ is a Riemannian manifold, it comes with a metric, i.e. an isomorphism 
+$\sO\xrightarrow g \sym^2 \Omega^1$. It yields an isomorphism (the 
+musical isomorphism) $(-)^\flat:\sX\to \sX^{\vee\vee} = \Omega^1$, given by 
+$X^\flat(Y) = \langle X,Y\rangle = (X\otimes Y)(g)$. 
+
+The maps $\alpha$ and $\beta$ are 
+\[
+  \alpha:X\mapsto (Y\otimes Z\mapsto \langle X, Y\times Z\rangle)
+\]
+d
+\[
+  \nabla\times X = \left(\hodge(d X^\flat)\right)^\sharp
+\]
+
+
+
+
+
+\section{General differential geometry}
+
+Let $(X,\sO)$ be a ringed topos, and $\sE$ a locally free $\sO$-module of 
+finite type. General nonsense tells us that the natural map 
+$(\sE\otimes\sE)^\vee \to \hom(\sE,\sE^\vee)$ is an isomorphism. In particular, 
+to any $g\in (\sE\otimes \sE)^\vee$ we can associate the ``musical map'' 
+$(-)^\flat:\sE\to \sE^\vee$. We call $g$ non-degenerate if $(-)^\flat$ is an 
+isomorphism. 
+
+
+Suppose we have a derivation $d:\sO\to \Omega^1$, $\Omega^1$ is locally free, 
+and put $\sX=(\Omega^1)^\vee$. Let $g\in (\sX\otimes \sX)^\vee$ be a non-degenerate 
+symmetric inner product. Put $\langle X,Y\rangle = g(X,Y)$. Since $g$ is 
+non-denerate, 
+
+
+
+
+
+\end{document}
