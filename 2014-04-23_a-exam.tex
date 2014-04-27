@@ -1,0 +1,746 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb,amsthm,extarrows,fullpage,mathpazo,mathrsfs,mathtools}
+\usepackage[hidelinks]{hyperref}
+\usepackage[all]{xy}
+\DeclareMathOperator{\adjoint}{ad}
+\DeclareMathOperator{\automorphism}{Aut}
+\DeclareMathOperator{\characters}{X}
+\DeclareMathOperator{\divisor}{div}
+\DeclareMathOperator{\divisors}{Div}
+\DeclareMathOperator{\galois}{Gal}
+\DeclareMathOperator{\generallinear}{GL}
+\DeclareMathOperator{\graded}{gr}
+\DeclareMathOperator{\h}{H}
+\DeclareMathOperator{\height}{ht}
+\DeclareMathOperator{\image}{im}
+\DeclareMathOperator{\induce}{ind}
+\DeclareMathOperator{\lie}{Lie}
+\DeclareMathOperator{\picard}{Pic}
+\DeclareMathOperator{\restrict}{res}
+\DeclareMathOperator{\sign}{sgn}
+\DeclareMathOperator{\speciallinear}{SL}
+\DeclareMathOperator{\specialunitary}{SU}
+\DeclareMathOperator{\spectrum}{Spec}
+\DeclareMathOperator{\symmetricpower}{Sym}
+\DeclareMathOperator{\trace}{tr}
+\DeclareMathOperator{\volume}{vol}
+\newcommand{\dA}{\mathbf{A}}
+\newcommand{\dC}{\mathbf{C}}
+\newcommand{\dF}{\mathbf{F}}
+\newcommand{\dG}{\mathbf{G}}
+\newcommand{\dI}{\mathbf{I}}
+\newcommand{\dN}{\mathbf{N}}
+\newcommand{\dQ}{\mathbf{Q}}
+\newcommand{\dR}{\mathbf{R}}
+\newcommand{\dZ}{\mathbf{Z}}
+\newcommand{\fa}{\mathfrak{a}}
+\newcommand{\fe}{\mathfrak{e}}
+\newcommand{\fg}{\mathfrak{g}}
+\newcommand{\fh}{\mathfrak{h}}
+\newcommand{\fk}{\mathfrak{k}}
+\newcommand{\fm}{\mathfrak{m}}
+\newcommand{\fn}{\mathfrak{n}}
+\newcommand{\fp}{\mathfrak{p}}
+\newcommand{\fo}{\mathfrak{o}}
+\newcommand{\sD}{\mathscr{D}}
+\newcommand{\sI}{\mathscr{I}}
+\newcommand{\sM}{\mathscr{M}}
+\newcommand{\sO}{\mathscr{O}}
+\newcommand{\abelianize}{\textnormal{ab}}
+\newcommand{\complementaryseries}{\mathcal{C}}
+\newcommand{\discreteseries}{\mathcal{D}}
+\newcommand{\finitedimensional}{\mathcal{F}}
+\newcommand{\isomorphism}{\xlongrightarrow{\sim}}
+\newcommand{\laurent}[1]{(\! ({#1} )\! )}
+\newcommand{\principalseries}{\mathcal{P}}
+\newcommand{\smat}[4]{\bigl(\begin{smallmatrix} {#1} & {#2} \\ {#3} & {#4} \end{smallmatrix} \bigr)}
+\newcommand{\transpose}[1]{\prescript{\textnormal{t}}{}{#1}}
+\newcommand{\unramified}{\textnormal{ur}}
+\newtheorem{theorem}[subsubsection]{Theorem}
+\theoremstyle{definition}
+\newtheorem{definition}[subsubsection]{Definition}
+
+\title{Topics for A-exam}
+\author{Daniel Miller}
+
+\begin{document}
+\maketitle
+\tableofcontents
+
+
+
+
+
+
+
+
+
+
+\section{Algebraic number theory}
+
+
+
+
+
+\subsection{Extensions of dedekind schemes}
+
+Recall that a \emph{dedekind scheme} is an integral noetherian normal scheme 
+of dimension $1$. If $X$ is a Dedekind scheme, then all the stalks 
+$\sO_{X,x}$ are one-dimensional regular local rings, i.e.\ discrete valuation 
+rings. In particular, each closed point $x\in X$ induces a discrete valuation 
+$v_x$ on the field of fractions $k$ of $X$. 
+
+If $K/k$ is a finite separable extension, let $Y$ be the normalization of $X$ 
+in $K$, i.e.\ the relative spectrum of the sheaf 
+\[
+  U\mapsto \text{integral closure of $\sO_X(U)$ in $K$} .
+\]
+Then $p:Y\to X$ is a finite surjective morphism. Each fiber $p^{-1}(x)$ is a 
+finite set, possibly with nilpotents. 
+
+
+
+
+
+\subsection{Discrete valuation fields}
+
+Let $k$ be a field with a discrete valuation 
+$v:k^\times \twoheadrightarrow \dZ$. Let $\fo=\{x\in k:v(x)\geqslant 0\}$ be 
+the valuation ring of $k$, and let $\fp\subset \fo$ be the unique maximal 
+ideal. Put $U=1+\fp$, and give $\fp$ and $U$ filtrations by 
+\begin{align*}
+  \fp^r &= \text{the $r$-th power of $\fp$} \\
+  U^r &= 1+\fp^r .
+\end{align*}
+There is a canonical isomorphism 
+$\graded(\fp^\bullet) \isomorphism \graded(U^\bullet)$, given by 
+$x\mapsto 1+x$. 
+
+
+
+
+
+
+\subsection{Henselian Fields}
+
+Let $k$ be a field with a discrete valuation. One calls $k$ \emph{Henselian} 
+if Hensel's lemma holds for $\fo_k$. Alternatively, one requires that 
+valuations extend uniquely to algebraic extensions of $k$. Complete fields 
+are Henselian. 
+
+One can give a reasonable description of the absolute Galois group $G_k$ of a 
+Henselian field $k$. Let $\kappa$ be the residue field of $k$, and let 
+$p\geqslant 0$ be the characteristic of $\kappa$. If $K/k$ is a \emph{finite} 
+extension, then define for $r\geqslant 0$, 
+\[
+  \galois(K/k)_r = \ker\left(\galois(K/k) \to \automorphism_{\fo_k}(\fo_L/\fp^{r+1})\right) .
+\]
+There is a canonical embedding 
+$\graded(\galois(K/k)_\bullet)\hookrightarrow \graded(U_K^\bullet)$, 
+given by $\sigma\mapsto \sigma \pi/\pi$, for $\pi\in \fo_K$ an arbitrary 
+uniformizer. In particular, $\galois(K/k)$ is solvable. 
+
+upper ramification numbering
+
+
+
+
+
+\subsection{Local fields}
+
+A \emph{local field} is a locally compact topological field. Local fields are 
+known to be finite extensions of either $\dF_p\laurent t$ or $\dQ_p$. 
+
+
+
+
+
+\subsection{Global fields}
+
+
+\subsection{Classical geometry of numbers}
+
+Our main reference is Chapter I, \S5-7 of \cite{ne99}. Let $k$ be a number 
+field, and write $k_\infty = k_\dR=k\otimes_\dQ \dR$. This is a finite \'etale 
+$\dR$-algebra isomorphic to $\dR^r\times \dC^s$, where $r$ is the 
+number of real places and $s$ is the number of complex places of $k$. One gives 
+$k_\infty$ a standard measure (twice Lebesgue on copies of $\dC$ and Lebesgue 
+on copies of $\dR$) under which the lattice $\fo$ has volume 
+$\volume(\fo) = \volume(k_\infty/\fo) = |d_k|^{1/2}$. As a corollary, if 
+$S\subset k_\infty$ is open, convex, and centrally symmetric, then 
+$\volume(S) \geqslant \volume(\fo)$ implies $S\cap \fo\ne 0$. The same type of 
+theorem holds for any $\fa\subset \fo$, where 
+$\volume(\fa) = [\fo:\fa] |d_k|^{1/2}$. Considering $S=\{a:|N(a)| \leqslant ?\}$ 
+gives that for every nonzero ideal 
+$\fa\subset \fo$, there is $a\in \fa\smallsetminus 0$ such that (there exist 
+$a$ for both of these) 
+\begin{align*}
+  |N_{k/\dQ}(a)| &\leqslant \frac{n!}{n^n}\left(\frac 4 \pi\right)^s |d_k|^{1/2} [\fo:\fa] \\
+  |N_{k/\dQ}(a)| &\leqslant \left(\frac 2 \pi\right)^s |d_k|^{1/2} [\fo:\fa] .
+\end{align*}
+
+There is a natural map $\log|\cdot|:k_\infty^\times$. 
+
+
+\subsection{Adelic geometry of numbers}
+
+A key fact is that $\dI^1_k/k^\times$ and $\dA_k/k$ are compact. 
+
+Our main reference here is \cite{pr94}. Let $k$ be a number field, and $G$ an 
+algebraic group over $k$. Let $S$ be a finite set of places of $k$, containing 
+all the infinite places, and let $k_S=\prod_{v\in S} k_v$. It is a theorem of 
+Borel (essentially Theorem 5.1 of \cite{pr94}) that the double quotient 
+$G(k)\backslash G(\dA_k) / G(k_S) K$ is finite, whenever 
+$K\subset G(\dA)$ is open compact. 
+
+Let $\characters(G)=\hom_k(G,\dG_m)$; this is a finite free $\dZ$-module. 
+There is a canonical homomorphism 
+\[
+  c:G(\dA) \to \characters(G)_\dR^\vee \qquad (g_v) \mapsto \chi\mapsto \prod_v |\chi(g_v)|_v .
+\]
+Let $G(\dA)^1 = \ker(c)$. Then Theorem 5.6 of \cite{pr94} tells us that 
+$G(\dA)^1 / G(k)$ is compact if and only if the semisimple part of $G$ is 
+anisotropic over $k$. 
+
+
+
+
+
+
+
+
+
+
+\section{Class field theory}
+
+The main references are Chapter V of \cite{ne99} and Chapter VI of 
+\cite{cf86}. 
+
+
+\subsection{Local class field theory}
+
+These theorems are from chapter V of \cite{ne99}. Recall that if $\kappa$ is a 
+finite field, we regard $\dZ$ as a subgroup of $G_\kappa$ by letting $1\in \dZ$ 
+correspond to the (arithmetic) Frobenius of $\kappa$. We normalize all 
+valuations so that uniformizers have valuation $1$. 
+
+\begin{theorem}
+Let $k$ be a local field with residue field $\kappa$. Then there is a unique 
+continuous homomorphism $r:k^\times \to G_k^\abelianize$ such that 
+\begin{enumerate}
+  \item the following diagram commutes:
+    \[\xymatrix{
+      k^\times \ar[r]^r \ar[d]^-v 
+        & G_k^\abelianize \ar@{->>}[d] \\
+      \dZ \ar@{^{(}->}[r] 
+        & G_\kappa
+    }\]
+  \item for all finite abelian $K/k$, the map $r$ induces an isomorphism 
+    $k^\times/N(K^\times) \isomorphism \galois(K/k)$
+\end{enumerate}
+This homomorphism (called the \emph{reciprocity map}) induces an isomorphism 
+$\widehat{k^\times} \isomorphism G_k^\abelianize$. Finally, a subgroup 
+$G\subset k^\times$ is of the form $N(K^\times)$ for some finite $K/k$ if and 
+only if $G$ is open and has finite index. 
+\end{theorem}
+\begin{proof}
+This proof is inspired by that of Theorem 1.13 in \cite{mi-cft}. 
+We only prove the uniqueness of $r$. Since $k^\times$ is topologically 
+generated by uniformizers, it suffices to show that conditions determine 
+$r(\pi)$ for any $\pi\in k^\times$ with $v(\pi)=1$.  For any such $\pi$, we 
+get a decomposition $k^\abelianize = k^\unramified \cdot k_\pi$, where $k_\pi$ 
+is the fixed field of $r(\pi)$. Since $r(\pi)$ has to act on $k^\unramified$ as 
+Frobenius, and (by definition), $r(\pi)$ acts trivially on $k_\pi$, the action 
+of $r(\pi)$ on $k^\abelianize$ is determined. 
+\end{proof}
+
+This theorem is true even if $k$ is archimedean. Just ignore part 1, and note 
+that $G_\dR=\dZ/2$, which has no nontrivial automorphisms. In other words, 
+there is a unique homomorphism $\dR^\times \to G_\dR$ inducing an isomorphism 
+$\widehat{\dR^\times}\isomorphism G_\dR$. 
+
+
+\subsection{Global class field theory}
+
+A good references is chapter VI of \cite{ne99}. For a global field $k$, write 
+$\dA_k$ for its ring of adeles, and define 
+$C_k=\generallinear(1,\dA_k) / \generallinear(1,k)$. For a place $v$ of $k$, 
+write $r_v$ for the reciprocity map of $k_v$. Since the decomposition groups 
+$D_v=G_{k_v}$ are well-defined up to conjugacy in $G_k$, the abelianized 
+decomposition groups $D_v^\abelianize$ are well-defined as subgroups of 
+$G_k^\abelianize$. 
+
+\begin{theorem}
+There is a unique continuous homomorphism $r:C_k \to G_k^\abelianize$ such that 
+\begin{enumerate}
+  \item the following diagram commutes for all $v$:
+    \[\xymatrix{
+      k_v^\times \ar@{^{(}->}[r] \ar[d]^-{r_v} 
+        & C_k \ar[d]^-r \\
+      D_v^\abelianize \ar@{^{(}->}[r] 
+        & G_k^\abelianize
+    }\]
+  \item if $K/k$ is finite abelian, $r$ induces an isomorphism 
+    $C_k/N(C_K) \isomorphism \galois(K/k)$. 
+\end{enumerate}
+This homomorphism (also called the \emph{reciprocity map}) induces an 
+isomorphism $\widehat{C_k}\isomorphism G_k^\abelianize$. Finally, a subgroup 
+$G\subset C_k$ is of the form $N(K^\times)$ for some finite $K/k$ if and only 
+if $G$ is open and has finite index. 
+\end{theorem}
+
+
+
+
+
+\section{Algebraic geometry}
+
+\cite{ha77}, \cite{si09}, and \cite{eh00}
+
+Zariski's main theorem
+
+tangent space on affine / projective variety as special case of tangent sheaf 
+for arbitrary morphism of schemes
+
+
+\subsection{Cartier divisors}
+
+For a ringed space $X$, let $\sM$ be the sheaf of meromorphic functions, and 
+put $\sD=\sM^\times/\sO^\times$. This is a sheaf of abelian groups on $X$, 
+called the \emph{sheaf of Cartier divisors}. A global section of $\sD$ is 
+called a \emph{Cartier divisor} on $X$. The (tautological) short exact 
+sequence 
+\[
+  1 \to \sO^\times \to \sM^\times \to \sD \to 0 
+\]
+yields a long exact sequence in sheaf cohomology:
+\[
+  1 \to \Gamma(\sO^\times) \to \Gamma(\sM^\times) \to \divisors(X) \to \picard(X) \to \h^1(\sM^\times) \to \cdots
+\]
+If $X$ is integral, $\sM$ is flasque, so $\h^1(\sM^\times)=0$, whence 
+$\picard(X) = \divisors(X)/\divisor\Gamma(\sM^\times)$. If $X$ is a 
+one-dimensional scheme over $S$, then points $x\in X(S)$ yield Cartier 
+divisors, denoted $\sI(x)$, on $X$. If we think of $\sI(x)$ as a sheaf, 
+then it makes sense to talk about $\sI^{-1}(x)$. 
+
+
+\subsection{Algebraic groups and their Lie algebras}
+
+We would like to interpret the notion of a representation of an algebraic 
+group over a field in terms of arbitrary ringed topoi. The main source here is 
+\cite{sga3}. We start with the following list of analogies. 
+\begin{center}
+\begin{tabular}{c|c}
+  classical & topos-theoretic \\ \hline
+  field $k$ & base scheme $S$ \\
+  finite-dimensional $k$-space $V$ & coherent $\sO_X$-module $\sM$ \\
+  $R\mapsto V_R=V\otimes_k R$ & $(X\xrightarrow f S)\mapsto \Gamma(f^\ast \sM)$ \\
+  $\spectrum(k[V^\vee])$ & $\mathbf V(\sM) = \spectrum(\sO_S[\sM^\vee])$ \\
+  $\generallinear(V):R\mapsto \automorphism_R(V_R)$ & $\generallinear(\sM):X\mapsto \automorphism_{\Gamma(X)}(\Gamma(f^\ast \sM))$ \\
+  $\rho:G\to \generallinear(V)$ & $\rho:G\to \generallinear(\sM)$ \\
+  $G(R) \to \automorphism_R(V_R)$ & $G(X) \to \automorphism_{\Gamma(X)}(\Gamma(f^\ast \sM))$
+\end{tabular}
+\end{center}
+
+An algebraic group $G$ over a field $k$ is \emph{anisotropic} if it contains 
+no $k$-split tori. If $k$ is a non-algebraically closed local field, then $G$ 
+is anisotropic if and only if $G(k)$ is compact. 
+
+
+
+
+
+\section{Geometry of curves}
+
+The main references for this section are Chapter IV of \cite{ha77} and Chapter 
+7 of \cite{li02}:
+
+
+\subsection{Divisors and invertible sheaves on curves}
+
+
+\subsection{The Riemann-Roch theorem}
+
+
+
+
+
+\section{Elliptic curves}
+
+The main reference on elliptic curves is \cite{si09}, especially chapters 
+II-IV and VI-VIII. Chapter II mostly covers the geometry of curves. 
+
+elliptic curves over local fields
+
+elliptic curves over global fields
+
+
+\subsection{The group law on an elliptic curve}
+
+If $X$ is a curve over $S$, define 
+\[
+  \picard_{X/S}^1(T) = \picard^1(X_T) / \picard(T) .
+\]
+
+\begin{theorem}
+Let $E$ be an elliptic curve over $S$. Then there is a natural isomorphism 
+of functors $E\isomorphism \picard_{E/S}^1$ given by $x\mapsto \sI^{-1}(x)$. 
+This induces the structure of an $S$-group on $E$, where $x+y+z=0$ if and only 
+if 
+\[
+  (\sI(x) - \sI(0)) + (\sI(y) - \sI(0)) + (\sI(z) - \sI(0)) = 0\qquad \text{in } \picard_{X/S}(T) . 
+\]
+\end{theorem}
+\begin{proof}
+This is Theorem 2.1.2 of \cite{km85}
+\end{proof}
+
+
+\subsection{Formal groups of elliptic curves}
+
+Let $F$ be a formal group. By Proposition IV.4.2 of \cite{si09}, the 
+invariant differential of $F$ is 
+$\omega = \frac{\partial F}{\partial X}(0,T)^{-1} dT$. Put 
+$\log_F=\int \omega$. Then $\log_F:F\to \hat\dG_a$ is an isomorphism over 
+$\dQ$. If $F$ is defined over a mixed-characteristic complete discrete 
+valuation ring and $v(p)>0$, then for $r>v(p)/(p-1)$, $\log_F$ induces 
+an isomorphism $F(\fm^r) \isomorphism \hat\dG_a(\fm^r)$. 
+
+If $E$ is an elliptic curve, let $\hat E$ denote the corresponding formal 
+group. A nice theorem (IV.7.4 in \cite{si09}) is that if $f:E_1\to E_2$ is an 
+isogeny of characteristic $p$ elliptic curves, then 
+$\deg_i(f) = p^{\height{\hat f}}$, where $\deg_i$ denotes inseparable degree. 
+
+
+\subsection{Elliptic curves over \texorpdfstring{$\dC$}{C}}
+
+Let $E$ be an elliptic curve over $\dC$, which we will take to mean that $E$ is 
+a compact connected one-dimensional complex Lie group of genus one. Let 
+$\fe=\lie E$. The exponential map $\exp:\fe\to E$ is a surjective homomorphism 
+of Lie groups, so we get a short exact sequence 
+\[
+  0 \to \Lambda \to \fe \xrightarrow{\exp} E \to 0 .
+\]
+
+It is possible to go the other direction. Start with a lattice 
+$\Lambda\subset \dC$, and define 
+\begin{align*}
+  \wp_\Lambda(z) &= \sum_{\lambda\in \Lambda\smallsetminus 0} \left((z-\lambda)^{-2} - \lambda^{-2} \right) \\
+  G_k(\Lambda) &= \sum_{\lambda\in \Lambda\smallsetminus 0} \lambda^{-k} .
+\end{align*}
+
+\begin{theorem}
+Let $\Lambda\subset \dC$ be a lattice. Let $g_2=60 G_2(\Lambda)$ and 
+$g_3 = 140 G_6(\Lambda)$. Let $E_\Lambda$ be the elliptic curve 
+$y^2=4 x^3+ g_2 x + g_3$. Then the map 
+$(\wp_\Lambda:\wp_\Lambda':1):\dC/\Lambda \to E_\Lambda$ is an analytic isomorphism. 
+\end{theorem}
+\begin{proof}
+This is Proposition VI.3.6 of \cite{si09}. 
+\end{proof}
+
+In fact, $\Lambda \mapsto E_\Lambda$ induces an equivalence of categories 
+between lattices over $\dC$ and elliptic curves over $\dC$. 
+
+
+
+
+
+\section{Representation theory}
+
+The main references are \cite{kn79} and \cite{do97}. 
+
+
+\subsection{Representations of reductive Lie groups}
+
+Following \cite{wa88}, we say that a real Lie group $G$ is \emph{real 
+reductive group} if it is a finite cover of the real points of a Zariski-closed 
+subgroup of $\generallinear_n(\dC)$, defined over $\dR$, which is closed under 
+conjugate-transpose. 
+
+First, note that if $G$ is an arbitrary locally compact group, $f\in C_c(G)$, 
+and $\pi$ is a continuous Banach representation of $G$, then we can put 
+\[
+  \pi(f) = \int_G f(g) \pi(f)\, dg .
+\]
+This is a representation of the algebra $C_c(G)$. We apply this construction 
+to the special case where $G$ be a real reductive group with maximal compact 
+$K$. Let $\widehat K$ be the unitary dual of $K$. If $\tau\in \widehat K$, 
+put $\alpha_\tau(k) = \dim(\tau) \trace \tau(k^{-1})$. For any representation 
+$\pi$ of $K$, set $\Pi_\tau = \pi(\alpha_\tau)$ for any $\tau\in \widehat K$. 
+It turns out that $\Pi_\tau$ is a projection operator, and that 
+\[
+  \pi = \widehat{\displaystyle\bigoplus_{\tau\in \widehat K}} \image(\Pi_\tau) .
+\]
+One says that $\pi$ is \emph{admissible} if each $\image(\Pi_\tau)$ is 
+finite-dimensional (equivalently, if each $\tau$ has finite multiplicity in 
+$\pi$). Call a representation $\pi$ of $G$ \emph{admissible} if the restriction 
+$\restrict_K \pi$ is admissible. 
+
+
+\subsection{Decompositions of groups}
+
+Let $G$ be a real reductive group with lie algebra $\fg$ and Cartan involution 
+$\theta$. Put 
+\begin{align*}
+  \fk &= \{X\in \fg:\theta X=X\} \\
+  \fp &= \{X\in \fg:\theta X=-X\} .
+\end{align*}
+Then $\fk$ is the Lie algebra of a ``canonical'' maximal compact $K$ of $G$. 
+The \emph{Cartan decomposition} of $G$ is the fact that the map 
+$\fp\times K\to G$, $(X,k)\mapsto \exp(X) k$, is a diffeomorphism. 
+\textbf{Warning}: $\fp$ is \emph{not} a subalgebra of $\fg$. The next 
+decomposition is trickier. Let $\fa\subset \fp$ be a maximal abelian 
+subalgebra. For $\alpha\in \fa^\vee$, put 
+\[
+  \fg_\alpha=\{X\in \fg:\adjoint Y(X)=\lambda(Y) X\text{ for all }Y\in \fa\} .
+\]
+Let $R=\{\alpha\in \fa^\vee\smallsetminus 0:\fg_\alpha\ne 0\}$. It is known 
+that $\fg=\fg_0\oplus \sum_{\alpha\in R} \fg_\alpha$. Let $\Delta^+\subset R$ 
+be some choice of positive roots, and put 
+\[
+  \fn = \sum_{\alpha\in \Delta^+} \fg_\alpha .
+\]
+Then $\fg=\fk\oplus \fa\oplus \fn$, inducing an isomorphism 
+$G=K A N$ (at least, if everything is appropriately connected). 
+
+One interprets $A$ and $N$ as depending on $\fp$, so write $A_\fp$, $N_\fp$. 
+Define 
+\[
+  M = M_\fp = Z_K(A_\fp) = \{k\in K:k a = a k\text{ for all }a\in A_\fp\} .
+\]
+Then $S=M A N$ is the ``standard minimal parabolic.'' In the main example 
+$G=\speciallinear_2(\dR)$, we have 
+\begin{align*}
+  \fp &= \left\{\smat{a}{b}{b}{-a}:a,b\in \dR\right\} = \left\langle \smat{1}{}{}{-1},\smat{}{1}{1}{}\right\rangle \\
+  \fk &= \left\langle \smat{}{1}{-1}{}\right\rangle  = \lie K = \lie\left\{k_\theta = \smat{\cos\theta}{\sin\theta}{-\sin\theta}{\cos\theta} :0\leqslant \theta < 2\pi\right\} \\
+  \fa &= \left\langle \smat{1}{}{}{-1} \right\rangle  = \lie A = \lie\left\{\smat{a}{}{}{a^{-1}} : a>0\right\} \\
+  \fn &= \left\langle \smat{}{1}{}{}\right\rangle = \lie N = \lie\smat{1}{\ast}{}{1} \\
+  \fm &= 0 = \lie M = \lie(\pm 1)
+\end{align*}
+One puts $\fn_+=\fn$, $\fn_-=\sum_{\alpha\in -\Delta^+} \fg_\alpha$. 
+
+
+\subsection{Induced representations}
+
+Let $G$ be a real reductive group, and consider the canonical decomposition 
+$G = K S = K M A N$. Suppose $\rho$ is a unitary representation of $S$ with 
+space $V_\rho$. The induced space $\induce_S^G\rho$ is the completion of 
+\[
+  \{f:G\to V_\rho:f(k s) = \rho(s^{-1}) f(k)\} 
+\]
+with respect to the norm 
+\[
+  \|f\|^2 = \int_K |f(k)|^2\, dk .
+\]
+The action is $(\gamma \cdot f)(g) = f(\gamma^{-1} g)$. A function 
+$f\in \induce_S^G\rho$ is determined by both its restrictions 
+$f|_K$ and $f|_{N_-}$, so $\induce_S^G\rho$ can be realized as function spaces 
+on both those subgroups of $G$. 
+
+
+\subsection{Representations of \texorpdfstring{$\speciallinear_2(\dR)$}{SL2(R)}}
+
+Let's start out with the standard families of unitary representations of 
+$\speciallinear_2(\dR)$. Each of these is defined as the completion of some 
+space of smooth (or analytic) functions with respect to a specified norm. 
+
+\begin{definition}[finite-dimensional: $\finitedimensional_n$ for $n\geqslant 0$]
+Let $\rho_0:\speciallinear_2(\dR)\hookrightarrow\generallinear_2(\dC)$ be the 
+inclusion morphism. Put $\rho_n = \symmetricpower^n \rho_0$. The representation 
+$\rho_n$ can be realized in the space $\finitedimensional_n$ of homogeneous 
+polynomials $f\in \dC[x,y]$ of degree $n$. A matrix 
+$\gamma\in \speciallinear_2(\dR)$ acts by $(\gamma f)(v) = f(\gamma^{-1} v)$. 
+If we reinterpret $f\in \dC[x,y]_n$ as an element of $\dC[z]_{\leqslant n}$, 
+then $\gamma=\smat a b c d$ acts by 
+$(\gamma f)(z) = (b z+d)^n f\bigl(\frac{a z+c}{b z+d}\bigr)$. 
+\end{definition}
+
+\begin{theorem}
+Every finite-dimensional irreducible representation of $\speciallinear_2(\dR)$ 
+is one of $\{\finitedimensional_n:n\geqslant 0\}$. 
+\end{theorem}
+
+The finite-dimensional representations of $\speciallinear_2(\dR)$ are 
+\emph{not} unitary, except for the trivial representation. 
+
+\begin{definition}[discrete series: $\discreteseries_n^\pm$ for $n\geqslant 2$]
+Let $G$ act on the upper half-plane $\fh$ in the usual way: 
+$\gamma = \smat a b c d:z\mapsto\frac{a z+b}{c z+d}$. The group $G$ has a 
+right action on functions on $\fh$: 
+\[
+  (f\cdot \gamma)(z) = \frac{1}{(c z+d)^n} f\left(\frac{a z+b}{c z+d}\right) = j(z,\gamma)^{-n} f(\gamma z) .
+\]
+Composing with the inverse gives us a left action: 
+$(\gamma f)(z) = j(z,\gamma^{-1})^{-n} f(\gamma^{-1} z)$. The norm on 
+$\discreteseries_n^+$ is 
+\[
+  \|f\|^2 = \int_\fh |f(z)|^2 y^n \, \frac{dx dy}{y^2}  .
+\]
+To be precise: 
+$\discreteseries_n^+ = \{f:\fh\to \dC\text{ analytic}: \|f\|<\infty\}$. 
+\end{definition}
+
+\begin{theorem}
+The representations $\discreteseries_n^\pm$ are irreducible for $n\geqslant 1$. 
+\end{theorem}
+\begin{proof}
+We only consider $\discreteseries_n^+$. 
+Let $K=\specialunitary(2)\subset \speciallinear_2(\dR)$ be the standard 
+maximal compact subgroup. Its unitary representations are of the form 
+$\chi_n:\smat{\cos\theta}{\sin\theta}{-\sin\theta}{\cos\theta}\mapsto e^{i n\theta}$ 
+for $n\in \dZ$. Let $\Pi_n=\Pi_{\chi_n}$. This is the projection operator on 
+$\discreteseries_n^+$ defined by 
+\[
+  (\Pi_n f)(z) = \frac{1}{2\pi} \int_0^{2\pi} e^{-i n \theta} (-z\sin\theta + \cos\theta)^{-n} f\left(\frac{z\cos\theta + \sin\theta}{-z\sin\theta + \cos\theta}\right)\, d\theta
+\]
+The function $f_n(z) = (z+i)^{-n}$ is an eigenvector for $\Pi_n$, and an element 
+of $\discreteseries_n^+$. Moreover, a computation in complex analysis shows 
+that if $f\in \discreteseries_n^+$ has $f(i)\ne 0$, then 
+$\Pi_n f\in \dC\cdot f_n$. Using the transitivity of the action of 
+$\speciallinear_2(\dR)$ on $\fh$, the result easily follows. 
+\end{proof}
+
+
+\begin{definition}[principal series: $\principalseries^{\pm, i v}$ for $v\in \dR$]
+The space underlying $\principalseries^{\pm, i v}$ is $L^2(\dR)$. The action is 
+\[
+  (\gamma\cdot f)(x) = 
+  \begin{cases}
+    \frac{1}{|-b x+d|^{1+i v}} f\left(\frac{a x-c}{-b x+d}\right) & \text{if $+$} \\
+    \frac{\sign(-b x+d)}{|-b x+d|^{1+i v}} f\left(\frac{a x-c}{-b x+d}\right) & \text{if $-$}
+  \end{cases}
+\]
+These are induced from unitary representations of $S=\smat{\ast}{\ast}{}{\ast}$. 
+They can be realized as functions on $K$ or $N_-$. 
+\end{definition}
+
+The only reducible principal series is 
+$\principalseries^{-,0}\simeq \discreteseries_1^+ \oplus \discreteseries_1^-$. 
+There is a ``nonunitary principal series'' $\principalseries^{k, z}$ for 
+$k\in \dZ$, $z\in \dC$, where the space is $C_c^\infty(\dR)$, and the action 
+is 
+\[
+  (\gamma f)(x) = \frac{\pm(-b x+d)}{|-b x+d|^{1+z}} f\left(\frac{a x-c}{-b x+d}\right) .
+\]
+
+\begin{definition}[complementary series $\complementaryseries^s$ for $0<s<1$]
+Let $0<s<1$. The space underlying $\complementaryseries^s$ is the set of 
+$f\in L_\text{loc}^1(\dR)$ such that 
+\[
+  \|f\|^2 = \int_{\dR^2} \frac{f(x)\overline{f(y)}}{|x-y|^{1-u}}\, dxdy <\infty .
+\]
+The action is what we would have with $\principalseries^{+, u}$, i.e. 
+\[
+  (\gamma f)(x) = \frac{1}{|-b x+d|^{1-u}} f\left(\frac{a x-c}{-b x+d}\right) .
+\]
+\end{definition}
+
+\begin{definition}[limits of discrete series: $\discreteseries_1^{\pm}$]
+The action here is the same as in the $\discreteseries_n^\pm$, but the norm is 
+\[
+  \|f\|^2 = \sup_{y>0} \int_\dR |f(x+i y)|^2\, dx .
+\]
+\end{definition}
+
+
+\begin{theorem}
+Every irreducible unitary representation of $\speciallinear_2(\dR)$ is one 
+of the following:
+\begin{itemize}
+  \item $\discreteseries_n^\pm$ for $n\geqslant 2$
+  \item $\discreteseries_1^\pm$
+  \item $\principalseries^{\pm, i v}$ for $v\in \dR$, and $v\ne 0$ if $-$. 
+  \item $\complementaryseries^s$ for $0<s<1$. 
+\end{itemize}
+The only isomorphisms between items in this list are: 
+\begin{align*}
+  \principalseries^{+, i v} &\simeq \principalseries^{+, -i v} \\
+  \principalseries^{-, i v} &\simeq \principalseries^{-,-i v} .
+\end{align*}
+\end{theorem}
+
+
+\subsection{Representations of \texorpdfstring{$\generallinear_2(\dR)$}{GL2R}}
+
+This is discussed in section 2 of \cite{kn79}. 
+Let $\speciallinear_2^\pm(\dR)=\{g\in \generallinear_2(\dR):\det g=\pm 1\}$, 
+and consider $\induce_{\speciallinear_2(\dR)}^{\speciallinear_2^\pm(\dR)}\pi$ for 
+irreducible unitary representations $\pi$ of $\speciallinear_2(\dR)$. We have 
+\[
+  \induce_{\speciallinear_2}^{\speciallinear_2^\pm}(\principalseries^{\pm, i v}) \simeq P^{\pm, i v}\oplus P^{\pm , i v}
+\]
+for a canonical irreducible unitary representation $P^{\pm, i v}$ of 
+$\speciallinear_2^\pm(\dR)$. For $n\geqslant 2$, the representation 
+$\induce_{\speciallinear}^{\speciallinear^\pm}(\discreteseries_n^\pm)$ is 
+irreducible unitary. These (also with the complementary series) exhaust the 
+irreducible unitary representations of $\speciallinear_2^\pm(\dR)$. The 
+irreducible unitary representations of $\generallinear_2(\dR)$ are of the 
+form 
+\[
+  \smat{x}{}{}{x} \smat a b c d \mapsto \chi(x)\pi\smat a b c d
+\]
+for $\chi$ a unitary character of $\dR^+$ and $\pi$ a representation of 
+$\speciallinear_2^\pm(\dR)$. 
+
+
+\subsection{Representations of \texorpdfstring{$\speciallinear_2(\dC)$}{SL2C}}
+
+A good reference is II.4 of \cite{kn86}. 
+
+\begin{definition}[principal series $\principalseries^{n, i v}$ for $n\in \dZ$ and $v\in \dR$]
+The underlying space is $L^2(\dC)$. The action is, for $\gamma=\smat a b c d$: 
+\[
+  (\gamma f)(z) = |-b z+d|^{-2-i v}\left(\frac{-b z+d}{|-b z+d|}\right)^{-n} f\left(\frac{a z-c}{-b z+d}\right) . 
+\]
+\end{definition}
+
+\begin{definition}[complementary series $\complementaryseries^s$ for $0<s<2$]
+As for $\speciallinear_2(\dR)$, the space lives inside $L^1_\text{loc}(\dC)$, 
+has action just like $\principalseries^{0, s}$: 
+\[
+  (\gamma f)(z) = |-b z+d|^{-2-s} f\left(\frac{a z-c}{-b z+d}\right) .
+\]
+The norm is 
+\[
+  \|f\|^2 = \int_{\dC^2} \frac{f(x)\overline{f(y)}}{|x-y|^{2-s}}\, dxdy .
+\]
+\end{definition}
+
+\begin{theorem}
+Every irreducible unitary representation of $\speciallinear_2(\dC)$ is one of 
+the following:
+\begin{itemize}
+  \item $\principalseries^{n, i v}$ for $n\in \dZ$, $v\in \dR$ 
+  \item $\complementaryseries^s$ for $0<s<2$
+\end{itemize}
+The only isomorphisms between items in this list are: 
+\[
+  \principalseries^{n, i v} \simeq \principalseries^{-n, -i v}. 
+\]
+\end{theorem}
+\begin{proof}
+This is Theorem 16.2 of \cite{kn86}. 
+\end{proof}
+
+
+\subsection{Representations of \texorpdfstring{$\generallinear_2(\dC)$}{GL2C}}
+
+It is claimed in the last paragraph of \cite{kn79} that every irreducible 
+unitary representation of $\generallinear_2(\dC)$ is of the form 
+\[
+  \smat{z}{}{}{z} \smat a b c d \mapsto \chi(z) \pi\smat a b c d ,
+\]
+for $z\in \dC^\times$, $\smat a b c d\in \speciallinear_2(\dC)$, and 
+$\chi$ a unitary character of $\dC^\times$ that agrees with $\pi$ on 
+$\smat{-1}{}{}{-1}$. 
+
+
+
+
+
+\bibliographystyle{alpha}
+\bibliography{tidbit-sources}
+
+\end{document}
