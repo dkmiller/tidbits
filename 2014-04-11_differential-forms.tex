@@ -1,9 +1,13 @@
 \documentclass{article}
 
-\usepackage{amsmath,amssymb,fullpage,mathpazo,mathrsfs,mathtools}
+\usepackage{amsmath,amssymb,calligra,fullpage,mathpazo,mathtools}
+\usepackage[mathscr]{euscript}
 \usepackage[all]{xy}
 \DeclareMathOperator{\curl}{curl}
+\DeclareMathOperator{\derivation}{\mathscr{D}\text{\kern -2pt {\calligra\large er}}}
+\DeclareMathOperator{\generallinear}{GL}
 \DeclareMathOperator{\grad}{grad}
+\DeclareMathOperator{\locallyfree}{\mathsf{LF}}
 \DeclareMathOperator{\sym}{Sym}
 \renewcommand{\div}{\operatorname{div}}
 \newcommand{\ii}{\mathbf{i}}
@@ -13,8 +17,15 @@
 \newcommand{\dR}{\mathbf{R}}
 \newcommand{\sO}{\mathscr{O}}
 \newcommand{\sE}{\mathscr{E}}
+\newcommand{\sI}{\mathscr{I}}
+\newcommand{\sL}{\mathscr{L}}
+\newcommand{\sM}{\mathscr{M}}
 \newcommand{\sX}{\mathscr{X}}
 \newcommand{\hodge}[1]{\prescript{\star}{}{#1}}
+
+
+
+
 
 \title{Multivariable calculus and differential forms}
 \author{Daniel Miller}
@@ -67,6 +78,11 @@ d
 
 
 
+
+
+
+
+
 \section{General differential geometry}
 
 Let $(X,\sO)$ be a ringed topos, and $\sE$ a locally free $\sO$-module of 
@@ -81,6 +97,27 @@ Suppose we have a derivation $d:\sO\to \Omega^1$, $\Omega^1$ is locally free,
 and put $\sX=(\Omega^1)^\vee$. Let $g\in (\sX\otimes \sX)^\vee$ be a non-degenerate 
 symmetric inner product. Put $\langle X,Y\rangle = g(X,Y)$. Since $g$ is 
 non-denerate, 
+
+Again, let $(X,\sO)$ be a ringed topos. The motivating problem is that if we 
+define $\Omega^1_X$ in the obvious way, (i.e.\ as $\sI/\sI^2$, where $\sI$ is 
+the kernel of $\sO\otimes \sO \to \sO$, then $\Omega_X^1$ for $X$ a smooth 
+manifold doesn't agree with the ``classical definition'' in differential 
+geometry. [This may not be the case.] One can define a sheaf (for any 
+$\sO$-module $\sM$) $\derivation(\sO,\sM)$ in the usual manner. This agrees 
+with the classical definition. However, $\derivation(\sO,\sO)^\vee$ is 
+\emph{not} necessarily isomorphic to $\Omega^1$, if $(X,\sO)$ is a smooth 
+manifold. A kludge is to put $\sX=\derivation(\sO,\sO)$ for vector fields, and 
+not worry directly about $\Omega^1$. 
+
+
+
+
+
+\subsection{Vector bundles and torsors}
+
+Let $(X,\sO)$ be a smooth manifold. Recall that a \emph{vector bundle} on 
+$X$ is a locally free $\sO$-module. Let $\locallyfree(\sO)$ be the category of 
+vector bundles on $X$. 
 
 
 
