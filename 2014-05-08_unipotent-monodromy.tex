@@ -1,0 +1,61 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb,fullpage,mathpazo}
+\usepackage[hidelinks]{hyperref}
+\DeclareMathOperator{\h}{H}
+\newcommand{\dC}{\mathbf{C}}
+\newcommand{\dZ}{\mathbf{Z}}
+
+\title{Vanishing cycles, cyclotomic polynomials, and monodromy}
+\author{Daniel Miller}
+
+\begin{document}
+\maketitle
+
+
+
+
+
+\section{Motivation}
+
+This is inspired by the discussion at the beginning of \cite[\S 9]{mi68}. Let 
+$f$ be a regular function on $\dC^{n+1}$. Let $V=V(f)$; this is an 
+$n$-dimensional complex variety. Fix an isolated critical point $x\in V$. For 
+$\varepsilon>0$, let $S_\varepsilon$ be a (real) sphere of radius $\varepsilon$ 
+centered at $x$, and put $K_\varepsilon = V\cap S_\varepsilon$. Define 
+$\phi_\varepsilon:S_\varepsilon\smallsetminus K_\varepsilon \to S^1$ by 
+\[
+  \phi_\varepsilon(x) = \frac{f(x)}{|f(x)|} .
+\]
+The ``fibration theorem'' tells us that $\phi_\varepsilon$ is a fibration; we 
+put 
+$F_s = \phi_\varepsilon^{-1}(s)\subset S_\varepsilon\smallsetminus K_\varepsilon$ 
+for $s\in S^1$. It is known that $F_s$ is a smooth $2n$-dimensional real 
+manifold. Let $h$ be the canonical generator of $\pi_1(S^1)$. There is an 
+endomorphism $h_\ast$ of $\h_n(F_s,\dZ)$. Let $\Delta$ be its characteristic 
+polynomial. Milnor claims that Grothendieck has proved $\Delta$ is a product of 
+cyclotomic polynomials. 
+
+
+
+
+
+\section{Reinterpretation}
+
+Let $f$, $V$, \ldots be as above. Instead of considering the homology of 
+individual fibers $F_s$ of the map $\phi_\varepsilon$, we consider the  
+pushforward $\mathsf R^n \phi_{\varepsilon,\ast} \dZ$ as a sheaf on $S^1$. This 
+is a local system, so we can consider it as a representation of the group 
+$\pi_1(S^1)$. Hopefully, there is a theorem that 
+$\mathsf R^n \phi_{\varepsilon,\ast} \dZ$ is quasi-unipotent. 
+
+Consider \cite{sga7-i} and \cite{sga7-ii}
+
+
+
+
+
+\bibliographystyle{alpha}
+\bibliography{tidbit-sources}
+
+\end{document}
