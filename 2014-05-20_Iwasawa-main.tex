@@ -2,6 +2,11 @@
 
 \usepackage{amsmath,amssymb,fullpage,mathpazo,microtype}
 \usepackage[hidelinks]{hyperref}
+\DeclareMathOperator{\class}{Cl}
+\DeclareMathOperator{\galois}{Gal}
+\newcommand{\dF}{\mathbf{F}}
+\newcommand{\dQ}{\mathbf{Q}}
+\newcommand{\dZ}{\mathbf{Z}}
 
 \title{$p$-adic $L$-functions and the Iwasawa main conjecture}
 \author{Daniel Miller}
@@ -15,6 +20,31 @@
 
 An impossible-to-find, but conceptual source seems to be \cite{fk06}. A more 
 accessible source may be \cite{pr00}. 
+
+Things more or less got started in \cite{ri76}, and really got going in 
+\cite{mw84}. A more recent result is \cite{su14}. 
+
+
+
+
+
+\section{The start of the field}
+
+A lot of mathematical activity was kicked off by Ribet's influential paper 
+\cite{ri76}. Let $p$ be an odd prime, and let 
+$C=\class\left(\dQ(\mu_p)\right)\otimes \dF_p$. Then $G_\dQ$ 
+acts on this through its quotient $\galois(\dQ(\mu_p)/\dQ)$, and if 
+$\chi:G_\dQ\to \dF_p^\times$ is the corresponding cyclotomic character, we 
+have a decomposition $C=\bigoplus_{i\in \dZ/(p-1)} C(\chi^i)$, where 
+\[
+  C(\chi^i)=\{c\in C:\sigma \cdot c = \chi^i(\sigma) c\text{ for all }\sigma\in G_\dQ\} .
+\]
+
+Ribet proved that if for $2\leqslant k\leqslant p-3$ even, 
+$C(\chi^k)\ne 0$ if and only if $v_p(B_k)>0$. One direction had already been 
+proved by Herbrand, so all Ribet has to do is prove that $v_p(B_k)>0$ implies 
+$C(\chi^k)\ne 0$. He does this by constructing the appropriate unramified 
+extension of $\dQ(\mu_p)$ using modular forms. 
 
 
 
