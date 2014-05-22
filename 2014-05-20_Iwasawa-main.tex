@@ -1,12 +1,16 @@
 \documentclass{article}
 
-\usepackage{amsmath,amssymb,fullpage,mathpazo,microtype}
+\usepackage{amsmath,amssymb,extarrows,fullpage,mathpazo,microtype,stmaryrd}
 \usepackage[hidelinks]{hyperref}
 \DeclareMathOperator{\class}{Cl}
 \DeclareMathOperator{\galois}{Gal}
+\DeclareMathOperator{\h}{H}
 \newcommand{\dF}{\mathbf{F}}
 \newcommand{\dQ}{\mathbf{Q}}
 \newcommand{\dZ}{\mathbf{Z}}
+\newcommand{\fo}{\mathfrak{o}}
+\newcommand{\isomorphism}{\xlongrightarrow\sim}
+\newcommand{\power}[1]{\llbracket #1 \rrbracket}
 
 \title{$p$-adic $L$-functions and the Iwasawa main conjecture}
 \author{Daniel Miller}
@@ -45,6 +49,37 @@ $C(\chi^k)\ne 0$ if and only if $v_p(B_k)>0$. One direction had already been
 proved by Herbrand, so all Ribet has to do is prove that $v_p(B_k)>0$ implies 
 $C(\chi^k)\ne 0$. He does this by constructing the appropriate unramified 
 extension of $\dQ(\mu_p)$ using modular forms. 
+
+
+
+
+
+\section{The Main Conjecture for modular forms}
+
+We follow \cite[III]{ka04}. Let $\dQ_\infty$ be the $\dZ_p$-extension of $\dQ$, 
+with Galois group $\Gamma\isomorphism \dZ_p^\times$ via the cyclotomic 
+character $\kappa$. We are interested in modules over the Iwasawa algebra  
+$\Lambda = \dZ_p\power{\Gamma}$, which is (non-canonically) isomorphic to the 
+power-series ring $\dZ_p\power{t}$. If $M$ is a $\Gamma$-module over $\dZ_p$, 
+we can interpret it as a representation of $G_\dQ$ unramified outside $p$, 
+hence a sheaf on the \'etale site of $\dZ[\frac 1 p]$. Let 
+$\fo_n = \dZ[\zeta_{p^{n+1}}]$ and $\fo_{n,\{p\}}=\fo_n[\frac 1 p]$. We put 
+\[
+  \boldsymbol\h^i(M) = \varprojlim_n \h^i(\fo_{n,\{p\}},M)
+\]
+It turns out that $\boldsymbol\h^i(M)=0$ unless $i\in \{1,2\}$. If 
+$M$ is a $\dQ_p$-representation of $\Gamma$, we choose a 
+$\Gamma$-stable lattice $M_0\subset M$, and put 
+\[
+  \boldsymbol\h^i(M) =\boldsymbol\h^i(M_0)\otimes \dQ .
+\]
+
+Let $p$ be an odd prime, 
+$k\geqslant 2$ and $N\geqslant 1$. We start with a normalized newform 
+$f\in S_k(X_1(N))$. Choose a prime $\ell\nmid N p$, let $F_f=\dQ(f)$, and let 
+$V_f$ be the associated two-dimensional $F_{f,\lambda}$-vector space with 
+continuous $G_\dQ$-action. Kato defines a canonical map 
+$z:V_f \to \boldsymbol\h^1(V_f)$. 
 
 
 
