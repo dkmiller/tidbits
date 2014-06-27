@@ -1,0 +1,163 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb,extarrows,fullpage,mathpazo,mathrsfs,microtype}
+\DeclareMathOperator{\abelian}{Ab}
+\DeclareMathOperator{\adjoint}{ad}
+\DeclareMathOperator{\automorphism}{Aut}
+\DeclareMathOperator{\cogroup}{Cg}
+\DeclareMathOperator{\derivation}{Der}
+\DeclareMathOperator{\End}{End}
+\DeclareMathOperator{\generallinear}{GL}
+\DeclareMathOperator{\lie}{Lie}
+\newcommand{\cA}{\mathcal{A}}
+\newcommand{\fg}{\mathfrak{g}}
+\newcommand{\sO}{\mathscr{O}}
+\newcommand{\iso}{\xlongrightarrow\sim}
+
+\title{Thoughts on lie algebras}
+\author{Daniel Miller}
+
+\begin{document}
+\maketitle
+
+
+
+
+
+Let $k$ be a commutative ring. We will write $\cA$ to denote the category of 
+$k$-algebras, but much of this will work for $\cA$ an arbitrary (sufficiently 
+nice) category. 
+
+Let $\cA^\ast$ be the category of augmented $k$-algebras (or more generally, 
+the category of arrows $0 \to a$ in $\cA$). Then the initial and terminal 
+objects in $\cA^\ast$ are the same. Let $\abelian(\cA^\ast)$ denote the 
+category of abelian group objects in $\cA^\ast$. There is an obvious 
+forgetful functor $\abelian(\cA^\ast) \to \cA^\ast$. It has a left adjoint 
+which we denote by $\Omega$. One has 
+\[
+  \Omega(A,\varepsilon) = k\oplus \varepsilon_\ast\Omega_{A/k}^1
+\]
+
+Now let $\cogroup(\cA^\ast)$ denote the category of cogroup objects in 
+$\cA^\ast$ -- in other words group objects in $\cA^{\ast\circ}$. So 
+$\hom(G,-)$ is a group-valued functor for $G\in \cogroup(\cA^\ast)$. 
+
+If $G\in \cogroup(\cA^\ast)$ and $M\in \abelian(\cA^\ast)$, then 
+$\hom_{\cA^\ast}(G,M)$ has two group operations, each of which distribute 
+over the other. Thus $\hom_{\abelian(\cA^\ast)}(\Omega G,-)$ is canonically 
+an abelian-group functor, so $\Omega G$, a priori only an abelian group 
+object, is also an abelian co-group object in $\cA^\ast$. Put 
+$\fg=\Omega G$. I claim that $\fg$ has a natural action of $G$, the 
+\emph{adjoint action} $\adjoint:G\to \automorphism \fg$. We first realize 
+this action on 
+
+Given 
+$g\in G(A)$, $X\in \fg(A)$
+\begin{align*}
+  g\in \hom_{\cA^\ast}(G,A) \\
+  X\in \hom_{\cA^\ast}(\fg,A) = \hom_{\abelian(\cA^\ast)}(\fg, k\oplus A) = \hom_{\cA^\ast}(G,k\oplus A)
+\end{align*}
+
+
+
+
+
+\section{Some examples}
+
+Let $A$ be (possibly non-associative) $k$-algebra. Let 
+$\automorphism(A)$ be the funtor 
+$R\mapsto \automorphism_R(A\otimes_k R)$. Put $G=\automorphism(A)$; we want to 
+compute $\fg=\lie G$. We have 
+\[
+  \fg(R) = \ker(G(R[\varepsilon]) \to G(R)) = \ker(\automorphism_R(A_{R[\varepsilon]}) \to \automorphism_R(A_R)) 
+\]
+If $\phi:A\otimes R[\varepsilon] \to A\otimes R[\varepsilon]$ is an isomorphism 
+of $R[\varepsilon]$-algebras in $\fg(R)$. Then $\phi$ is of the form 
+$a\otimes r\mapsto (a+(\partial a)\varepsilon)\otimes r$, for 
+$\partial:A_r\to A_R$ an $R$-linear map. One checks that $\phi$ is an automorphism 
+if and only if $\partial$ is a derivation. We have: 
+\begin{align*}
+  \derivation(A) &\iso \lie(\automorphism A) \\
+  \End(V) &\iso \lie(\generallinear V) 
+\end{align*}
+
+If we have $\rho:G\to \automorphism A$, then we get 
+$\rho:\lie G\to \derivation(A)$. In particular, the adjoint action of $G$ on 
+itself gives $\fg \to \derivation(G)$. 
+
+Let's work things out for $G=\generallinear(V)$, where $V$ is some 
+$k$-module. We want to get a morphism $\fg \to \derivation(G)$. We look at 
+$R$-valued points. An element $X\in \fg(R)$ is identified with 
+\[
+  \exp(X) = 1+X\varepsilon\in \ker(\generallinear(V\otimes R[\varepsilon]) \to \generallinear(V\otimes R)) .
+\]
+The action $\adjoint:G\to \automorphism G$ should give us 
+$\adjoint(X)\in \ker(\automorphism(G\otimes R[\varepsilon]) \to \automorphism(G\otimes R))$. Indeed, $\adjoint(X)$ acts on $S$-valued points as 
+$\adjoint(X):G_{R[\varepsilon]}(S)\to G_{R[\varepsilon]}(S)$ as honest 
+conjugation by $1+\varepsilon X$.
+\[
+  g:R[\varepsilon][X_{i j},{\det}^{-1}] \to S \leftrightarrow (g_{i j})\in \generallinear(V\otimes S)
+\]
+\[
+  (1+\varepsilon X) g (1-\varepsilon X) = g+\varepsilon[X,g]	
+\]
+
+
+
+
+
+\section{Some functors}
+
+We define a $k$-group functor $\derivation(A)$ by 
+$\derivation(A)(R) = \derivation_R(A\otimes_k R)$. In nice circumstances, this 
+is a quasi-coherent $\sO$-module. Define 
+$\derivation(A) \to \lie(\automorphism A)$ as follows. On $R$-valued points, 
+we need 
+\begin{align*}
+  \derivation_R(A\otimes R) &\to \ker(\automorphism(A)(R[\varepsilon]) \to \automorphism(A)(R)) \\
+  \derivation_R(A\otimes R) &\to \ker(\automorphism_{R[\varepsilon]}(A\otimes R[\varepsilon]) \to \automorphism_R(A\otimes R))
+\end{align*}
+Let $\partial:A\otimes R\to A\otimes R$ be an $R$-derivation. Define 
+$\phi=1+\varepsilon\cdot \partial$ by 
+\[
+  \phi(a\otimes r) = a\otimes r + \partial(a)\otimes \varepsilon r .
+\]
+In other words, $\phi=1+\partial\otimes \varepsilon$. We have 
+\begin{align*}
+  \phi(a\otimes r)\phi(b\otimes s) 
+    &= (a\otimes r + \partial(a)\otimes \varepsilon r)(b\otimes s+\partial(b)\otimes \varepsilon s) \\
+    &= a b\otimes r s + a \partial(b)\otimes \varepsilon r s + b\partial(a)\otimes \varepsilon r s \\
+    &= a b\otimes r s + (a\partial b + b\partial a)\otimes \varepsilon r s \\
+    &= a b\otimes r s + \partial(a b)\otimes \varepsilon r s .
+\end{align*}
+So $\phi$ is a ring homomorphism. Note that $1+\varepsilon\cdot \partial$ and 
+$1-\varepsilon\cdot \partial$ are inverses, so $\phi$ is an automorphism. Conversely, 
+one checks that all elements of $\lie(\automorphism A)(R)$ are of the form 
+$1+\varepsilon\cdot \partial$. In other words, 
+$\derivation(A) \to \lie(\automorphism A)$ is an isomorphism of group functors. 
+
+
+
+
+
+\section{Invariant derivations}
+
+Let $G$ be a $k$-group functor. Then we have a homomorphism 
+$l:G\to \automorphism G$, the ``left regular representation.'' The induced 
+infinitesimal representation $l:\fg \to \lie(\automorphism G)=\derivation(G)$ 
+should induce an isomorphism between $\fg=\lie G$ and the algebra of 
+invariant derivations of $G$. Let's see how this works. On points, we have 
+\[
+  l(R):\ker(G(R[\varepsilon]) \to G(R)) \to \ker(\automorphism_{R[\varepsilon]}(G\otimes R[\varepsilon]) \to \automorphism_R(G\otimes R)) 
+\]
+Given $X\in \fg(R)$, we need an element 
+$l(R)(X)\in \automorphism_{R[\varepsilon]}(G\otimes R[\varepsilon])$. We define 
+this on the functor of points: 
+$l(R)(X)(S):(G\otimes R[\varepsilon])(S) \to (G\otimes R[\varepsilon])(S)$ 
+is $x\mapsto X\cdot x$. 
+
+
+
+
+
+\end{document}
