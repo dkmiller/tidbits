@@ -1,0 +1,92 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\DeclareMathOperator{\derive}{\mathsf{D}}
+\DeclareMathOperator{\GL}{GL}
+\DeclareMathOperator{\localsystem}{\mathsf{LS}}
+\DeclareMathOperator{\pseudocompact}{PS}
+\DeclareMathOperator{\spec}{Spec}
+\newcommand{\cD}{\mathcal{D}}
+\newcommand{\cO}{\mathcal{O}}
+\newcommand{\dF}{\mathbf{F}}
+
+\newcommand{\etale}{\textnormal{\'et}}
+
+\title{A possible new approach to deformation theory}
+\author{Daniel Miller}
+
+\begin{document}
+\maketitle
+
+
+
+
+
+\section{Motivation}
+
+Let $F$ be a number field, $k$ a local field with ring of integers $\cO$ and 
+field of fractions $\kappa$. Typically one starts with a continuous 
+representation $\bar\rho:G_{F,S} \to \GL_n(\kappa)$ and studies lifts of 
+$\bar\rho$ to representations $G_{F,S} \to \GL_n(A)$, where $A$ ranges over 
+local pseudocompact $\cO$-algebras with residue field $\kappa$. There is 
+generally a pseudocompact $\cO$-algebra $R_{\bar\rho}^\square$ classifying 
+such lifts. One proceeds to take quotients of the associated formal scheme, 
+and hope that these quotients (and certain subfunctors) are representable. 
+
+
+
+
+
+\section{Key ideas}
+
+There are two motivating ideas. First, instead of representations 
+$G_{F,S}\to \GL_n(\kappa)$, work more categorically. Let 
+$U=\spec(\cO_F)\smallsetminus S$ and consider $\kappa$-local systems on 
+the \'etale site of $U$. For each artinian $\cO$-algebra $A$, we have the 
+category $\localsystem(U,A)$ of $A$-local systems on $U_\etale$. Hopefully 
+the functor $A\mapsto\localsystem(U,A)$ is a formal stack (though not 
+algebraic) in some sense. In any case, one defines 
+$\localsystem(U,\cO) = \varprojlim \localsystem(U,A)$. Write 
+$\pi$ for the functor $L\mapsto L\otimes_\cO \kappa$ from 
+$\localsystem(U,\cO)$ to $\localsystem(U,\kappa)$. Given 
+$L\in \localsystem(U,\kappa)$, we could write $D_L$ for the ``fiber'' 
+$\pi^{-1}(L)$, which we again hope to be a formal stack in some reasonable 
+sense. 
+
+Everything up to now has merely been a change of language. The next main 
+idea is that instead of working with $\cO$-local systems or 
+$\kappa$-local systems, we should work with the ``derived category'' 
+$\derive_c^b(U,k)$ of bounded constructible $k$-sheaves on 
+$U_\etale$. That is, let $\pseudocompact(\cO)$ be the category of 
+pseudocompact $\cO$-algebras. For any $A\in \pseudocompact(\cO)$, we have a 
+category $\derive_c^b(U,A)$ of bounded constructible $A$-sheaves on $U_\etale$. 
+One might hope that $\derive_c^b(U,-)$ is again a formal stack in some sense. 
+
+The analogy of a residual representation $\bar\rho:G_{F,S}\to \GL_n(\kappa)$ is 
+the choice of $L\in \derive_c^b(\kappa)$. Hopefully the ``fiber above $L$'' 
+gives some kind of formal stack $\cD_L$. But it is not at all obvious that 
+$\cD_L$ will be representable, or even a stack. 
+
+If $E$ is an elliptic curve over $F$, we can ``spread out'' $E$ to an elliptic 
+scheme over some $U\subset \spec(O_F)$. Let $f:E\to U$ be the structure map; 
+then $\mathsf R f_\ast \kappa\in \derive_b^c(U,\kappa)$ is our analogue of the 
+residual representation $\bar\rho_{E,\ell}$. The problem is, studying the 
+``derived deformation theory'' of $\mathsf Rf_\ast \kappa$ is probably too 
+complicated. A better place to start would be with the ``derived deformation 
+theory'' of the cyclotomic character. Hopefully this would give us some kind of 
+``derived version'' of the Iwasawa algebra. 
+
+The mod-$p$ cyclotomic character should be $\dF_p(1)$ in 
+$\derive_b^c(U,\dF_p)$. I need to understand what constructible (as opposed to 
+smooth) sheaves on $U$ look like. A major problem is that constructible sheaves 
+might have ramification, in which case classifying constructible lifts would be 
+the wrong thing. 
+
+So the question is: what (if any) is the concrete interpretation of 
+$\derive_c^b(U,A)$? 
+
+
+
+
+
+\end{document}
