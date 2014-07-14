@@ -1,0 +1,263 @@
+\documentclass[11pt]{article}
+
+\usepackage{amsmath,amssymb,amsthm,extarrows}
+\usepackage[colorlinks=true]{hyperref}
+\usepackage[paperwidth=6.75in,paperheight=10in,textwidth=5.25in,textheight=8.5in]{geometry}
+\DeclareMathOperator{\character}{X}
+\DeclareMathOperator{\GL}{GL}
+\DeclareMathOperator{\h}{H}
+\DeclareMathOperator{\lie}{Lie}
+\DeclareMathOperator{\norm}{N}
+\DeclareMathOperator{\shimura}{Sh}
+\DeclareMathOperator{\SL}{SL}
+\DeclareMathOperator{\spectrum}{Spec}
+\newcommand{\cA}{\mathcal{A}}
+\newcommand{\dA}{\mathbf{A}}
+\newcommand{\dC}{\mathbf{C}}
+\newcommand{\dR}{\mathbf{R}}
+\newcommand{\dQ}{\mathbf{Q}}
+\newcommand{\dZ}{\mathbf{Z}}
+\newcommand{\fg}{\mathfrak{g}}
+\newcommand{\fk}{\mathfrak{k}}
+\newcommand{\dd}{\mathrm{d}}
+\newcommand{\discrete}{\mathrm{disc}}
+\newcommand{\finite}{\mathrm{f}}
+\newcommand{\hecke}{\mathcal{H}}
+\newcommand{\iso}{\xlongrightarrow\sim}
+\newtheorem{theorem}[subsubsection]{Theorem}
+
+\title{Automorphic representations and deformation theory in arithmetic geometry}
+\author{Daniel Miller}
+\date{July 18, 2014}
+
+\begin{document}
+\maketitle
+\tableofcontents
+
+
+
+
+
+\section{Automorphic representations}
+
+
+\subsection{Adeles}
+
+Let $F$ be a number field. If 
+$v$ is a place of $F$, write $F_v$ for the completion of $F$ at $v$, and $O_v$ 
+for the ring of integers of $F_v$. Write $\dA=\dA_F$ for the ring of adeles of 
+$F$; the most important fact about $\dA$ is that it is a locally compact 
+$F$-algebra. It can be defined in many ways: 
+\begin{itemize}
+  \item The topological direct limit $\varinjlim_S\dA(S)$, where $S$ ranges 
+    over all finite sets of valuations of $F$, and 
+    \[
+      \dA(S) = \prod_{v\in S} F_v \times \prod_{v\notin S} O_v .
+    \]
+  \item The topological tensor product $(\dR\times\widehat\dZ)\otimes F$.
+  \item A restricted direct product $\prod_v' (F_v,O_v)$, consisting of those 
+    tuples $(a_v)\in \prod_v F_v$ for which $a_v\in O_v$ for almost all $v$.
+  \item Via \cite{gs66}, an initial object in the category of locally compact 
+    $F$-algebras with no proper open ideals, and with the intersection of all 
+    closed maximal ideals being $0$. 
+\end{itemize}
+Write $\dA_\finite=\widehat\dZ\otimes F$ for the ring of \emph{finite adeles}. 
+It is totally disconnected. 
+
+In \cite{c12}, it is shown that there is a unique product-preserving functor 
+$(-)(\dA)$ from affine schemes of finite type over $F$ to topological spaces, 
+compatible with closed embeddings, for which $(\spectrum F[t])(\dA)=\dA$ with 
+its usual topology. In particular, if $G$ is an algebraic group over $F$, the 
+abstract group $G(\dA)$ carries the structure of a locally compact topological 
+group. As such, it carries a Haar measure $\dd g$.  
+
+
+\subsection{Hecke algebras}
+
+A good reference for this section is \cite{f79}. 
+
+For the remainder, $G$ is a connected reductive group over $F$. Let 
+$\fg=\lie G$. There exists 
+an open subset of $U\subset \spectrum(O_F)$ and a ``spreading out'' of $G$ to 
+a reductive group scheme on $U$. Up to finitely many places, this spreading out 
+is well-defined. In particular, for almost all finite places $v$, the group 
+$G(O_v)$ is well-defined for almost all $v$. It is a maximal (open) compact 
+subgroup of $G(F_v)$. We normalize Haar measures on $G(F_v)$ so that 
+$G(O_v)$ has volume $1$, and choose the Haar measure on $G(\dA)$ to be the 
+product of measure on each $G(F_v)$. 
+
+Let $v$ be a finite place. Write $\hecke_v=\hecke_v(G)$ for the \emph{Hecke 
+algebra} consisting of locally constant, compactly supported functions 
+$G(F_v) \to \dQ$. Multiplication is convolution: 
+\[
+  (f\star g)(x) = \int_{G(F_v)} f(g) g(y^{-1} x)\, \dd y .
+\]
+Even though this is written as an integral, it is a finite sum over double 
+cosets of open compact subgroups of $G(F_v)$, so no analysis is involved. For 
+almost all $v$, the algebra $\hecke_v$ comes with a canonical idempotent, 
+$e_v=\chi_{G(O_v)}$. Write $\hecke_\finite$ for the restricted tensor product 
+(in the sense of \cite[\S 2]{f79}) of the $\hecke_v$ with respect to the 
+$e_v$. It is the direct limit $\varinjlim_S \hecke(S)$, where 
+$\hecke(S)=\bigotimes_{v\in S} \hecke_v$, and for 
+$T\supset S$, the injection $\hecke(S)\to \hecke(T)$ is induced by the 
+$e_v$ for $v\in T\smallsetminus S$. We will also think of $\hecke_\finite$ as 
+the algebra of locally constant, compactly supported functions $f$ on 
+$G(\dA_\finite)$ for which $f^{-1}(x)\supset \prod_{v\notin S} G(O_v)$ for each 
+$x$, with $S$ depending on $x$. 
+
+The ring $F_\infty=F\otimes\dR$ is a finite product of copies of $\dR$ and 
+$\dC$, so  $G(F_\infty)$ is naturally a Lie group. Fix a maximal compact 
+subgroup $K_\infty\subset G(F_\infty)$. The Hecke algebra 
+$\hecke_\infty=\hecke_\infty(G)$ is the convolution algebra of $K_\infty$-finite 
+distributions on $G(F_\infty)$ with support in $K_\infty$. There is an 
+isomorphism 
+\[
+  U(\fg_\dC)\otimes_{U(\fk_\dC)} A_K, \iso \hecke_\infty \qquad D\otimes \mu\mapsto D\star \mu ,
+\]
+where $\fk=\lie(K_\infty)$ and $A_K$ is the algebra of Borel measures on $K$. 
+
+The \emph{global Hecke algebra} of $G$ is 
+$\hecke=\hecke(G)=\hecke_\infty\otimes\hecke_\finite$. We will be interested in 
+special classes of representations of $\hecke$. 
+
+For a sufficiently large set $S$ of finite places, it makes sense to define 
+$e_S\in \hecke_\finite$ to be the characteristic function of 
+$\prod_{v\notin S} G(O_v)$. 
+
+An \emph{admissible} representation of $\hecke_\finite$ is an 
+$\hecke_\finite$-module $V$ such that for each $v\in V$, there is a finite set 
+$S$ of places for which $e_S\cdot v = v$. 
+
+
+\subsection{Automorphic representations}
+
+A good reference for this section is \cite{bj79}. 
+
+Let $F$, $G$, \ldots be as above. Let $Z$ be the center of $G$, and choose a 
+character $\omega:Z(F)\backslash Z(\dA)\to \dC^\times$. Write 
+$L^2(G,\omega)$ for the space of measurable functions 
+$f:G(F)\backslash G(\dA)\to \dC$ such that 
+\begin{align*}
+  f(z x) &= \omega(z) f(x) && z\in Z(\dA) \\
+  \|f\|^2 &= \int_{G(F)\backslash G(\dA)} |f(x)|^2\, \dd x < \infty .
+\end{align*}
+The space $L^2(G,\omega)$ is a representation of $G(\dA)$ in the obvious 
+way. Write $L_\discrete^2(G,\omega)$ for the closed subspace generated by all 
+irreducible closed subrepresentations. Let 
+$\cA(G,\omega)\subset L_\discrete^2(G,\omega)$ be the space of $K$-finite 
+vectors. Then $\cA(G,\omega)$ is naturally a $\hecke$-module, and as such, 
+decomposes as a countable direct sum of irreducible representations with finite 
+multiplicities: 
+\begin{equation}\label{eq:aut-decomp}
+  \cA(G,\omega) = \bigoplus_\pi m(\pi) \pi .
+\end{equation}
+We call the irreducible admissible representations of $\hecke$ appearing in 
+\eqref{eq:aut-decomp} \emph{automorphic representations} of $G$. By 
+\cite[th.4]{f79}, each automorphic representation $\pi$ decomposes as a 
+restricted tensor product $\bigotimes \pi_v$ of irreducible admissible 
+representations of the $\hecke_v$. 
+
+
+\subsection{Hecke eigensystems and \texorpdfstring{$L$}{L}-functions}
+
+Let $\pi$ be an automorphic representation of $G$ and choose a nonzero vector 
+$u$ in $\pi$. For almost all places $v$, the idempotent $e_v=\chi_{G(O_v)}$ in 
+$\hecke_v$ fixes $u$ (in this case, we say that $\pi$ is \emph{unramified} at 
+$v$). In particular, the action of $\hecke_v$ on $\pi$ factors 
+through that of 
+\[
+  \hecke_v(O_v) = e_v \hecke_v e_v = C_c^\infty(G(O_v)\backslash G(F_v)/G(O_v)) .
+\]
+Let $S$ be a set of places outside which $e_v$ fixes $u$. Let 
+$\hecke(S)=\bigotimes_{v\notin S} \hecke_v(O_v)$. Then $\pi$ is an irreducible 
+admissible module over $\hecke(S)\otimes \bigotimes_{v\in S} \hecke_v$. Since 
+$\hecke(S)$ is central in this algebra, it must act via a character 
+$\chi:\hecke(S)\to \dC$. The system of homomorphisms 
+$\{\chi_v:\hecke_v(O_v) \to \dC:v\notin S\}$ is called a \emph{Hecke 
+eigensystem}. 
+
+In the case $G=\GL(n)$, Hecke eigensystems have a particularly easy 
+description. A character $\chi:\hecke_v(O_v)\to \dC$ is uniquely determined by 
+a semisimple conjugacy class $\sigma_v(\chi)\in \GL(n,\dC)$. If 
+$\pi=\bigotimes_v \pi_v$ is an automorphic representation of $\GL(n)$, put 
+$\sigma_v(\pi) = \sigma(\chi_{\pi_v})$ and (for finite $v$): 
+\[
+  L_v(s,\pi) = \det\left(1-\norm(v)\cdot \sigma_v(\pi)^{-s}\right)^{-1} .
+\]
+For $S$ sufficiently large, we can define the \emph{partial $L$-function} of 
+$\pi$ as 
+\[
+  L_S(s,\pi) = \prod_{v\notin S} L_v(s,\pi) .
+\]
+This has the expected properties including analytic continuation, a functional 
+equation\ldots. In the case $G=\GL(n)$, an automorphic representation $\pi$ is 
+determined by $L(s,\pi)$. 
+
+
+
+
+
+\section{Shimura varieties}
+
+For the rest of this note, we exclusively consider $F=\dQ$ and $G=\GL(n)$. Many 
+of the definitions work in greater generality, but technicalities (which we 
+wish to avoid) multiply endlessly. Our references for this section are 
+\cite{m98,s09}. 
+
+
+\subsection{Locally symmetric spaces}
+
+Classically, one studies representations of a real semisimple group $G$ by 
+fixing a maximal compact $K$, setting $X=G/K$, and studying the regular 
+representation of $G$ on $C^\infty(\Gamma\backslash X)$ for $\Gamma\subset G$ 
+a discrete group. Big examples are the (affine) modular curves $Y_0(n)$, 
+coming from $\Gamma_0(n)\subset \SL(2,\dR)$. We will carry out this 
+construction adelically. 
+
+Let $G=\GL(2)_\dQ$. As mentioned above, most constructions here work for 
+arbitrary reductive $G$, but that requires introducing the notion of a 
+\emph{Shimura datum}, which we omit because of space considerations. Put 
+$X=Z_\infty \backslash G(F_\infty) / K_\infty$. Let 
+$K\subset G(\dA_\finite)$ be a torsion-free open compact subgroup. We define 
+\[
+  \shimura_K(G) = G(F)\backslash (X\times G(\dA_\finite)) / K .
+\]
+A priori, this is only a topological space, but it turns out to canonically 
+have the structure of a Riemannian manifold. Let 
+$\lambda\in \character^\ast(G)$ be a dominant weight, $V_\lambda$ the induced 
+representation of $G$. There is a canonical way of defining a local system
+$V_\lambda$ on $\shimura_K(G)$. Put 
+\[
+  \h(K,\lambda) = \h_{\mathrm{sing},c}^\bullet\left(\shimura_K(G),V_\lambda\right) .
+\]
+
+\begin{theorem}
+$\h(K,\lambda)$ is canonically an $\hecke_\finite$-module.
+\end{theorem}
+\begin{proof}
+It is sufficient to construct an action of the double coset $g K h$ for 
+$K\subset G(\dA_\finite)$ sufficiently small. 
+\end{proof}
+
+In our setting, it is the 
+complex points of a variety (also denoted $\shimura_K(G)$) defined over $\dQ$. 
+\[
+  \operatorname{H}_l^\bullet(K,\lambda)
+\]
+
+
+
+
+
+\section{Modular representations}
+
+\section{Deformation theory}
+
+
+
+
+
+\bibliographystyle{alpha}
+\bibliography{tidbit-sources}
+
+\end{document}
