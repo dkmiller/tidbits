@@ -1,8 +1,9 @@
 \documentclass[11pt]{article}
 
-\usepackage{amsmath,amssymb,amsthm,extarrows}
+\usepackage{amsmath,amssymb,extarrows}
 \usepackage[colorlinks=true]{hyperref}
 \usepackage[paperwidth=6.75in,paperheight=10in,textwidth=5.25in,textheight=8.5in]{geometry}
+\usepackage[all]{xy}
 \DeclareMathOperator{\character}{X}
 \DeclareMathOperator{\GL}{GL}
 \DeclareMathOperator{\h}{H}
@@ -24,7 +25,6 @@
 \newcommand{\finite}{\mathrm{f}}
 \newcommand{\hecke}{\mathcal{H}}
 \newcommand{\iso}{\xlongrightarrow\sim}
-\newtheorem{theorem}[subsubsection]{Theorem}
 
 \title{Automorphic representations and deformation theory in arithmetic geometry}
 \author{Daniel Miller}
@@ -230,20 +230,15 @@ $V_\lambda$ on $\shimura_K(G)$. Put
 \[
   \h(K,\lambda) = \h_{\mathrm{sing},c}^\bullet\left(\shimura_K(G),V_\lambda\right) .
 \]
-
-\begin{theorem}
-$\h(K,\lambda)$ is canonically an $\hecke_\finite$-module.
-\end{theorem}
-\begin{proof}
-It is sufficient to construct an action of the double coset $g K h$ for 
-$K\subset G(\dA_\finite)$ sufficiently small. 
-\end{proof}
-
-In our setting, it is the 
-complex points of a variety (also denoted $\shimura_K(G)$) defined over $\dQ$. 
-\[
-  \operatorname{H}_l^\bullet(K,\lambda)
-\]
+In fact, the vector space $\h(K,\lambda)$ is an $\hecke_\finite$-module! We 
+construct an action of the double coset $g C h$ for 
+$C\subset G(\dA_\finite)$ sufficiently small. Let $C'=C\cap g^{-1} K h^{-1}$, 
+and let $g C h$ act via the correspondence 
+\[\xymatrix{
+  \shimura_K(G) 
+    & \ar@{->>}[l] \shimura_{C'}(G) \ar[r]^-{g(-)h} 
+    & \shimura_K(G) .
+}\]
 
 
 
