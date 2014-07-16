@@ -1,0 +1,112 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb,amsthm,fullpage}
+\usepackage[colorlinks]{hyperref}
+\DeclareMathOperator{\adjoint}{ad}
+\DeclareMathOperator{\galois}{Gal}
+\DeclareMathOperator{\GL}{GL}
+\DeclareMathOperator{\h}{H}
+\DeclareMathOperator{\trace}{tr}
+\newcommand{\dG}{\mathbf{G}}
+\newcommand{\dQ}{\mathbf{Q}}
+\newcommand{\dZ}{\mathbf{Z}}
+\newcommand{\sF}{\mathscr{F}}
+\newcommand{\arithfrob}{\mathrm{fr}}
+\newcommand{\etale}{\textnormal{\'et}}
+\newcommand{\mmu}{\boldsymbol\mu}
+\newcommand{\mult}{\mathrm{m}}
+\newtheorem{theorem}[subsection]{Theorem}
+
+\title{Basic results in the deformation theory of Galois representations}
+\author{Daniel Miller}
+
+\begin{document}
+\maketitle
+
+
+
+
+
+This is a review of useful results in the study of deformations of (mostly 
+two-dimensional) representations of $\pi_1(\dQ)=\galois(\overline\dQ/\dQ)$. 
+References to the literature will be given whenever possible. 
+
+
+
+
+
+\section{Duality theorems for Galois cohomology}
+
+Let $l$ be a prime, $X$ a connected noetherian scheme on which $l$ is 
+invertible. Let $\dZ_l=\varprojlim\mmu_{l^n}$, considered as a smooth $l$-adic 
+sheaf on $X$. For any $l$-adic sheaf $F$ on $X$, put 
+$F(n)=F\otimes_{\dZ_l} \dZ_l(1)^{\otimes n}$. 
+
+We call a \emph{$p$-adic field} a nonarchimedean local field of characteristic 
+zero with residue characteristic $p$. 
+
+\begin{theorem}[Tate]
+Let $k$ be a $p$-adic local field. Let $M$ be a finite $\pi_1(k)$-module. Then 
+the cup-product induces an isomorphism 
+\[
+  \h^\bullet(k,M^\vee(1)) = \h^{2-\bullet}(k,M)^\vee .
+\]
+\end{theorem}
+
+Let $\pi=\pi_1(k)$, and let $M$ be a $\pi$-module. Suppose we want to compute 
+$h^\bullet(M)$. It should be possible to compute 
+$h^0(M)$ and $h^2(M)=h^0(M^\vee(1))$. We then use the Euler-Poincar\'e characteristic 
+formula of Tate \cite[7.3.1]{nsw08} to do this. 
+
+
+
+
+
+\section{Galois representations associated to modular forms}
+
+Let $N\geqslant 1$ be an integer and $\varepsilon:(\dZ/N)^\times \to S^1$ a 
+character. We write $S_0(N,\varepsilon)$ for the space of cusp forms for 
+$\Gamma_1(N)$ with nebentypus $\varepsilon$. We call a form 
+$f=\sum_{n\geqslant 0} a_n q^n$ in $S_0(N,\varepsilon)$ \emph{normalized} if 
+$a_0=1$. 
+
+\begin{theorem}
+Let $N\geqslant 3$ and $k\geqslant 1$ be integers, $l$ an odd prime. Let 
+$f_0\in S_0(N,\varepsilon)$ be a normalized eigenfunction for the Hecke 
+operators $\{T_p:p\nmid N\}$. Let $K=K_f=\dQ(a_n:n\geqslant 1)$. 
+Then there is a continuous irreducible representation 
+$\rho_{f,l}:\pi_1\left(\dZ[\frac{1}{l N}]\right)\to \GL_2(K_{f,l})$ such that 
+for each prime $p\nmid l N$, 
+\begin{align*}
+  \trace \rho_{f,l}(\arithfrob_p) &= a_p \\
+  \det \rho_{f,l}(\arithfrob_p) &= \varepsilon(p) p^{k-1} .
+\end{align*}
+This representation is unique up to isomorphism. 
+\end{theorem}
+\begin{proof}
+\textbf{Do this!}
+\end{proof}
+
+
+
+
+
+\section{Two-dimensional representations}
+
+Nice fact if $\phi,\psi$ are characters: 
+\[
+  \adjoint(\phi\oplus \psi) = \phi^{-1}\psi\oplus \phi\psi^{-1}\oplus 2 .
+\]
+In particular, 
+\[
+  h^0(\adjoint(\phi\oplus 1)) = 2+2 h^0(\phi)
+\]
+
+
+
+
+
+\bibliographystyle{alpha}
+\bibliography{tidbit-sources}
+
+\end{document}
