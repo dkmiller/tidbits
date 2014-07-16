@@ -1,10 +1,12 @@
 \documentclass[11pt]{article}
 
-\usepackage{amsmath,amssymb,extarrows}
-\usepackage[colorlinks=true]{hyperref}
+\usepackage{amsmath,amssymb,extarrows,mathrsfs}
+\usepackage[colorlinks,linkcolor=blue]{hyperref}
 \usepackage[paperwidth=6.75in,paperheight=10in,textwidth=5.25in,textheight=8.5in]{geometry}
 \usepackage[all]{xy}
 \DeclareMathOperator{\character}{X}
+\DeclareMathOperator{\extension}{Ext}
+\DeclareMathOperator{\galois}{Gal}
 \DeclareMathOperator{\GL}{GL}
 \DeclareMathOperator{\h}{H}
 \DeclareMathOperator{\lie}{Lie}
@@ -15,16 +17,21 @@
 \newcommand{\cA}{\mathcal{A}}
 \newcommand{\dA}{\mathbf{A}}
 \newcommand{\dC}{\mathbf{C}}
+\newcommand{\dF}{\mathbf{F}}
+\newcommand{\dG}{\mathbf{G}}
 \newcommand{\dR}{\mathbf{R}}
 \newcommand{\dQ}{\mathbf{Q}}
 \newcommand{\dZ}{\mathbf{Z}}
 \newcommand{\fg}{\mathfrak{g}}
 \newcommand{\fk}{\mathfrak{k}}
+\newcommand{\sF}{\mathscr{F}}
 \newcommand{\dd}{\mathrm{d}}
 \newcommand{\discrete}{\mathrm{disc}}
+\newcommand{\etale}{\textnormal{\'et}}
 \newcommand{\finite}{\mathrm{f}}
 \newcommand{\hecke}{\mathcal{H}}
 \newcommand{\iso}{\xlongrightarrow\sim}
+\newcommand{\mult}{\mathrm{m}}
 
 \title{Automorphic representations and deformation theory in arithmetic geometry}
 \author{Daniel Miller}
@@ -33,6 +40,40 @@
 \begin{document}
 \maketitle
 \tableofcontents
+
+
+
+
+
+\section{The analogy between knots and primes}
+
+We start by recalling the analogy described in \cite[ch.3-4]{m12}. 
+\begin{center}
+\begin{tabular}{c|c}
+Topology & Arithmetic \\ \hline
+3-manifold $M$ 
+  & $X=\spectrum(O_F)\smallsetminus S$ for a number field $F$ \\
+$\extension^\bullet(\sF,\dZ) = \h_c^{3-\bullet}(M,\sF)^\vee$
+  & $\extension^\bullet(\sF,\dG_\mult) = \h_c^{3-\bullet}(X,\sF)^\vee$ \\
+$S^1=K(\dZ,1)$ 
+  & $\spectrum(\dF_q) = K(\widehat\dZ,1)$ \\
+knot $S^1\hookrightarrow M$ 
+  & prime $\spectrum(\dF_q)\hookrightarrow X$ \\
+tubular neighborhood $V_K\hookrightarrow M$ 
+  & $\spectrum(O_{F,v})\hookrightarrow X$ \\
+boundary $\partial V_K\hookrightarrow M$ 
+  & $\spectrum(F_v) \hookrightarrow X$ \\
+peripheral group $\pi_1(\partial V_K)$
+  & decomposition $D_v=\pi_1(F_v)\to \pi_1(X)$ \\
+knot group $\pi_1(M\smallsetminus K)$
+  & $\pi_1(X\smallsetminus \{v\})=G_{F,S\cup\{v\}}$ \\
+$\dZ^2=\pi_1(\partial V_K) \to \pi_1(M)$ 
+  & $D_v \to \pi_1(X\smallsetminus \{v\})$. 
+\end{tabular}
+\end{center}
+Here and in the remainder of this note, if $A$ is a commutative ring we write 
+$\pi_1(A)$ for the \'etale fundamental group $\pi_1^\etale(\spectrum A)$ with 
+respect to an implicit basepoint. 
 
 
 
@@ -247,6 +288,8 @@ and let $g C h$ act via the correspondence
 \section{Modular representations}
 
 \section{Deformation theory}
+
+Here we follow the exposition in \cite[ch.13-14]{m12}. 
 
 
 
