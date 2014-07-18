@@ -11,8 +11,10 @@
 \DeclareMathOperator{\h}{H}
 \DeclareMathOperator{\lie}{Lie}
 \DeclareMathOperator{\norm}{N}
+\DeclareMathOperator{\restrict}{R}
 \DeclareMathOperator{\shimura}{Sh}
 \DeclareMathOperator{\SL}{SL}
+\DeclareMathOperator{\SO}{SO}
 \DeclareMathOperator{\spectrum}{Spec}
 \newcommand{\cA}{\mathcal{A}}
 \newcommand{\dA}{\mathbf{A}}
@@ -21,11 +23,14 @@
 \newcommand{\dG}{\mathbf{G}}
 \newcommand{\dR}{\mathbf{R}}
 \newcommand{\dQ}{\mathbf{Q}}
+\newcommand{\dS}{\mathbf{S}}
 \newcommand{\dZ}{\mathbf{Z}}
 \newcommand{\fg}{\mathfrak{g}}
+\newcommand{\fH}{\mathfrak{H}}
 \newcommand{\fk}{\mathfrak{k}}
 \newcommand{\sF}{\mathscr{F}}
 \newcommand{\dd}{\mathrm{d}}
+\newcommand{\analytic}{\mathrm{an}}
 \newcommand{\discrete}{\mathrm{disc}}
 \newcommand{\etale}{\textnormal{\'et}}
 \newcommand{\finite}{\mathrm{f}}
@@ -286,6 +291,70 @@ and let $g C h$ act via the correspondence
 
 
 \section{Modular representations}
+
+In this section, algebraic groups, adeles, etc.~will be taken over $\dQ$. 
+Let $n\geqslant 1$ be an integer. We define the following congruence subgroup 
+of $\SL_2(\dZ)$:
+\[
+  \Gamma_0(n) = \left\{\begin{pmatrix}a & b \\ c & d \end{pmatrix}\in \SL(2,\dZ) : c\equiv 0\pmod n\right\} .
+\]
+Let $K_0(n)$ be the induced subgroup of $\GL_2(\dA_\finite)$. Write $Y_0(n)$ 
+for the induced locally symmetric space: 
+\[
+  Y_0(n) = \shimura_{K_0(n)}(\GL_2) = \GL_2(\dQ)\backslash \GL_2(\dA) / Z_\infty K_\infty K_0(n) .
+\]
+Here $Z_\infty=Z(\GL_d(\dR))$ and $K_\infty=\SO(2)\subset \GL_2(\dR)$. Put 
+$X=\GL_2(\dR)^+/Z_\infty K_\infty$. Note that $\GL_2(\dR)^+/Z = \SL_2(\dR)$, so 
+\[
+  \GL_2(\dR)^+ / Z_\infty K_\infty \iso \fH = \{z\in \dC:\Im z>0\} 
+\]
+via $\gamma\mapsto \gamma\cdot i$. The strong approximation theorem tells us 
+that 
+\[
+  \GL_2(\dA) = \GL_2(\dQ) \GL_2(\dR) K_0(n),
+\]
+so the quotient $\shimura_{K_0(n)}(\GL_2)$ is just 
+\[
+  (\GL_2(\dQ)\cap K_0(n))\backslash \fH = \Gamma_0(n) \backslash \fH = Y_0(n).
+\]
+This will be a singular complex-analytic orbifold. There are two ways of 
+realizing $Y_0(n)$ and its compactication $X_0(n)$ as curves over $\dQ$: 
+\begin{enumerate}
+  \item Interpret $Y_0(n)$ as a moduli space for elliptic curves with level 
+    structure. This moduli problem makes sense over $\dQ$, so $Y_0(n)$ descends 
+    in a canonical way to $\dQ$. 
+  \item Use the general theory of canonical models of Shimura varieties. 
+\end{enumerate}
+The former approach generalizes to a special class of Shimura varieties 
+consisting of those of \emph{PEL type} (standing for 
+\textbf{P}olarization, \textbf{E}ndomorphism, and \textbf{L}evel structure). 
+The space 
+\[
+  \fH^\pm = Z_\infty \backslash \GL_2(\dR) / \SO_2(\dR) 
+\]
+can be interpreted as the set of $\GL_2(\dR)$-conjugacy classes of 
+homomorphisms $\dS=\restrict_{\dC/\dR}\dG_\mult\to \GL(2)_\dR$ containing 
+\[
+  h:(x,y)\mapsto \begin{pmatrix} x & y \\ -y & x \end{pmatrix} .
+\]
+This is all defined over $\dQ$ (one says $\dQ$ is the \emph{reflex field} of 
+the Shimura datum $(\GL_2,\fH^\pm)$, so by \cite[2.18]{m98} if 
+$K_\finite\subset\GL_2(\dA_\finite)$ is any open compact subgroup, the quotient 
+\[
+  \shimura_{K_\finite}(\GL_2) = \GL_2(\dQ)\backslash (\fH^\pm\times \GL_2(\dA_\finite))/K_\finite
+\]
+descends to a uniquely determined curve over $\dQ$. 
+
+
+[modular curves via canonical models of Shimura varieties]
+
+[what sheaf on $\shimura_{K_0(n)}(\GL_2)$ do modular forms live in?]
+
+[Hecke operators via Satake isomorphism]
+
+
+
+
 
 \section{Deformation theory}
 
