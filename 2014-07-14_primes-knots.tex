@@ -302,8 +302,8 @@ $K\subset G(\dA_\finite)$ be an open compact subgroup. We define
 A priori, this is only a topological space, but the quotient map 
 $X\times G(\dA_\finite)/K \to \shimura_K(G)$ gives $\shimura_K(G)$ the 
 structure of a Riemannian manifold. Let $(V,\rho)$ be a representation of $G$. 
-There is an induced local system $\sV_\rho$ on $\shimura_K(G)$, whose (global) 
-sections are locally constant sections $s:X\times G(\dA_\finite)/K \to V_\rho$ 
+There is an induced local system $\sV_\rho$ of $F$-vector spaces on $\shimura_K(G)$, whose (global) 
+sections are locally constant sections $s:X\times G(\dA_\finite)/K \to V$ 
 such that $s(\gamma x) = \rho(\gamma) s(x)$ for $\gamma\in G(\dQ)$. Put 
 \[
   \h^\bullet(K,\rho) = \h_c^\bullet\left(\shimura_K(G),\sV_\rho\right) .
@@ -322,7 +322,11 @@ sum
   \h^\bullet(K,\rho) = \bigoplus_{\pi\in \automorphic(G)} \h(K,\rho)[\pi]
 \]
 where $(-)[\pi]$ is the span of all $\hecke_\finite$-submodules of type $\pi$. 
-See \cite{s09} for details. 
+See \cite{s09} for details. Better (Theorem 4.1 in loc.~cit.) we have 
+\[
+  \h^\bullet_\cusp(G,\rho) = \bigoplus_\pi \h^\bullet(\fg_\infty,K_\infty,H_{\pi_\infty}\otimes \rho)\otimes H_{\pi_\finite} .
+\]
+So the multiplicities above are dimensions of $(\fg,K)$-cohomology. 
 
 To compute the cohomology with compact support, it is useful to have a 
 compactification of $\shimura_K(G)$ that respects the action of 
