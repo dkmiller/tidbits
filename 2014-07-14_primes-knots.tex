@@ -1,6 +1,6 @@
 \documentclass{article}
 
-\usepackage{amsmath,amssymb,extarrows,mathrsfs}
+\usepackage{amsmath,amssymb,extarrows,mathrsfs,stmaryrd}
 \usepackage[nottoc]{tocbibind}
 \usepackage[colorlinks,linkcolor=blue]{hyperref}
 \usepackage[paperwidth=6in,paperheight=8.5in,textwidth=4.75in,textheight=7in]{geometry}
@@ -15,6 +15,7 @@
 \DeclareMathOperator{\GL}{GL}
 \DeclareMathOperator{\GSp}{GSp}
 \DeclareMathOperator{\h}{H}
+\DeclareMathOperator{\isometry}{Iso}
 \DeclareMathOperator{\lie}{Lie}
 \DeclareMathOperator{\norm}{N}
 \DeclareMathOperator{\PSL}{PSL}
@@ -27,6 +28,7 @@
 \DeclareMathOperator{\symmetric}{sym}
 \DeclareMathOperator{\trace}{tr}
 \newcommand{\cA}{\mathcal{A}}
+\newcommand{\cT}{\mathcal{T}}
 \newcommand{\cX}{\mathcal{X}}
 \newcommand{\dA}{\mathbf{A}}
 \newcommand{\dC}{\mathbf{C}}
@@ -41,9 +43,11 @@
 \newcommand{\fg}{\mathfrak{g}}
 \newcommand{\fH}{\mathfrak{H}}
 \newcommand{\fk}{\mathfrak{k}}
+\newcommand{\fX}{\mathfrak{X}}
 \newcommand{\sF}{\mathscr{F}}
 \newcommand{\sV}{\mathscr{V}}
 \newcommand{\dd}{\mathrm{d}}
+\newcommand{\abelian}{\mathrm{ab}}
 \newcommand{\analytic}{\mathrm{an}}
 \newcommand{\arithfrob}{\mathrm{fr}}
 \newcommand{\cusp}{\mathrm{cusp}}
@@ -507,6 +511,11 @@ $\rho_{\pi,\ell}$ for the corresponding $\ell$-adic representation (assuming
 it exists). 
 
 
+\subsection{Interpolating modular representations}
+
+[Construct Hida's Hecke algebra $\mathbf h_n$]
+
+
 
 
 
@@ -573,7 +582,7 @@ for all $\dC$-algebras $A$, a natural isomorphism
 
 The \emph{character variety} of $K$ is the geometric quotient 
 \[
-  X_K = \representation(\pi,\SL_2) /\!\!\!/ \SL_2 = \spectrum\left(\dC[\representation(\pi,\SL_2)]^{\SL_2(\dC)}\right) ,
+  X_K = \representation(\pi,\SL_2) /\!\!/ \SL_2 = \spectrum\left(\dC[\representation(\pi,\SL_2)]^{\SL_2(\dC)}\right) ,
 \]
 via the obvious action of $\SL(2)$ on $\representation(\pi,\SL_2)$ via 
 conjugation. The representation $\rho$ is a point in $X_K$, and one is 
@@ -591,18 +600,135 @@ representations $G_S\to \GL_2(A)$, where $A$ is a topological $\dZ_p$-algebra.
 
 Here, the functorial approach to defining representation schemes is the 
 correct one. If $\pi$ is an arbitrary profinite group, there is a 
-formal scheme $\widehat\representation(\pi,\GL_2)$, satisfying 
+formal scheme $\widehat\representation(\pi,\GL_n)$, satisfying 
 \[
-  \hom\left(\formalspectrum(A),\widehat\representation(\pi,\GL_2)\right) = \hom_\mathrm{cts}(\pi,\GL_2 A) ,
+  \hom\left(\formalspectrum(A),\widehat\representation(\pi,\GL_n)\right) = \hom_\mathrm{cts}(\pi,\GL_n A) ,
 \]
 for any local pro-artinian $\dZ_p$-algebra $A$ with residue field $\dF_p$. The 
-problem is, $\widehat\representation(\pi,\GL_2)$ is really horrible as a space 
+problem is, $\widehat\representation(\pi,\GL_n)$ is really horrible as a space 
 -- it generally has infinitely many different connected components. So before 
 we do anything else, let's restrict to the connected component of $\bar\rho$, 
-where $\bar\rho:G_S\to \GL_2(\dF_p)$ has been fixed beforehand. The component 
-$X^\square(\bar\rho)$ represents continuous homomorphisms 
-$G_S\to \GL_2(A)$ that reduce to $\bar\rho$ modulo $p$. 
+where $\bar\rho:G_S\to \GL_n(\dF_p)$ has been fixed beforehand. The component 
+$\fX^\square(\bar\rho)$ represents continuous homomorphisms 
+$G_S\to \GL_n(A)$ that reduce to $\bar\rho$ modulo $p$. 
 
+As before, we will quotient out by the natural action of $\GL(n)$, but here we 
+should be careful because $\GL(n)$ does not preserve the component 
+$\fX^\square(\bar\rho)$. The correct thing to do is define 
+\[
+  \widehat\GL_n(A) = \{g\in \GL_n(A):g\equiv 1\pmod p)\} = \ker\left(\GL_n(A)\to \GL_n(\dF_p)\right).
+\]
+The action of $\widehat\GL(n)$ on $\widehat\representation(\pi,\GL_n)$ 
+preserves $\fX^\square(\bar\rho)$. Now a miracle happens. Define 
+\[
+  \fX(\bar\rho)(A) = \fX^\square(A)/\widehat\GL_n(A).
+\]
+Then in \cite[pr.1]{mazur-1989}, it is proved that if $\bar\rho$ is absolutely 
+irreducible and $\pi$ satisfies a certain technical hypothesis (which will hold 
+for all our examples), the functor $\fX(\bar\rho)$ is represented by 
+$\formalspectrum(R_{\bar\rho})$, where $R_{\bar\rho}$ is a complete local 
+noetherian $\dZ_p$-algebra with residue field $\dF_p$. That is, there is a 
+representation $\rho:\pi\to \GL_n(R_{\bar\rho})$ lifting $\bar\rho$ such that 
+any $\widehat\GL_n(A)$-equivalence class of lifts $\pi\to \GL_n(A)$ is induced 
+by a unique continuous homomorphism $R_{\bar\rho} \to A$. 
+
+Suppose we have fixed a subgroup $I\subset \pi$. We call a representation 
+$\rho:\pi\to \GL_2(A)$ \emph{$I$-ordinary} if $\rho^I$ is a free, rank-one, 
+direct summand of $\rho$. Suppose $\bar\rho$ is absolutely irreducible and 
+$I$-ordinary. Then we can define a subfunctor $\fX^\circ(\bar\rho)$
+of $\fX(\bar\rho)$ by 
+\[
+  \fX^\circ(\bar\rho)(A) = \{\rho\in \fX(\bar\rho)(A):\rho\text{ is $I$-ordinary}\} .
+\]
+By \cite[pr.3]{mazur-1989}, $\fX^\circ(\bar\rho)$ is represented by 
+$\formalspectrum(R_{\bar\rho}^\circ)$ for a complete local noetherian 
+$\dZ_p$-algebra $R_{\bar\rho}^\circ$ with residue field $\dF_p$. 
+
+
+\subsection{The case \texorpdfstring{$n=1$}{n=1}}
+
+Start with $\GL(1)$. Let $\pi=\pi_1(\dZ[\frac 1 p])$ and 
+$\bar\rho=\bar\kappa:\pi\to \GL_1(\dF_p)$ be the \emph{mod-$p$ cyclotomic 
+character}. This is defined, for $\sigma\in G_\dQ$, by 
+\[
+  \sigma(\zeta_p) = \zeta_p^{\bar\kappa(\sigma)} .
+\]
+Let's start by computing $\widehat\representation(\pi,\GL_1)$. Deformations 
+$\rho:\pi\to A^\times$ factor through $\pi^\abelian$. Class field theory tells 
+us that $\pi^\abelian \simeq \dZ_p^\times$. So 
+\[
+  \widehat\representation(\pi,\GL_1) = \formalspectrum\left(\dZ_p\left\llbracket \dZ_p^\times\right\rrbracket\right) \simeq \coprod_{\varepsilon:\pi \to \dF_p^\times} \formalspectrum\left(\dZ_p\llbracket \dZ_p\rrbracket\right) ,
+\]
+where each $\formalspectrum(\dZ_p\llbracket \dZ_p\rrbracket)$ is the connected 
+component of some $\varepsilon$. We see that 
+$R_{\bar\kappa}\simeq \dZ_p\llbracket \dZ_p\rrbracket\simeq \dZ_p\llbracket X\rrbracket$.
+
+
+\subsection{The main example}
+
+Let $U\subset\spectrum(\dZ)$ be open, and put $\pi=\pi_1(U)$. Let 
+$E\xrightarrow e U$ be an elliptic curve. Choose a prime $p\notin U$. The 
+$p$-torsion subscheme $E[p]$ is an \'etale cover of $U$, so we get an action 
+of $\pi$ on the underlying set $E[p]\simeq (\dZ/p)^2$. This action preserves 
+the group structure, so we have a representation 
+\[
+  \bar\rho=\bar\rho_{E,p}:\pi_1(U)\to \GL_2(\dF_p) .
+\]
+Another way of constructing $\bar\rho$ is to use the equivalence between 
+\'etale-local $\dF_p$-systems on $U$ and $\dF_p$-representations of $\pi$ to 
+realize $\eR e_\ast \dF_p$ as a mod-$p$ representation of $\pi$. 
+
+We could consider the universal deformation ring $R_{\bar\rho}$ and its 
+associated formal spectrum $\fX(\bar\rho)$. Recall that if 
+$K\hookrightarrow S^3$ is a hyperbolic knot, the ``knot decomposition group'' 
+$D_K=\pi_1(\mathrm{torus})$ is abelian, so 
+\[
+  \rho_K|_{D_K} \sim \begin{pmatrix} \varepsilon & \ast \\ & \varepsilon^{-1} \end{pmatrix} ,
+\]
+for some character $\varepsilon:G_K\to \dC^\times$. In particular, 
+$\varepsilon(I_K)=1$. So to make the analogy between knots and primes more 
+precise, we should require that our residual Galois representation 
+$\bar\rho:\pi \to \GL_2(\dF_p)$ be \emph{$p$-ordinary} in the sense that 
+\[
+  \bar\rho|_{D_p} \sim \begin{pmatrix} \varphi & \ast \\ & \psi \end{pmatrix} ,
+\]
+where $\psi({I_p})=1$. This is exactly ``$I_p$-ordinary'' as defined above. So 
+there is a $p$-ordinary representation 
+$\rho^\circ:\pi \to \GL_2(R_{\bar\rho}^\circ)$ that is universal for 
+$p$-ordinary deformations, 
+i.e.~$\formalspectrum(R_{\bar\rho}^\circ)$ represents the 
+functor
+\[
+  \fX^\circ(\bar\rho)(A) = \{\rho\in \fX(\bar\rho)(A):\rho\text{ is $p$-ordinary}\} .
+\]
+
+
+
+
+
+\section{Deformations of hyperbolic structures and Hida theory}
+
+We put together all the machinery we've developed to see an analogy between the 
+space of hyperbolic structures on a 3-manifold and the formal spectrum of 
+Hida's big Hecke algebras. 
+
+
+\subsection{Deformation of hyperbolic structures}
+
+Let $K$ be a hyperbolic knot, $M=S^3\smallsetminus K$ the knot complement. Put 
+$\Gamma=\pi_1(M)$. Let $\cT_K=\cT(\Gamma)$ be the space of injective 
+homomorphisms $\Gamma\to \isometry(\dH^3)$ with discrete image; this is the 
+space of hyperbolic structures on $M$. There should be a covering map 
+$\cT_K \to X_K$, which is ``almost'' an isomorphism. The analogue is 
+$X_0(n)$ being a moduli space of elliptic curves. It will be harder to justify 
+Hida's Hecke algebra $\mathbf h$ (better, $\formalspectrum(\mathbf h)$) as 
+being the ``right'' analogue of $\cT_K$, but the analogue of 
+$\cT_K \to X_K$ should be $\formalspectrum(\mathbf h) \to \fX^\circ(\bar\rho)$, 
+and ``almost isomorphism'' should correspond to an ``$R=T$'' theorem. 
+
+Maybe $\mathfrak T = \formalspectrum(\mathbf h)$?
+
+So $T_K\to X_K^\circ$ versus $\mathfrak T(\bar\rho) \to \fX^\circ(\bar\rho)$. 
 
 
 
