@@ -536,10 +536,48 @@ it exists).
 
 We showed explicitly how to construct the Galois representations associated to 
 cuspidal eigenforms of weight $2$. In fact, in \cite{deligne-1973}, Deligne 
-showed how to construct $\rho_{f,\ell}$ for \emph{any} eigenform of weight 
-$k\geqslant 2$. 
+showed how to construct $\rho_{f,\ell}$ for \emph{any} cusp-eigenform $f$ of 
+weight $k\geqslant 2$. Recall that such forms have a Fourier expansion 
+\[
+  f(z) = \sum_{n\geqslant 1} a_n(f) e^{2\pi n z} .
+\]
+Call $f$ \emph{$p$-ordinary} if $a_p(f)$ is a $p$-adic unit. This is equivalent 
+to $\bar\rho_{f,p}$ being an extension of an unramified character by a 
+character. In \cite{hida-1986a,hida-1986b}, Hida $p$-adically interpolated the 
+Galois representations $\rho_{f,p}$ coming from $p$-ordinary $f$ of varying 
+weight and level. 
 
-[Construct Hida's Hecke algebra $\mathbf h_n$]
+Fix a prime $p\geqslant 5$ and an integer $n$ prime to $p$. Recall that our 
+modular curves are defined over $\dQ$. So instead of defining modular forms in 
+terms of automorphic representations showing up in the spectral decomposition 
+of $\h_\cusp^1(X_0(n),\dC)$, we can (as before) 
+consider modular forms as irreducible $\hecke_\finite$-components of 
+$\h_{\cusp,\etale}^1(X_0(n)_{\overline\dQ},\dZ_p)$. This lets us define a space 
+$S_k(\Gamma_0(n p^r),\dZ_p)$ admitting an action of $\hecke_\finite$. 
+
+Let $K_0\subset \overline{\dQ}$ contain all the Hecke eigenvalues of forms in 
+\[
+  S_k(n p^\infty,\dC) = \varinjlim_r S_k(n p^r,\dC) .
+\]
+Let $K$ be the closure of $K_0$ in $\dC_p$, and put 
+\[
+  S_k(n p^\infty,O_K) = \varinjlim_r S_k(n p^r,O_K) .
+\]
+For each $r$, let $\hida_{n,r})$ be the image of $\hecke_\finite$ inside 
+$\operatorname{End} S_2(n p^r,O_K)$. By \cite[1.1]{hida-1986a}, the projective 
+limit $\hida_n = \varprojlim_r \hida_{n,r}$ actually acts on all the 
+$S_k(n p^\infty,O_K)$. There is an idempotent $e\in \hida_n$ projecting onto 
+the space of ordinary cusp forms; put $\hida_n^\circ=e \hida_n$. 
+
+Suppose $f$ is a $p$-ordinary cusp form of level $n p^r$, and write 
+$\bar\rho=\bar\rho_{f,p}$. Write $\hida_n^\circ(\bar\rho)$ for the algebra 
+acting on $p$-ordinary forms congruent to $f$ mod $p$. One has to 
+``fudge'' $\hida_n^\circ(\bar\rho)$ into a ring 
+$\widetilde\hida_n^\circ(\bar\rho)$. Then there is a Galois 
+representation $\rho^\mathrm{H}:G_{\dQ,n p} \to \GL_2(\widetilde\hida_n(\bar\rho))$ 
+that induces all the $\rho_{f,p}$. 
+
+[check this: details probably not right!]
 
 
 
