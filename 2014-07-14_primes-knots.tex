@@ -28,7 +28,6 @@
 \DeclareMathOperator{\symmetric}{sym}
 \DeclareMathOperator{\trace}{tr}
 \newcommand{\cA}{\mathcal{A}}
-\newcommand{\cT}{\mathcal{T}}
 \newcommand{\cX}{\mathcal{X}}
 \newcommand{\dA}{\mathbf{A}}
 \newcommand{\dC}{\mathbf{C}}
@@ -43,6 +42,7 @@
 \newcommand{\fg}{\mathfrak{g}}
 \newcommand{\fH}{\mathfrak{H}}
 \newcommand{\fk}{\mathfrak{k}}
+\newcommand{\fT}{\mathfrak{T}}
 \newcommand{\fX}{\mathfrak{X}}
 \newcommand{\sF}{\mathscr{F}}
 \newcommand{\sV}{\mathscr{V}}
@@ -55,6 +55,7 @@
 \newcommand{\etale}{\textnormal{\'et}}
 \newcommand{\finite}{\mathrm{f}}
 \newcommand{\hecke}{\mathcal{H}}
+\newcommand{\hida}{\mathbf{h}}
 \newcommand{\iso}{\xlongrightarrow\sim}
 \newcommand{\mult}{\mathrm{m}}
 
@@ -598,23 +599,32 @@ group -- it's a compact topological group which is (conjecturally)
 representations $G_S\to \GL_2(\dC)$, we should look for continuous 
 representations $G_S\to \GL_2(A)$, where $A$ is a topological $\dZ_p$-algebra. 
 
-Here, the functorial approach to defining representation schemes is the 
-correct one. If $\pi$ is an arbitrary profinite group, there is a 
+Briefly, a scheme $X$ over $k$ can be thought of in terms of its functor of 
+points $X(-):k\textnormal{-}\mathsf{Alg}\to \mathsf{Set}$. In the arithmetic 
+context, our deformation spaces will be \emph{formal schemes} over $\dZ_p$. For 
+us, this just means that the test category consists of complete local 
+pro-artinian $\dZ_p$-algebras with residue field $\dF_p$. If $R$ is such an 
+ring, we write $\formalspectrum(R)$ to denote the functor 
+$A\mapsto\hom(R,A)$. There is a way of making $\formalspectrum(R)$ into a 
+topological space with structure sheaf, but we will not need this. 
+
+The functorial approach to defining representation schemes works well. 
+If $\pi$ is an arbitrary profinite group, there is a 
 formal scheme $\widehat\representation(\pi,\GL_n)$, satisfying 
 \[
-  \hom\left(\formalspectrum(A),\widehat\representation(\pi,\GL_n)\right) = \hom_\mathrm{cts}(\pi,\GL_n A) ,
+  \widehat\representation(\pi,\GL_n)(A) = \hom_\mathrm{cts}(\pi,\GL_n A) ,
 \]
 for any local pro-artinian $\dZ_p$-algebra $A$ with residue field $\dF_p$. The 
 problem is, $\widehat\representation(\pi,\GL_n)$ is really horrible as a space 
 -- it generally has infinitely many different connected components. So before 
 we do anything else, let's restrict to the connected component of $\bar\rho$, 
-where $\bar\rho:G_S\to \GL_n(\dF_p)$ has been fixed beforehand. The component 
+where $\bar\rho:\pi\to \GL_n(\dF_p)$ has been fixed beforehand. The component 
 $\fX^\square(\bar\rho)$ represents continuous homomorphisms 
-$G_S\to \GL_n(A)$ that reduce to $\bar\rho$ modulo $p$. 
+$\pi\to \GL_n(A)$ that reduce to $\bar\rho$ modulo $p$. 
 
 As before, we will quotient out by the natural action of $\GL(n)$, but here we 
 should be careful because $\GL(n)$ does not preserve the component 
-$\fX^\square(\bar\rho)$. The correct thing to do is define 
+$\fX^\square(\bar\rho)$. The correct thing to do is to first define 
 \[
   \widehat\GL_n(A) = \{g\in \GL_n(A):g\equiv 1\pmod p)\} = \ker\left(\GL_n(A)\to \GL_n(\dF_p)\right).
 \]
@@ -626,11 +636,11 @@ preserves $\fX^\square(\bar\rho)$. Now a miracle happens. Define
 Then in \cite[pr.1]{mazur-1989}, it is proved that if $\bar\rho$ is absolutely 
 irreducible and $\pi$ satisfies a certain technical hypothesis (which will hold 
 for all our examples), the functor $\fX(\bar\rho)$ is represented by 
-$\formalspectrum(R_{\bar\rho})$, where $R_{\bar\rho}$ is a complete local 
-noetherian $\dZ_p$-algebra with residue field $\dF_p$. That is, there is a 
-representation $\rho:\pi\to \GL_n(R_{\bar\rho})$ lifting $\bar\rho$ such that 
-any $\widehat\GL_n(A)$-equivalence class of lifts $\pi\to \GL_n(A)$ is induced 
-by a unique continuous homomorphism $R_{\bar\rho} \to A$. 
+a complete local noetherian $\dZ_p$-algebra $R_{\bar\rho}$ with residue field 
+$\dF_p$. That is, there is a representation $\rho:\pi\to \GL_n(R_{\bar\rho})$ 
+lifting $\bar\rho$ such that any $\widehat\GL_n(A)$-equivalence class of lifts 
+$\pi\to \GL_n(A)$ is induced by a unique continuous homomorphism 
+$R_{\bar\rho} \to A$. 
 
 Suppose we have fixed a subgroup $I\subset \pi$. We call a representation 
 $\rho:\pi\to \GL_2(A)$ \emph{$I$-ordinary} if $\rho^I$ is a free, rank-one, 
@@ -640,14 +650,15 @@ of $\fX(\bar\rho)$ by
 \[
   \fX^\circ(\bar\rho)(A) = \{\rho\in \fX(\bar\rho)(A):\rho\text{ is $I$-ordinary}\} .
 \]
-By \cite[pr.3]{mazur-1989}, $\fX^\circ(\bar\rho)$ is represented by 
-$\formalspectrum(R_{\bar\rho}^\circ)$ for a complete local noetherian 
-$\dZ_p$-algebra $R_{\bar\rho}^\circ$ with residue field $\dF_p$. 
+By \cite[pr.3]{mazur-1989}, $\fX^\circ(\bar\rho)$ is represented by a complete 
+local noetherian $\dZ_p$-algebra $R_{\bar\rho}^\circ$ with residue field 
+$\dF_p$. 
 
 
 \subsection{The case \texorpdfstring{$n=1$}{n=1}}
 
-Start with $\GL(1)$. Let $\pi=\pi_1(\dZ[\frac 1 p])$ and 
+The easiest example is when our representations take values in $\GL(1)$. Let 
+$\pi=\pi_1(\dZ[\frac 1 p])$ and 
 $\bar\rho=\bar\kappa:\pi\to \GL_1(\dF_p)$ be the \emph{mod-$p$ cyclotomic 
 character}. This is defined, for $\sigma\in G_\dQ$, by 
 \[
@@ -661,7 +672,8 @@ us that $\pi^\abelian \simeq \dZ_p^\times$. So
 \]
 where each $\formalspectrum(\dZ_p\llbracket \dZ_p\rrbracket)$ is the connected 
 component of some $\varepsilon$. We see that 
-$R_{\bar\kappa}\simeq \dZ_p\llbracket \dZ_p\rrbracket\simeq \dZ_p\llbracket X\rrbracket$.
+$R_{\bar\kappa}\simeq \dZ_p\llbracket \dZ_p\rrbracket\simeq \dZ_p\llbracket X\rrbracket$, 
+via $[p]\leftrightarrow X+1$. 
 
 
 \subsection{The main example}
@@ -716,19 +728,16 @@ Hida's big Hecke algebras.
 \subsection{Deformation of hyperbolic structures}
 
 Let $K$ be a hyperbolic knot, $M=S^3\smallsetminus K$ the knot complement. Put 
-$\Gamma=\pi_1(M)$. Let $\cT_K=\cT(\Gamma)$ be the space of injective 
+$\Gamma=\pi_1(M)$. Let $T_K=T(\Gamma)$ be the space of injective 
 homomorphisms $\Gamma\to \isometry(\dH^3)$ with discrete image; this is the 
 space of hyperbolic structures on $M$. There should be a covering map 
-$\cT_K \to X_K$, which is ``almost'' an isomorphism. The analogue is 
+$T_K \to X_K$, which is ``almost'' an isomorphism. The analogue is 
 $X_0(n)$ being a moduli space of elliptic curves. It will be harder to justify 
-Hida's Hecke algebra $\mathbf h$ (better, $\formalspectrum(\mathbf h)$) as 
-being the ``right'' analogue of $\cT_K$, but the analogue of 
-$\cT_K \to X_K$ should be $\formalspectrum(\mathbf h) \to \fX^\circ(\bar\rho)$, 
+Hida's Hecke algebra $\hida$ (better, $\fT=\formalspectrum(\hida)$) as 
+being the ``right'' analogue of $T_K$, but the analogue of 
+$T_K \to X_K$ should be $\fT(\bar\rho) \to \fX^\circ(\bar\rho)$, 
 and ``almost isomorphism'' should correspond to an ``$R=T$'' theorem. 
 
-Maybe $\mathfrak T = \formalspectrum(\mathbf h)$?
-
-So $T_K\to X_K^\circ$ versus $\mathfrak T(\bar\rho) \to \fX^\circ(\bar\rho)$. 
 
 
 
