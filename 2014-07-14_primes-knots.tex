@@ -27,6 +27,7 @@
 \DeclareMathOperator{\spectrum}{Spec}
 \DeclareMathOperator{\symmetric}{sym}
 \DeclareMathOperator{\trace}{tr}
+\DeclareMathOperator{\volume}{vol}
 \newcommand{\cA}{\mathcal{A}}
 \newcommand{\cX}{\mathcal{X}}
 \newcommand{\dA}{\mathbf{A}}
@@ -167,7 +168,7 @@ subgroup of $G(F_v)$. We normalize Haar measures on $G(F_v)$ so that
 $G(O_v)$ has volume $1$, and choose the Haar measure on $G(\dA)$ to be the 
 product of measure on each $G(F_v)$. 
 
-Let $v$ be a finite place. Write $\hecke_v=\hecke_v(G)$ for the \emph{Hecke 
+Let $v$ be a finite place. Write $\hecke_v$ for the \emph{Hecke 
 algebra} consisting of continuous, locally constant, compactly supported 
 functions $G(F_v) \to \dQ$. Multiplication is convolution: 
 \[
@@ -198,7 +199,7 @@ where $\fk=\lie(K_\infty)$ and $M(K_\infty)$ is the algebra of measures on
 $K_\infty$. 
 
 The \emph{global Hecke algebra} of $G$ is 
-$\hecke=\hecke(G)=\hecke_\infty\otimes\hecke_\finite$. We will be interested in 
+$\hecke=\hecke_\infty\otimes\hecke_\finite$. We will be interested in 
 special classes of representations of $\hecke$. 
 
 For a sufficiently large set $S$ of finite places, it makes sense to define 
@@ -244,6 +245,26 @@ We call the irreducible admissible representations of $\hecke$ appearing in
 \cite[th.4]{f79}, each automorphic representation $\pi$ decomposes as a 
 restricted tensor product $\bigotimes \pi_v$ of irreducible admissible 
 representations of the $\hecke_v$. 
+
+In the remainder, we will often pass without comment between admissible 
+representations of $G(\dA_\finite)$ and admissible representations of 
+$\hecke_\finite$. This is not hard. Suppose $\pi:G(\dA_\finite)\to \GL(V)$ is 
+an admissible representation. For $f\in \hecke_\finite$ and $v\in V$, put 
+\[
+  f \star v = \int_{G(\dA_\finite)} f(x) \pi(x)\cdot v\, \dd x.
+\]
+This integral is actually a finite sum. Indeed, we can write $f$ as a finite 
+sum of scalars multiples of characteristic functions $\chi_{g K}$, where 
+$K\subset G(\dA_\finite)$ is open, compact, and fixes $v$. For such a function, 
+we see that 
+\[
+  \chi_{g K}\star v = \int_{G(\dA_\finite)}\chi_{g K}(x) \pi(x) v\, \dd x = \int_K g v\, \dd x = \volume(K) g  v. 
+\]
+So the action of $\hecke_\finite$ on $V$ makes sense. Going the other way is 
+also easy. If $V$ is an admissible $\hecke_\finite$-module and 
+$g\in G(\dA_\finite)$, choose open compact normal $K$ such that 
+$\chi_K\star v=v$. Inspired by the above, put 
+$g v = \volume(K)^{-1} \chi_{g K}\star v$. 
 
 
 \subsection{Hecke eigensystems and \texorpdfstring{$L$}{L}-functions}
@@ -292,7 +313,7 @@ $F=\dQ$, $G=\GL(2)$. Many of the definitions work in greater generality,
 but technicalities (which we wish to avoid) multiply endlessly. 
 
 
-\subsection{Locally symmetric spaces}\label{sec:local-symm}
+\subsection{Locally symmetric spaces and their cohomology}\label{sec:local-symm}
 
 Classically, one studies representations of a real semisimple group $G$ by 
 fixing a maximal compact $K$, setting $X=G/K$, and studying the regular 
@@ -310,45 +331,35 @@ $K\subset G(\dA_\finite)$ be an open compact subgroup. We define
 A priori, this is only a topological space, but the quotient map 
 $X\times G(\dA_\finite)/K \to \shimura_K(G)$ gives $\shimura_K(G)$ the 
 structure of a Riemannian manifold. Let $(V,\rho)$ be a representation of $G$. 
-There is an induced local system $\sV_\rho$ of $F$-vector spaces on $\shimura_K(G)$, whose (global) 
-sections are locally constant sections $s:X\times G(\dA_\finite)/K \to V$ 
-such that $s(\gamma x) = \rho(\gamma) s(x)$ for $\gamma\in G(\dQ)$. Put 
-\[
-  \h^\bullet(K,\rho) = \h_c^\bullet\left(\shimura_K(G),\sV_\rho\right) .
-\]
-In fact, the vector space $\h(K,\rho)$ is an $\hecke_\finite$-module! We 
-construct an action of a coset $gC$ for $C\subset K$. Let 
-$C'=C\cap g^{-1} K$, and let $g C$ act via the correspondence 
+There is an induced local system $\sV_\rho$ of $F$-vector spaces on 
+$\shimura_K(G)$, whose (global) sections are locally constant sections 
+$s:X\times G(\dA_\finite)/K \to V$ such that 
+$s(\gamma x) = \rho(\gamma) s(x)$ for $\gamma\in G(\dQ)$. 
+
+The cohomology $\h^\bullet(\shimura_K(G),\sV_\rho)$ is naturally an 
+admissible $\hecke_\finite$-module. For open compact $C\subset K$, the function 
+$\chi_{g C}$ acts via the correspondence 
 \[\xymatrix{
   \shimura_K(G) 
-    & \ar@{->>}[l] \shimura_{C'}(G) \ar[r]^-{g\cdot} 
+    & \ar@{->>}[l] \shimura_{K\cap C}(G) \ar[r]^-{\cdot g} 
+    & \shimura_{K\cap g^{-1} C g}(G) \ar@{->>}[r] 
     & \shimura_K(G) .
 }\]
-As a representation of $\hecke_\finite$, $\h(K,\rho)$ decomposes as a direct 
-sum 
+There is a standard compactification of $\shimura_K(G)$, namely its 
+\emph{Borel-Serre compactification} $\overline\shimura_K(G)$. Define the 
+\emph{cuspidal cohomology} to be 
 \[
-  \h^\bullet(K,\rho) = \bigoplus_{\pi\in \automorphic(G)} \h(K,\rho)[\pi]
+  \h_\cusp^\bullet(\shimura_K(G),\sV_\rho) = \ker\left(\h^\bullet(\overline\shimura_K(G),\sV_\rho) \to \h^\bullet(\partial\shimura_K(G),\sV_\rho)\right) .
 \]
-where $(-)[\pi]$ is the span of all $\hecke_\finite$-submodules of type $\pi$. 
-See \cite{s09} for details. Better (Theorem 4.1 in loc.~cit.) we have 
+The cuspidal cohomology is also an admissible $\hecke_\finite$-module. In 
+fact, we have a \emph{generalized Eichler-Shimura isomorphism} \cite[4.1]{s09}. 
 \[
-  \h^\bullet_\cusp(G,\rho) = \bigoplus_\pi \h^\bullet(\fg_\infty,K_\infty,H_{\pi_\infty}\otimes \rho)\otimes H_{\pi_\finite} .
+  \h_\cusp^\bullet(\shimura_K(G),\sV_\rho) = \bigoplus_{\substack{\pi\in \cA_\cusp(G,\chi_\rho) \\ K\text{-spherical}}}\h^\bullet(\hecke_\infty, \pi_\infty\otimes \rho)\otimes \pi_\finite .
 \]
-So the multiplicities above are dimensions of $(\fg,K)$-cohomology. 
-
-To compute the cohomology with compact support, it is useful to have a 
-compactification of $\shimura_K(G)$ that respects the action of 
-$G(\dA_\finite)$. For general $G$, the theory of compactifications of locally 
-symmetric spaces is very rich and complicated. Fortunately for us, when 
-$G=\GL(2)$ suffice it to say that there is a reasonably canonical 
-compactification $\overline{\shimura_K(\GL_2)}$; we define \emph{cuspidal 
-cohomology} by 
-\[
-  \h_\cusp^\bullet(K,\rho) = \ker\left(\h^\bullet(K,\rho) \to \h_c^\bullet(\partial \shimura_K(G),\sV_\rho)\right) .
-\]
-There is also a spectral decomposition of automorphic cohomology. We call
-automorphic representations appearing in the spectral decomposition of a vector 
-bundle on some locally symmetric space \emph{cohomological}. 
+The notation $\h^\bullet(\hecke_\infty,-)$ needs explanation. There is a good 
+category of admissible $\hecke_\infty$-modules, and $\hom(\dC,-)$ is 
+left-exact. Its derived functor is the $(\fg_\infty,K_\infty)$-cohomology 
+$\h^\bullet(\hecke_\infty-)$. 
 
 
 \subsection{Canonical models}\label{sec:can-model}
@@ -382,17 +393,6 @@ action of $\hecke_\finite$ to the \'etale cohomology of $\shimura_K(G)$.
 
 
 \section{Modular representations}
-
-Use the generalized Eichler-Shimura isomorphism given in 
-\cite{harder-1987}. Via the introduction of 
-\url{http://www-users.math.umn.edu/~kwlan/articles/iccm-2010.pdf}, there is an isomorphism 
-\[
-  \h_\cusp^1(\shimura_{K_0(n)}(\GL_2),\symmetric^{k-2}) = S_k(\Gamma_0(n))\oplus \overline{S_k(\Gamma_0(n))} .
-\]
-So the ``weight'' in $S_k$ comes from the weight parameterizing the irreducible 
-representation of $\GL(2)$. To derive this sort of thing from Harder's generalized 
-Eichler-Shimura, I need to check that the $\infty$-type of a weight-$k$ modular 
-is $\symmetric^{k-2}$. 
 
 
 \subsection{Modular curves}
@@ -447,44 +447,61 @@ homomorphisms $\dS=\restrict_{\dC/\dR}\dG_\mult\to \GL(2)_\dR$ containing
 \]
 This is all defined over $\dQ$, so the theory of canonical models discussed 
 in \autoref{sec:can-model} tells us that if 
-$K_\finite\subset\GL_2(\dA_\finite)$ is any open compact subgroup, the quotient 
+$K\subset\GL_2(\dA_\finite)$ is any open compact subgroup, the quotient 
 \[
-  \shimura_{K_\finite}(\GL_2) = \GL_2(\dQ)\backslash (\fH^\pm\times \GL_2(\dA_\finite))/K_\finite
+  \shimura_K(\GL_2) = \GL_2(\dQ)\backslash (\fH^\pm\times \GL_2(\dA_\finite))/K
 \]
-descends to a uniquely determined curve over $\dQ$. 
+descends to a uniquely determined curve over $\dQ$. Moreover, this curve has a 
+well-defined smooth compactification also defined over $\dQ$, so we don't need 
+to worry about the difference between minimal and toroidal compactifications. 
 
 
 \subsection{The Eichler-Shimura construction}
 
+
+%Use the generalized Eichler-Shimura isomorphism given in 
+%\cite{harder-1987}. Via the introduction of 
+%\url{http://www-users.math.umn.edu/~kwlan/articles/iccm-2010.pdf}, there is an isomorphism 
+%\[
+%  \h_\cusp^1(\shimura_{K_0(n)}(\GL_2),\symmetric^{k-2}) = S_k(\Gamma_0(n))\oplus \overline{S_k(\Gamma_0(n))} .
+%\]
+%So the ``weight'' in $S_k$ comes from the weight parameterizing the irreducible 
+%representation of $\GL(2)$. To derive this sort of thing from Harder's generalized 
+%Eichler-Shimura, I need to check that the $\infty$-type of a weight-$k$ modular 
+%is $\symmetric^{k-2}$. 
+
 Let $n\geqslant 3$. 
 As above, write $Y_0(n)$ for the Shimura variety $\shimura_{K_0(n))}(\GL_2)$, 
-and write $X_0(n)$ for its arithmetic compactification. We define the space of 
-\emph{cusp forms} of weight 2 and level $\Gamma_0(n)$ to be 
+and write $X_0(n)$ for its arithmetic compactification. We are interested in the 
+cohomology $\h_\cusp^1(X_0(n),\sV_{\symmetric^{k-2}})$.
+At the moment, this is just a $\dC$-vector space with an action of 
+$\hecke_\finite$. However, in \autoref{sec:local-symm}, there is an automorphic 
+decomposition 
 \[
-  S_2(\Gamma_0(n)) = \h_\cusp^1(X_0(n),\dC) .
+  \h_\cusp^1(X_0(n),\sV_{\symmetric^{k-2}}) = \bigoplus_{\substack{\pi\in \automorphic(\GL_2) \\ \Gamma_0(n)\text{-spherical}}} \h^1(\mathfrak{gl}_2,\SO(2),\pi_\infty\otimes \symmetric^{k-2})\otimes \pi_\finite .
 \]
-As a $\hecke_\finite$-module, there is a decomposition 
+The computation in \cite[\S3.4-3.6]{harder-1987} tells us that 
+$\h^1(\mathfrak{gl}_2,\SO(2),\pi_\infty\otimes \symmetric^{k-2})=0$ unless 
+$\pi$ is the automorphic representation coming from a weight-$k$ cuspidal 
+eigenform of level $n$, in which case 
+$\h^1(\mathfrak{gl}_2,\SO(2),\pi_\infty\otimes \symmetric^{k-2})=\dC\oplus \overline\dC$. 
+In particular, 
 \[
-  S_2(\Gamma_0(n),\dC) = \bigoplus_{\pi\in \automorphic(\GL_2)} m(\Gamma_0(n),\pi) \pi ,
+  \h_\cusp^1(X_0(n),\sV_{\symmetric^{k-2}}) = \bigoplus_{f\text{ eigen-cusp}} \dC\oplus \overline{\dC} = S_k(\Gamma_0(n))\oplus \overline{S_k(\Gamma_0(n))}.
 \]
-where in our case $m(\Gamma_0(n),\pi) \leqslant 1$. Representations $\pi$ with 
-$m(\Gamma_0(n),\pi)=1$ are of the form $\hecke_\finite\star f$ for $f$ a 
-normalized cupsidal eigenform. Write $\pi_f$ for the corresponding cuspidal 
-automorphic representation of $\GL(2)$. 
 
-Recall that our modular curves are defined over $\dQ$. In particular, we could 
-consider the cohomology spaces 
+Recall that our modular curves are defined over $\dQ$. So we can consider the 
+cohomology spaces 
 \[
   \h_{\etale,\cusp}^1(X_0(n)_{\overline\dQ},\overline{\dQ_\ell}) \simeq S_2(\Gamma_0(n),\dC) .
 \]
 These have commuting actions of 
 $G_{\dQ,\ell n}=\pi_1(\dZ[\frac{1}{\ell n}])$ and 
-$\hecke_\finite$. There is a decomposition of 
-$\hecke_\finite\times G_{\dQ,\ell n}$-modules 
-\[
-  \h_{\etale,\cusp}^1(X_0(n)_{\overline\dQ},\overline{\dQ_\ell}) = \bigoplus_f \pi_f\otimes \rho_{f,\ell} ,
-\]
-and the \emph{Eichler-Shimura relation} basically tells us that the Hecke and 
+$\hecke_\finite$. So $G_{\dQ,\ell n}$ acts on each $\hecke_\finite$-irreducible 
+piece. These pieces are 2-dimensional, so we get, for each cuspidal eigenform 
+$f$, a Galois representation 
+$\rho_{f,\ell}:G_{\dQ,n\ell} \to \GL_2(\overline{\dQ_\ell})$. 
+The \emph{Eichler-Shimura relation} basically tells us that the Hecke and 
 Frobenius parameters for $\pi_f$ and $\rho_{f,\ell}$ match up. That is, for all 
 $p\nmid \ell n$, we have 
 $\rho_{f,\ell}(\arithfrob_p) = \sigma_p(\pi_f)$, or equivalently 
@@ -516,6 +533,11 @@ it exists).
 
 
 \subsection{Interpolating modular representations}
+
+We showed explicitly how to construct the Galois representations associated to 
+cuspidal eigenforms of weight $2$. In fact, in \cite{deligne-1973}, Deligne 
+showed how to construct $\rho_{f,\ell}$ for \emph{any} eigenform of weight 
+$k\geqslant 2$. 
 
 [Construct Hida's Hecke algebra $\mathbf h_n$]
 
@@ -740,6 +762,33 @@ Hida's Hecke algebra $\hida$ (better, $\fT=\formalspectrum(\hida)$) as
 being the ``right'' analogue of $T_K$, but the analogue of 
 $T_K \to X_K$ should be $\fT(\bar\rho) \to \fX^\circ(\bar\rho)$, 
 and ``almost isomorphism'' should correspond to an ``$R=T$'' theorem. 
+
+
+\subsection{Hida theory}
+
+Roughly, the idea of Hida theory is to create universal $p$-adic families of 
+cuspidal automorphic representations of $\GL(2)$. There is a generalization 
+(the eigenvariety of a reductive group satisfying the Harish-Chandra condition) 
+but we will not discuss that here. 
+
+Let's start with a Shimura datum $(G,X)$. For simplicity, we'll assume the 
+associated Shimura variety $\shimura(G)$ is also defined over $\dQ$. Fix a 
+prime $p$, and choose a compact open subgroup (the \emph{tame level}) 
+$N\subset G(\dA^p)$. For a representation $\rho$ of $G$, define 
+\[
+  \h^\bullet_\cusp(\shimura_N(G),\sV_\rho(\dZ_p)) = \varinjlim_L \h_\cusp^\bullet(\shimura_{N L}(G),\sV_\rho(\dZ_p)) ,
+\]
+where $L$ ranges over all open compact subgroups of $G(\dQ_p)$. Let 
+$\hida_{N,\rho}(\dZ_p)$ be the image of the action of 
+\[
+  \varprojlim_L \hecke(N L,\dZ_p)
+\]
+on $\h^\bullet_\cusp(\shimura_N(G),\sV_\rho)$. 
+
+
+\subsection{The analogy}
+
+d
 
 
 
