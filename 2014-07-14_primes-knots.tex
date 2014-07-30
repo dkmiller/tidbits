@@ -1,4 +1,4 @@
-\documentclass[oneside]{amsart}
+\documentclass[oneside,11pt]{amsart}
 
 \usepackage{amsmath,amssymb,extarrows,mathrsfs,newtxtext,newtxmath,stmaryrd}
 \usepackage[colorlinks,linkcolor=blue]{hyperref}
@@ -391,7 +391,7 @@ There is a standard compactification of $\shimura_K(G)$, namely its
 The cuspidal cohomology is also an admissible $\hecke_\finite$-module. In 
 fact, we have a \emph{generalized Eichler-Shimura isomorphism} \cite[4.1]{s09}. 
 \[
-  \h_\cusp^\bullet(\shimura_K(G),\sV_\rho) = \bigoplus_{\substack{\pi\in \cA_\cusp(G,\chi_\rho) \\ K\text{-spherical}}}\h^\bullet(\hecke_\infty, \pi_\infty\otimes \rho)\otimes \pi_\finite .
+  \h_\cusp^\bullet(\shimura_K(G),\sV_\rho) = \bigoplus_{\substack{\pi\in \cA_\cusp(G,\chi_\rho) \\ K\text{-spherical}}}\h^\bullet(\hecke_\infty, \pi_\infty\otimes \rho)\otimes \pi_\finite^K .
 \]
 The notation $\h^\bullet(\hecke_\infty,-)$ needs explanation. There is a good 
 category of admissible $\hecke_\infty$-modules, and $\hom(\dC,-)$ is 
@@ -495,18 +495,6 @@ to worry about the difference between minimal and toroidal compactifications.
 
 \subsection{The Eichler-Shimura construction}
 
-
-%Use the generalized Eichler-Shimura isomorphism given in 
-%\cite{harder-1987}. Via the introduction of 
-%\url{http://www-users.math.umn.edu/~kwlan/articles/iccm-2010.pdf}, there is an isomorphism 
-%\[
-%  \h_\cusp^1(\shimura_{K_0(n)}(\GL_2),\symmetric^{k-2}) = S_k(\Gamma_0(n))\oplus \overline{S_k(\Gamma_0(n))} .
-%\]
-%So the ``weight'' in $S_k$ comes from the weight parameterizing the irreducible 
-%representation of $\GL(2)$. To derive this sort of thing from Harder's generalized 
-%Eichler-Shimura, I need to check that the $\infty$-type of a weight-$k$ modular 
-%is $\symmetric^{k-2}$. 
-
 Let $n\geqslant 3$. 
 As above, write $Y_0(n)$ for the Shimura variety $\shimura_{K_0(n))}(\GL_2)$, 
 and write $X_0(n)$ for its arithmetic compactification. We are interested in the 
@@ -515,7 +503,7 @@ At the moment, this is just a $\dC$-vector space with an action of
 $\hecke_\finite$. However, in \autoref{sec:local-symm}, there is an automorphic 
 decomposition 
 \[
-  \h_\cusp^1(X_0(n),\sV_{\symmetric^{k-2}}) = \bigoplus_{\substack{\pi\in \automorphic(\GL_2) \\ \Gamma_0(n)\text{-spherical}}} \h^1(\mathfrak{gl}_2,\SO(2),\pi_\infty\otimes \symmetric^{k-2})\otimes \pi_\finite .
+  \h_\cusp^1(X_0(n),\sV_{\symmetric^{k-2}}) = \bigoplus_{\substack{\pi\in \automorphic(\GL_2) \\ \Gamma_0(n)\text{-spherical}}} \h^1(\mathfrak{gl}_2,\SO(2),\pi_\infty\otimes \symmetric^{k-2})\otimes \pi_\finite^{\Gamma_0(n)} .
 \]
 The computation in \cite[\S3.4-3.6]{harder-1987} tells us that 
 $\h^1(\mathfrak{gl}_2,\SO(2),\pi_\infty\otimes \symmetric^{k-2})=0$ unless 
@@ -863,9 +851,7 @@ on $\h^\bullet_\cusp(\shimura_N(G),\sV_\rho)$.
 
 \subsection{The analogy}
 
-\noindent is even this Selmer group is not the one considered by Bloch and Kato, but
-it is the one that is more pertinent when studying deformation rings. In the
-case of $\bar\rho$ even, in some particular cases, deformations of $\bar\rho$ to characteristic $0$ were produced
+d
 
 
 
