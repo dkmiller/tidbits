@@ -1,4 +1,4 @@
-\documentclass[oneside,11pt]{amsart}
+\documentclass[oneside]{amsart}
 
 \usepackage{amsmath,amssymb,extarrows,mathrsfs,newtxtext,newtxmath,stmaryrd}
 \usepackage[colorlinks,linkcolor=blue]{hyperref}
@@ -43,10 +43,14 @@
 \newcommand{\fH}{\mathfrak{H}}
 \newcommand{\fk}{\mathfrak{k}}
 \newcommand{\fp}{\mathfrak{p}}
+\newcommand{\fE}{\mathfrak{E}}
 \newcommand{\fT}{\mathfrak{T}}
+\newcommand{\fU}{\mathfrak{U}}
+\newcommand{\fW}{\mathfrak{W}}
 \newcommand{\fX}{\mathfrak{X}}
 \newcommand{\sF}{\mathscr{F}}
 \newcommand{\sL}{\mathscr{L}}
+\newcommand{\sO}{\mathscr{O}}
 \newcommand{\sV}{\mathscr{V}}
 \newcommand{\dd}{\mathrm{d}}
 \newcommand{\abelian}{\mathrm{ab}}
@@ -60,6 +64,8 @@
 \newcommand{\hida}{\mathbf{h}}
 \newcommand{\iso}{\xlongrightarrow\sim}
 \newcommand{\mult}{\mathrm{m}}
+
+\SetSymbolFont{stmry}{bold}{U}{stmry}{m}{n}
 
 \setcounter{tocdepth}{1}
 
@@ -604,6 +610,55 @@ representation $\rho^\mathrm{H}:G_{\dQ,n p} \to \GL_2(\widetilde\hida_n(\bar\rho
 that induces all the $\rho_{f,p}$. 
 
 [check this: details probably not right!]
+
+Morally, let $G$ be a reductive group over $\dQ$, and fix a prime $p$. Let 
+$\fW$ be the $p$-adic weight space -- i.e.~the $p$-adic space satisfying 
+\[
+  \fW(A) = \hom_\mathsf{cts}(\character^\ast(T)\otimes\dZ_p,A^\times) .
+\]
+Let $\fW^\mathrm{cl}$ be the subset of classical weights. For 
+$\lambda\in \fW^\mathrm{cl}$, a $p$-adic family $\boldsymbol\pi$ of automorphic 
+representations of $G$ should be a rigid-analytic map 
+$\boldsymbol\pi\to \fU\ni \lambda$, together with 
+$\Theta:\hecke\to \sO(\boldsymbol\pi)$ such that for each 
+$\mu\in \fU^\mathrm{cl}$ and $\pi$ lying over $\mu$, the evaluation map 
+$\Theta_\pi:\hecke\to \sO(\boldsymbol\pi) \to \dC_p$ is the trace of a 
+cuspidal automorphic representation of $G$ with weight $\mu$. 
+
+The Galois representation associated to $\boldsymbol\pi$ should be 
+\[
+  \rho_{\boldsymbol\pi,l}:G_\dQ \to G^\vee(\sO(\fU)),
+\]
+such that for each $\mu\in \fU^\mathrm{cl}$ and $\pi$ above $\mu$, the 
+evaluation map 
+$\mathrm{ev}_\pi\circ \rho_{\boldsymbol\pi,l}:G_\dQ \to G^\vee(\dC_p)$ is 
+an ``honest $\rho_{\pi,l}$.'' 
+
+\textbf{(for simplicity, suppose $G$ is Chevalley, so split over $\dQ$)}
+
+Here is an attempt at better notation. A $p$-adic family consists of 
+$\boldsymbol\lambda\subset \fW$ together with finite map 
+$w:\boldsymbol\sigma\to \boldsymbol\lambda$ and 
+$\Theta:\hecke^\mathrm{fs}\to \sO(\boldsymbol\sigma)$ such that for all 
+$\sigma\mapsto \lambda\in \boldsymbol\lambda^\mathrm{cl}$, the composite 
+\[
+  \Theta_\sigma:\hecke^\mathrm{fs} \to \sO(\boldsymbol\sigma) \xrightarrow{\mathrm{ev}_\sigma} \overline{\dQ_p}
+\]
+is $m(\pi,\lambda)\trace_\pi$ for an honest $\pi$ of finite slope, cohomological 
+of (algebraic) weight $\lambda$. Strictly speaking, $\pi$ is just an 
+$L$-packet. 
+
+The Galois representation associated to $\boldsymbol\sigma$ should be 
+\[
+  \rho_{\boldsymbol\sigma,l}:G_{S\cup l}\to G^\vee(\sO(\boldsymbol\sigma))
+\]
+such that for all $\sigma\mapsto \lambda\in \boldsymbol\lambda^\mathrm{cl}$, 
+the composite 
+\[
+  \rho_{\sigma,l}:G_{S\cup l}\to G^\vee(\sO(\boldsymbol\sigma)) \to G^\vee(\overline{\dQ_l})
+\]
+is $\rho_{\pi,l}$ for an honest $L$-packet $\pi$, cohomological of algebraic 
+weight $\lambda$. 
 
 
 
