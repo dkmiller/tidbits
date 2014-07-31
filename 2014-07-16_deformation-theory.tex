@@ -1,8 +1,8 @@
 \documentclass{amsart}
 
-\usepackage{amsmath,amssymb,amsthm,fullpage}
+\usepackage{amsmath,amssymb,amsthm,fullpage,stmaryrd}
 \usepackage[all]{xy}
-\usepackage[colorlinks]{hyperref}
+\usepackage[colorlinks,linkcolor=blue]{hyperref}
 \DeclareMathOperator{\adjoint}{ad}
 \DeclareMathOperator{\galois}{Gal}
 \DeclareMathOperator{\GL}{GL}
@@ -29,6 +29,8 @@
 
 \begin{document}
 \maketitle
+\setcounter{tocdepth}{1}
+\tableofcontents
 
 
 
@@ -61,7 +63,7 @@ exact sequence
 
 
 
-\section{Duality theorems for Galois cohomology}
+\subsection{Duality theorems for Galois cohomology}
 
 Let $l$ be a prime, $X$ a connected noetherian scheme on which $l$ is 
 invertible. Let $\dZ_l=\varprojlim\mmu_{l^n}$, considered as a smooth $l$-adic 
@@ -229,6 +231,26 @@ $\bar\rho$ is nice for $T\smallsetminus S$. Then
 $R_{\bar\rho}^{T\textnormal{-new}}$ represents minimally ramified deformations 
 $\rho:G_{\dQ,S} \to \GL_2(A)$ such that for $v\in T\smallsetminus S$, 
 $\rho_v$ is a twist of $\begin{pmatrix} \varepsilon & \ast \\ & 1 \end{pmatrix}$. 
+
+
+
+
+
+\section{Commutative algebra}
+
+
+\subsection{Weierstrass preparation theorem}
+
+This is from \cite[VII \S 3.8, pr.6]{bourbaki-comm-alg}. Let $\cO$ be a 
+complete discrete valuation ring with uniformizer $\pi$. Then any 
+$f\in \cO\llbracket X\rrbracket$ can be written as 
+\[
+  f = u \pi^m \left(X^n+a_{n-1} X^{n-1} + \cdots + a_0\right),
+\]
+where $u\in \cO\llbracket X\rrbracket^\times$ and the 
+$a_i\in \langle \pi\rangle$. In particular, the only way the quotient 
+$\cO\llbracket X\rrbracket/f$ can be flat over $\cO$ is for 
+$m=0$, in which case the quotient has finite $\cO$-rank. 
 
 
 
