@@ -34,6 +34,8 @@
 \newcommand{\dF}{\mathbf{F}}
 \newcommand{\dG}{\mathbf{G}}
 \newcommand{\dH}{\mathbf{H}}
+\newcommand{\dlambda}{\boldsymbol\lambda}
+\newcommand{\dpi}{\boldsymbol\pi}
 \newcommand{\dR}{\mathbf{R}}
 \newcommand{\dQ}{\mathbf{Q}}
 \newcommand{\dS}{\mathbf{S}}
@@ -426,9 +428,9 @@ on $\shimura(G)$.
 The main reason we care about this is that if $\shimura_K(G)$ is smooth and 
 $E=\dQ$, then general theorems about \'etale cohomology tell us that 
 \[
-  \h_{\mathrm{sing},c}^\bullet(\shimura_K(G),\sV_\rho) = \h_{\etale,c}^\bullet(\shimura_K(G)_{\overline\dQ},\sV_\rho(\overline{\dQ_\ell})) 
+  \h_{\mathrm{sing},c}^\bullet(\shimura_K(G),\sV_\rho) = \h_{\etale,c}^\bullet(\shimura_K(G)_{\overline\dQ},\sV_\rho(\overline{\dQ_l})) 
 \]
-after choice of an isomorphism $\dC\simeq \overline{\dQ_\ell}$. The choice of 
+after choice of an isomorphism $\dC\simeq \overline{\dQ_l}$. The choice of 
 an \emph{arithmetic compactification} of $\shimura_K(G)$ lets us extend the 
 action of $\hecke_\finite$ to the \'etale cohomology of $\shimura_K(G)$. 
 
@@ -525,42 +527,42 @@ In particular,
 Recall that our modular curves are defined over $\dQ$. So we can consider the 
 cohomology spaces 
 \[
-  \h_{\etale,\cusp}^1(X_0(n)_{\overline\dQ},\overline{\dQ_\ell}) \simeq S_2(\Gamma_0(n),\dC) .
+  \h_{\etale,\cusp}^1(X_0(n)_{\overline\dQ},\overline{\dQ_l}) \simeq S_2(\Gamma_0(n),\dC) .
 \]
 These have commuting actions of 
-$G_{\dQ,\ell n}=\pi_1(\dZ[\frac{1}{\ell n}])$ and 
-$\hecke_\finite$. So $G_{\dQ,\ell n}$ acts on each $\hecke_\finite$-irreducible 
+$G_{\dQ,l n}=\pi_1(\dZ[\frac{1}{l n}])$ and 
+$\hecke_\finite$. So $G_{\dQ,l n}$ acts on each $\hecke_\finite$-irreducible 
 piece. These pieces are 2-dimensional, so we get, for each cuspidal eigenform 
 $f$, a Galois representation 
-$\rho_{f,\ell}:G_{\dQ,n\ell} \to \GL_2(\overline{\dQ_\ell})$. 
+$\rho_{f,l}:G_{\dQ,nl} \to \GL_2(\overline{\dQ_l})$. 
 The \emph{Eichler-Shimura relation} basically tells us that the Hecke and 
-Frobenius parameters for $\pi_f$ and $\rho_{f,\ell}$ match up. That is, for all 
-$p\nmid \ell n$, we have 
-$\rho_{f,\ell}(\arithfrob_p) = \sigma_p(\pi_f)$, or equivalently 
-$L_p(\rho_{f,\ell},s) = L_p(\pi_f,s)$. 
+Frobenius parameters for $\pi_f$ and $\rho_{f,l}$ match up. That is, for all 
+$p\nmid l n$, we have 
+$\rho_{f,l}(\arithfrob_p) = \sigma_p(\pi_f)$, or equivalently 
+$L_p(\rho_{f,l},s) = L_p(\pi_f,s)$. 
 
-It is known that $\rho_{f,\ell}:G_{\dQ,\ell n} \to \GL_2(\overline{\dQ_\ell})$ 
+It is known that $\rho_{f,l}:G_{\dQ,l n} \to \GL_2(\overline{\dQ_l})$ 
 factors through $\GL_2(K_{f,\lambda})$, where 
 $K_f = \dQ(a_p(f):p\text{ prime})$ is a number field and $\lambda$ is a place 
-of $K_f$ dividing $\ell$. An elementary argument shows that we can conjugate 
-the image of $\rho_{f,\ell}$ to lie in $\GL_2(O_{f,\lambda})$, where 
-$O_f=O_{K_f}$. In particular, we can reduce $\rho_{f,\ell}$ modulo $\lambda$ 
+of $K_f$ dividing $l$. An elementary argument shows that we can conjugate 
+the image of $\rho_{f,l}$ to lie in $\GL_2(O_{f,\lambda})$, where 
+$O_f=O_{K_f}$. In particular, we can reduce $\rho_{f,l}$ modulo $\lambda$ 
 to get a continuous representation 
 \[
-  \bar\rho_{f,\ell}:G_{\dQ,\ell n} \to \GL_2(O_{f,\lambda}/\lambda) = \GL_2(\dF_\lambda) .
+  \bar\rho_{f,l}:G_{\dQ,l n} \to \GL_2(O_{f,\lambda}/\lambda) = \GL_2(\dF_\lambda) .
 \]
-We say that a mod-$\ell$ representation of $G_\dQ$ is \emph{modular} (better, 
-\emph{automorphic}) if it is of the form $\bar\rho_{f,\ell}$ for some $f$. 
-Similarly, we say that an $\ell$-adic representation of $G_\dQ$ is 
+We say that a mod-$l$ representation of $G_\dQ$ is \emph{modular} (better, 
+\emph{automorphic}) if it is of the form $\bar\rho_{f,l}$ for some $f$. 
+Similarly, we say that an $l$-adic representation of $G_\dQ$ is 
 \emph{modular} (better, \emph{automorphic}) if it is of the form 
-$\rho_{f,\ell}$ for some $\ell$. 
+$\rho_{f,l}$ for some $l$. 
 
 In what follows, we will ignore the modular form $f$ and just write $\pi$ for 
 the corresponding cuspidal automorphic representation of $\GL(2)$, keeping in 
 mind that for some automorphic representations (those corresponding to Maass 
 forms) we still don't know how to construct the associated Galois 
 representations. For an automorphic representation $\pi$, write 
-$\rho_{\pi,\ell}$ for the corresponding $\ell$-adic representation (assuming 
+$\rho_{\pi,l}$ for the corresponding $l$-adic representation (assuming 
 it exists). 
 
 
@@ -568,7 +570,7 @@ it exists).
 
 We showed explicitly how to construct the Galois representations associated to 
 cuspidal eigenforms of weight $2$. In fact, in \cite{deligne-1973}, Deligne 
-showed how to construct $\rho_{f,\ell}$ for \emph{any} cusp-eigenform $f$ of 
+showed how to construct $\rho_{f,l}$ for \emph{any} cusp-eigenform $f$ of 
 weight $k\geqslant 2$. Recall that such forms have a Fourier expansion 
 \[
   f(z) = \sum_{n\geqslant 1} a_n(f) e^{2\pi n z} .
@@ -660,6 +662,12 @@ the composite
 is $\rho_{\pi,l}$ for an honest $L$-packet $\pi$, cohomological of algebraic 
 weight $\lambda$. 
 
+Better notation would be $\dpi\to \dlambda$. One would have 
+$\Theta:\hecke^\mathrm{fs}\to \sO(\dpi)$ such that 
+$\Theta_\pi$ is ``honest'' for $\pi\in \dpi^\mathrm{lc}$. As 
+motivation for all this, take \cite{urban-2011}. The representation would be 
+$\rho_{\dpi,l}:G_\dQ\to G^\vee(\sO(\dpi))$. 
+
 
 
 
@@ -673,33 +681,33 @@ First let's consider the
 motivation for studying deformations of Galois representations. If $X$ is a 
 nice (that is smooth, projective and geometrically integral) variety over 
 $\dQ$, its \'etale cohomology 
-$\h_\etale^\bullet(X_{\overline\dQ},\dQ_\ell)$ carries a continuous 
+$\h_\etale^\bullet(X_{\overline\dQ},\dQ_l)$ carries a continuous 
 action of $G_\dQ$. The ``right'' way to see this is as follows. Spread out 
 $X$ to a smooth proper scheme $\cX$ over an open 
 $U= \spectrum(\dZ)\smallsetminus S$. Write $\pi:\cX\to U$ for the structure 
-map. Then $\eR^\bullet \pi_\ast \dQ_\ell$ is a local system on 
+map. Then $\eR^\bullet \pi_\ast \dQ_l$ is a local system on 
 $U_\etale$. The \'etale version of covering space theory tells us that local 
 systems correspond to representations of $\pi_1(U)=G_{\dQ,S}$. 
 
-The motivating example was the representation $\rho_{E,\ell}$ coming from an 
-elliptic curve $E\xrightarrow\pi U$ via $\eR^1 \pi_\ast \dQ_\ell$. Langlands' 
+The motivating example was the representation $\rho_{E,l}$ coming from an 
+elliptic curve $E\xrightarrow\pi U$ via $\eR^1 \pi_\ast \dQ_l$. Langlands' 
 conjectural framework tells us that there should exist an automorphic cuspidal 
 representation $\pi$ of $\GL(2)$ for which 
-$\rho_{E,\ell} \simeq \rho_{\pi,\ell}$. We don't know how to construct $\pi$ 
+$\rho_{E,l} \simeq \rho_{\pi,l}$. We don't know how to construct $\pi$ 
 this directly. However, we \emph{do} know (via Serre's conjecture) that 
-$\bar\rho_{E,\ell}$ is automorphic. One of the main applications of 
-deformation theory is to prove that the automorphy of $\bar\rho_{E,\ell}$ 
-implies that of $\rho_{E,\ell}$. 
+$\bar\rho_{E,l}$ is automorphic. One of the main applications of 
+deformation theory is to prove that the automorphy of $\bar\rho_{E,l}$ 
+implies that of $\rho_{E,l}$. 
 
-More generally, given an $\ell$-adic Galois 
-representation $\rho:G_{\dQ,S}\to \GL_n(\dQ_\ell)$ that is suitably nice 
+More generally, given an $l$-adic Galois 
+representation $\rho:G_{\dQ,S}\to \GL_n(\dQ_l)$ that is suitably nice 
 (\emph{geometric}, in the sense of Fontaine-Mazur \cite{fontain-mazur-1995}), 
 Langlands' program tells us that we should expect there to be a cuspidal 
 automorphic representation $\pi$ of $\GL(n)$ such that 
-$\rho\simeq \rho_{\pi,\ell}$ (assuming we knew how to construct $\rho_\pi$ in 
+$\rho\simeq \rho_{\pi,l}$ (assuming we knew how to construct $\rho_\pi$ in 
 general). Proving that $\rho$ is automorphic is very hard! However, we have a 
 much better chance (in theory and in practice) of showing that 
-$\bar\rho:G_{\dQ,S} \to \GL_n(\dF_\ell)$ is automorphic. A theorem to the 
+$\bar\rho:G_{\dQ,S} \to \GL_n(\dF_l)$ is automorphic. A theorem to the 
 effect that ``$\bar\rho$ automorphic $\Rightarrow\rho$ automorphic'' is known 
 as a \emph{automorphy lifting theorem}. In practice, one has to impose many 
 technical conditions on $\bar\rho$ and the automorphic representation with 
