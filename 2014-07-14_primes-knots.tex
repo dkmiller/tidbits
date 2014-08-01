@@ -1,6 +1,6 @@
 \documentclass[oneside]{amsart}
 
-\usepackage{amsmath,amssymb,extarrows,mathrsfs,newtxtext,newtxmath,stmaryrd}
+\usepackage{amsmath,amssymb,bm,extarrows,mathrsfs,mathtools,newtxtext,newtxmath,stmaryrd}
 \usepackage[colorlinks,linkcolor=blue]{hyperref}
 \usepackage[paperwidth=6.1in,paperheight=9.25in,textwidth=4.6in,textheight=8in]{geometry}
 \usepackage[all]{xy}
@@ -34,8 +34,8 @@
 \newcommand{\dF}{\mathbf{F}}
 \newcommand{\dG}{\mathbf{G}}
 \newcommand{\dH}{\mathbf{H}}
-\newcommand{\dlambda}{\boldsymbol\lambda}
-\newcommand{\dpi}{\boldsymbol\pi}
+\newcommand{\dlambda}{{\bm\lambda}}
+\newcommand{\dpi}{{\bm\pi}}
 \newcommand{\dR}{\mathbf{R}}
 \newcommand{\dQ}{\mathbf{Q}}
 \newcommand{\dS}{\mathbf{S}}
@@ -65,9 +65,8 @@
 \newcommand{\hecke}{\mathcal{H}}
 \newcommand{\hida}{\mathbf{h}}
 \newcommand{\iso}{\xlongrightarrow\sim}
+\newcommand{\langlands}[1]{\prescript{\textnormal{\tiny L}}{}{#1}}
 \newcommand{\mult}{\mathrm{m}}
-
-\SetSymbolFont{stmry}{bold}{U}{stmry}{m}{n}
 
 \setcounter{tocdepth}{1}
 
@@ -82,6 +81,7 @@
 
 \begin{document}
 \fontsize{10.5}{12}\selectfont 
+
 
 \begin{abstract}
 This is a brief expository note, motivated by \cite{m12}, on the analogy 
@@ -666,7 +666,11 @@ Better notation would be $\dpi\to \dlambda$. One would have
 $\Theta:\hecke^\mathrm{fs}\to \sO(\dpi)$ such that 
 $\Theta_\pi$ is ``honest'' for $\pi\in \dpi^\mathrm{lc}$. As 
 motivation for all this, take \cite{urban-2011}. The representation would be 
-$\rho_{\dpi,l}:G_\dQ\to G^\vee(\sO(\dpi))$. 
+$\rho_\dpi:G_\dQ\to \langlands G(\sO_\dpi)$. (Note that it is a 
+\emph{$p$-adic} Galois representation.)
+\[
+  \rho_\dpi:G_{\dQ,S} \to \langlands G(\sO(\dpi))
+\]
 
 
 
