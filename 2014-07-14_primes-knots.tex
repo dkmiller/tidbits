@@ -649,26 +649,26 @@ A \emph{$p$-adic automorphic representation $\dsigma$ of $G$ of tame level
 $K^p$} consists of :
 \begin{itemize}
   \item An rigid subset $\fU\subset \fW$. 
-  \item A finite flat surjection $w:\fV\to \fU$. 
-  \item A $\dQ_p$-linear map $J:\hida\to \sO(\fV)$.
+  \item A finite flat surjection $w:\fT\to \fU$. 
+  \item A $\dQ_p$-linear map $J:\hida\to \sO(\fT)$.
 \end{itemize}
-This data is required to satisfy the following properties:
-\begin{itemize}
-  \item $\fU^\classical$ is dense in $\fU$. 
-  \item For a dense subset of $\sigma\mapsto\lambda\in\fU^\classical$, the 
-    composite 
-    \[
-      J_\sigma:\hida \to \sO(\fV) \xrightarrow{\mathrm{ev}_\sigma} \dC_p
-    \]
-    is $m(\pi,\lambda) \trace_\pi$ for a cohomological representation $\pi$ of 
-    weight $\lambda$. 
-\end{itemize}
+We require that there is a dense 
+subset of $\sigma\mapsto\lambda\in\fU^\classical$ for which $\lambda$ is 
+dominant and the composite 
+\[
+  J_\sigma:\hida \to \sO(\fT) \xrightarrow{\mathrm{ev}_\sigma} \dC_p
+\]
+is $m(\pi,\lambda) \trace_\pi$ for a cohomological representation $\pi$ of 
+weight $\lambda$. 
 \end{definition*}
 Here $m(\pi,\lambda)$ is the \emph{Euler-Poincar\'e characteristic} 
 by 
 \[
   m(\pi,\lambda) = \sum (-1)^i \dim\hom_\hida(\pi^{K^p I_r},\h_\cusp^i(\shimura_{K^p I_r}(G),\sV_\lambda(\dC)) .
 \]
+In \cite{urban-2011}, Urban constructed $p$-adic families containing the 
+``finite slope'' representations, for groups satisfying the Harish-Chandra 
+condition. 
 
 Recall that for ``nice'' automorphic representations $\pi$, there should 
 be a Galois representation 
@@ -689,68 +689,9 @@ $\sigma\mapsto \lambda\in \fU^\classical$ is automorphic, the composite
 is the corresponding $p$-adic Galois representation. 
 \end{conjecture*}
 
-
-
-
-
-%Morally, let $G$ be a reductive group over $\dQ$, and fix a prime $p$. Let 
-%$\fW$ be the $p$-adic weight space -- i.e.~the $p$-adic space satisfying 
-%\[
-%  \fW(A) = \hom_\mathsf{cts}(\character^\ast(T)\otimes\dZ_p,A^\times) .
-%\]
-%Let $\fW^\mathrm{cl}$ be the subset of classical weights. For 
-%$\lambda\in \fW^\mathrm{cl}$, a $p$-adic family $\boldsymbol\pi$ of automorphic 
-%representations of $G$ should be a rigid-analytic map 
-%$\boldsymbol\pi\to \fU\ni \lambda$, together with 
-%$\Theta:\hecke\to \sO(\boldsymbol\pi)$ such that for each 
-%$\mu\in \fU^\mathrm{cl}$ and $\pi$ lying over $\mu$, the evaluation map 
-%$\Theta_\pi:\hecke\to \sO(\boldsymbol\pi) \to \dC_p$ is the trace of a 
-%cuspidal automorphic representation of $G$ with weight $\mu$. 
-%
-%The Galois representation associated to $\boldsymbol\pi$ should be 
-%\[
-%  \rho_{\boldsymbol\pi,l}:G_\dQ \to G^\vee(\sO(\fU)),
-%\]
-%such that for each $\mu\in \fU^\mathrm{cl}$ and $\pi$ above $\mu$, the 
-%evaluation map 
-%$\mathrm{ev}_\pi\circ \rho_{\boldsymbol\pi,l}:G_\dQ \to G^\vee(\dC_p)$ is 
-%an ``honest $\rho_{\pi,l}$.'' 
-%
-%\textbf{(for simplicity, suppose $G$ is Chevalley, so split over $\dQ$)}
-%
-%Here is an attempt at better notation. A $p$-adic family consists of 
-%$\boldsymbol\lambda\subset \fW$ together with finite map 
-%$w:\boldsymbol\sigma\to \boldsymbol\lambda$ and 
-%$\Theta:\hecke^\mathrm{fs}\to \sO(\boldsymbol\sigma)$ such that for all 
-%$\sigma\mapsto \lambda\in \boldsymbol\lambda^\mathrm{cl}$, the composite 
-%\[
-%  \Theta_\sigma:\hecke^\mathrm{fs} \to \sO(\boldsymbol\sigma) \xrightarrow{\mathrm{ev}_\sigma} \overline{\dQ_p}
-%\]
-%is $m(\pi,\lambda)\trace_\pi$ for an honest $\pi$ of finite slope, cohomological 
-%of (algebraic) weight $\lambda$. Strictly speaking, $\pi$ is just an 
-%$L$-packet. 
-%
-%The Galois representation associated to $\boldsymbol\sigma$ should be 
-%\[
-%  \rho_{\boldsymbol\sigma,l}:G_{S\cup l}\to G^\vee(\sO(\boldsymbol\sigma))
-%\]
-%such that for all $\sigma\mapsto \lambda\in \boldsymbol\lambda^\mathrm{cl}$, 
-%the composite 
-%\[
-%  \rho_{\sigma,l}:G_{S\cup l}\to G^\vee(\sO(\boldsymbol\sigma)) \to G^\vee(\overline{\dQ_l})
-%\]
-%is $\rho_{\pi,l}$ for an honest $L$-packet $\pi$, cohomological of algebraic 
-%weight $\lambda$. 
-%
-%Better notation would be $\dpi\to \dlambda$. One would have 
-%$\Theta:\hecke^\mathrm{fs}\to \sO(\dpi)$ such that 
-%$\Theta_\pi$ is ``honest'' for $\pi\in \dpi^\mathrm{lc}$. As 
-%motivation for all this, take \cite{urban-2011}. The representation would be 
-%$\rho_\dpi:G_\dQ\to \langlands G(\sO_\dpi)$. (Note that it is a 
-%\emph{$p$-adic} Galois representation.)
-%\[
-%  \rho_\dpi:G_{\dQ,S} \to \langlands G(\sO(\dpi))
-%\]
+This conjecture is \emph{wide} open -- we don't even know how to construct 
+individual $\rho_{\pi,p}$ for most $G$. However, for $G=\GL(2)$ and 
+$\pi$ corresponding to a $p$-ordinary form, 
 
 
 
@@ -964,19 +905,23 @@ Hida's big Hecke algebras.
 \subsection{Deformation of hyperbolic structures}
 
 Let $K$ be a hyperbolic knot, $M=S^3\smallsetminus K$ the knot complement. Put 
-$\Gamma=\pi_1(M)$. Let $T_K=T(\Gamma)$ be the space of injective 
-homomorphisms $\Gamma\to \isometry(\dH^3)$ with discrete image; this is the 
-space of hyperbolic structures on $M$. There should be a covering map 
-$T_K \to X_K$, which is ``almost'' an isomorphism. The analogue is 
-$X_0(n)$ being a moduli space of elliptic curves. It will be harder to justify 
-Hida's Hecke algebra $\hida$ (better, $\fT=\formalspectrum(\hida)$) as 
-being the ``right'' analogue of $T_K$, but the analogue of 
-$T_K \to X_K$ should be $\fT(\bar\rho) \to \fX^\circ(\bar\rho)$, 
-and ``almost isomorphism'' should correspond to an ``$R=T$'' theorem. 
+$\Gamma=\pi_1(M)$. Let $T_K=\operatorname{Teich}(\Gamma)$ be the space of 
+injective homomorphisms $\Gamma\to \isometry(\dH^3)$ with discrete image, taken 
+up to conjugacy; this is the space of hyperbolic structures on $M$. Since 
+$\isometry(\dH^3)=\PSL_2(\dC)$, we get a map 
+\[
+  \phi:T_K \to X_K .
+\]
+It's not quite straightforward -- you have to fudge for this to be well defined. 
+On a small neighborhood, $T_K^\circ \to X_K^\circ$ is an isomorphism. 
+
+Also, $X_K^\circ\to \dC$, $\rho\mapsto \trace \rho(m)$ is locally 
+biholomorphic. Similarly, $\fT^\circ(\bar\rho) \to \fX^\circ(\bar\rho)$, 
+choose a generator $\tau$ of the $\dZ_p$-quotient of $\pi_1(\dZ[\frac 1 p])$. 
+Then $\rho\mapsto \trace\rho$ is $p$-adically bianalytic near $\bar\rho$. 
 
 
 \subsection{Hida theory}
-
 
 We showed explicitly how to construct the Galois representations associated to 
 cuspidal eigenforms of weight $2$. In fact, in \cite{deligne-1973}, Deligne 
@@ -985,49 +930,40 @@ weight $k\geqslant 2$. Recall that such forms have a Fourier expansion
 \[
   f(z) = \sum_{n\geqslant 1} a_n(f) e^{2\pi n z} .
 \]
-Call $f$ \emph{$p$-ordinary} if $a_p(f)$ is a $p$-adic unit. This is equivalent 
+Say that $f$ is \emph{$p$-ordinary} if $a_p(f)$ is a $p$-adic unit. This is equivalent 
 to $\bar\rho_{f,p}$ being an extension of an unramified character by a 
 character. In \cite{hida-1986a,hida-1986b}, Hida $p$-adically interpolated the 
 Galois representations $\rho_{f,p}$ coming from $p$-ordinary $f$ of varying 
 weight and level. 
 
-Fix a prime $p\geqslant 5$ and an integer $n$ prime to $p$. Recall that our 
-modular curves are defined over $\dQ$. So instead of defining modular forms in 
-terms of automorphic representations showing up in the spectral decomposition 
-of $\h_\cusp^1(X_0(n),\dC)$, we can (as before) 
-consider modular forms as irreducible $\hecke_\finite$-components of 
-$\h_{\cusp,\etale}^1(X_0(n)_{\overline\dQ},\dZ_p)$. This lets us define a space 
-$S_k(\Gamma_0(n p^r),\dZ_p)$ admitting an action of $\hecke_\finite$. 
+Fix a prime $p\geqslant 5$ and an integer $n$ prime to $p$. Let $f$ be a 
+$p$-ordinary modular form of level $n p^r$. Then there is a $p$-adic 
+family $\bm f$ of automorphic representations containing $f$. In fact, Hida 
+\emph{explicitly} constructs a completion $\hida^\circ$ of $\hida$ such that 
+for $\fT^\circ=\formalspectrum(\hida^\circ)$, \emph{all} $p$-ordinary forms 
+of tame level $n$ which are congruent to $f$ lie in $\fT^\circ$. Moreover, 
+there is the associated Galois representation 
+$\rho_{\bm f}:G_\dQ\to \GL_2(\hida^\circ)$, such that \emph{all} $p$-ordinary 
+modular Galois representations congruent to $\rho_f$ come from 
+$\hida^\circ$. 
 
-Let $K_0\subset \overline{\dQ}$ contain all the Hecke eigenvalues of forms in 
-\[
-  S_k(n p^\infty,\dC) = \varinjlim_r S_k(n p^r,\dC) .
-\]
-Let $K$ be the closure of $K_0$ in $\dC_p$, and put 
-\[
-  S_k(n p^\infty,O_K) = \varinjlim_r S_k(n p^r,O_K) .
-\]
-For each $r$, let $\hida_{n,r})$ be the image of $\hecke_\finite$ inside 
-$\operatorname{End} S_2(n p^r,O_K)$. By \cite[1.1]{hida-1986a}, the projective 
-limit $\hida_n = \varprojlim_r \hida_{n,r}$ actually acts on all the 
-$S_k(n p^\infty,O_K)$. There is an idempotent $e\in \hida_n$ projecting onto 
-the space of ordinary cusp forms; put $\hida_n^\circ=e \hida_n$. 
 
-Suppose $f$ is a $p$-ordinary cusp form of level $n p^r$, and write 
-$\bar\rho=\bar\rho_{f,p}$. Write $\hida_n^\circ(\bar\rho)$ for the algebra 
-acting on $p$-ordinary forms congruent to $f$ mod $p$. One has to 
-``fudge'' $\hida_n^\circ(\bar\rho)$ into a ring 
-$\widetilde\hida_n^\circ(\bar\rho)$. Then there is a Galois 
-representation $\rho^\mathrm{H}:G_{\dQ,n p} \to \GL_2(\widetilde\hida_n(\bar\rho))$ 
-that induces all the $\rho_{f,p}$. 
-
-[check this: details probably not right!]
 
 
 
 \subsection{The analogy}
 
-d
+Let $f$ be a $p$-ordinary cuspidal eigenform. Put $\rho=\rho_{f,p}$. Let 
+$\fT^\circ=\formalspectrum(\hida^\circ)$ be the corresponding $p$-adic family 
+of modular forms, and $\rho_{\bm f}:G_\dQ\to \GL_2(\hida^\circ)$ the Galois 
+representation. Since $\rho_{\bm f}\equiv \bar\rho_{f,p} \pmod p$ and 
+$\rho_{\bm f}$ is $p$-ordinary, we get a map 
+$R_{\bar\rho_f}^\circ \to \hida^\circ$, equivalently 
+\[
+  \phi:\fT^\circ \to \fX^\circ(\bar\rho) .
+\]
+The \emph{very} hard theorem of Wiles, etc.~is that $\phi$ is an isomorphism if 
+$f$ satisfies some technical hypotheses. 
 
 
 
