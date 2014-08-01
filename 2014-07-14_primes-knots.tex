@@ -46,7 +46,6 @@
 \newcommand{\dG}{\mathbf{G}}
 \newcommand{\dH}{\mathbf{H}}
 \newcommand{\dlambda}{{\bm\lambda}}
-%\newcommand{\dpi}{{\bm\pi}}
 \newcommand{\dR}{\mathbf{R}}
 \newcommand{\dQ}{\mathbf{Q}}
 \newcommand{\dS}{\mathbf{S}}
@@ -60,7 +59,6 @@
 \newcommand{\fE}{\mathfrak{E}}
 \newcommand{\fT}{\mathfrak{T}}
 \newcommand{\fU}{\mathfrak{U}}
-\newcommand{\fV}{\mathfrak{V}}
 \newcommand{\fW}{\mathfrak{W}}
 \newcommand{\fX}{\mathfrak{X}}
 \newcommand{\sF}{\mathscr{F}}
@@ -622,13 +620,13 @@ $\cU_p=\dZ_p[T^-/T(\dZ_p)]$ and think of $\cU_p$ as a single avatar for all
 of the $C_c^\infty(I_r \backslash \Delta_r^- / I_r,\dZ_p)$. Our big Hecke 
 algebra is 
 \[
-  \hida = C_c^\infty(K^p\backslash G(\dA_\finite^p)/K_p,\dQ_p)\otimes \cU_p .
+  \hida = C_c^\infty(K^p\backslash G(\dA_\finite^p)/K^p,\dQ_p)\otimes \cU_p .
 \]
 Note that $\hida\hookrightarrow \hecke_\finite\otimes \dQ_p$. So, if 
 $\sigma$ is an irreducible representation of $\hida$, we will call $\sigma$ 
 \emph{automorphic} if $\sigma=\pi_\finite^{K^p I_r}|_\hida$ for some honest 
 automorphic representation $\pi$. Note that if $G\ne \GL(n)$, the 
-representation $\pi$ may be far from unique. 
+representation $\pi$ may not be unique. 
 
 A $p$-adic family of automorphic representations of $G$ will contain 
 $K^p I_r$-spherical representations for varying $r$. We will also require the 
@@ -641,22 +639,22 @@ Let $\fW^\classical=\character^\ast(T)$ be the set of \emph{classical
 weights}. We say an automorphic representation $\pi$ is \emph{cohomological of 
 weight $\lambda$} if $\pi$ appears in some 
 $\h_\cusp^\bullet(\shimura_{K^p I_r}(G),\sV_\lambda(\dC))$. Given such a 
-representation, we have the trace map $\trace_\pi:\hida\to \dQ_p$, which 
-characterizes $\pi$ (as an $\hida$-module). 
+representation, we have the trace map $\trace_\pi:\hida\to \overline{\dQ_p}$, 
+which characterizes $\pi$ as an $\hida$-module. 
 
 \begin{definition*}
-A \emph{$p$-adic automorphic representation $\dsigma$ of $G$ of tame level 
-$K^p$} consists of :
+A \emph{$p$-adic family $\dsigma$ of automorphic representations of $G$ of 
+tame level $K^p$} consists of:
 \begin{itemize}
   \item An rigid subset $\fU\subset \fW$. 
   \item A finite flat surjection $w:\fT\to \fU$. 
   \item A $\dQ_p$-linear map $J:\hida\to \sO(\fT)$.
+  \item A dense set $\dsigma^\classical\subset\fU^\classical$. 
 \end{itemize}
-We require that there is a dense 
-subset of $\sigma\mapsto\lambda\in\fU^\classical$ for which $\lambda$ is 
-dominant and the composite 
+We require that for each $\sigma\in \dsigma^\classical$, the weight 
+$\lambda=w(\sigma)$ is dominant and the composite 
 \[
-  J_\sigma:\hida \to \sO(\fT) \xrightarrow{\mathrm{ev}_\sigma} \dC_p
+  J_\sigma:\hida \to \sO(\fT) \xrightarrow{\mathrm{ev}_\sigma} \overline{\dQ_p}
 \]
 is $m(\pi,\lambda) \trace_\pi$ for a cohomological representation $\pi$ of 
 weight $\lambda$. 
@@ -668,30 +666,38 @@ by
 \]
 In \cite{urban-2011}, Urban constructed $p$-adic families containing the 
 ``finite slope'' representations, for groups satisfying the Harish-Chandra 
-condition. 
+condition (having discrete series at infinity). 
 
 Recall that for ``nice'' automorphic representations $\pi$, there should 
 be a Galois representation 
 $\rho_{\pi,p}:G_\dQ\to \langlands G(\overline{\dQ_p})$ unramified almost 
-everywhere, such that for unramified $l$, 
-$\rho_{\pi,p}(\arithfrob_l)$ is conjugate to the Satake parameter of $\pi$ 
-at $l$. For $G=\GL(n)$, this will just be a representation 
-$G_\dQ\to \GL_n(\overline{\dQ_p})$. 
+everywhere, such that for unramified $v$, 
+$\rho_{\pi,p}(\arithfrob_v)$ is conjugate to the Satake parameter of $\pi$ 
+at $v$. For $G=\GL(n)$, this will just be a representation 
+$G_\dQ\to \GL_n(\overline{\dQ_p})$. Note that even if multiplicity-one theorems 
+fail for $G$, the trace $\trace_\pi$ determines $\rho_{\pi,p}$. So we will 
+speak of ``the Galois representation associated to $\trace_\pi$,'' bearing in 
+mind that we don't currently know how to construct $\rho_{\pi,p}$ for general 
+$G$. 
 
 \begin{conjecture*}
-Let $\dsigma=(\fU,\fV,w,J)$ be an $L$-algebraic $p$-adic automorphic 
-representation. Then there is a continuous representation 
-$\rho_\dsigma:G_\dQ\to \langlands G(\sO(\fV))$ such whenever 
-$\sigma\mapsto \lambda\in \fU^\classical$ is automorphic, the composite 
+Let $\dsigma$ be a $p$-adic family of automorphic representations of $G$ with 
+$L$-algebraic classical points. Then there is a continuous representation 
+$\rho_\dsigma:G_\dQ\to \langlands G(\sO(\fT))$ such for all 
+$\sigma\in \dsigma^\classical$, the composite 
 \[
-  \rho_\sigma:G_\dQ\to \langlands G(\sO(\fV)) \xrightarrow{\mathrm{ev}_\sigma} \langlands G(\overline{\dQ_p}) 
+  \rho_\sigma:G_\dQ\to \langlands G(\sO(\fT)) \xrightarrow{\mathrm{ev}_\sigma} \langlands G(\overline{\dQ_p}) 
 \]
-is the corresponding $p$-adic Galois representation. 
+is the Galois representation associated to $J_\sigma$.
 \end{conjecture*}
 
 This conjecture is \emph{wide} open -- we don't even know how to construct 
-individual $\rho_{\pi,p}$ for most $G$. However, for $G=\GL(2)$ and 
-$\pi$ corresponding to a $p$-ordinary form, 
+individual $\rho_{\pi,p}$ for most $G$. In \cite{su14}, Skinner 
+and Urban construct $p$-adic families of \emph{pseudorepresentations} for 
+``unitary similitude groups'' associated to an imaginary quadratic field. 
+For $G=\GL(2)$ and $\pi$ corresponding to a $p$-ordinary form, Hida has 
+constructed a big $p$-adic family containing $\pi$, and the associated 
+$p$-adic family of Galois representations. 
 
 
 
