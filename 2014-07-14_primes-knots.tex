@@ -1,19 +1,31 @@
 \documentclass[oneside]{amsart}
+\setcounter{tocdepth}{1}
 
+
+% -------------------- packages --------------------
 \usepackage{
   amsmath,
   amssymb,
   amsthm,
   bm, % bold Greek
-  extarrows, % xlongrightarrow
   mathrsfs, % mathscr
   mathtools,
-  %newtxtext,newtxmath, % Times New Roman
   stmaryrd % llbracket
 }
-\usepackage[colorlinks,linkcolor=blue]{hyperref}
-\usepackage[paperwidth=6.1in,paperheight=9.25in,textwidth=4.6in,textheight=8in]{geometry}
-\usepackage[all]{xy}
+\usepackage[
+  colorlinks,
+  linkcolor=blue
+]{hyperref}
+\usepackage[
+  paperwidth=6.1in,
+  paperheight=9.25in,
+  textwidth=4.6in,
+  textheight=8in
+]{geometry}
+
+
+
+% -------------------- special functions --------------------
 \DeclareMathOperator{\annihilator}{ann}
 \DeclareMathOperator{\automorphism}{Aut}
 \DeclareMathOperator{\automorphic}{\mathcal{A}}
@@ -37,6 +49,9 @@
 \DeclareMathOperator{\symmetric}{sym}
 \DeclareMathOperator{\trace}{tr}
 \DeclareMathOperator{\volume}{vol}
+
+
+% -------------------- special characters --------------------
 \newcommand{\cA}{\mathcal{A}}
 \newcommand{\cU}{\mathcal{U}}
 \newcommand{\cX}{\mathcal{X}}
@@ -66,6 +81,9 @@
 \newcommand{\sO}{\mathscr{O}}
 \newcommand{\sV}{\mathscr{V}}
 \newcommand{\dd}{\mathrm{d}}
+
+
+% -------------------- miscellaneous commands --------------------
 \newcommand{\abelian}{\mathrm{ab}}
 \newcommand{\analytic}{\mathrm{an}}
 \newcommand{\arithfrob}{\mathrm{fr}}
@@ -76,16 +94,20 @@
 \newcommand{\finite}{\mathrm{f}}
 \newcommand{\hecke}{\mathcal{H}}
 \newcommand{\hida}{\mathbf{h}}
-\newcommand{\iso}{\xlongrightarrow\sim}
+\newcommand{\iso}{\xrightarrow\sim}
 \newcommand{\langlands}[1]{\prescript{\textnormal{\tiny L}}{}{#1}}
 \newcommand{\mult}{\mathrm{m}}
 
+
+% -------------------- theorems --------------------
 \newtheorem*{conjecture*}{Conjecture}
 \newtheorem*{definition*}{Definition}
 
-\setcounter{tocdepth}{1}
 
-\title[Representations and deformation theory in arithmetic]{Automorphic representations and deformation theory in arithmetic geometry}
+% -------------------- document information --------------------
+\title
+  [Representations and deformation theory in arithmetic]
+  {Automorphic representations and deformation theory in arithmetic geometry}
 \author{Daniel Miller}
 \address{Department of Mathematics, Cornell University, Malott Hall, Ithaca, NY 14853, USA}
 \email{dkmiller@math.cornell.edu}
@@ -94,19 +116,20 @@
 \urladdr{http://www.math.cornell.edu/~dkmiller}
 \subjclass[2000]{11F41,11F70,11F80,11G18,13D10,14G35}
 
-\begin{document}
-%\fontsize{10.5}{12}\selectfont 
 
+% -------------------- preliminaries --------------------
+\begin{document}
 
 \begin{abstract}
 This is a brief expository note, motivated by \cite{m12}, on the analogy 
 between the character variety of the fundamental group of a hyperbolic knot, 
-and the $p$-ordinary deformation space of a Galois representation. We have 
-two goals: 1) Find an arithmetic analogue of the Jones polynomial. 2) 
-Generalize the analogy to arbitrary reductive groups, or at least $\GL(n)$. In 
-light of these goals, we begin with a lengthy aside in which we introduce 
-modular representations and Hida's $p$-ordinary Hecke algebra from the 
-perspective of automorphic Galois representations and eigenvarieties. 
+and the $p$-ordinary deformation space of a two-dimensional modular Galois 
+representation. Hopefully this analogy should generalize to arbitrary 
+reductive groups, or at least $\GL(n)$. In light of this, much of this note is 
+an introduction to the relevant objects from a general perspective. So we 
+introduce notion of a $p$-adic family of automorphic representations, and the 
+(conjecturally) corresponding family of $p$-adic Galois representations in 
+full generality. 
 \end{abstract}
 
 \maketitle
@@ -118,9 +141,7 @@ perspective of automorphic Galois representations and eigenvarieties.
 
 \section{The analogy between knots and primes}
 
-We start by recalling the analogy described in \cite[ch.3-4]{m12}. The 
-punchline is: ``a rational prime $p$ should be thought of as a knot in $S^3$.'' 
-One sees this via the \'etale topology. Recall that a morphism $f:X\to Y$ of 
+Recall that a morphism $f:X\to Y$ of 
 schemes is \emph{\'etale} if it is flat and unramified. Equivalently, $f$ is 
 flat and for each $y\in Y$, the fiber $X_y$ is the spectrum of a finite 
 product of finite separable extensions of $k(y)$. If $X$ is a connected 
@@ -128,9 +149,10 @@ noetherian scheme with chosen base point $x\in X$, the category of finite
 \'etale covers of $X$ is canonically equivalent to the category of finite 
 sets with continuous action of $\pi_1(X,x)$. Here $\pi_1(X,x)$ is the 
 \emph{\'etale fundamental group} of $X$ at $x$, which we will denote $\pi_1(X)$ 
-when $x$ is clear. A good reference for all of this is \cite{milneLEC}. To 
-save space, we will write $\pi_1(A)$ instead of $\pi_1(\spectrum A)$. 
+when $x$ is clear. To save space, we will write $\pi_1(A)$ instead of 
+$\pi_1(\spectrum A)$. A good reference for all of this is \cite{milneLEC}.
 
+We start by recalling the analogy described in \cite[ch.3-4]{m12}.
 We should think of the circle $S^1$ as a $K(\dZ,1)$-space. The arithmetic 
 analogue is $\spectrum(\dF_q)$ for any prime power $q$. Indeed, as is the case 
 for any field, 
@@ -155,10 +177,10 @@ neighborhood'' of $\spectrum(\dF_p)\hookrightarrow \spectrum(\dZ)$, namely
 $\spectrum(\dZ_p)\to \spectrum(\dZ)$. The \emph{peripheral group} of $K$ is 
 $\pi_1(V_K\smallsetminus K)\simeq \dZ^2$, corresponding to 
 $\pi_1(\spectrum(\dZ_p)\smallsetminus \spectrum(\dF_p))=\pi_1(\dQ_p)$. Finally, 
-the \emph{knot group} is $G_K=\pi_1(S^3\smallsetminus K)$, corresponding to 
-$G_{\dQ,p} = \pi_1(\dZ[\frac 1 p])$. The peripheral map 
-$\pi_1(V_K\smallsetminus K) \to G_K$ corresponds to the map 
-$\pi_1(\dQ_p) \to G_{\dQ,p}$. 
+the \emph{knot group} is $\Gamma_K=\pi_1(S^3\smallsetminus K)$, corresponding to 
+$\Gamma_{\dQ,p} = \pi_1(\dZ[\frac 1 p])$. The peripheral map 
+$\pi_1(V_K\smallsetminus K) \to \Gamma_K$ corresponds to the map 
+$\pi_1(\dQ_p) \to \Gamma_{\dQ,p}$. 
 
 Unfortunately, this analogy is not perfect. While the topological periphery 
 group $\pi_1(V_K\smallsetminus K)$ is abelian, free on generators $l,m$ 
@@ -207,8 +229,8 @@ $F$-algebra. It can be defined in many ways:
 Write $\dA_\finite=\widehat\dZ\otimes F$ for the ring of \emph{finite adeles}. 
 It is totally disconnected. 
 
-In \cite{c12}, it is shown that there is a unique product-preserving functor 
-$(-)(\dA)$ from affine schemes of finite type over $F$ to topological spaces, 
+In \cite{c12}, it is shown that there is a unique fiber-product-preserving 
+functor $(-)(\dA)$ from affine schemes of finite type over $F$ to topological spaces, 
 compatible with closed embeddings, for which $(\spectrum F[t])(\dA)=\dA$ with 
 its usual topology. In particular, if $G$ is an algebraic group over $F$, the 
 abstract group $G(\dA)$ carries the structure of a locally compact topological 
@@ -218,9 +240,7 @@ group. As such, it has a unique (up to scalar) Haar measure $\dd g$.
 \subsection{Hecke algebras}
 
 A good reference for this section is \cite{f79}. 
-
-For the remainder, $G$ is a connected reductive group over $F$. Let 
-$\fg=\lie G$. There exists 
+Let $G$ be a connected reductive group over $F$, and let $\fg=\lie G$. There exists 
 an open subset of $U\subset \spectrum(O_F)$ and a ``spreading out'' of $G$ to 
 a reductive group scheme on $U$. Up to finitely many places, this spreading out 
 is well-defined. In particular, for almost all finite places $v$, the group 
@@ -400,12 +420,12 @@ $s(\gamma x) = \rho(\gamma) s(x)$ for $\gamma\in G(\dQ)$.
 The cohomology $\h^\bullet(\shimura_K(G),\sV_\rho)$ is naturally an 
 admissible $\hecke_\finite$-module. For open compact $C\subset K$, the function 
 $\chi_{g C}$ acts via the correspondence 
-\[\xymatrix{
+\[
   \shimura_K(G) 
-    & \ar@{->>}[l] \shimura_{K\cap C}(G) \ar[r]^-{\cdot g} 
-    & \shimura_{K\cap g^{-1} C g}(G) \ar@{->>}[r] 
-    & \shimura_K(G) .
-}\]
+    \twoheadleftarrow \shimura_{K\cap C}(G) \xrightarrow{\cdot g} 
+    \shimura_{K\cap g^{-1} C g}(G) \twoheadrightarrow
+    \shimura_K(G) .
+\]
 There is a standard compactification of $\shimura_K(G)$, namely its 
 \emph{Borel-Serre compactification} $\overline\shimura_K(G)$. Define the 
 \emph{cuspidal cohomology} to be 
@@ -545,18 +565,18 @@ cohomology spaces
   \h_{\etale,\cusp}^1(X_0(n)_{\overline\dQ},\overline{\dQ_l}) \simeq S_2(\Gamma_0(n),\dC) .
 \]
 These have commuting actions of 
-$G_{\dQ,l n}=\pi_1(\dZ[\frac{1}{l n}])$ and 
-$\hecke_\finite$. So $G_{\dQ,l n}$ acts on each $\hecke_\finite$-irreducible 
+$\Gamma_{\dQ,l n}=\pi_1(\dZ[\frac{1}{l n}])$ and 
+$\hecke_\finite$. So $\Gamma_{\dQ,l n}$ acts on each $\hecke_\finite$-irreducible 
 piece. These pieces are 2-dimensional, so we get, for each cuspidal eigenform 
 $f$, a Galois representation 
-$\rho_{f,l}:G_{\dQ,nl} \to \GL_2(\overline{\dQ_l})$. 
+$\rho_{f,l}:\Gamma_{\dQ,nl} \to \GL_2(\overline{\dQ_l})$. 
 The \emph{Eichler-Shimura relation} basically tells us that the Hecke and 
 Frobenius parameters for $\pi_f$ and $\rho_{f,l}$ match up. That is, for all 
 $p\nmid l n$, we have 
 $\rho_{f,l}(\arithfrob_p) = \sigma_p(\pi_f)$, or equivalently 
 $L_p(\rho_{f,l},s) = L_p(\pi_f,s)$. 
 
-It is known that $\rho_{f,l}:G_{\dQ,l n} \to \GL_2(\overline{\dQ_l})$ 
+It is known that $\rho_{f,l}:\Gamma_{\dQ,l n} \to \GL_2(\overline{\dQ_l})$ 
 factors through $\GL_2(K_{f,\lambda})$, where 
 $K_f = \dQ(a_p(f):p\text{ prime})$ is a number field and $\lambda$ is a place 
 of $K_f$ dividing $l$. An elementary argument shows that we can conjugate 
@@ -564,11 +584,11 @@ the image of $\rho_{f,l}$ to lie in $\GL_2(O_{f,\lambda})$, where
 $O_f=O_{K_f}$. In particular, we can reduce $\rho_{f,l}$ modulo $\lambda$ 
 to get a continuous representation 
 \[
-  \bar\rho_{f,l}:G_{\dQ,l n} \to \GL_2(O_{f,\lambda}/\lambda) = \GL_2(\dF_\lambda) .
+  \bar\rho_{f,l}:\Gamma_{\dQ,l n} \to \GL_2(O_{f,\lambda}/\lambda) = \GL_2(\dF_\lambda) .
 \]
-We say that a mod-$l$ representation of $G_\dQ$ is \emph{modular} (better, 
+We say that a mod-$l$ representation of $\Gamma_\dQ$ is \emph{modular} (better, 
 \emph{automorphic}) if it is of the form $\bar\rho_{f,l}$ for some $f$. 
-Similarly, we say that an $l$-adic representation of $G_\dQ$ is 
+Similarly, we say that an $l$-adic representation of $\Gamma_\dQ$ is 
 \emph{modular} (better, \emph{automorphic}) if it is of the form 
 $\rho_{f,l}$ for some $l$. 
 
@@ -660,7 +680,6 @@ is $m(\pi,\lambda) \trace_\pi$ for a cohomological representation $\pi$ of
 weight $\lambda$. 
 \end{definition*}
 Here $m(\pi,\lambda)$ is the \emph{Euler-Poincar\'e characteristic} 
-by 
 \[
   m(\pi,\lambda) = \sum (-1)^i \dim\hom_\hida(\pi^{K^p I_r},\h_\cusp^i(\shimura_{K^p I_r}(G),\sV_\lambda(\dC)) .
 \]
@@ -670,11 +689,11 @@ condition (having discrete series at infinity).
 
 Recall that for ``nice'' automorphic representations $\pi$, there should 
 be a Galois representation 
-$\rho_{\pi,p}:G_\dQ\to \langlands G(\overline{\dQ_p})$ unramified almost 
+$\rho_{\pi,p}:\Gamma_\dQ\to \langlands G(\overline{\dQ_p})$ unramified almost 
 everywhere, such that for unramified $v$, 
 $\rho_{\pi,p}(\arithfrob_v)$ is conjugate to the Satake parameter of $\pi$ 
 at $v$. For $G=\GL(n)$, this will just be a representation 
-$G_\dQ\to \GL_n(\overline{\dQ_p})$. Note that even if multiplicity-one theorems 
+$\Gamma_\dQ\to \GL_n(\overline{\dQ_p})$. Note that even if multiplicity-one theorems 
 fail for $G$, the trace $\trace_\pi$ determines $\rho_{\pi,p}$. So we will 
 speak of ``the Galois representation associated to $\trace_\pi$,'' bearing in 
 mind that we don't currently know how to construct $\rho_{\pi,p}$ for general 
@@ -683,10 +702,10 @@ $G$.
 \begin{conjecture*}
 Let $\dsigma$ be a $p$-adic family of automorphic representations of $G$ with 
 $L$-algebraic classical points. Then there is a continuous representation 
-$\rho_\dsigma:G_\dQ\to \langlands G(\sO(\fT))$ such for all 
+$\rho_\dsigma:\Gamma_\dQ\to \langlands G(\sO(\fT))$ such for all 
 $\sigma\in \dsigma^\classical$, the composite 
 \[
-  \rho_\sigma:G_\dQ\to \langlands G(\sO(\fT)) \xrightarrow{\mathrm{ev}_\sigma} \langlands G(\overline{\dQ_p}) 
+  \rho_\sigma:\Gamma_\dQ\to \langlands G(\sO(\fT)) \xrightarrow{\mathrm{ev}_\sigma} \langlands G(\overline{\dQ_p}) 
 \]
 is the Galois representation associated to $J_\sigma$.
 \end{conjecture*}
@@ -713,12 +732,12 @@ motivation for studying deformations of Galois representations. If $X$ is a
 nice (that is smooth, projective and geometrically integral) variety over 
 $\dQ$, its \'etale cohomology 
 $\h_\etale^\bullet(X_{\overline\dQ},\dQ_l)$ carries a continuous 
-action of $G_\dQ$. The ``right'' way to see this is as follows. Spread out 
+action of $\Gamma_\dQ$. The ``right'' way to see this is as follows. Spread out 
 $X$ to a smooth proper scheme $\cX$ over an open 
 $U= \spectrum(\dZ)\smallsetminus S$. Write $\pi:\cX\to U$ for the structure 
 map. Then $\eR^\bullet \pi_\ast \dQ_l$ is a local system on 
 $U_\etale$. The \'etale version of covering space theory tells us that local 
-systems correspond to representations of $\pi_1(U)=G_{\dQ,S}$. 
+systems correspond to representations of $\pi_1(U)=\Gamma_{\dQ,S}$. 
 
 The motivating example was the representation $\rho_{E,l}$ coming from an 
 elliptic curve $E\xrightarrow\pi U$ via $\eR^1 \pi_\ast \dQ_l$. Langlands' 
@@ -731,14 +750,14 @@ deformation theory is to prove that the automorphy of $\bar\rho_{E,l}$
 implies that of $\rho_{E,l}$. 
 
 More generally, given an $l$-adic Galois 
-representation $\rho:G_{\dQ,S}\to \GL_n(\dQ_l)$ that is suitably nice 
+representation $\rho:\Gamma_{\dQ,S}\to \GL_n(\dQ_l)$ that is suitably nice 
 (\emph{geometric}, in the sense of Fontaine-Mazur \cite{fontain-mazur-1995}), 
 Langlands' program tells us that we should expect there to be a cuspidal 
 automorphic representation $\pi$ of $\GL(n)$ such that 
 $\rho\simeq \rho_{\pi,l}$ (assuming we knew how to construct $\rho_\pi$ in 
 general). Proving that $\rho$ is automorphic is very hard! However, we have a 
 much better chance (in theory and in practice) of showing that 
-$\bar\rho:G_{\dQ,S} \to \GL_n(\dF_l)$ is automorphic. A theorem to the 
+$\bar\rho:\Gamma_{\dQ,S} \to \GL_n(\dF_l)$ is automorphic. A theorem to the 
 effect that ``$\bar\rho$ automorphic $\Rightarrow\rho$ automorphic'' is known 
 as a \emph{automorphy lifting theorem}. In practice, one has to impose many 
 technical conditions on $\bar\rho$ and the automorphic representation with 
@@ -776,11 +795,11 @@ interested in the connected component $X_K(\rho)$.
 \subsection{Deformation functors}
 
 The analogous situation in number theory is much more complicated, partly 
-because $G_S=\pi_1(\spectrum(\dZ)\smallsetminus S)$ is not a finitely presented 
+because $\Gamma_S=\pi_1(\spectrum(\dZ)\smallsetminus S)$ is not a finitely presented 
 group -- it's a compact topological group which is (conjecturally) 
 \emph{topologically} finitely presented. So instead of looking for 
-representations $G_S\to \GL_2(\dC)$, we should look for continuous 
-representations $G_S\to \GL_2(A)$, where $A$ is a topological $\dZ_p$-algebra. 
+representations $\Gamma_S\to \GL_2(\dC)$, we should look for continuous 
+representations $\Gamma_S\to \GL_2(A)$, where $A$ is a topological $\dZ_p$-algebra. 
 
 Briefly, a scheme $X$ over $k$ can be thought of in terms of its functor of 
 points $X(-):k\textnormal{-}\mathsf{Alg}\to \mathsf{Set}$. In the arithmetic 
@@ -843,7 +862,7 @@ $\dF_p$.
 The easiest example is when our representations take values in $\GL(1)$. Let 
 $\pi=\pi_1(\dZ[\frac 1 p])$ and 
 $\bar\rho=\bar\kappa:\pi\to \GL_1(\dF_p)$ be the \emph{mod-$p$ cyclotomic 
-character}. This is defined, for $\sigma\in G_\dQ$, by 
+character}. This is defined, for $\sigma\in \Gamma_\dQ$, by 
 \[
   \sigma(\zeta_p) = \zeta_p^{\bar\kappa(\sigma)} .
 \]
@@ -880,7 +899,7 @@ $D_K=\pi_1(\mathrm{torus})$ is abelian, so
 \[
   \rho_K|_{D_K} \sim \begin{pmatrix} \varepsilon & \ast \\ & \varepsilon^{-1} \end{pmatrix} ,
 \]
-for some character $\varepsilon:G_K\to \dC^\times$. In particular, 
+for some character $\varepsilon:\Gamma_K\to \dC^\times$. In particular, 
 $\varepsilon(I_K)=1$. So to make the analogy between knots and primes more 
 precise, we should require that our residual Galois representation 
 $\bar\rho:\pi \to \GL_2(\dF_p)$ be \emph{$p$-ordinary} in the sense that 
@@ -949,8 +968,8 @@ family $\bm f$ of automorphic representations containing $f$. In fact, Hida
 for $\fT^\circ=\formalspectrum(\hida^\circ)$, \emph{all} $p$-ordinary forms 
 of tame level $n$ which are congruent to $f$ lie in $\fT^\circ$. Moreover, 
 there is the associated Galois representation 
-$\rho_{\bm f}:G_\dQ\to \GL_2(\hida^\circ)$, such that \emph{all} $p$-ordinary 
-modular Galois representations congruent to $\rho_f$ come from 
+$\rho_{\bm f}:\Gamma_\dQ\to \GL_2(\hida^\circ)$, such that \emph{all} $p$-ordinary 
+modular Galois representations congruent to $\rho_{f,p}$ come from 
 $\hida^\circ$. 
 
 
@@ -961,7 +980,7 @@ $\hida^\circ$.
 
 Let $f$ be a $p$-ordinary cuspidal eigenform. Put $\rho=\rho_{f,p}$. Let 
 $\fT^\circ=\formalspectrum(\hida^\circ)$ be the corresponding $p$-adic family 
-of modular forms, and $\rho_{\bm f}:G_\dQ\to \GL_2(\hida^\circ)$ the Galois 
+of modular forms, and $\rho_{\bm f}:\Gamma_\dQ\to \GL_2(\hida^\circ)$ the Galois 
 representation. Since $\rho_{\bm f}\equiv \bar\rho_{f,p} \pmod p$ and 
 $\rho_{\bm f}$ is $p$-ordinary, we get a map 
 $R_{\bar\rho_f}^\circ \to \hida^\circ$, equivalently 
