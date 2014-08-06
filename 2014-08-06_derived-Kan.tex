@@ -1,12 +1,10 @@
 \documentclass{amsart}
 
-\usepackage{amsmath,amssymb,hyperref,microtype,mathrsfs}
+\usepackage{amsmath,amssymb}
+\usepackage[colorlinks,linkcolor=blue]{hyperref}
 \usepackage[all]{xy}
-\DeclareMathOperator{\adjoint}{ad}
-\DeclareMathOperator{\GL}{GL}
 \DeclareMathOperator{\h}{H}
 \DeclareMathOperator{\hoker}{hok}
-\DeclareMathOperator{\spectrum}{Spec}
 \newcommand{\cA}{\mathcal{A}}
 \newcommand{\cB}{\mathcal{B}}
 \newcommand{\cC}{\mathcal{C}}
@@ -14,15 +12,10 @@
 \newcommand{\cE}{\mathcal{E}}
 \newcommand{\cX}{\mathcal{X}}
 \newcommand{\cY}{\mathcal{Y}}
-\newcommand{\dF}{\mathbf{F}}
-\newcommand{\dZ}{\mathbf{Z}}
 \newcommand{\eD}{\mathsf{D}}
 \newcommand{\eK}{\mathsf{K}}
 \newcommand{\eL}{\mathsf{L}}
 \newcommand{\eR}{\mathsf{R}}
-\newcommand{\sF}{\mathscr{F}}
-\newcommand{\sL}{\mathscr{L}}
-\newcommand{\abelian}{\mathrm{ab}}
 \newcommand{\lan}{\mathrm{L}}
 \newcommand{\ran}{\mathrm{R}}
 \DeclareFontFamily{U}{wncy}{}
@@ -30,86 +23,11 @@
 \DeclareSymbolFont{mcy}{U}{wncy}{m}{n}
 \DeclareMathSymbol{\sha}{\mathord}{mcy}{"58} 
 
-\title{Selmer groups in arithmetic topology}
+\title{Derived functors as Kan extensions}
 \author{Daniel Miller}
 
 \begin{document}
 \maketitle
-
-
-
-
-
-In the first couple sections I construct things in a relatively elementary way. 
-The rest of this note looks at categorical foundations. 
-
-
-
-
-
-\section{Arithmetic setup}
-
-Let $F$ be a number field, $S$ a finite set of places of $F$. Write 
-$G_{F,S}=\pi_1(\spectrum(O_F)\smallsetminus S)$ for the Galois group of the 
-maximal extension of $F$ unramified outside $S$. Let $M$ be a 
-$G_{F,S}$-module. The \emph{$S$-Tate-Shafarevich group} of $M$ is 
-\[
-  \sha_S^\bullet(M) = \ker\left(\h^\bullet(G_{F,S},M) \to \bigoplus_{v\in S} \h^\bullet(G_v,M)\right) ,
-\]
-where $G_v=\pi_1(F_v)$ is the decomposition group at $v$. Let's start by giving 
-a geometric definition of $\sha$. 
-
-Let $X=\spectrum(O_F)$, and let $S\subset X$ be a closed subscheme. Write 
-$i:S\hookrightarrow X$ and $j:U=X\smallsetminus S\hookrightarrow X$ for the 
-inclusion maps. We should think of the $G_{F,S}$-module $M$ as being a locally 
-constant sheaf $\sF$ on $U$. The question is: how should we think of 
-$\bigoplus_{v\in S} \h^\bullet(G_v,M)$? Let $S^+$ be the infinitesimal \'etale 
-neighborhood of $S$. Then $S^+=\coprod_{v\in S} \spectrum(O_{F,v})$. It follows 
-that 
-\[
-  \partial S = S^+\smallsetminus S = \coprod_{v\in S} \spectrum(F_v) .
-\]
-Locally constant sheaves on $\partial S$ are the same thing as a collection of 
-$G_v$-modules for $v\in S$. The analogue of ``treating $M$ as a $G_v$-module'' 
-is $j_\ast \sF|_{\partial S}$. So our sheaf-theoretic Tate-Shafarevich group is 
-\[
-  \sha_S^\bullet(\sF) = \ker\left(\h^\bullet(U,\sF) \to \h^\bullet(\partial S,j_\ast \sF|_{\partial S})\right) .
-\]
-
-A common place for these groups to arise is in deformation theory. If 
-$\bar\rho:G_{F,S}\to \GL_2(\dF_q)$ is a Galois representation, one wants 
-$\sha_S^1(\adjoint \bar\rho)$ to vanish. Often, by enlarging $S$ cleverly, one 
-can ensure this. 
-
-
-
-
-
-\section{Topological analogue}
-
-Let $M$ be a three manifold and let $L\subset M$ be a link (not just a knot -- 
-this is important). Put $U=M\smallsetminus L$, and let $\sL$ be a local system 
-on $U$. Let $j:U\hookrightarrow M$ be the inclusion. Let $V_L$ be a tubular 
-neighborhood of $L$, and put $\partial V_L=V_L\smallsetminus L$ (this 
-deformation retracts onto a union of tori). The \emph{topological 
-Tate-Shafarevich group} is 
-\[
-  \sha_L^\bullet(\sL) = \ker\left(\h^\bullet(U,\sL) \to \h^\bullet(\partial V_L,j_\ast \sL|_{\partial V_L})\right) .
-\]
-General question: is $\sha_L^\bullet(\sL)$ an ``already known object''? If so, 
-what role does it play?
-
-Let's look at a baby example. Let $K\subset S^3$ be a knot, $\sL$ the constant 
-sheaf $\dZ$. Then 
-\begin{align*}
-  \sha_K^1(\dZ) 
-    &= \ker\left(\hom(\pi_1(U),\dZ) \to \hom(\pi_1(\partial V_L),\dZ)\right) \\
-    &= \ker\left(\hom(G_K^\abelian,\dZ) \to \dZ^2\right) \\
-    &= \left(G_K^\abelian / \dZ^2\right)^\vee ,
-\end{align*}
-where $\dZ^2\to G_K$ is the peripheral map. Since $G_K^\abelian=\dZ$, this 
-``topological Tate-Shafarevich group'' is cyclic. It's not clear to me whether 
-we can say much about general $\sha_L^1(\sL)$. 
 
 
 
