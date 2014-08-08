@@ -1,6 +1,6 @@
 \documentclass{amsart}
 
-\usepackage{amsmath,amssymb,amsthm,fullpage,stmaryrd}
+\usepackage{amsmath,amssymb,amsthm,bm,fullpage,stmaryrd}
 \usepackage[all]{xy}
 \usepackage[colorlinks,linkcolor=blue]{hyperref}
 \DeclareMathOperator{\adjoint}{ad}
@@ -22,6 +22,11 @@
 \newcommand{\iso}{\xrightarrow\sim}
 \newcommand{\mmu}{\boldsymbol\mu}
 \newcommand{\mult}{\mathrm{m}}
+%sha
+\DeclareFontFamily{U}{wncy}{}
+\DeclareFontShape{U}{wncy}{m}{n}{<->wncyr10}{}
+\DeclareSymbolFont{mcy}{U}{wncy}{m}{n}
+\DeclareMathSymbol{\sha}{\mathord}{mcy}{"58} 
 \newtheorem{theorem}[subsection]{Theorem}
 
 \title{Basic results in the deformation theory of Galois representations}
@@ -60,9 +65,6 @@ exact sequence
 }\]
 
 
-
-
-
 \subsection{Duality theorems for Galois cohomology}
 
 Let $l$ be a prime, $X$ a connected noetherian scheme on which $l$ is 
@@ -85,6 +87,28 @@ Let $\pi=\pi_1(k)$, and let $M$ be a $\pi$-module. Suppose we want to compute
 $h^\bullet(M)$. It should be possible to compute 
 $h^0(M)$ and $h^2(M)=h^0(M^\vee(1))$. We then use the Euler-Poincar\'e characteristic 
 formula of Tate \cite[7.3.1]{nsw08} to do this. 
+
+
+\subsection{Tate-Shafarevich groups and sets of places}
+
+Let $F$ be a number field, $S$ a finite set of places of $F$. If $M$ is a 
+$G_{F,S}$-module, put 
+\[
+  \sha_S^1(M) = \ker\left(\h^1(G_{F,S},M) \to \bigoplus_{v\in S} \h^1(G_v,M)\right) .
+\]
+If $S\subset T$, then one can naturally identify $\sha_S^1(M)$ with a subgroup of 
+$\sha_T^1(M)$. Indeed, there is a natural injection (inflation) 
+$\h^1(G_{F,S},M) \to \h^1(G_{F,T},M)$ coming from the projection 
+$G_{F,T}\twoheadrightarrow G_{F,S}$. The five-term inflation-restriction exact 
+sequence \cite[1.6.7]{nsw08} tells us that the image of the inflation map is 
+the kernel of the restriction map $\h^1(G_{F,T},M) \to \h^1(H,M)$, where 
+$H=\ker(G_{F,T}\to G_{F,S})$. The point is that 
+$H=\langle I_v:v\in T\smallsetminus S\rangle$. So if $c\in \sha_T(M)$, then 
+$c|_v=0$ for all $v\in T\smallsetminus S$, so certainly $c$ is induced from 
+an element of $\h^1(G_{F,S},M)$. What remains is the easy verification of 
+$c\in \sha_S(M)$. To be precise, 
+$\sha_T^1(M)\subset \h^1(G_{F,T},M)$ is a subset of the image of 
+$\sha_S^1(M)\subset \h^1(G_{F,S},M)$ under the (injective) inflation map. 
 
 
 
