@@ -1,0 +1,96 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb,mathrsfs}
+\DeclareMathOperator{\GL}{GL}
+\DeclareMathOperator{\h}{H}
+\newcommand{\cO}{\mathcal{O}}
+\newcommand{\dA}{\mathbf{A}}
+\newcommand{\dR}{\mathbf{R}}
+\newcommand{\dQ}{\mathbf{Q}}
+\newcommand{\dZ}{\mathbf{Z}}
+\newcommand{\fa}{\mathfrak{a}}
+\newcommand{\fp}{\mathfrak{p}}
+\newcommand{\sV}{\mathscr{V}}
+\newcommand{\finite}{\mathrm{f}}
+
+\title{Towards an adelic completed cohomology}
+\author{Daniel Miller}
+
+\begin{document}
+\maketitle
+
+
+
+
+Let $F$ be a number field, $G$ a split reductive group over $F$. For an 
+open compact subgroup $K_\finite\subset G(\dA_\finite)$, we have the associated 
+locally symmetric space 
+\[
+  Y(K_\finite) = G(F) \backslash G(\dA_F) / K_\finite K_\infty Z_\infty .
+\]
+Let $E\supset F$. If $\rho$ is a representation of $G$ defined over $E$, then 
+there is a compatible system of sheaves $\sV_\rho$ on the $Y(K_\finite)$. One 
+often studies the cohomology 
+\[
+  \h^\bullet(\sV_\rho) = \varinjlim_{K_\finite} \h^\bullet(Y(K_\finite),\sV_\rho) .
+\]
+We can do better. Since $G$ is split, it and $\rho$ descend to objects over 
+$\cO_E$. Thus we can define the \emph{adelic completed cohomology} 
+\[
+  \mathbf{H}^\bullet(\sV_\rho) = \dQ\otimes \varprojlim_{\fa\subset \cO_E} \varinjlim_{K_\finite} \h^\bullet(Y(K_\finite),\sV_\rho / \fa) .
+\]
+Since $\dA_{E,\finite}=\dQ\otimes\varprojlim_\fa \cO_E/\fa$, this is naturally a 
+$\dA_{E,\finite}$-module. Moreover, it has a continuous action of 
+$G(\dA_{F,\finite})$. Unfortunately, this will probably not be very 
+interesting. Note that for each $\fa\subset O_E$, 
+\[
+  \sV_\rho/\fa = \prod_{\fp\mid\fa} \sV_\rho / \fp^{v_\fp(\fa)} .
+\]
+It follows that $\mathbf{H}^\bullet(\sV_\rho)$ is a restricted direct product 
+of the 
+$\varprojlim_e \varinjlim_{K_\finite} \h^\bullet(Y(K_\finite),\sV_\rho/\fp^e)$. 
+This is very close to Emerton's completed cohomology. 
+
+The question is what topology to put on $\mathbf{H}^\bullet(\sV_\rho)$, and 
+what sort of inductive and projective limits to take. It would need to live 
+inside a ``good'' category of representations of $G(\dA_{F,\finite})$. These 
+would have to be $\dA_{E,\finite}$-modules of infinite rank. 
+
+
+
+
+
+\section{The case of tori}
+
+Let $G=T$ be a torus over $F$, and put $E=F$. For 
+$K_\finite\subset \dA_\finite^\times$, the quotient 
+$Y(K_\finite)=T(F)\backslash T(\dA_F) / K_\finite T(F_\infty)$ is a 
+finite set. In particular, for $\rho=1$, our cohomology is concentrated in 
+degree zero. We have 
+\[
+  \mathbf{H}^0 = \dQ\otimes \varprojlim_{\fa\subset \cO_F} \varinjlim_{K_\finite} (\cO_E/\fa)^{\pi_0(Y(K_\finite))}
+\]
+Suppose $T$ is split, so that $T$ descends to a torus over $O_F$. Then the 
+$K(\fa) = \ker(T(\widehat{\cO_F}) \to T(\cO_F/\fa))$ form a system of neighborhoods 
+of the identity in $T(\dA_\finite)$. 
+
+Let's try $T=\GL(1)$, $F=\dQ$. Then 
+\begin{align*}
+  Y(K(n))
+    &= \dQ^\times \backslash \dA^\times / K(n) R^\times \\
+    &= \widehat\dZ^\times / K(n) \\
+    &= (\dZ/n)^\times .
+\end{align*}
+For given $a\in \dZ$, the inductive limit $\varinjlim \h^0(Y_0(K(n)),\dZ/a)$ is 
+just $C^\infty(\widehat\dZ^\times,\dZ/a)$, that is continuous maps 
+$\widehat\dZ^\times \to \dZ/a$. From the definition of projective limits, we 
+get that $\mathbf{H}^0$ is the space of continuous maps 
+$\widehat\dZ^\times \to \dA$. This is a huge monstrosity! But how is this a 
+representation of $\dA_\finite^\times$?
+
+
+
+
+
+\end{document}
+
