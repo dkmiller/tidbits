@@ -16,13 +16,6 @@
   colorlinks,
   linkcolor=blue
 ]{hyperref}
-%\usepackage[
-%  paperwidth=6.1in,
-%  paperheight=9.25in,
-%  textwidth=4.6in,
-%  textheight=8in
-%]{geometry}
-
 
 
 % -------------------- special functions --------------------
@@ -161,9 +154,10 @@ the Frobenius $\arithfrob_q(x)=x^q$. The arithmetic analogue of a $3$-manifold
 is $X=\spectrum(O_F)\smallsetminus S$ for any number field $F$ and finite set 
 $S$ of primes in $O_F$. Indeed, for constructible sheaves $\sF$ on $X$, there 
 is a ``$3$-dimensional duality'' 
-$\extension^\bullet(\sF,\dG_\mult) = \h_c^{3-\bullet}(X,\sF)^\vee$ similar to 
+$\extension^\bullet(\sF,\dG_\mult) = \h_c^{3-\bullet}(X,\sF)^\vee$ 
+\cite[2.4]{mazur-1973} similar to 
 the classical Artin-Verdier duality 
-$\extension^\bullet(\sL,\dZ) = \h_c^{3-\bullet}(M,\sL)^\vee$ for local systems 
+$\extension^\bullet(\sL,\dQ) = \h_c^{3-\bullet}(M,\sL)^\vee$ for local systems 
 on a $3$-manifold $M$. 
 
 In topology, a knot is an embedding $K:S^1\hookrightarrow S^3$. More generally, 
@@ -240,7 +234,7 @@ group. As such, it has a unique (up to scalar) Haar measure $\dd g$.
 \subsection{Hecke algebras}
 
 A good reference for this section is \cite{f79}. 
-Let $G$ be a connected reductive group over $F$, and let $\fg=\lie G$. There exists 
+Let $G$ be a connected reductive group over $F$, and let $\fg=\lie(G)$. There exists 
 an open subset of $U\subset \spectrum(O_F)$ and a ``spreading out'' of $G$ to 
 a reductive group scheme on $U$. Up to finitely many places, this spreading out 
 is well-defined. In particular, for almost all finite places $v$, the group 
@@ -319,7 +313,7 @@ Then $\cA(G,\omega)$ is naturally a $\hecke$-module, and as such,
 decomposes as a countable direct sum of irreducible representations with finite 
 multiplicities: 
 \begin{equation}\label{eq:aut-decomp}
-  \cA(G,\omega) = \bigoplus_\pi m(\pi) \pi .
+  \cA(G,\omega) = \bigoplus_{\pi\in \widehat G_\mathrm{c.a}(\omega)} m(\pi) \pi .
 \end{equation}
 We call the irreducible admissible representations of $\hecke$ appearing in 
 \eqref{eq:aut-decomp} \emph{automorphic representations} of $G$. By 
@@ -441,6 +435,11 @@ The notation $\h^\bullet(\hecke_\infty,-)$ needs explanation. There is a good
 category of admissible $\hecke_\infty$-modules, and $\hom(\dC,-)$ is 
 left-exact. Its derived functor is the $(\fg_\infty,K_\infty)$-cohomology 
 $\h^\bullet(\hecke_\infty-)$. 
+
+Better:
+\[
+  \h^\bullet_\cusp(\shimura(G),\sV_\rho) = \bigoplus_{\pi\in \widehat G_\mathrm{c}(\omega)}\h^\bullet(\hecke_\infty,\pi_\infty\otimes\rho)\otimes \pi_\finite .
+\]
 
 
 \subsection{Canonical models}\label{sec:can-model}
