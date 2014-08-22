@@ -1,0 +1,60 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb,amsthm,fullpage}
+\newcommand{\cT}{\mathcal{T}}
+\newcommand{\fp}{\mathfrak{p}}
+\newcommand{\Ainf}{\mathbf{A}_\mathrm{inf}}
+\newcommand{\frobenius}{\mathrm{fr}}
+\newtheorem{theorem}{Theorem}
+
+\title{Conceptual approach to Fontaine's period rings}
+\author{Daniel Miller}
+
+\begin{document}
+\maketitle
+
+
+
+
+
+The ideas here are inspired by \cite{fontaine-1994} and \cite{scholze-2012}. 
+Fix a ring $\Lambda$, an ideal $\fp\subset \Lambda$, and a $\Lambda$-algebra 
+$V$. The category $\cT^{\leqslant m}(\fp) = \cT_\Lambda^{\leqslant m}(V,\fp)$ 
+of \emph{$\fp$-adic pro-infinitesimal $\Lambda$-thickenings of $V$ of order 
+$\leqslant m$} consists of pairs $(D,\theta)$, where $D$ is a $\fp$-adically 
+complete $\Lambda$-algebra, $\theta:D\to V$ is a surjection, and moreover 
+$(\ker\theta)^{m+1}=0$. The category $\cT^\infty(\fp)$ of 
+\emph{$\fp$-adic pro-infinitesimal $\Lambda$-thickenings} of $V$ consists of 
+similar pairs, except that now we require $D$ to be separated and complete with 
+respect to $I_D=\ker(\theta)$. 
+
+\begin{theorem}
+Let $\fp=(p)$, and suppose $V$ is $p$-adically complete and 
+$\frobenius:V/p\to V/p$ is surjective. Then $\cT^\infty(p)$ has an initial 
+object $\Ainf(V/\Lambda)$. 
+\end{theorem}
+\begin{proof}
+One constructs $\Ainf$ directly. Start by putting 
+$V^\flat = \varprojlim_\frobenius V/p$. Our assumptions on $V$ make the map 
+$(-)^\sharp:V^\flat \to V$ given by 
+\[
+  x^\sharp = \lim_{n\to \infty} \widetilde{x_n}^{p^n} 
+\]
+a well-defined multiplicative map. It induces a ring map 
+$\theta:W(V^\flat) \to V$ by $[x]\mapsto x^\sharp$. The ring 
+$\Ainf(V/\Lambda)$ is the completion of 
+$W(V^\flat)_\Lambda$ with respect to $\ker(\theta:W(V^\flat)_\Lambda\to V)$. 
+The basic idea is: suppose we have $\theta:D\twoheadrightarrow V$. Define 
+$(-)^\sharp:V^\flat\to D$ just as above; this is multiplicative, and induces 
+a unique $\theta:W(V^\flat)_\Lambda\to D$, which in turn factors uniquely 
+through its completion $\Ainf(V/\Lambda)$. 
+\end{proof}
+
+
+
+
+
+\bibliographystyle{alpha}
+\bibliography{tidbit-sources}
+
+\end{document}
