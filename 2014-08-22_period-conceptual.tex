@@ -1,10 +1,27 @@
 \documentclass{article}
 
-\usepackage{amsmath,amssymb,amsthm,fullpage}
+\usepackage{amsmath,amssymb,amsthm,bookmark,fullpage,tikz-cd}
+\DeclareMathOperator{\filtration}{fil}
+\DeclareMathOperator{\graded}{gr}
+\DeclareMathOperator{\symmetric}{Sym}
 \newcommand{\cT}{\mathcal{T}}
+\newcommand{\dF}{\mathbf{F}}
+\newcommand{\dQ}{\mathbf{Q}}
+\newcommand{\dZ}{\mathbf{Z}}
 \newcommand{\fp}{\mathfrak{p}}
-\newcommand{\Ainf}{\mathbf{A}_\mathrm{inf}}
+\newcommand{\algebra}{\mathsf{Alg}}
 \newcommand{\frobenius}{\mathrm{fr}}
+\newcommand{\Perf}{\mathsf{Pf}}
+\newcommand{\perf}{\mathsf{pf}}
+% period rings and related objects
+  \newcommand{\Ainf}{\mathbf{A}_\mathrm{inf}}
+  \newcommand{\Binf}{\mathbf{B}_\mathrm{inf}}
+  \newcommand{\Acris}{\mathbf{A}_\mathrm{cris}}
+  \newcommand{\Bcris}{\mathbf{B}_\mathrm{cris}}
+  \newcommand{\Bdr}{\mathbf{B}_\mathrm{dR}}
+  \newcommand{\Bht}{\mathbf{B}_\mathrm{HT}}
+  \newcommand{\Bst}{\mathbf{B}_\mathrm{st}}
+  \DeclareMathOperator{\units}{U}
 \newtheorem{theorem}{Theorem}
 
 \title{Conceptual approach to Fontaine's period rings}
@@ -16,6 +33,8 @@
 
 
 
+
+\section{Brief overview}
 
 The ideas here are inspired by \cite{fontaine-1994} and \cite{scholze-2012}. 
 Fix a ring $\Lambda$, an ideal $\fp\subset \Lambda$, and a $\Lambda$-algebra 
@@ -49,6 +68,151 @@ $(-)^\sharp:V^\flat\to D$ just as above; this is multiplicative, and induces
 a unique $\theta:W(V^\flat)_\Lambda\to D$, which in turn factors uniquely 
 through its completion $\Ainf(V/\Lambda)$. 
 \end{proof}
+
+The ring $\Bdr^+(V/\Lambda)$ is the completion of $\Ainf(V/\Lambda)[\frac 1 p]$ 
+with respect to $\ker(\theta)$. 
+\[
+  \log[\cdot]:\mathrm{U}^\times \to \Bdr
+\]
+The category $\perf$ consists of $\dF_p$-algebras $A$ such that  
+$\frobenius:R\to R$ is surjective. The category $\Perf$ consists of 
+$p$-adically separated and complete rings $A$ such that $A/p\in \perf$. 
+There are functors $-\otimes \dF_p:\Perf\to \perf$ and 
+$W(-):\perf\to \Perf$. Note that $(W,\otimes\dF_p)$ is an adjoint pair.
+\[\begin{tikzcd}
+  \mathsf{Pf} \ar[r, "W"] 
+    & \mathsf{pf}
+\end{tikzcd}\]
+If $\Bcris(V/\Lambda)$ is a divided power envelope, then its universal 
+property should give a map $\Bcris\to \Bdr$. The trickier ring is 
+$\Bst$. Also note that 
+\[
+  \operatorname{gr}^\bullet\Bdr = \mathbf{B}_\mathrm{HT} .
+\]
+
+
+
+
+
+\section{Some categories and functors}
+
+Let $A$ be a reduced $\dF_p$-algebra. Then $\frobenius:A\to A$ is injective, so 
+$\varprojlim_\frobenius A = \bigcap \frobenius^n(A)$. This motivates our 
+general definition of $\frobenius^\infty(A)=\varprojlim_\frobenius A$. The ring 
+$\frobenius^\infty(A)$ is an ``$\dF_p$-algebra with splitting.'' That is, it 
+comes with a canonical section $(-)^{1/p}:(a_0,a_1,\dots)\mapsto(a_1,\dots)$ of 
+Frobenius. Let $\perf$ denote the category of such algebras. That is, an object 
+of $\perf$ is a pair $(A,(-)^{1/p})$, where $A$ is an $\dF_p$-algebra and 
+$(-)^{1/p}:A\to A$ is a section of $\frobenius:A\to A$. So $\frobenius^\infty$ 
+is a functor $\algebra(\dF_p)\to \perf$. In fact, one can easily check that 
+\[
+  \hom_{\algebra(\dF_p)}(A,B) = \hom_\perf((A,(-)^{1/p}),\frobenius^\infty B) ,
+\]
+i.e.~$\frobenius^\infty$ is right-adjoint to the forgetful functor 
+$\perf\to \algebra(\dF_p)$. 
+
+Let $\algebra(p)$ be the category of $p$-adically complete algebras, and let 
+$\Perf$ be the full subcategory mapping onto $\perf\subset \algebra(\dF_p)$. 
+There is the obvious functor $\otimes\dF_p:\Perf\to \perf$. Moreover, there 
+is a functor ``take Witt vectors'' $W:\perf\to \Perf$ that satisfies 
+\[
+  \hom_\Perf(W(A),B) = \hom_\perf(A,B/p) .
+\]
+
+
+
+
+
+\section{A bestiary of period rings}
+
+Call a \emph{quasi-perfectoid ring} a commutative $p$-adic Banach algebra 
+$A$ such that $\frobenius:A^\circ/p\to A^\circ/p$ is surjective. For the 
+remainder, let $A$ be a quasi-perfectoid ring. We agree that 
+$\mathbf{A}_\ast$ will take values in $\dZ_p$-algebras, while 
+$\mathbf{B}_\ast$ will take values in $\dQ_p$-algebras. In fact, when both are 
+defined, $\mathbf{B}_\ast=\mathbf{A}_\ast[\frac 1 p]$. For simplicity, we 
+assume $p$ is odd. 
+
+
+\subsection{\texorpdfstring{$\Ainf$}{Ainf}}
+
+The ring $\Ainf(A)$ is the ``universal $p$-adic pro-infinitesimal formal 
+thickening of $A^\circ$.'' That is, it has a surjective ring map 
+$\theta:\Ainf(A)\to A^\circ$ for which $\Ainf(A)$ is complete with respect to 
+$\ker(\theta)$. Explicitly, 
+\[
+  \Ainf(A) = W(\frobenius^\infty A^\circ/p) ,
+\]
+and $\theta([a]) = a^\sharp$. Note that $\Ainf(A)$ has a natural filtration 
+in which $\filtration^r \Ainf = (\ker\theta)^r$. 
+
+
+\subsection{\texorpdfstring{$\Binf$}{Binf}}
+
+This is just $\Binf(A) = \Ainf(A)[\frac 1 p]$. Note that 
+$\theta:\Ainf(A)\to A^\circ$ extends uniquely to 
+$\theta:\Binf(A)\to A$, so $\Binf$ inherits the filtration from 
+$\Ainf$. 
+
+
+\subsection{\texorpdfstring{$\units^\times$}{Ux}}
+
+We define two subgroups of $\frobenius^\infty(A^\circ/p)$:
+\begin{align*}
+  \units^1(A) 
+    &= \{x\in \frobenius^\infty(A^\circ/p):x^\sharp\equiv 1\pmod p\} \\
+  \units^\times(A) 
+    &= \{x\in \frobenius^\infty(A^\circ/p):|x^\sharp-1|<1\} .
+\end{align*}
+Clearly $\units^1\subset \units^\times$. Note that a better-motivated definition 
+would be $\units^1(A)=\{a\in A:|a-1|<\frac 1 p\}$. The logarithm function 
+\[
+  \log(a) = \sum_{n\geqslant 1} (-1)^{n+1} \frac{(a-1)^n}{n}
+\]
+is easily checked to converge, so it gives a continuous homomorphism (with this 
+definition of $\units^1$) $\units^1(A)\to A$. 
+
+
+\subsection{\texorpdfstring{$\Bdr$}{Bdr}}
+
+First we define $\Bdr^+(A)$ to be the completion of 
+$\Binf(A)$ with respect to $\ker(\theta)$. There is a continuous homomorphism 
+$\log[\cdot]:\units^\times \to \Bdr^+$. The ring $\Bdr$ should be an 
+appropriate localization of $\Bdr^+$. 
+
+
+\subsection{\texorpdfstring{$\Bht$}{Bht}}
+
+We set $\Bht^+=\graded^{\geqslant 0} \Bdr$, and 
+$\Bht=\graded^\bullet \Bdr$. Hopefully, 
+$\Bht(A)=\bigoplus_{n\in \dZ} \units^\times(A)^{\otimes n}$. But this only 
+works if $\dim_{\dQ_p} \units^\times(A)=1$. Indeed, we needed that to define 
+$\langle \xi\rangle = \graded^1\Bdr$ anyways. 
+
+
+\subsection{\texorpdfstring{$\Bcris$}{Bcris}}
+
+Let $\Acris(A)$ be the universal $p$-adically complete formal 
+divided-power thickening of $A^\circ$, and $\Bcris(A)=\Acris(A)[\frac 1 p]$. By 
+definition, there is a map $\theta:\Acris(A)\to A^\circ$ inducing 
+$\theta:\Bcris(A)\to A$. Moreover, we get a natural map (injective if $A$ is a 
+field) $\Bcris(A)\to \Bdr(A)$. Moreover, the map 
+$\log[\cdot]:\units^\times \to \Bdr$ factors through 
+$\log[\cdot]:\units^\times \to \Bcris$. 
+
+
+\subsection{\texorpdfstring{$\Bst$}{Bst}}
+
+Let $\Bst^+(A)$ be the initial object among $\Bcris^+(A)$-algebras $S$ together 
+with $\lambda:\operatorname{frac}(\frobenius^\infty A^\circ/p)^\times\to S$ 
+extending $\log[\cdot]:\units^\times(A)\to S$. One has 
+\[
+  \Bst^+=\symmetric^\bullet(\operatorname{frac}(\frobenius^\infty A^\circ/p)^\times)\otimes_{\symmetric^\bullet((\frobenius^\infty A^\circ/p)^\times)} \Bcris^+(A) .
+\]
+Again, if $A$ is a field, then 
+$\operatorname{frac}(\frobenius^\infty A^\circ/p)^\times/\frobenius^\infty(A^\circ/p)^\times = A^{\flat\times} / A^{\flat\circ\times}$ is a one-dimensional $\dQ_p$-vector space, so we have a 
+(non-canonical) isomorphism $\Bst^+=\Bcris[X]$. Finally, 
+$\Bst=\Bst^+\otimes_{\Bcris^+} \Bcris$. 
 
 
 
