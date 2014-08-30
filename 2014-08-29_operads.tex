@@ -1,0 +1,82 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb,amsthm,fullpage}
+\DeclareMathOperator{\complexes}{\mathsf{Com}}
+\DeclareMathOperator{\cone}{cone}
+\DeclareMathOperator{\holim}{holim}
+\newcommand{\cC}{\mathcal{C}}
+\newcommand{\dN}{\mathbf{N}}
+\newcommand{\dZ}{\mathbf{Z}}
+\newcommand{\tuples}{\mathsf{tup}}
+\newtheorem{definition}{Definition}
+
+\title{Operads for number theory}
+\author{Daniel Miller}
+
+\begin{document}
+\maketitle
+
+
+
+
+
+
+Our main source is \cite{hinich-schechtman-1987}. 
+Let $\cC$ be a strict monoidal category. Our main example is the category 
+$\complexes(k)$ of chain complexes over a (commutative, unital) ring $k$. The 
+main objects of interest will be collections $O=\{O_n:n\geqslant 0\}$ in $\cC$. 
+To handle these, we introduce some formalism. Note that $\dN=\{1,2,\ldots\}$. 
+
+Let $\tuples=\coprod_{d\geqslant 0} \tuples_d$ be the set of \emph{tuples}. 
+For $d\geqslant 0$, $\tuples_d$ is the set of pairs $(m,S)$, where 
+$S$ is a finite subset of $\dN^d$ and $m:S\to \dZ_{\geqslant 0}$. We write 
+$\dim(m)=d$ if $m\in \tuples_d$. Define 
+\begin{align*}
+  |\cdot|:\tuples &\to \dZ_{\geqslant 0} && |(m,S)| = \sum_{s\in S} m_s \\
+  l:\tuples_{d+1} &\to \tuples_d && l(m,S) = \left((s_1,\dots,s_d)\mapsto \sup_{(s_1,\dots,s_{d+1})\in S}s_{d+1}, \{(s_d,\dots,s\right)
+\end{align*}
+
+We 
+will write $m = (m_1,\dots,m_n)$ for an $n$-tuple of integers; we put 
+$l(m) = n$ and $|m| = \sum m_i$. 
+In general, we say a tuple $m=(m_{i_1,\dots,i_d})$ has \emph{dimension $d$}, 
+write $\dim(m)=d$, $|m|=\sum m_{i_1,\dots,i_d}$ and 
+
+\begin{definition}
+An \emph{operad} $O$ in $\cC$ consists of the following data: 
+\begin{itemize}
+  \item A family of objects $\{O_n:n\geqslant 0\}$ in $\cC$. For 
+    $m = (m_1,\dots,m_n)$, we put 
+    $O_m = O_{m_1}\otimes \cdots \otimes O_{m_n}$. 
+  \item Multiplication maps 
+    $\gamma_m:O_{\ell(m)}\otimes O_m \to O_{|m|}$. 
+  \item A unit $e:1\to O_0$. 
+\end{itemize}
+If $m$ is a two-dimensional tuple, put 
+$O_m = \bigotimes_{i_1,i_2} O_{m_{i_1},m_{i_2}}$. 
+
+This data is required to satisfy the following properties: 
+\end{definition}
+
+
+
+
+
+\section{Application}
+
+Here our inspiration is from \cite{beilinson-2012}. The fundamental idea is 
+that a ring like $\dZ_p$, a limit of non-free $\dZ$-modules, should be 
+``resolved.'' More precisely, consider 
+\[
+  \dZ_p^\flat = \holim_n \cone(\dZ \xrightarrow{p^n} \dZ) .
+\]
+The functor $F\widehat\otimes \dZ_p := \holim \cone$
+
+
+
+
+
+\bibliographystyle{alpha}
+\bibliography{tidbit-sources}
+
+\end{document}
