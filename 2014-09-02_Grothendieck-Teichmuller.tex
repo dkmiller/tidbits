@@ -1,0 +1,288 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb,bm,fullpage,hyperref,microtype}
+\DeclareMathOperator{\aut}{Aut}
+\DeclareMathOperator{\galois}{Gal}
+\DeclareMathOperator{\MCG}{MCG}
+\DeclareMathOperator{\out}{Out}
+\DeclareMathOperator{\PGL}{PGL}
+\DeclareMathOperator{\stab}{Stab}
+\newcommand{\cC}{\mathcal{C}}
+\newcommand{\cM}{\mathcal{M}}
+\newcommand{\cT}{\mathcal{T}}
+\newcommand{\dA}{\mathbf{A}}
+\newcommand{\dC}{\mathbf{C}}
+\newcommand{\dF}{\mathbf{F}}
+\newcommand{\dGamma}{\bm{\Gamma}}
+\newcommand{\dP}{\mathbf{P}}
+\newcommand{\dQ}{\mathbf{Q}}
+\newcommand{\dZ}{\mathbf{Z}}
+\newcommand{\frob}{\mathrm{fr}}
+\newcommand{\GT}{\widehat{\mathrm{GT}}}
+\newcommand{\iso}{\xrightarrow\sim}
+\newcommand{\sets}{\mathsf{set}}
+
+\hypersetup{colorlinks=true}
+
+\title{A brief tour of Grothendieck-Teichm\"uller theory}
+\author{Daniel Miller}
+\date{September 2, 2014}
+
+\begin{document}
+\maketitle
+
+
+
+
+
+Everything in this brief note is inspired by Grothendieck's revolutionary 
+letter \cite{grothendieck-1997}. 
+
+
+
+
+
+\section{Motivation from topology}
+
+
+Let's start with a slightly unorthodox take on the (standard) fundamental group 
+of a topological space. Let $X$ be a ``nice'' space (e.g.~a manifold) and let 
+$x\in X$ be a chosen basepoint. Let $p:C\to X$ be a cover. If 
+$\gamma\in \pi_1(X,x)$ is a path, it induces a permutation of the set
+$p^{-1}(x)$ in the usual way [draw picture]. We get in this way the 
+\emph{monodromy representation} $\rho_C:\pi_1(X,x) \to \aut(p^{-1}(x))$. 
+
+Introduce a bit of notation and write $F_x(C)=p^{-1}(x)$ if $C\xrightarrow p X$ 
+is a cover. The monodromy representation is functorial in the sense that it 
+gives us a representation $\rho:\pi_1(X,x)\to \aut(F_x)$. In fact, this 
+``universal'' monodromy representation is an isomorphism, 
+i.e.~$\pi_1(X,x)\iso\aut(F_x)$. Our general heuristic towards fundamental 
+groups will be that there is a category $\cC$ of ``covers'' and a functor 
+$F:\cC\to \sets$. One puts $\pi_1(\cC)=\aut(F)$. This is naturally a 
+topological group, and if everything is sufficiently nice, induces an 
+equivalence $\cC\iso \sets(\pi)$. 
+
+Finally, recall a bit of group theory. If $1\to \pi\to H\to G\to 1$ is a short 
+exact sequence of groups, then there is a natural representation 
+$\rho:G\to \out(\pi)$. For $g\in G$, put 
+$\rho(g)(x) = \widetilde{g} x \widetilde{g}^{-1}$. It is essentially trivial 
+that the class of $\rho(g)$ in $\out(\pi)$ does not depend on the choice of a 
+lift $\widetilde g$ of $g$ to $H$. 
+
+
+
+
+
+\section{Some Galois theory}
+
+Let $q=p^f$ be a prime power, and let $\dF_q$ be the finite field with $q$ 
+elements. Let $\overline{\dF_q}$ be an algebraic closure of $\dF_q$. Let's 
+compute $G_{\dF_q} = \galois(\overline{\dF_q}/\dF_q)$. Let 
+$\frob_q(x)=x^q$; this gives an element $\frob_q\in G_{\dF_q}$. So then 
+$\frob_q^\dZ\subset G_{\dF_q}$. But we haven't exhausted $G_{\dF_q}$. Choose a 
+sequence of numbers $a_n\in \dZ/n!$ such that $a_{n+1}\equiv a_n\pmod{n!}$. 
+Then $\frob_q^{\bm a}$ makes sense as an element of $G_{\dF_q}$. For 
+$x\in \overline{\dF_q}$, choose $n$ such that $x\in \dF_{q^n}$ and put 
+$\frob_q^{\bm a}(x) = \frob_q^{a_n}(x)$; it is easy to see that this is 
+a well-defined element of $G_{\dF_q}$. Let $\widehat\dZ$ be the group of 
+sequences $\bm a=(a_n)\in \prod_n \dZ/n!$ such that $a_{n+1}\equiv a_n\pmod{n!}$. 
+This is naturally a compact topological group, and 
+$\bm a\mapsto \frob_q^{\bm a}$ is an isomorphism $\widehat\dZ\iso G_{\dF_q}$. 
+
+It seems that Galois groups are naturally topological groups. Let 
+$G_\dQ=\galois(\overline\dQ/\dQ)$. For $x\in \overline\dQ$, put 
+$G_\dQ(x)=\stab_{G_\dQ}(x)$. The $G_\dQ(x)$ form the basis for a topology (the 
+\emph{Krull topology}), with 
+which $G_\dQ$ is a compact, totally disconnected topological group with a basis 
+of open normal subgroups of finite index. Such groups are called 
+\emph{profinite}. Understanding $G_\dQ$ is the central object of algebraic 
+number theory. Unfortunately, studying $G_\dQ$ directly has not been very 
+fruitful. The best approach up till now has been to study $G_\dQ$ via its 
+representations. A good source of these representations are the fundamental 
+groups of varieties over $\dQ$. 
+
+
+
+
+
+\section{Algebraic fundamental groups}
+
+Now let $X$ be a variety over $\dQ$. I won't define this precisely, but you 
+should think of subsets of $\dA^n$ or $\dP^n$ cut out by polynomials with 
+coefficients in $\dQ$. It makes sense to ask for complex solutions to these 
+polynomial equations, and $X(\dC)$ is naturally a topological space. If $X$ is 
+smooth, then $X(\dC)$ is a complex manifold. 
+
+We want a good category of covers of $X$. We will say that a morphism 
+$p:C\to X$ of varieties over $\dQ$ (that means that the polynomials defining 
+$p$ have coefficients in $\dQ$) is a \emph{cover} if the induced map 
+$f:X(\dC)\to Y(\dC)$ is a cover in the sense of differential geometry (a 
+local analytic diffeomorphism). Choose a point $x\in X(\dQ)$ and let 
+$F_x(C)=p^{-1}(x)$. Since everything is algebraic, $F_x(C)$ is a finite set. 
+Put $\pi_1(X)=\aut(F_x)$; this is naturally a profinite group. Indeed, 
+\[
+  \pi_1(X)=\left\{(\sigma_C)\in \prod_{p:C\to X} F_x(C) : f\circ \sigma_C = \sigma_D\circ f\text{ for all }f:C\to D\text{ between covers}\right\} .
+\]
+The group $\prod_C F_x(C)$ is a product of finite (hence compact) groups, so it 
+is compact. 
+
+If $X$ is a variety over $\dQ$, let $X_{\overline\dQ}$ be $X$, except now that 
+we allow maps $f:Y\to X$ where the equations defining $Y$ and the polynomials 
+defining $f$ have coefficients in $\overline\dQ$. We can define a category of 
+covers of $X_{\overline\dQ}$ in the same way, and get a fundamental group 
+$\pi_1(X_{\overline\dQ})$. There is a canonical short exact sequence 
+\[
+  1\to \pi_1(X_{\overline\dQ})\to \pi_1(X)\to G_\dQ\to 1 .
+\]
+Basically, if $\gamma\in \pi_1(X)$, we need to define how $\gamma$ acts on 
+finite Galois extensions $F/\dQ$. The variety $X\times F$ is a cover of 
+$X$, so $\gamma$ acts on $X\times F$. This action must come from one of 
+$\gamma$ on $F$ itself. 
+
+There is a nice comparison theorem. If $X$ is a variety over $\dQ$, then 
+$\pi_1(X_{\overline\dQ})$ is the profinite completion of the topological 
+fundamental group $\pi_1(X(\dC))$. Thus: 
+\begin{align*}
+  \pi_1(\dP^1_{\overline\dQ}\smallsetminus \{0,\infty\}) 
+    &= \widehat\dZ \\
+  \pi_1(\dP^1_{\overline\dQ}\smallsetminus \{0,1,\infty\}) 
+    &= \widehat{F_2} \\
+    &\cdots \\
+  \pi_1(\dP^1_{\overline\dQ}\smallsetminus \{x_0,\dots,x_n\}) 
+    &= \widehat{F_n} .
+\end{align*}
+Note that if we choose $x\in X(\dQ)$, then the surjection 
+$\pi_1(X)\twoheadrightarrow G_\dQ$ has a section. This gives a representation 
+$G_\dQ\to \aut(\pi_1(X_{\overline\dQ}))$. We will be interested in a clever 
+choice of $X$, to be described in the next section. 
+
+
+
+
+
+\section{Teichm\"uller tower}
+
+Let $\dP^1(\dC)=\dC\cup\{\infty\}$ be the Riemann sphere. Recall that if 
+$\{x_1,x_2,x_3\}$ are three distinct points in $\dP^1$, then there is a unique 
+fractional linear transformation $\mu(z)=\frac{a z+b}{c z+d}$ such that 
+$\mu(x_1)=0$, $\mu(x_2)=1$ and $\mu(x_3)=\infty$. Let $\PGL_2(\dC)$ be the 
+group of fractional linear transformations. We can rephrase this by saying 
+that $\PGL_2(\dC)$ acts simply transitively on $\dP^1(\dC)$. 
+
+Let $n\geqslant 1$ be an integer. Let $\Delta\subset (\dP^1)^n$ be the ``weak 
+diagonal'' consisting of all tuples $(x_1,\dots,x_n)$ with some $x_i=x_j$. Put 
+\[
+  \cM_{0,n} = \left((\dP^1(\dC))^n\smallsetminus \Delta\right)/\PGL_2(\dC) .
+\]
+A priori, this is just a topological space. However, we could have repeated the 
+definition with varieties: 
+\[
+  \cM_{0,n} = \left((\dP^1)^n\smallsetminus \Delta\right)/\PGL(2) ,
+\]
+and gotten a variety over $\dQ$. As a set, $\cM_{0,n}$ is the space of 
+isomorphism classes of $n$ marked points on $\dP^1(\dC)$. Thus 
+\begin{align*}
+  \cM_{0,4} &= \dP^1\smallsetminus \{0,1,\infty\} \\
+  \cM_{0,5} &= (\cM_{0,4})^2\smallsetminus \Delta .
+\end{align*}
+There are obvious maps $\cM_{0,n+1}\to \cM_{0,n}$ given by ``forget a point.'' Denote by 
+$\cM_{0,\bullet}$ the whole collection of the $\cM_{0,n}$ with these maps. Note 
+that $\dim(\cM_{0,n}) = \max\{0,n-3\}$. 
+
+More generally, if $3 g-3+n\geqslant 0$, let $\cM_{g,n}$ be the ``moduli space 
+of genus $g$ curves with $n$ marked points. As a topological space, this has an 
+easy description. Let $S_{g,n}$ be a genus $g$ surface with $n$ marked points, 
+let $\cT_{g,n}$ be the space of triples $(X,\bm x,\phi)$ where $X$ is a genus 
+$g$ curve, $\bm x=(x_1,\dots,x_n)$ is a tuple of $n$ distinct points in 
+$X$, and $\phi:S_{g,n}\iso X$ is a diffeomorphism. The space $\cT_{g,n}$ is 
+simply connected. Let 
+$\dGamma_{g,n}=\pi_0\left(\operatorname{Diff}^+(S_{g,n})\right)$, the space of 
+connected components in the group of orientation-preserving, boundary fixing 
+diffeomorphisms of $S_{g,n}$. This is the mapping class group of $S_{g,n}$. 
+The group $\Gamma_{g,n}$ acts freely on $\cT_{g,n}$ and (topologically) we 
+have $\cM_{g,n}=\cT_{g,n}/\Gamma_{g,n}$. The space $\cM_{g,n}$ exists as a 
+variety of dimension $3 g-3+n$ over $\dQ$. We will only need $\cM_{0,n}$. Note 
+that the geometric fundamental group 
+$\pi_1((\cM_{g,n})_{\overline\dQ})=\dGamma_{g,n}$, where we write 
+$\dGamma_{g,n}$ for the profinite completion of $\Gamma_{g,n}$. Since 
+$\cM_{0,4}=\dP^1\smallsetminus \{0,1,\infty\}$, we have 
+$\dGamma_{0,4}=\widehat{F_2}$. 
+
+By \cite{lochak-1997}, there is a coherent way of choosing basepoints for the 
+$\cM_{g,n}$ in such a way that the actions of $G_\dQ$ on $\dGamma_{g,n}$ are 
+compatible with the degeneracy maps $\dGamma_{g,n+1}\to \dGamma_{g,n}$. We write 
+$\cM_{\bullet,\bullet}$ for the whole collection of the $\cM_{g,n}$-s, and 
+$\rho:G_\dQ\to \aut(\dGamma_{\bullet,\bullet})$ for the induced 
+action. 
+
+
+
+
+
+\section{The Grothendieck-Teichm\"uller group \texorpdfstring{$\GT$}{GT}}
+
+Define $\GT=\aut(\dGamma_{\bullet,\bullet})$. By the theory of ``base points at 
+infinity'' we have a representation $\rho:G_\dQ\to \GT$. A fundamental theorem of 
+Bely\u{\i} is that $\rho$ is an injection. The \emph{Grothendieck-Teichm\"uller 
+conjecture} states that $G_\dQ\iso \GT$. Even if this were proved, it wouldn't 
+a priori be especially helpful if we couldn't determine $\GT$. Fortunately, it 
+is possible to pin down $\GT$ as a subgroup of $\aut(\widehat{F_2})$. First, it 
+is known that $\aut(\dGamma_{\bullet,\bullet})=\aut(\dGamma_{0,\leqslant 5})$, 
+i.e.~an automorphism of the Teichm\"uller tower is determined by its 
+restriction to $\dGamma_{0,4}$ and $\dGamma_{0,5}$. Moreover, it is shown in 
+\cite{schneps-1997} that this restriction has an explicit description. 
+
+To be precise, for 
+$(\lambda,f)\in \widehat\dZ^\times\times [\widehat{F_2},\widehat{F_2}]$, 
+consider the map $\phi_{\lambda,f}:\widehat{F_2}\to \widehat{F_2}$ given 
+by 
+\begin{align*}
+  \phi_{\lambda,f}(x) &= x^\lambda \\
+  \phi_{\lambda,f}(y) &= f^{-1}\cdot y^\lambda\cdot f .
+\end{align*}
+Here we have chosen generators $F_2=\langle x,y\rangle$. Let 
+\begin{align*}
+  P_5 = \langle \sigma_1,\dots,\sigma_4: 
+    & \sigma_i \sigma_{i+1} \sigma_i = \sigma_{i+1} \sigma_i \sigma_{i+1} \\
+    & \sigma_i \sigma_j = \sigma_j \sigma_i \\
+    & \sigma_4 \sigma_3 \sigma_2 \sigma_1^2 \sigma_2 \sigma_3 \sigma_4 = 1 \\
+    & (\sigma_1\sigma_2\sigma_3\sigma_4)^5=1 \rangle
+\end{align*}
+and, for $i\in \dZ/5$, let 
+$x_{i,i+1} = \sigma_{i-1} \dotsm \sigma_{i+2} \sigma_{i+1}^2 \sigma_{i+3}^{-1}\dotsm \sigma_{i-1}$ 
+(check that this is independent of the class of $i$). A good reference here is 
+\cite{ih91}.
+
+  Let 
+$\theta\in \aut(\widehat{\dF_2})$ be 
+$\theta(x)=y$, $\theta(y)=x$, and $\omega(x)=y$, $\omega(y)=(x y)^{-1}$. 
+Suppose $\phi_{\lambda,f}$ is invertible. Then 
+$\phi_{\lambda,f}$ extends to an automorphism of $\dGamma_{0,5}$ if and only 
+if 
+\begin{align}\tag{I}\label{eq:I}
+  f(x,y) f(y,x) &= 1 \\ \tag{II}\label{eq:II}
+  f(z,x) z^m f(y,z) y^m f(x,y) x^m &= 1\text{ if }x y z=1\text{ and }m=\frac 1 2(\lambda-1) \\ \tag{III}\label{eq:III}
+  f(x_{1,2},x_{2,3}) f(x_{3,4},x_{4,0})f(x_{0,1},x_{1,2}) f(x_{2,3},x_{3,4})f(x_{4,0},x_{0,1}) &= 1
+\end{align}
+The last relation takes place in $P_5$, where we interpret 
+$f(a,b)$ (for $a,b$ elements of any group) in the obvious way. So conjecturally 
+$G_\dQ$ is isomorphic to the subgroup of $\aut(\widehat{F_2})$ consisting of 
+$\phi_{\lambda,f}$ satisfying \eqref{eq:I}, \eqref{eq:II}, and \eqref{eq:III}. 
+
+
+
+Finally. If $p:C\to \dP_{\overline\dQ}^1\smallsetminus \{0,1,\infty\}$ is a 
+Bely\u{\i} cover, let $\Gamma=p^{-1}[0,1]$; this is a graph in $C$ with edges 
+marked black and white for lying over $0$ and $1$. It is an example of a 
+\emph{dessin d'enfant}: a connected graph with a two-coloring of the vertices, 
+for which each edge has endpoints of different colors. See the AMS article 
+\emph{What is a Dessin d'Enfant} by Leonardo Zapponi for examples. 
+
+
+
+
+
+\bibliographystyle{alpha}
+\bibliography{tidbit-sources}
+
+\end{document}
