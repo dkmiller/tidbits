@@ -1,17 +1,16 @@
 \documentclass{article}
 
-\usepackage{amsmath,amssymb,fullpage,mathpazo}
+\usepackage{amsmath,amssymb,amsthm,bookmark}
 \usepackage[all]{xy}
 \DeclareMathOperator{\gal}{Gal}
-\DeclareMathOperator{\h}{H}
-\DeclareMathOperator{\genlin}{GL}
-\DeclareMathOperator{\lie}{Lie}
-\newcommand{\ab}{\textnormal{ab}}
 \newcommand{\dA}{\mathbf{A}}
 \newcommand{\dC}{\mathbf{C}}
-\newcommand{\dG}{\mathbf{G}}
+\newcommand{\dP}{\mathbf{P}}
 \newcommand{\dQ}{\mathbf{Q}}
+\newcommand{\dR}{\mathbf{R}}
 \newcommand{\dZ}{\mathbf{Z}}
+\newcommand{\iso}{\xrightarrow{\sim}}
+\newtheorem{definition}{Definition}
 
 \title{On computable elements of $\gal(\overline\dQ/\dQ)$}
 \author{Daniel Miller}
@@ -22,69 +21,59 @@
 
 
 
+M. Mignotte: An inequality about factors of polynomials. [Do this for general 
+number fields with height functions.] Are heights effectively computable? 
 
-Let $G_\dQ=\gal(\overline\dQ/\dQ)$. Our goal is to prove that ``computable 
-elements'' of $G_\dQ$ are dense. 
+Also see \url{http://math.stackexchange.com/questions/412010}. 
 
-First note that for each place $v$ of $\dQ$, there is a canonical algebraically 
-closed field $\Omega_v$, which has valuation extending $v$, and which is 
-spherically complete. For example, $\Omega_\infty=\dC$, and 
-$\Omega_p$ is the field of ``generalized Hahn series'' considered by Poonen. 
-There are canonical embeddings $\dQ_v\hookrightarrow \Omega_v$, so we can 
-consider $\overline\dQ\subset \overline\dQ_v\subset \Omega_v$ for any $v$, 
-giving a canonical system of embeddings embedding 
-$G_{\dQ_v}\hookrightarrow G_{\dQ,v}$, where 
+And \url{http://mathoverflow.net/questions/24047/}
+
+
+
+
+
+\section{Factoring polynomials in number fields}
+
+\begin{definition}
+A \emph{pinned number field} is a monic irreducible polynomial 
+$f\in \dZ[x]$. 
+\end{definition}
+
+When we say ``let $F$ be a pinned number field,'' we mean ``let $f$ be a monic 
+irreducible polynomial and $F=\dQ[x]/(f)$. 
+
+For us, a \emph{pinned number field} consists of a number field $F$ together 
+with a chosen isomorphism $\dQ[T]/f\iso F$, where $f\in \dZ[T]$ is a specified 
+monic irreducible polynomial. 
+
+Claim: the height function $H:O_F\to \dR_{>0}$ is computable. Indeed, 
 \[
-  G_{\dQ,v} = \gal((\overline\dQ\cap \Omega_v)/\dQ) .
+  H(x) = \#(O_F/x)\cdot \prod_{v\mid\infty} \max\{\|x\|_v,1\} .
 \]
-As topological groups, the $G_{\dQ,v}$ are all isomorphic, but the isomorphisms 
-do not seem to be computable in any reasonable sense. 
+and both the set $F(\infty)$ of infinite places of $F$ and the 
+normalized ``absolute value'' $\|x\|_v$ are computable. For any 
+$c\in \dR$, we want the set $\{H<c\}$ to be effectively computable. 
 
-Each $G_{\dQ,v}$ should have a distinguished ``Frobenius element.'' 
-
-By writing $\overline\dQ$ as a ``computable inductive limit of finite 
-extensions of $\dQ$,'' the hope would be to write elements of 
-$G_\dQ$ as ``computable compatible sequences of automorphisms.'' 
-
-
-
-
-
-
-
-
-
-\section{Conjectures in explicit class field theory}
-
-Let $k$ be a local or global field. Class field theory (CFT) gives an explicit 
-description of the abelianized absolute Galois group $G_k^\ab$. This is 
-\emph{not} explicit class field theory. Explicit class field theory (ECFT) 
-attempts to construct the field $k^\ab=(k^s)^{G_k^\ab}$. For example, if 
-$k=\dQ$, let $\chi:G_\dQ \to \widehat\dZ^\times$ be the cyclotomic character 
-coming from torsion points on $\dG_m$. The map $\chi$ induces an isomorphism 
-$G_\dQ^\ab \xrightarrow\sim \widehat\dZ^\times$. In other words, 
-$\dQ^\ab = \dQ(\operatorname{Tors}\dG_m)$. 
-
-Similarly, let $k$ be a CM field of degree $2 g$ over $\dQ$, and let $A$ be a 
-$2 g$-dimensional abelian variety over $k$ with 
-$\operatorname{End}_k^\circ(A)=k$. Let $V(A)$ be the ``total rational Tate 
-module of $k$.'' This is a free $\dA_k^f$-module of rank one, the action of 
-$G_k$ commutes with that of $\dA_k^f$, so we get a homomorphism 
-$G_k \to \genlin_1(\dA_k^f)$. 
-
-The problem with the functor 
-$\lie:\{\text{algebraic groups}\} \to \{\text{Lie algebras}\}$ is that it only 
-retains information about the connected component. We would also like to retain 
-some information about the (nilpotent) completion of the connected components 
-of an algebraic group. $G^0=G^\circ$
-
-There should be a functor 
+Better, use Theorem 2 from \cite{mignotte-1974}: if $g=\sum g_i t^i$ is a 
+factor of $f=\sum f_i t^i$ in $\dC[t]$, then
 \[
-  \{\text{pro-algebraic groups over $k$}\} \to 
+  \max\{|g_i|\} \leqslant \deg(f)! \left(\sum |f_i|^2\right)^{1/2}
 \]
+In other words, there is an effectively computable constant 
+$C(f)$ such that all coefficients in $g$ have absolute value 
+$\leqslant C(f)$. 
+
+\section{Conclusion}
+
+The idea was to show that there is a dense computable subset of 
+$\gal(\overline\dQ/\dQ)$. It turns out the idea was already figured out by 
+Greg Kuperberg. See his answer to \url{http://mathoverflow.net/questions/6802}. 
 
 
 
 
+
+\bibliographystyle{alpha}
+\bibliography{tidbit-sources}
 
 \end{document}
