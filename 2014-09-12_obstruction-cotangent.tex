@@ -1,0 +1,113 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb,amsthm,fullpage,mathrsfs,microtype,tikz-cd}
+\DeclareMathOperator{\ext}{Ext}
+\DeclareMathOperator{\sheaves}{Sh}
+\DeclareMathOperator{\spf}{Spf}
+\DeclareMathOperator{\witt}{W}
+\newcommand{\cS}{\mathcal{S}}
+\newcommand{\cX}{\mathcal{X}}
+\newcommand{\cY}{\mathcal{Y}}
+\newcommand{\sO}{\mathscr{O}}
+\newcommand{\vaf}{\mathsf{Vaf}}
+\newtheorem{definition}[subsection]{Definition}
+\newtheorem{theorem}[subsection]{Theorem}
+
+\title{Obstruction theory via the cotangent complex}
+\author{Daniel Miller}
+
+\begin{document}
+\maketitle
+
+
+
+
+
+Our main example is as follows. Let $k$ be a finite field, $\witt(k)$ its ring 
+of Witt vectors. Consider the category $\vaf_{\witt(k)}$ of ``formal varieties 
+over $\witt(k)$.'' It is the opposite category of the full category of 
+topological $\witt(k)$-algebras that are filtered projective limits of finite 
+$\witt(k)$-algebras. We will give $\vaf_{\witt(k)}$ a suitable subcanonical 
+Grothendieck topology, and consider sheaves on it. Note that 
+$\sheaves(\vaf_{\witt(k)})$ comes with a commutative ring object -- namely the 
+forgetful functor $\spf(A)\mapsto A$. We will denote this functor by $\sO$. 
+If $\cX$ is a formal scheme, or just a sheaf on $\vaf_{\witt(k)}$, we will 
+consider $\cX$ as the topos $\sheaves\left(\vaf_{\witt(k)}\right)_{/\cX}$. 
+This has an obvious commutative ring object $\sO_\cX=\sO\times \cX$. So for the 
+rest of this note we will work with an arbitrary ringed topos $(\cX,\sO)$, but 
+the reader should keep in mind this specific example. 
+
+Our main reference is \cite{illusie-1971}. Also be aware that we will sometimes 
+work with sheaves on the category of connected, pointed $\witt(k)$-formal 
+varieties -- that is the opposite category of the category of local profinite 
+$\witt(k)$-algebras with residue field $k$. We will do this in the context of 
+specific deformation problems. 
+
+Brief justification that this generalization works. Let $\cX$ be a topos, 
+$\mathfrak{Top}$ the category of all topoi and geometric morphisms. Then the 
+``slice functor'' $x\mapsto \cX_{/x}$ from $\cX\to\mathfrak{Top}_{/\cX}$ is 
+a fully faithful embedding by \cite[4.38]{johnstone-1977}. So there is no 
+loss replacing a formal scheme over $\witt(k)$ with the topos of sheaves over 
+this scheme, regarded as a topos over the topos of sheaves over $\witt(k)$. 
+
+
+
+
+
+\section{Cotangent complex for morphisms of topoi}
+
+If $\cX,\cY$ are topoi, we call a \emph{morphism} $f:\cX\to \cY$ an adjoint 
+pair $(f^{-1},f_\ast)$, where is a morphism $f_\ast:\cX\to \cY$ and 
+$f^{-1}:\cY\to \cX$ is exact. If $\cX$ and $\cY$ are ringed topoi, then a 
+morphism $f:\cX\to \cY$ must come with a morphism of ring objects 
+$\sO_\cY\to f_\ast \sO_\cX$, or equivalently $f^{-1} \sO_\cY\to \sO_\cX$. 
+
+\begin{definition}[{\cite[II 1.2.7]{illusie-1971}}]
+Let $f:\cX\to \cY$ be a morphism of ringed topoi. The \emph{cotangent complex} 
+of $\cX$ over $\cY$ is the simplicial $\sO_\cX$-module given by 
+$L_{\cX/\cY} = L_{\sO_\cX/f^{-1} \sO_\cY}$. 
+\end{definition}
+
+Here $L_{B/A}$ is defined as in \cite[II 1.2]{illusie-1971}. Our main example 
+of interest is when $\cX$ is a some deformation functor for a residual Galois 
+representation $\bar\rho$. The representation $\bar\rho$ will correspond to 
+$\bar\rho:\spf(k)\to\cX$, and we will be concerned with 
+$L_{\bar\rho/\cX} = L_{\spf(k)/_{\bar\rho}\cX}$. This is a simplicial 
+$k$-vector space. 
+
+
+
+
+
+\section{Obstruction theory}
+
+Our goal is as follows. Work over a base topos $\cS$. Suppose 
+$x_0:\cX_0\to \cY$ is a morphism and $I$ is an $\sO_{\cX_0}$-module. We are 
+interested in extensions of $x_0$ to $x:\cX\to \cY$, where $\cX$ has the same 
+underlying topos as $\cX_0$, but for which $\sO_\cX$ is a square-zero extension 
+of $\sO_{\cX_0}$ by the ideal $I$. 
+
+\begin{theorem}
+Let $\cX_0\xrightarrow{x_0}\cY$ be a morphism over $\cY$, and $I$ be an 
+$\sO_{\cX_0}$-module. Then there is a canonical \emph{obstruction class} 
+\[
+  o(x_0)\in \ext_{\cX_0}^2(L_{\cX_0/\cY},I) 
+\]
+which is $0$ if and only if an extension of $x_0$ to $\cX\to \cY$ exists. If 
+such an extension exists, then the extensions are a 
+$\ext_{\cX_0}^1(L_{\cX_0/\cY},I)$-torsor, and each extension has automorphism 
+group $\ext_{\cX_0}^0(L_{\cX_0/\cY},I)$. 
+\end{theorem}
+\begin{proof}
+This is \cite[III 2.1.7]{illusie-1971}, where $\cY_0=\cY$ and the base topos is 
+hidden from notation.  
+\end{proof}
+
+
+
+
+
+\bibliographystyle{alpha}
+\bibliography{tidbit-sources}
+
+\end{document}
