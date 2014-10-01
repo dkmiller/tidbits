@@ -1,0 +1,95 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb,bookmark,fullpage,microtype}
+\DeclareMathOperator{\GL}{GL}
+\DeclareMathOperator{\h}{H}
+\DeclareMathOperator{\symmetric}{sym}
+\DeclareMathOperator{\witt}{W}
+\newcommand{\dC}{\mathbf{C}}
+\newcommand{\dH}{\mathbf{H}}
+\newcommand{\dQ}{\mathbf{Q}}
+\newcommand{\fH}{\mathfrak{H}}
+\newcommand{\fX}{\mathfrak{X}}
+\newcommand{\adele}{\mathbf{A}}
+\newcommand{\etale}{\textnormal{\'et}}
+\newcommand{\finite}{\mathrm{f}}
+
+\usepackage[
+  hyperref = true,      % links to online documents
+  backend  = bibtex,    % use bibtex instead of biber
+  sorting  = nyt,       % sorts by (name, year, title)
+  style    = alphabetic % citations look like [Har77]
+]{biblatex}
+\addbibresource{tidbit-sources.bib}
+\hypersetup{
+  colorlinks = true,
+  linkcolor  = blue,
+  urlcolor   = cyan
+}
+
+\title{Completed cohomology, deformation theory, and a torsion local Langlands correspondence}
+\author{Daniel Miller}
+
+\begin{document}
+\maketitle
+
+
+
+
+
+\section{Definitions}
+
+Consider the group $\GL(2)_{/\dQ}$. For each open compact 
+$K\subset \GL_2(\adele_\finite)$, let $X_K$ be the variety over $\dQ$ 
+underlying the (compactification of the quotient 
+\[
+  Y_K(\dC) = \GL_2(\dQ) \backslash\left(\dH^\pm \times \GL_2(\adele_\finite)\right)/ K .
+\]
+The projective system $\{X_K\}$ admits an action of $\GL_2(\adele_\finite)$. 
+Moreover, if $\rho$ is a representation of $\GL(2)_{/\dQ}$, there is a 
+canonical sheaf, also denoted $\rho$, on the projective system $\{X_K\}$. 
+
+Let $k$ be a finite field, $\witt(k)$ its ring of Witt vectors. For any 
+Artinian $\witt(k)$-algebra $A$, put 
+\[
+  \h^\bullet(\rho)_A = \varinjlim_{K\subset \GL_2(\adele_\finite)} \h^1_\etale\left((X_K)_{\overline\dQ},\rho_A\right) .
+\]
+This is an $A[\Gamma_\dQ\times \GL_2(\adele_\finite)]$-module. 
+
+If $w\geqslant 0$ is an integer, we put 
+$\h^\bullet(w)_A=\h^\bullet(\symmetric^{w-2})_A$. If $A=\varprojlim A_i$ is a 
+pro-artinian $\witt(k)$-module, put 
+$\h^\bullet(\rho)_A=\varprojlim \h^\bullet(\rho)_{A_i}$. 
+
+
+
+
+
+\section{Some deformation theory}
+
+For a residual representation $\bar\rho:\Gamma_\dQ\to \GL_2(k)$, we write 
+$\fX=\fX(\bar\rho)$ for the deformation functor classifying lifts 
+$\Gamma_{\dQ,S}\to \GL_2(k)$, for some unspecified $S$. To be precise, we are 
+considering $\fX(\bar\rho)$ as an ind-(formal scheme). Assume $\bar\rho$ is 
+odd and absolutely irreducible; then $\bar\rho$ is modular. By 
+\cite[1.2.6]{emerton-2011}, there is a natural isomorphism 
+\[
+  \bar\pi(\bar\rho) \simeq \hom_{\Gamma_\dQ}(\bar\rho,\h^1_k)
+\]
+of $\GL_2(\adele_\finite)$-modules, assuming some technical conditions on 
+$\bar\rho$. In particular, the hom-set is non-zero. 
+
+We define a functor  
+$\fH(\bar\rho)$ on local artinian $\witt(k)$-algebras with residue field $k$. 
+For such an algebra $A$, we let $\fH(\bar\rho)(A)$ be the set of pairs 
+$(\rho,f)$, where $\rho\in \fX(\bar\rho)(A)$ and $f:\rho\to \h^1_A$ is 
+$A[\Gamma_\dQ]$-linear and reduces to some specified 
+$\bar f:\bar\rho\hookrightarrow \h_k^1$. 
+
+
+
+
+
+\printbibliography
+
+\end{document}

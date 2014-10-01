@@ -3,20 +3,11 @@
 *.log
 *.out
 *.toc
-
-## Intermediate documents:
 *.pdf
-
-## Bibliography auxiliary files (bibtex/biblatex/biber):
 *.bbl
 *.blg
-
-
-## Build tool auxiliary files:
 *.synctex.gz
 *.synctex.gz(busy)
-
-## Auxiliary and intermediate files from other packages:
-
-# hyperref
 *.brf
+*-blx.bib
+*.run.xml
