@@ -1,0 +1,76 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb,fullpage,microtype}
+\DeclareMathOperator{\chars}{X}
+\DeclareMathOperator{\GL}{GL}
+\DeclareMathOperator{\hodge}{Hdg}
+\DeclareMathOperator{\rep}{Rep}
+\DeclareMathOperator{\weight}{wt}
+\DeclareMathOperator{\weil}{R}
+\DeclareMathOperator{\type}{tp}
+\newcommand{\dS}{\mathbf{S}}
+\newcommand{\dZ}{\mathbf{Z}}
+\newcommand{\Gm}{\mathbf{G}_\mathrm{m}}
+\newcommand{\iso}{\xrightarrow\sim}
+
+\title{Basic facts about Hodge structures}
+\author{Daniel Miller}
+
+\begin{document}
+\maketitle
+
+
+
+
+
+Let $K/k$ be a finite Galois extension with Galois group $\Gamma$. We write 
+$\dS=\weil_{K/k}\Gm$ and let $\hodge(K/k)=\rep_k(\dS)$. By definition, for 
+any $k$-algebra $A$, we have 
+\[
+  \dS(A) = (A\otimes_k K)^\times .
+\]
+Recall that there is a canonical $k$-algebra isomorphism 
+$K\otimes_k K\to \prod_\Gamma K$, given by 
+$x\otimes y\mapsto (x\gamma(y))_\gamma$. It induces a canonical isomorphism 
+$\dS_K\iso \prod_\Gamma\Gm$, given on $A$-points by 
+\[
+  a\otimes x\mapsto (a\gamma(x))_\gamma .
+\]
+Write $z_\gamma:\dS_K\to \Gm$ for the component $a\otimes x\mapsto a\gamma(x)$. 
+Note that $\chars^\ast(\prod_\Gamma \Gm) = \dZ^\Gamma$. So 
+$z:\dS_K\iso \prod_\Gamma\Gm$ induces an isomorphism 
+$z^\ast:\dZ^\Gamma\iso \chars^\ast(\dS_K)$. 
+
+There is a canonical homomorphism $w:\Gm\to \dS$ given by 
+$w(a)=a\otimes 1$ on $A$-points. The induced map 
+$w^\ast:\chars(\dS_K)\to \dZ$ is just $(z_\gamma)\mapsto \sum z_\gamma$. If 
+$V\in \hodge(K/k)$, we write $w^\ast V$ for the induced representation of 
+$\Gm$. Note that there is a canonical decomposition 
+\[
+  w^\ast V = \bigoplus_{\chi\in \chars^\ast(\Gm)} (w^\ast V)_\chi .
+\]
+The \emph{weight} of $V$, denoted $\weight(V)$, is by definition the set 
+$\{\chi\in \chars^\ast(\Gm):(w^\ast V)_\chi\ne 0\}$. We say that $V$ is 
+\emph{pure of weight $n$} if $\weight(V)=\{n\}$. 
+
+If $V\in \hodge(K/k)$, there is a decomposition 
+\[
+  V_K = \bigoplus_{\chi\in \chars^\ast(\dS_K)} V_{K,\chi} .
+\]
+The \emph{type} of $V$, denoted $\type(V)$, is by definition the set 
+$\{\chi\in \dZ^\Gamma:(z^\ast V)_\chi\ne 0\}$. Alternatively, could think of 
+$\type(V)$ as being a subset of $\chars^\ast(\dS_K)$. 
+
+It is a general theorem that $\chars_\ast(\dS_K)=\chars^\ast(\dS_K)^\vee$. 
+Since $\dZ^\Gamma$ is self-dual as a representation of $\Gamma$, we have that 
+$\chars_\ast(\dS_K) = \dZ^\Gamma$. For $\gamma\in \Gamma$, write 
+$z_\gamma^\vee:\Gm\to \dS_K$ for the cocharacter dual to 
+$z_\gamma:\dS_K\to \Gm$. Write $\mu_{\gamma,h}:\Gm\to \GL(V_K)$ for the 
+composite $\mu_{\gamma,h} = h\circ z_\gamma^\vee$. More generally, for 
+$\chi\in \dZ^\Gamma$, we have $\mu_{\chi,h}=h\circ \chi^\vee:\Gm\to \GL(V_K)$. 
+
+
+
+
+
+\end{document}
