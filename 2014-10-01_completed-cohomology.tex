@@ -1,18 +1,25 @@
 \documentclass{article}
 
-\usepackage{amsmath,amssymb,bookmark,fullpage,microtype}
+\usepackage{amsmath,amssymb,amsthm,bookmark,fullpage,microtype}
+\DeclareMathOperator{\End}{End}
 \DeclareMathOperator{\GL}{GL}
 \DeclareMathOperator{\h}{H}
+\DeclareMathOperator{\induce}{ind}
 \DeclareMathOperator{\symmetric}{sym}
 \DeclareMathOperator{\witt}{W}
 \newcommand{\dC}{\mathbf{C}}
 \newcommand{\dH}{\mathbf{H}}
 \newcommand{\dQ}{\mathbf{Q}}
+\newcommand{\dZ}{\mathbf{Z}}
+\newcommand{\fp}{\mathfrak{p}}
 \newcommand{\fH}{\mathfrak{H}}
 \newcommand{\fX}{\mathfrak{X}}
 \newcommand{\adele}{\mathbf{A}}
 \newcommand{\etale}{\textnormal{\'et}}
 \newcommand{\finite}{\mathrm{f}}
+\newcommand{\mat}[4]{\begin{pmatrix} #1 & #2 \\ #3 & #4 \end{pmatrix}}
+\newcommand{\ordinary}{\mathrm{ord}}
+\newtheorem{theorem}[subsection]{Theorem}
 
 \usepackage[
   hyperref = true,      % links to online documents
@@ -85,6 +92,65 @@ For such an algebra $A$, we let $\fH(\bar\rho)(A)$ be the set of pairs
 $(\rho,f)$, where $\rho\in \fX(\bar\rho)(A)$ and $f:\rho\to \h^1_A$ is 
 $A[\Gamma_\dQ]$-linear and reduces to some specified 
 $\bar f:\bar\rho\hookrightarrow \h_k^1$. 
+
+
+
+
+
+\section{Ordinary parts}
+
+We work out \cite{emerton-2010-i,emerton-2010-ii} for the group $\GL_2(\dQ_p)$. 
+Let $k$ be a finite field, $\witt(k)$ its ring of Witt vectors, and $A$ an 
+artinian local $\witt(k)$-algebra. Let $M$ be a locally profinite abelian 
+group, $M^+\subset M$ an open sub-semigroup. Let $\pi$ be a finitely generated 
+$A$-module with smooth $M^+$-action. Put 
+\[
+  \pi^\ordinary = \hom_{M^+}(A[M],\pi) .
+\]
+
+\begin{theorem}
+The natural map $\pi^\ordinary\to \pi$ given by evaluation at $1$ induces an 
+isomorphism between $\pi^\ordinary$ and the maximal $A[M^+]$-submodule of 
+$\pi$ on which $M^+$ acts invertibly. 
+\end{theorem}
+\begin{proof}
+This is essentially the proof of \cite[3.1.5]{emerton-2010-i}. 
+Let $B$ be the image of $A[M^+]$ in $\End_A(\pi)$. Then there is a 
+$B=\prod B_\fp$, where each $B_\fp$ is local Artinian. This induces a 
+decomposition $\pi=\prod \pi_\fp$. Call $\fp$ \emph{ordinary} if 
+$M^+$ acts invertibly on $\pi_\fp$, and \emph{non-ordinary} otherwise. We claim 
+that if $\fp$ is ordinary, then $(\pi_\fp)^\ordinary=\pi_\fp$, and that 
+$(\pi_\fp)^\ordinary=0$ otherwise. The first claim is obvious: if 
+$M^+$ acts invertibly on $\pi_\fp$, then its action extends uniquely to one of 
+$M$. If some $m^+\in M^+$ does not act invertibly on $\pi_\fp$, it acts 
+nilpotently, and we may as well assume that $m^+ \pi_\fp=0$. But then for 
+$\phi:A[M]\to \pi$, we have 
+\[
+  \phi(m) = m^+\cdot \phi\left((m^+)^{-1} m\right) = 0,
+\]
+so $\phi=0$. 
+\end{proof}
+
+Now let $M\subset \GL_2(\dQ_p)$ be the subgroup 
+$\mat{\ast}{}{}{\ast}$ of diagonal matrices, and $M^+$ be the sub-semigroup 
+consisting of those $\mat{a}{}{}{b}$ with $|a|\geqslant |b|$. Note that if we 
+put $K=\GL_2(\dZ_p)\subset \GL_2(\dQ_p)$, then by 
+\cite[4.6.2]{bump-1997}, the natural map $M^+\to K\backslash G/K$ is 
+surjective. In particular, if $\pi$ is a spherical representation of 
+$\GL_2(\dQ_p)$, it should be determined by its restriction to $M^+$. In 
+fact, it should be determined by the action of $\mat{1}{}{}{p}$. If 
+$\pi$ is a smooth $G$-representation, we define 
+\[
+  \pi^\ordinary=\hom_{M^+}\left(A[M],\pi^{N_0}\right)_{M\mathrm{-finite}} ,
+\]
+where $N_0=\mat{1}{}{\dZ_p}{1}$. In the 
+notation of \cite{emerton-2010-i}, the functor $(-)^\ordinary$ is 
+$\mathrm{Ord}_{\overline B}$. By \cite[4.4.6]{emerton-2010-i}, if 
+$\pi$ is a smooth $G$-representation and $\rho$ is a smooth $B$-representation, 
+then there is a natural isomorphism 
+\[
+  \hom_G\left(\induce_B^G\rho,\pi\right) = \hom_M\left(\rho,\pi^\ordinary\right) .
+\]
 
 
 
