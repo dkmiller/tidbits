@@ -1,6 +1,57 @@
 \documentclass{article}
 
-\usepackage{amsmath,amssymb,fullpage,microtype}
+\usepackage{
+  amsmath,
+  amssymb,
+  amsthm,
+  bookmark,  % instead of hyperref
+  fullpage,
+  mathrsfs,  % mathscr
+  microtype, % better formatting
+  thmtools,  % so that autoref -> 'Theorem *'
+  tikz-cd,   % tikzcd
+}
+% operators
+  \DeclareMathOperator{\aut}{Aut}
+  \DeclareMathOperator{\bun}{Bun}
+  \DeclareMathOperator{\diff}{Diff}
+  \DeclareMathOperator{\GL}{GL}
+  \DeclareMathOperator{\rep}{Rep}
+  \DeclareMathOperator{\spec}{Spec}
+  \DeclareMathOperator{\vect}{Vec}
+  \DeclareMathOperator{\weil}{R}
+% fonts
+  \newcommand{\cC}{\mathcal{C}}
+  \newcommand{\cU}{\mathcal{U}}
+  \newcommand{\dC}{\mathbf{C}}
+  \newcommand{\dR}{\mathbf{R}}
+  \newcommand{\dS}{\mathbf{S}}
+  \newcommand{\dZ}{\mathbf{Z}}
+  \newcommand{\fg}{\mathfrak{g}}
+  \newcommand{\sE}{\mathscr{E}}
+  \newcommand{\sL}{\mathscr{L}}
+  \newcommand{\sO}{\mathscr{O}}
+% misc
+  \newcommand{\dd}{\mathrm{d}}
+  \newcommand{\gl}{\mathfrak{gl}}
+  \newcommand{\Gm}{\mathbf{G}_\mathrm{m}}
+  \newcommand{\hodge}{\mathrm{Hdg}}
+  \newcommand{\iso}{\xrightarrow\sim}
+% theorems
+  \newtheorem{theorem}[subsection]{Theorem}
+  
+\usepackage[
+  hyperref = true,      % links to online documents
+  backend  = bibtex,    % use bibtex instead of biber
+  sorting  = nyt,       % sorts by (name, year, title)
+  style    = alphabetic % citations look like [Har77]
+]{biblatex}
+\addbibresource{tidbit-sources.bib}
+\hypersetup{
+  colorlinks = true,
+  linkcolor  = blue,
+  urlcolor   = cyan
+}
 
 \title{Tannakian categories}
 \author{Daniel Miller}
@@ -12,11 +63,287 @@
 
 
 
+\section{Motivation}\label{sec:examples}
+
+Throughout, $k$ is an arbitrary field of characteristic zero. We will work over 
+$k$, so all maps are tacitly assumed to be $k$-linear and all tensor product 
+will be over $k$. Consider the following categories. 
+
+
+\subsection{Representations of an algebraic group}\label{sec:rep-gp}
+
+For $G_{/k}$ an algebraic group, the category $\rep(G)$ has as objects pairs 
+$(V,\rho)$, where $V$ is a finite-dimensional $k$-vector space and 
+$\rho:G\to \GL(V)$ is a homomorphism of $k$-groups. A morphism 
+$(V_1,\rho_1)\to (V_2,\rho_2)$ in $\rep(G)$ is a $k$-linear map 
+$f:V_1\to V_2$ such that for all $k$-algebras $A$ and $g\in G(A)$, one has 
+$f \rho_1(g) = \rho_2(g)  f$, i.e.~the following diagram commutes:
+\[
+\begin{tikzcd}
+  V_1\otimes A \ar[r, "f"] \ar[d, "\rho_1(g)"] 
+    & V_2\otimes A \ar[d, "\rho_2(g)"] \\
+  V_1\otimes A \ar[r, "f"]
+    & V_2\otimes A .
+\end{tikzcd}
+\]
+
+
+\subsection{Representations of an algebra}\label{sec:rep-alg}
+
+Let $R$ be an associative (but possibly non-commutative) $k$-algebra. The 
+category $\rep(A)$ has as objects $A$-modules that are finite-dimensional as 
+a $k$-vector space. Morphisms are $A$-linear maps. 
+
+
+\subsection{Representations of a Lie algebra}\label{sec:rep-liealg}
+
+Let $\fg$ be a Lie algebra over $k$. The category $\rep(\fg)$ has as objects 
+$\fg$-representations that are finite-dimensional as a $k$-vector space. There 
+is a canonical isomorphism $\rep(\fg)=\rep(\cU \fg)$, where $\cU \fg$ is the 
+universal enveloping algebra of $\fg$. 
+
+
+\subsection{Differential equations}\label{sec:diff-eq}
+
+Let $X_{/k}$ be a connected smooth variety. Following 
+\cite{katz-1982}, we say a \emph{differential equation} on $X$ is a vector 
+bundle $\sE$ together with an integrable connection 
+$\nabla:\sE\to\sE\otimes \Omega^1$. That is, $\nabla$ is linear, satisfies the 
+Leibniz rule $\nabla(f m) = f\cdot \nabla(m) + m\otimes \dd f$, and is 
+\emph{integrable} in the sense that $\nabla^2=0$, where we extend $\nabla$ to 
+a map $\sE\otimes\Omega^\bullet \to \sE\otimes\Omega^{\bullet+1}$ by 
+\[
+  \nabla(x\otimes \omega)=x\otimes \dd \omega + (-1)^{|\omega|} \nabla(x)\wedge \omega .
+\] 
+Write $\diff(X)$ for the category of differential equations on $X$. 
+
+
+\subsection{Vector bundles on a manifold}\label{sec:vect-bun}
+
+Let $X$ be a connected smooth manifold. The category $\bun(X)$ has as objects 
+sheaves $\sL$ of finite-dimensional $k$-vector spaces on $X$ such that for each 
+$x\in X$, there is an open neighborhood $U$ of $x$ such that 
+$\sL|_U\simeq \underline k^r$. 
+
+
+\subsection{Continuous representations of a compact Lie group}\label{sec:rep-cpct}
+
+Let $K$ be a compact Lie group. The category $\rep_\dC(K)$ has as objects 
+pairs $(V,\rho)$, where $V$ is a finite-dimensional complex vector space and 
+$\rho:K\to \GL(V)$ is a continuous (hence smooth, by Cartan's theorem) 
+homomorphism. Morphisms $(V_1,\rho_1)\to (V_2,\rho_2)$ are $K$-equivariant 
+$\dC$-linear maps $V_1\to V_2$. 
+
+
+\subsection{Graded vector spaces}
+
+Consider the category whose objects are finite-dimensional $k$-vector spaces 
+$V$ together with a direct sum decomposition $V=\bigoplus_{n\in \dZ} V_n$. 
+Morphisms $U\to V$ are $k$-linear maps $f:U\to V$ such that 
+$f(U_n)\subset V_n$. 
+
+
+\subsection{Hodge structures}
+
+Let $V$ be a finite-dimensional $\dR$-vector space. A \emph{Hodge structure} 
+on $V$ is a direct sum decomposition $V_\dC=\bigoplus V_{p,q}$ such that 
+$\overline{V_{p,q}}=V_{q,p}$. If $U,V$ are vector spaces with Hodge structures, 
+a morphism $U\to V$ is a $\dR$-linear map $f:U\to V$ such that 
+$f(U_{p,q})\subset V_{p,q}$. Write $\hodge$ for the category of vector spaces 
+with Hodge structure. 
+
+Let $\vect(k)$ be the category of finite-dimensional $k$-vector spaces. For 
+$\cC$ any of the categories above, there is a faithful functor 
+$\omega:\cC\to \vect(k)$. For examples \ref{sec:rep-gp}, \ref{sec:rep-alg}, 
+\ref{sec:rep-liealg}, and \ref{sec:rep-cpct}, it is just the forgetful functor. 
+For examples \ref{sec:diff-eq} and \ref{sec:vect-bun}, it is ``take fiber at 
+some fixed $x\in X$.'' In all the examples, the main theorem will be that for 
+$\pi=\aut(\omega)$, the functor $\omega$ induces an equivalence of categories 
+$\cC\iso \rep(\pi)$. We proceed to make sense of the undefined terms in this 
+theorem. 
+
+
+
+
+
+\section{Main definitions}
+
+Our definitions follow \cite{deligne-milne-1982}. As before, $k$ is an 
+arbitrary field of characteristic zero. 
+
+
+\subsection{Tannakian category}
+
+A \emph{$k$-linear category} is an abelian category $\cC$ such that each 
+$V_1,V_2$, the group $\hom(V_1,V_2)$ has the structure of a $k$-vector space 
+in such a way that the composition map 
+$\hom(V_2,V_3)\otimes \hom(V_1,V_2)\to \hom(V_1,V_3)$ is $k$-linear. For us, 
+a \emph{rigid $k$-linear tensor category} is a $k$-linear category $\cC$ 
+together with the following data:
+\begin{enumerate}
+\item An exact faithful functor $\omega:\cC\to \vect(k)$. 
+\item A bi-additive functor $\otimes:\cC\times \cC\to \cC$. 
+\item Natural isomorphisms 
+$\omega(V_1\otimes V_2)\iso \omega(V_1)\otimes \omega(V_2)$. 
+\item Isomorphisms $V_1\otimes V_2\iso V_2\otimes V_1$ for all $V_i\in \cC$. 
+\item Isomorphisms $(V_1\otimes V_2)\otimes V_3\iso V_1\otimes (V_2\otimes V_3)$
+\end{enumerate}
+These data are required to satisfy the following conditions:
+\begin{enumerate}
+\item There exists an object $1\in \cC$ such that $\omega(1)$ is 
+one-dimensional and such that the natural map $k\to \hom(1,1)$ is an 
+isomorphism. 
+\item If $\omega(V)$ is one-dimensional, there exists $V^{-1}\in \cC$ such 
+that $V\otimes V^{-1}\simeq 1$. 
+\item Under $\omega$, the isomorphisms 3 and 4 are the obvious ones. 
+\end{enumerate}
+
+By \cite[Pr.~1.20]{deligne-milne-1982}, this is equivalent to the standard 
+(more abstract) definition. Note that all our examples in 
+\autoref{sec:examples} are rigid $k$-linear tensor categories. One calls the 
+functor $\omega$ a \emph{fiber functor}. 
+
+
+\subsection{Automorphisms of a functor}
+
+Let $(\cC,\otimes)$ be a rigid $k$-linear tensor category. In this setting, 
+define a functor $\aut(\omega)$ from $k$-algebras to groups by setting: 
+\begin{align*}
+  \aut^\otimes(\omega)(A) 
+    &= \aut^\otimes\left(\omega:\cC\otimes A\to \rep(A)\right) \\
+    &= \left\{(g_V)\in \prod_{V\in \cC} \GL(\omega(V)\otimes A):g_1=1\text{, }g_{V_1\otimes V_2} = g_{V_1}\otimes g_{V_2}\text{, and }f g_{V_1} = g_{V_1} f\text{ for all }f,V_1,V_2\right\} .
+\end{align*}
+In other words, an element of $\aut(\omega)(A)$ consists of a collection 
+$(g_V)$ of $A$-linear automorphisms 
+$g_V:\omega(V)\otimes A\iso \omega(V)\otimes A$, where $V$ ranges over objects 
+in $\cC$. This collection must satisfy: 
+\begin{enumerate}
+  \item $g_1 = 1_{\omega(1)}$
+  \item $g_{V_1\otimes V_2} = g_{V_1}\otimes g_{V_2}$ for all $V_1,V_2\in \cC$, and 
+  \item whenever $f:V_1\to V_2$ is a morphism in $\cC$, the following diagram 
+    commutes: 
+    \[
+    \begin{tikzcd}
+      \omega(V_1)_A \ar[r, "f"] \ar[d, "g_{V_1}"] 
+        & \omega(V_2)_A \ar[d, "g_{V_2}"] \\
+      \omega(V_1)_A \ar[r, "f"] 
+        & \omega(V_2)_A .
+    \end{tikzcd}
+    \]
+\end{enumerate}
+
+
+\subsection{Pro-algebraic group}
+
+Typically one only considers affine group schemes $G_{/k}$ that are 
+\emph{algebraic}, i.e.~whose coordinate ring $\sO(G)$ is a finitely generated 
+$k$-algebra, or equivalently that admit a finite-dimensional faithful 
+representation. Let $G_{/k}$ be an arbitrary affine group scheme, $V$ an 
+arbitrary representation of $G$ over $k$. By 
+\cite[Cor.~2.4]{deligne-milne-1982}, one has $V=\varinjlim V_i$, where $V_i$ 
+ranges over the finite-dimensional subrepresentations of $V$. Applying this to 
+the regular representation $G\to \GL(\sO(G))$, we see that 
+$\sO(G)=\varinjlim\sO(G_i)$, where $G_i$ ranges over the algebraic quotients of 
+$G$. That is, an arbitrary affine group scheme $G_{/k}$ can be written as a 
+filtered projective limit $G=\varprojlim G_i$, where each $G_i$ is an affine 
+algebraic group over $k$. So we will speak of pro-algebraic groups instead of 
+arbitrary affine group schemes. 
+
+If $V$ is a finite-dimensional $k$-vector space and $G=\varprojlim G_i$ is a 
+pro-algebraic $k$-group, representations $G\to \GL(V)$ factor through some 
+algebraic quotient $G_i$. That is, 
+$\hom(G,\GL(V))=\varinjlim \hom(G_i,\GL(V))$. As a basic example of this, 
+let $\Gamma$ be a profinite group, i.e.~a projective limit of finite groups. If 
+we think of $\Gamma$ as a pro-algebraic group, then algebraic representations 
+$\Gamma\to \GL(V)$ are exactly those representations that are continuous when 
+$V$ is given the discrete topology. 
+
+
+
+
+
+\section{Reconstruction theorem}
+
+First, suppose $\cC=\rep(G)$ for a pro-algebraic group $G$, and that 
+$\omega:\rep(G)\to \vect(k)$ is the forgetful functor. Then the Tannakian 
+fundamental group $\aut^\otimes(\omega)$ carries no new information 
+\cite[Pr.~2.8]{deligne-milne-1982}: 
+
+\begin{theorem}\label{thm:reconst}
+Let $G_{/k}$ be a pro-algebraic group, $\omega:\rep(G)\to \vect(k)$ the 
+forgetful functor. Then $G\iso \aut^\otimes(G)$. 
+\end{theorem}
+
+The main theorem is the following, taken essentially verbatum from 
+\cite[Th.~2.11]{deligne-milne-1982}. 
+
+\begin{theorem}\label{thm:main}
+Let $(\cC,\otimes,\omega)$ be a rigid $k$-linear tensor category. Then 
+$\pi=\aut^\otimes(\omega)$ is represented by a pro-algebraic group, and 
+$\omega:\cC\to \rep(\pi)$ is an equivalence of categories. 
+\end{theorem}
+
+
+
+
+
+\section{Examples}
+
+
+\subsection{Pro-algebraic groups}
+
+If $G_{/k}$ is a pro-algebraic group, then \autoref{thm:reconst} tells us that if 
+$\omega:\rep(G)\to \vect(k)$ is the forgetful functor, then 
+$G=\aut^\otimes(G)$. That is, $G=\pi_1(\rep G)$. 
+
+
+\subsection{Algebras}
+
+Suppose $A$ is finitely generated, i.e.~$A=k\langle x_1,\dots,x_n\rangle/(R)$ 
+for some set of relations $R$. 
+
+
+\subsection{Lie algebras}
+
 d
 
 
+\subsection{Differential equations}
+
+d
 
 
+\subsection{Vector bundles}
+
+d
+
+
+\subsection{Compact Lie groups}
+
+By definition, the \emph{complexification} of a real Lie group $K$ is a complex 
+Lie group $K_\dC$ such that all morphisms $K\to \GL(V)$ factor uniquely through 
+$K_\dC\to\GL(V)$. It turns out that $K_\dC$ is a complex algebraic group, and 
+so $\pi_1(\rep K)=K_\dC$. 
+
+
+\subsection{Graded vector spaces}
+
+To give a grading $V=\bigoplus_{n\in \dZ} V_n$ on a vector space is equivalent 
+to giving an action of the split rank-one torus $\Gm$. On each $V_n$, $\Gm$ 
+acts via the character $g\mapsto g^n$. Thus 
+$\pi_1(\text{graded vector spaces})=\Gm$. 
+
+
+\subsection{Hodge structures}
+
+Let $\dS=\weil_{\dC/\dR}\Gm$; this is defined by $\dS(A)=(A\otimes\dC)^\times$ 
+for $\dR$-algebras $A$. One can check that the category $\hodge$ of Hodge 
+structures is equivalent to $\rep_\dR(\dS)$. Thus $\pi_1(\hodge)=\dS$. 
+
+
+
+
+
+\printbibliography
 
 \end{document}
-
