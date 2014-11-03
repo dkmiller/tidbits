@@ -8,6 +8,7 @@
 \DeclareMathOperator{\GL}{GL}
 \DeclareMathOperator{\h}{H}
 \DeclareMathOperator{\trace}{tr}
+\DeclareMathOperator{\witt}{W}
 \newcommand{\cO}{\mathcal{O}}
 \newcommand{\dG}{\mathbf{G}}
 \newcommand{\dF}{\mathbf{F}}
@@ -16,12 +17,15 @@
 \newcommand{\dZ}{\mathbf{Z}}
 \newcommand{\fI}{\mathfrak{I}}
 \newcommand{\fm}{\mathfrak{m}}
+\newcommand{\ft}{\mathfrak{t}}
 \newcommand{\sF}{\mathscr{F}}
 \newcommand{\arithfrob}{\mathrm{fr}}
+\newcommand{\epic}{\twoheadrightarrow}
 \newcommand{\etale}{\textnormal{\'et}}
 \newcommand{\iso}{\xrightarrow\sim}
 \newcommand{\mmu}{\boldsymbol\mu}
 \newcommand{\mult}{\mathrm{m}}
+\newcommand{\pow}[1]{\llbracket #1 \rrbracket}
 %sha
 \DeclareFontFamily{U}{wncy}{}
 \DeclareFontShape{U}{wncy}{m}{n}{<->wncyr10}{}
@@ -291,6 +295,59 @@ where $u\in \cO\llbracket X\rrbracket^\times$ and the
 $a_i\in \langle \pi\rangle$. In particular, the only way the quotient 
 $\cO\llbracket X\rrbracket/f$ can be flat over $\cO$ is for 
 $m=0$, in which case the quotient has finite $\cO$-rank. 
+
+
+\subsection{Specific presentations via small extensions}
+
+Fix a finite field $k$ of characteristic $p$. Recall that a \emph{coefficient 
+ring} over $k$ is a complete local noetherian $\witt(k)$-algebra with residue 
+field $k$. If $R$ is such a ring, write $\ft_R=\hom(\fm_R/\fm_R^2,k)$; this is 
+a $k$-vector space. Recall that a \emph{small extension} of coefficient rings 
+over $k$ is a surjection $R_1\epic R_0$ such that the kernel $I$ is principle 
+and annihilated by $\fm_1$.
+
+We are interested in measuring the complexity of presentations of coefficient 
+rings. Write $\witt(k)\pow{\bm x}=\witt(k)\pow{x_1,\dots,x_d}$. For a 
+polynomial $f\in \witt(k)\pow{\bm x}$, put 
+\[
+  v(f) = \min\{e:p^e\mid f\} + \sum_{i=1}^r \min\{n_i:x_i^{n_i}\mid f\} .
+\]
+For a set $\bm f=\{f_1,\dots,f_r\}\subset \witt(k)\pow{\bm x}$, the 
+\emph{complexity} of $\bm f$, denoted $v(\bm f)$, is by definition 
+$\min\{v(f_i)\}_{1\leqslant i\leqslant r}$. Put $|\bm n|=n_1+\cdots+n_r$. 
+Note that if $v(\bm f)\geqslant e+|\bm n|$, then we have a surjection 
+\[
+  R(e,\bm n) = \witt(k)\pow{\bm x}/\langle p^e,x_1^{n_1},\dots,x_d^{n_d}\rangle \epic R(\bm f) = \witt(k)\pow{\bm x}/\langle f_1,\dots,f_r\rangle .
+\]
+
+We introduce an operation $\bm f\mapsto \bm f^+$ on sets of relations. Put 
+\[
+  \{f_1,\dots,f_r\}^+ = \{p f_1,x_1 f_1,\dots,x_d f_1,\dots,p f_r,x_1 f_r,\dots,x_d f_r\} .
+\]
+Note that $v(\bm f^+)>v(\bm f)$, and that the natural map 
+$R(\bm f^+)\epic R(\bm f)$ factors as 
+\begin{align*}
+  R(\bm f^+) 
+    &\epic R(p f_1,x_1 f_1,\dots,x_d f_1,\dots,p f_{r-1},x_1 f_{r-1},\dots,x_d f_{r-1},f_r) \\
+    &\epic R(p f_1,x_1 f_1,\dots,x_d f_1,\dots,p f_{r-2},x_1 f_{r-2},\dots,x_d f_{r-2},f_{r-1},f_r) \\
+    &\epic \cdots \\
+    &\epic R(\bm f) ,
+\end{align*}
+in which each surjection is small. 
+
+Write $\bm f^{+0}=\bm f$, $\bm f^{+(n+1)}=(\bm f^{+n})^+$. Fix some 
+$\bm f$. Then for all $(e,\bm n)$ with $e+|\bm n|\geqslant v(\bm f)$, there 
+exists some $m$ such that $v(\bm f^{+m})\geqslant e+|\bm n|$. This gives quotients 
+\[
+  R(e,\bm n)\twoheadleftarrow R(\bm f^{+m})\epic R(\bm f) .
+\]
+The key facts here are:
+\begin{enumerate}
+  \item The surjection $R(\bm f^{+m})\epic R(\bm f)$ is a composite of small 
+    extensions. 
+  \item Rings of the form $R(e,\bm n)$ surject onto any finite coefficient ring. 
+\end{enumerate}
+The latter fact holds because $\witt(k)\pow{\bm x}=\varprojlim R(e,\bm n)$.
 
 
 
