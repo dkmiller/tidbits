@@ -17,6 +17,7 @@
   \DeclareMathOperator{\diff}{Diff}
   \DeclareMathOperator{\GL}{GL}
   \DeclareMathOperator{\lie}{Lie}
+  \DeclareMathOperator{\measures}{M}
   \DeclareMathOperator{\rep}{Rep}
   \DeclareMathOperator{\spec}{Spec}
   \DeclareMathOperator{\vect}{Vec}
@@ -31,6 +32,7 @@
   \newcommand{\fa}{\mathfrak{a}}
   \newcommand{\fg}{\mathfrak{g}}
   \newcommand{\sE}{\mathscr{E}}
+  \newcommand{\sH}{\mathscr{H}}
   \newcommand{\sL}{\mathscr{L}}
   \newcommand{\sO}{\mathscr{O}}
 % misc
@@ -94,8 +96,8 @@ $f \rho_1(g) = \rho_2(g)  f$, i.e.~the following diagram commutes:
 
 Let $H$ be a co-commutative Hopf algebra. The category $\rep(H)$ has as objects 
 $H$-modules that are finite-dimensional over $k$, and morphisms are 
-$k$-linear maps. The algebra $H$ acts on a tensor product $U\otimes_k V$ via 
-its comultiplication $\Delta:H\to H$. 
+$k$-linear maps. The algebra $H$ acts on a tensor product $U\otimes V$ via 
+its comultiplication $\Delta:H\to H\otimes H$. 
 
 
 \subsection{Representations of a Lie algebra}\label{sec:rep-liealg}
@@ -292,6 +294,20 @@ two-sided ideal $\fa\subset A$ of finite codimension. The key fact here is that
 $(A\otimes B)^\circ=A^\circ\otimes B^\circ$, so that we can use multiplication 
 $m:H\otimes H\to H$ to define comultiplication 
 $m^\ast:H^\circ\to (H\otimes H)^\circ=H^\circ\otimes H^\circ$. 
+From \cite[II \S 6 1.1]{demazure-gabriel-1980}, if $G$ is a linear algebraic 
+group over an algebraically closed field $k$ of characteristic zero, we get an 
+isomorphism $\sO(G)^\circ= k[G(k)]\otimes \cU(\fg)$. Here $k[G(k)]$ is the 
+usual group algebra of the abstract group $G(k)$, and $\cU(\fg)$ is the 
+universal enveloping algebra of $\fg=\lie(G)$, both with their standard Hopf 
+structures. 
+
+[Note: one often calls $\sO(G)^\circ$ the ``space of distributions on $G$.'' 
+If instead $G$ is a real Lie group, then one often writes $\sH(G)$ for the 
+space of distributions on $G$. Let $K\subset G$ be a maximal compact subgroup, 
+$\measures(K)$ the space of finite measures on $K$. Then convolution 
+$D\otimes \mu\mapsto D\ast\mu$ induces an isomorphism 
+$\cU(\fg)\otimes \measures(K)\iso \sH(G)$. In the algebraic setting, 
+$k[G(k)]$ is the appropriate replacement for $\measures(K)$.]
 
 
 \subsection{Lie algebras}
@@ -299,11 +315,7 @@ $m^\ast:H^\circ\to (H\otimes H)^\circ=H^\circ\otimes H^\circ$.
 Let $\fg$ be a semisimple Lie algebra over $k$. Then by \cite{milne-2007}, 
 $G=\pi_1(\rep\fg)$ is the unique connected, simply connected algebraic group 
 with $\lie(G)=\fg$. If $\fg$ is not semisimple, e.g.~$\fg=k$, then things get a 
-lot nastier. If for example $\fg=k$ is the one-dimensional abelian Lie algebra, 
-then 
-\[
-  k[\fa]^\circ
-\]
+lot nastier. See the above example. 
 
 
 \subsection{Compact Lie groups}
