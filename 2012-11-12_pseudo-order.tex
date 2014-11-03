@@ -1,10 +1,34 @@
 \documentclass{article}
 
-\usepackage{amsmath,amssymb,fullpage,mathpazo}
+\usepackage{amsmath,amssymb,amsthm,bookmark,fullpage,microtype,thmtools}
 \DeclareMathOperator{\gal}{Gal}
+\DeclareMathOperator{\h}{H}
 \DeclareMathOperator{\trace}{tr}
+\newcommand{\fa}{\mathfrak{a}}
+\newcommand{\fA}{\mathfrak{A}}
+\newcommand{\fb}{\mathfrak{b}}
+\newcommand{\fC}{\mathfrak{C}}
+\newcommand{\fD}{\mathfrak{D}}
 \newcommand{\fo}{\mathfrak{o}}
 \newcommand{\fO}{\mathfrak{O}}
+\newcommand{\fp}{\mathfrak{p}}
+\newcommand{\fP}{\mathfrak{P}}
+\newcommand{\iso}{\xrightarrow\sim}
+\newtheorem{definition}[subsection]{Definition}
+\newtheorem{theorem}[subsection]{Theorem}
+
+\usepackage[
+  hyperref = true,      % links to online documents
+  backend  = bibtex,    % use bibtex instead of biber
+  sorting  = nyt,       % sorts by (name, year, title)
+  style    = alphabetic % citations look like [Har77]
+]{biblatex}
+\addbibresource{tidbit-sources.bib}
+\hypersetup{
+  colorlinks = true,
+  linkcolor  = blue,
+  urlcolor   = cyan
+}
 
 \title{A pseudo-associated order}
 \author{Daniel Miller}
@@ -16,28 +40,148 @@
 
 
 
-Let $\fo$ be a dedekind domain with field of fractions $k$, and let $K/k$ be a 
-finite Galois extension with $G=\gal(K/k)$. If $M$ is an $\fo$-module, write 
-$M^\vee=\hom_\fo(M,\fo)$ for its dual. Recall that if $M,N$ are 
-finitely-generated projective $\fo$-modules, the natural map 
+This note is essentially an explication of the arguments in the first section 
+of Bondarko's paper \cite{bondarko-2000}. 
+
+
+
+
+
+\section{Duality for group algebras}
+
+Let $k$ be a commutative ring, $\Gamma$ a finite group. We can consider the 
+group algebra $k[\Gamma]$ as a Hopf algebra in the usual way. The dual of 
+$k[\Gamma]$ is spanned as a $k$-module by the functionals 
+$\hat\sigma(\tau)=\delta_{\sigma\tau}$. Instead of using different notation for 
+$k[\Gamma]$ and its dual, we will use the $\ast$ to denote the product in the 
+dual of $k[\Gamma]$. In other words, 
 \[
-  M^\vee\otimes_\fo N \to \hom_\fo(M,N) , \qquad f\otimes n\mapsto f(-) n 
+  \left(\sum a_\sigma \sigma\right) \ast \left(\sum b_\sigma \sigma\right) = \sum a_\sigma b_\sigma \sigma .
 \]
-is an isomorphism. 
 
-By dimension considerations, the natural map $K[G] \to \hom_k(K,K)$ is an 
-isomorphism. Similarly, the map\ldots need $\phi:K\otimes_k K \to K[G]$, 
+For the rest of this note, the \emph{standard situation} consists of a 
+Dedekind domain $\fo$ with field of fractions $k$, along with a finite Galois 
+extension $K/k$. Put $\Gamma=\gal(K/k)$, and write $\fO$ for the integral 
+closure of $\fo$ in $K$. For fractional ideals $\fa,\fb\subset\fO$, put 
 \[
-  x\otimes y \mapsto \sum \sigma(x) y \sigma
+  \fA(\fa,\fb)=\{f\in k[\Gamma]:f\fa\subset \fb\} .
 \]
+Write $\fA=\fA(\fO,\fO)$. Note that $\fA$ is not, in general, closed under the 
+multiplication $\ast$. We will define an $\fo$-subalgebra 
+$Q\subset k[\Gamma]$ that is closed under $\ast$, and show that in certain 
+instances, $Q$ is monogenic under $\ast$, and gives an easily computable 
+$\fo$-basis for $\fA$. 
+
+
+
+
+
+\section{General nonsense with projectives}
+
+As before, let $k$ be an arbitrary commutative ring. If $E$ is a $k$-module, 
+write $E^\vee=\hom_k(E,k)$. If $E,F$ are finitely generated projective 
+$k$-modules, there is a natural isomorphism 
 \[
-  Q = \{f\in k[G]:f\cdot \mathfrak D^{-1}\subset \mathfrak O\}
+  E^\vee\otimes F\iso \hom(E,F) \qquad f\otimes x\mapsto f(-) x .
 \]
 
-Let $\fO$ be the integral closure of $\fo$ in $K$. 
+Return to the standard situation. There is a natural isomorphism  
+$K[\Gamma]\to \hom_k(K,K)$. For fractional ideals $\fa,\fb\subset K$ put 
+\[
+  \fC(\fa,\fb) = \hom_\fo(\fa,\fb) = \{f\in K[\Gamma]:f\fa\subset \fb\} .
+\]
+If $\fa\subset K$ is a fractional ideal, we may identify $\fa^\vee$ with 
+$\fa^\ast:=\{x\in K:\trace(x\fa)\subset \fo\}$ via 
+\[
+  \fa^\ast \to \fa^\vee \qquad x\mapsto \trace(x-) .
+\]
+In light of the above identifications, we have the following isomorphism of 
+$\fo$-modules: 
+\[
+  \fa^\ast\otimes \fb \iso \fa^\vee\otimes \fb \iso \hom_\fo(\fa,\fb)=\fC(\fa,\fb) \qquad x\otimes y\mapsto \sum \sigma(x) y\sigma .
+\]
+This suggests we define a map 
+\[
+  \phi:K\otimes K\to K[\Gamma] \qquad x\otimes y\mapsto \sum \sigma(x) y \sigma .
+\]
+It is well-known that if we give $K[\Gamma]$ the multiplication $\ast$, then 
+$\phi$ is an isomorphism of $k$-algebras. 
+
+Write $\fD^{-1}=\fO^\ast$ for the inverse different of the extension $K/k$. 
+
+\begin{definition}
+$Q=\fC(\fD^{-1},\fO)\cap k[\Gamma]$. 
+\end{definition}
+
+Since $Q=\fO\otimes \fO$ as a subset of $K\otimes K$, it is closed under 
+$\ast$. 
 
 
 
 
+
+\section{Local fields}
+
+We remain in the standard situation, and moreover assume that $K/k$ is a 
+totally ramified extension of local fields. Write $\fp$ (resp.~$\fP$) for the 
+maximal ideal of $\fo$ (resp.~$\fO$). We also assume that 
+$\fD=\delta\fO$ for some $\delta\in k$. We call such extensions \emph{perfectly 
+ramified}. In this case, one has $Q=\delta\fA$. As a result, $\fO$ is free over 
+$\fA$ if and only if $\fO=Qx$ for some $x\in \fD^{-1}$. 
+
+For the moment, we drop the assumption that $K/k$ is perfectly ramified (but 
+still assume it is totally ramified). Let $n=[K:k]$ and let $v$ be the 
+normalized valuation on $K$. Put $d=v(\fD)$ and $r=n-d-1$. 
+
+\begin{theorem}
+If $v(a)=r$, then $\trace a\in \fo^\times$. 
+\end{theorem}
+\begin{proof}
+Let $\pi\in K$ be a uniformizer, $f\in \fo[X]$ its minimal polynomial. It is 
+well-known that $d=v(f'(\pi))$. So, if we let $x=\pi^{n-1}/f'(\pi)$, then 
+$v(x)=n-d-1$, and by a theorem of Euler, $\trace x=1$. If $v(y)=v(x)$, then 
+$y=\varepsilon x+z$, where $\varepsilon\in \fo^\times$ and $v(z)>0$. Then 
+$v(\trace z)>0$, so $\trace y=\varepsilon + \trace z\in \fo\times$. 
+\end{proof}
+
+\begin{theorem}\label{thm:compute-val}
+Let $\alpha=1\otimes x+\sum x_i\otimes y_i\in \fO\otimes\fO$ with $v(x)<n$ and 
+$v(x_i)>0$. If $v(a)=r$, then $v(\phi(\alpha)(a))=v(x)$. 
+\end{theorem}
+\begin{proof}
+Consider the following computation, where $\pi_0$ is a uniformizer in $\fo$:
+\begin{align*}
+  \phi(\alpha)(a) 
+    &= x\trace(a) + \sum \trace(x_i a) y_i \\
+    &= x\trace(a) + \sum \pi_0 y_i \trace\left(\frac{x_i a}{\pi_0}\right) .
+\end{align*}
+
+\textbf{[finish this!]}
+\end{proof}
+
+In particular, if $\trace a=1$, then $\phi(\alpha)(a)\equiv x\pmod{\fP^e}$, where 
+$e=v(\fp)$ is the index of ramification. 
+
+\begin{theorem}
+Let $f,g\in Q$ and $v(a)=r$. If $v(f(a))=i$, $v(g(a))=j$ and 
+$i,j,i+j<n$, then $v((f\ast g)(a))=i+j$. 
+\end{theorem}
+\begin{proof}
+Write $f=\phi(\alpha)$, $g=\phi(\beta)$ where 
+$\alpha=1\otimes x+\sum x_i\otimes y_i$ and 
+$\beta=1\times u+\sum u_j\otimes v_j$ as in 
+\autoref{thm:compute-val}. Then $v(x)=i$ and $v(y)=j$. We have 
+\[
+  f\ast g=\phi(\alpha\beta) = 1\otimes u x+\sum x_i u_j\otimes y_i v_j .
+\]
+By \autoref{thm:compute-val}, it follows that $(f\ast g)(a)$ has valuation 
+$v(u x)=i+j$. 
+\end{proof}
+
+
+
+
+
+\printbibliography
 
 \end{document}
