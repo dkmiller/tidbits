@@ -155,14 +155,14 @@ Consider the following computation, where $\pi_0$ is a uniformizer in $\fo$:
     &= x\trace(a) + \sum \trace(x_i a) y_i \\
     &= x\trace(a) + \sum \pi_0 y_i \trace\left(\frac{x_i a}{\pi_0}\right) .
 \end{align*}
-
-\textbf{[finish this!]}
+Since $v(a)=r$, the arguments of the trace on the right have valuation at 
+least $-d$, so the sum on the right has valuation $>n$, whence the result. 
 \end{proof}
 
 In particular, if $\trace a=1$, then $\phi(\alpha)(a)\equiv x\pmod{\fP^e}$, where 
 $e=v(\fp)$ is the index of ramification. 
 
-\begin{theorem}
+\begin{theorem}\label{thm:val-product}
 Let $f,g\in Q$ and $v(a)=r$. If $v(f(a))=i$, $v(g(a))=j$ and 
 $i,j,i+j<n$, then $v((f\ast g)(a))=i+j$. 
 \end{theorem}
@@ -177,6 +177,83 @@ $\beta=1\times u+\sum u_j\otimes v_j$ as in
 By \autoref{thm:compute-val}, it follows that $(f\ast g)(a)$ has valuation 
 $v(u x)=i+j$. 
 \end{proof}
+
+As a matter of fact, note that if $\trace a=1$, then 
+$(f\ast g)(a)\equiv f(a) g(a)\pmod{\fP^e}$. 
+
+For $f\in K[\Gamma]$, define $f^{\ast 0}=\trace$, and 
+$f^{\ast(i+1)}=f\ast f^{\ast i}$. If $f\in Q$, then $f^{\ast i}\in Q$ for all 
+$i$. Suppose $v(f(a))=1$ for some $a$ with $v(a)=r$. Then by 
+\autoref{thm:val-product}, $f^{\ast i}(a)$ has valuation $i$ for all 
+$0\leqslant i < n$. Thus $\{f^{\ast 0}(a),\dots,f^{\ast(n-1)}(a)\}$ is an 
+$\fo$-basis for $\fO$. 
+
+\begin{theorem}
+If $v(a)=r$ and $f(a)$ is a uniformizer, then 
+$\{f^{\ast 0},\dots,f^{\ast(n-1)}\}$ is an $\fo$-basis for $Q$. 
+\end{theorem}
+\begin{proof}
+First note that the $f^{\ast i}$ form a $k$-basis for $K[\Gamma]$. Moreover, 
+for $g\in k[\Gamma]$, $g=0$ if and only if $g(a)=0$. Indeed, writing  
+$g=\sum a_i f^{\ast i}$, we get $g(a)=\sum a_i f^{\ast i}(a)$. The $i$th term 
+on the right has valuation $i\pmod n$, so the only way $g(a)$ can be zero is 
+for each $a_i=0$. Thus if $g\in Q$, then we have $g(a)=a_i f^{\ast i}(a)$ for 
+some $a_i\in \fo$ for each $0\leqslant i<n$. It follows that 
+$g-\sum a_i f^{\ast i}$ kills $a$, whence $g=\sum a_i f^{\ast i}$. 
+\end{proof}
+
+
+
+
+
+\section{Back to the associated order}
+
+Suppose $K/k$ is perfectly ramified, that is $\fD=\fO\delta$ for $\delta\in k$. 
+Then $\fA=\delta^{-1} Q$. So, if there exists $f\in Q$ such that $f(a)$ is 
+prime for some $a$ with $v(a)=r$, we have $\fA\cdot a=\fO$, and 
+$\{\delta^{-1}f^{\ast i}\}$ forms an $\fo$-basis for $\fA$. 
+
+\begin{theorem}
+$\fA$ is Hopf if and only if $\Delta(\delta^{-1}\trace)\in \fA\otimes\fA$. 
+\end{theorem}
+\begin{proof}
+Since $\Delta$ is $k$-linear, it suffices to prove that 
+$\Delta(Q)\subset \fA\otimes Q$ if and only if 
+$\Delta(\trace)\in \fA\otimes Q$. In fact, this always holds (even if $K/k$ is 
+not perfectly ramified). One implication is obvious. To prove the other, we 
+show that for $f\in k[\Gamma]$, we have 
+\[
+  \Delta(f) = (f\otimes \trace)\ast \Delta(\trace) .
+\]
+Indeed, writing $f=\sum a_\sigma \sigma$, we compute 
+\begin{align*}
+  \Delta(f) 
+    &= \sum a_\sigma \sigma\otimes \sigma \\
+    &= \left( \sum_{a,\tau}a_\sigma \sigma\otimes \tau\right) \ast \left(\sum_\gamma \gamma\otimes \gamma\right) \\
+    &= (f\otimes \trace)\ast \Delta(\trace). 
+\end{align*}
+Since $\Delta(\trace)\in \fA\otimes Q$ and 
+$(Q\otimes Q)(\fA\otimes Q)\subset \fA\otimes Q$, the result follows. 
+\end{proof}
+
+
+
+
+
+\section{Functoriality}
+
+Finally, we show that $Q$ is functorial in $K$. Let $K'/K$ be a finite Galois 
+extension, $\Gamma'=\gal(K'/K)$, and $G=\gal(K'/k)$. There is an obvious 
+functorial surjection $\Gamma'\twoheadrightarrow\Gamma$. This extends to a 
+(functorial) map of $k$-Hopf algebras $k[\Gamma']\to k[\Gamma]$. It induces 
+an injection $\rho:k[\Gamma]^\vee\to k[\Gamma']^\vee$, via 
+\[
+  \rho(\sigma) = \sum_{\tau\mapsto\sigma} \tau .
+\]
+One can easily check that if $f\in Q_K$, then $\rho(f)\in Q_{K'}$. Since the 
+maps $\Gamma'\to \Gamma$ are functorial, so are the $\rho$. To conclude, $Q$ 
+defines a functor from the category of finite Galois extensions of $k$ to the 
+category of $\fo$-algebras. 
 
 
 
