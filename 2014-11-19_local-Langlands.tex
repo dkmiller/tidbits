@@ -1,0 +1,50 @@
+\documentclass{article}
+
+\usepackage{
+  amsmath,
+  amssymb,
+  bookmark,
+  fullpage,
+  mathpazo,
+  microtype,
+  thmtools
+}
+\DeclareMathOperator{\GL}{GL}
+\newcommand{\dQ}{\mathbf{Q}}
+\newcommand{\dZ}{\mathbf{Z}}
+
+\usepackage[
+  hyperref = true,      % links to online documents
+  backend  = bibtex,    % use bibtex instead of biber
+  sorting  = nyt,       % sorts by (name, year, title)
+  style    = alphabetic % citations look like [Har77]
+]{biblatex}
+\addbibresource{tidbit-sources.bib}
+\hypersetup{
+  colorlinks = true,
+  linkcolor  = blue,
+  urlcolor   = cyan
+}
+
+\title{Local Langlands for \texorpdfstring{$\GL(n)$}{GL(n)} over \texorpdfstring{$p$}{p}-adic fields [after Peter Scholze]}
+\author{Daniel Miller}
+\date{November 19, 2014}
+
+\begin{document}
+\maketitle
+
+
+
+
+
+This is an exposition of Scholze's paper \cite{scholze-2013}. Another useful 
+sources is \cite{vogan-1993}. Recall that a \emph{$p$-adic field} is a 
+non-archimedean local field of characteristic zero. 
+
+
+
+
+
+\printbibliography
+
+\end{document}
