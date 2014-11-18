@@ -3,15 +3,54 @@
 \usepackage{
   amsmath,
   amssymb,
+  amsthm,
+  bm,
   bookmark,
   fullpage,
   mathpazo,
+  mathtools,
+  mathrsfs,
   microtype,
   thmtools
 }
+\DeclareMathOperator{\End}{End}
+\DeclareMathOperator{\galois}{Gal}
 \DeclareMathOperator{\GL}{GL}
+\DeclareMathOperator{\h}{H}
+\DeclareMathOperator{\height}{ht}
+\DeclareMathOperator{\induce}{ind}
+\DeclareMathOperator{\lie}{Lie}
+\DeclareMathOperator{\norm}{N}
+\DeclareMathOperator{\orbital}{O}
+\DeclareMathOperator{\reciprocity}{rec}
+\DeclareMathOperator{\sheaves}{Sh}
+\DeclareMathOperator{\trace}{tr}
+\DeclareMathOperator{\twistedorbital}{TO}
+\DeclareMathOperator{\witt}{W}
+\newcommand{\etale}{\textnormal{\'et}}
+\newcommand{\frob}{\mathrm{fr}} % Frobenius
+\newcommand{\Ga}{\mathbf{G}_\mathrm{a}}
+\newcommand{\iso}{\xrightarrow\sim}
+\newcommand{\transpose}[1]{\prescript{\mathrm{t}}{}{#1}}
+\newcommand{\WD}{\mathrm{WD}} % Weil-Deligne group
+\newcommand{\cA}{\mathcal{A}}
+\newcommand{\cG}{\mathcal{G}}
+\newcommand{\cO}{\mathcal{O}}
+\newcommand{\dC}{\mathbf{C}}
+\newcommand{\dmu}{\bm\mu}
+\newcommand{\dN}{\mathbf{N}}
 \newcommand{\dQ}{\mathbf{Q}}
+\newcommand{\dR}{\mathbf{R}}
 \newcommand{\dZ}{\mathbf{Z}}
+\newcommand{\eR}{\mathrm{R}}
+\newcommand{\fm}{\mathfrak{m}}
+\newcommand{\fV}{\mathfrak{V}}
+\newcommand{\fX}{\mathfrak{X}}
+\newcommand{\sF}{\mathscr{F}}
+\newcommand{\sO}{\mathscr{O}}
+\newtheorem{conjecture}[subsection]{Conjecture}
+\newtheorem{definition}[subsection]{Definition}
+\newtheorem{theorem}[subsection]{Theorem}
 
 \usepackage[
   hyperref = true,      % links to online documents
@@ -37,9 +76,263 @@
 
 
 
-This is an exposition of Scholze's paper \cite{scholze-2013}. Another useful 
-sources is \cite{vogan-1993}. Recall that a \emph{$p$-adic field} is a 
-non-archimedean local field of characteristic zero. 
+This is an exposition of Scholze's paper \cite{scholze-2013}. For the 
+remainder of this note, let $F$ be a finite extension of $\dQ_p$. Let 
+$\cO$ be the ring of integers of $F$, and let $k=\cO/\fm$ be the residue field 
+of $\cO$. Write $\varpi$ for a uniformizer of $F$. 
+
+
+
+
+
+\section{Statement of the conjectures}
+
+Here we follow \cite{wedhorn-2008}. Let $\Gamma$ be an arbitrary locally 
+profinite group. 
+
+\begin{definition}
+An \emph{admissible representation of $\Gamma$} is a (possibly 
+infinite-dimensional) vector space $\pi$ with $\Gamma$-action such that: 
+\begin{enumerate}
+  \item For all open subgroups $U\subset \Gamma$, the space 
+    $\h^0(U,\pi)$ is finite-dimensional. 
+  \item $\pi=\varinjlim_{U\subset \Gamma} \h^0(U,\pi)$. 
+\end{enumerate}
+\end{definition}
+
+Note that we did not mention what field $\pi$ is a vector space over. This 
+is intentional. Since no mention is made of the topology on the field, the 
+notion of ``admissible representation'' only depends on its isomorphism type 
+as an abstract field. We will only consider vector spaces over fields 
+abstractly isomorphic to $\dC$, e.g.~$\overline{\dQ_l}$. 
+
+For each $n\geqslant 1$, let $\cA_n(F)$ be the set of isomorphism classes of 
+irreducible irreducible admissible representations of $\GL_n(F)$. This has 
+a subset $\cA_n^\mathrm{cusp}(F)$ consisting of those $\pi$ for which 
+$\hom(\pi,\induce_P^{\GL_n(F)} \rho)=0$ for all parabolic subgroups 
+$P\subset \GL_n(F)$. Such $\pi$ are called \emph{supercuspidal}; equivalently 
+the matrix coefficients of $\pi$ are compact support modulo the center of 
+$\GL_n(F)$. 
+
+Let $W_F\subset\galois(\overline F/F)$ be the set of $\sigma$ such that 
+for some fixed $r\in \dZ$, $\sigma(x)\equiv \frob^r(x)\pmod p$ for all 
+$x\in \cO_{\overline F}$. This is the \emph{Weil group} of $F$. 
+
+\begin{definition}
+A \emph{Weil-Deligne representation} of $W_F$ is a pair $\rho=(r,N)$, where 
+$r:W_F\to \GL(V)$ is a continuous representation ($V$ is a finite-dimensional 
+vector space with the discrete topology) and $N:V\to V$ is a nilpotent linear 
+map such that 
+\[
+  r(\gamma) N r(\gamma)^{-1} = |\gamma|\cdot N 
+\]
+for all $\gamma\in W_F$. 
+\end{definition}
+
+Here $|\cdot|:W_F\to \dR^\times$ is defined by $|\sigma|=|\varpi^r|$, where 
+$r\in \dZ$ is such that $\sigma\equiv \frob^r\pmod p$. One says 
+$\rho=(r,N)$ is \emph{Frobenius semisimple} if $r:W_F\to \GL(V)$ is semisimple. 
+Note that as with admissible representations, no mention is made of the field 
+over which $V$ is a vector space. As above, we will work with either $\dC$ or 
+$\overline{\dQ_l}$. It turns out that a Weil-Deligne representation is the same 
+thing as an ``honest'' representation of the pro-algebraic \emph{Weil-Deligne 
+group} $\WD_F=W_F\ltimes \Ga$, via the action 
+$\gamma\cdot x = |\gamma|^{-1} x$. 
+
+For each $n\geqslant 1$, let $\cG_n(F)$ be the set of equivalence classes of 
+Frobenius-semisimple $n$-dimensional Weil-Deligne representations of $W_F$. It 
+has a distinguished subset $\cG_n^\mathrm{irr}(F)$ consisting of irreducible 
+representations. 
+
+\begin{conjecture}[local Langlands]\label{conj:local-langlands}
+There is a unique set of bijections $\{\reciprocity_n:\cA_n(F)\to \cG_n(F)\}$ 
+such that: 
+\begin{enumerate}
+\item $\reciprocity_1$ is induced by local Class Field Theory. 
+
+\item The maps $\reciprocity_n$ preserve $L$- and $\varepsilon$- factors: 
+\begin{align*}
+  L(\pi_1\oplus \pi_2) 
+    &= L(\reciprocity(\pi_1)\otimes \reciprocity(\pi_2)) \\
+  \varepsilon(\pi_1\oplus \pi_2) 
+    &= \varepsilon(\reciprocity(\pi_1)\otimes \reciprocity(\pi_2)) .
+\end{align*}
+
+\item If $\chi\in \cA_1$, then 
+$\reciprocity(\pi\otimes \chi)=\reciprocity(\pi)\otimes \reciprocity_1(\chi)$. 
+
+\item If $\pi$ has central character $\chi$, then 
+$\det\circ \reciprocity(\pi) = \reciprocity_1(\chi)$. 
+\end{enumerate}
+\end{conjecture}
+
+We will not define the $L$- and $\varepsilon$- factors for general 
+representations. The one example is: 
+\[
+  L(\rho,s) = \det\left(1-q^{-s} r(\frob^{-1}), (\ker N)^I\right)^{-1} ,
+\]
+where $q=\# k$ and $I\subset W_F$ is the \emph{inertia group} of $F$.  
+Henniart proved in \cite{henniart-1993} that these requirements characterize 
+the reciprocity map uniquely. Moreover, for such a correspondence, $\pi$ is 
+supercuspidal if and only if $\reciprocity(\pi)$ is irreducible. 
+
+
+
+
+
+\section{Moduli spaces of \texorpdfstring{$p$}{p}-divisible groups}
+
+The presentation of $p$-divisible group here follows that of 
+Messing in \cite{messing-1972}. Recall that $p$ is the residue characteristic 
+of $F$. Let $\dZ(p^\infty)=\dQ_p/\dZ_p$; this is an ind-cyclic $p$-torsion 
+group sometimes called the Pr\"ufer group. 
+
+\begin{definition}
+Let $S$ be a scheme. A \emph{$p$-divisible group} over $S$ is an fppf 
+sheaf $G$ such that: 
+\begin{enumerate}
+  \item $\hom(\dZ(p^\infty),G)\iso G$ ``$p$-torsion''
+  \item $G\xrightarrow p G$ is an epimorphism ``$p$-divisible''
+  \item Each $G[p^n]=\hom(\dZ/p^n,G)$ is a finite flat group scheme on $S$. 
+\end{enumerate}
+\end{definition}
+
+It follows that $G=\varinjlim G[p^n]$, where each $G[p^n]$ is a finite flat 
+group scheme for which multiplication by $p^i$ induces an isomorphism 
+$G[p^{n+i}]\xrightarrow{p^i}G[p^n]$. Thus this definition agrees with the more 
+traditional one. The main examples are: 
+\begin{enumerate}
+  \item The constant $p$-divisible group $\dZ(p^\infty)$. 
+  \item $\dmu_{p^\infty} = \varinjlim \dmu_{p^n}$. 
+  \item If $A_{/S}$ is an abelian scheme, $\varinjlim A[p^n]$. 
+\end{enumerate}
+
+If $G_{/S}$ is a $p$-divisible group, we put $\lie(G)=\lie(G[p^n])$ for 
+$n\gg 0$. This is a locally free $\sO_S$-module. Recall that $\varpi$ is a 
+uniformizer in $\cO=\cO_F$. 
+
+\begin{definition}
+Let $S_{/\cO}$ be a scheme. A \emph{$\varpi$-divisible group} on $S$ is a 
+$p$-divisible group $G_{/S}$ together with a homomorphism 
+$\cO\to \End(G)$ such that the induced action of $\cO$ on $\lie(G)$ agrees 
+with the usual one. 
+\end{definition}
+
+Let ${G_0}_{/k}$ be a $\varpi$-divisible group. We define a functor 
+$\fX_{G_0}$ on connected artinian schemes over $\cO$ by letting 
+$\fX_{G_0}(S)$ be the set of isomorphism classes of $\varpi$-divisible 
+groups $G_{/S}$ with an isomorphism $G\otimes k\iso G_0$. Suppose now that 
+$\dim(G_0)=1$ and $\height(G_0)=n$. Then for each 
+$m\geqslant 1$, let $\fX_{G_0,m}(S)$ be the set of isomorphism classes of 
+$G\in \fX_{G_0}(S)$ together with $x_1,\dots,x_n\in G[p^m]$ such that 
+$\langle x_1,\dots,x_n\rangle = G[p^m]$ as relative Cartier divisors. 
+Clearly $\GL_n(\cO/\fm^{m+1})$ acts on $\fX_{G_0,m}$ for each $m$. So if 
+we put 
+\[
+  H_{G_0} = \varinjlim_m \h^0\left(\eR \psi_{\fX_{G_0}}\overline{\dQ_l}\right) ,
+\]
+then $H_{G_0}$ is a complex of $\overline{\dQ_l}$-vector spaces with 
+$\GL_n(\cO)\times W_F$-action. 
+
+Here we use formal nearby cycle sheaves in the sense of Berkovich 
+\cite{berkovich-1996}, though he calls them vanishing cycle sheaves. If 
+$\fX_{/\cO}$ is a formal scheme, there is a functor 
+$\psi:\sheaves_\etale(\fX_{\overline F}) \to \sheaves_\etale(\fX_{\overline k})$, 
+where $(\psi \sF)(U)=\sF(V)$, where $V=\fV_{\overline F}$ and 
+$\fV_{/\cO_{\overline F}}$ is the unique \'etale cover whose special fiber is 
+$U$. 
+
+For each $r\geqslant 1$, let $F_r/F$ be the unique degree-$r$ unramified 
+extension of $F$. Using a relative version of Dieudonn\'e theory, Scholze 
+notices that to each 
+$\beta\in \Gamma_0(\varpi^m)\backslash \GL_n(\cO_r)/\Gamma_0(\varpi^m)$, 
+there is associated a unique one-dimensional $\varpi$-divisible group 
+$\overline G_\beta$ of height $n$ over $\cO_r$, 
+hence a formal scheme $\fX_{\beta,m}$ parameterizing $\varpi$-divisible 
+lifts of $\overline G_\beta$. The scheme $\fX_{\beta,m}$ admits a 
+$\GL_n(\cO_r/\fm^m)$-action. Put 
+\[
+  H_\beta = \varinjlim_m \h^0\left(\eR \psi_{\fX_{\beta,m}} \overline{\dQ_l}\right) ;
+\]
+this is a virtual $ W_{F_r}\times\GL_n(\cO_r)$-representation. 
+
+
+
+
+
+\section{Orbital integrals and transfer}
+
+The basic idea is follows. Let $\tau\in I\cdot \frob^r\subset W_F$. Recall 
+that $F_r$ is the degree-$r$ unramified extension of $F$. For 
+$h\in C_c^\infty(\GL_n(F_r))$, define $h^\vee(x) = h(\transpose x^{-1})$. 
+Define an element $\phi_{\tau,h}\in C_c^\infty(\GL_n(F_r))$ by 
+\begin{equation*}\tag{$\ast$}\label{eq:fun-def}
+  \phi_{\tau,h}(\beta) = \begin{cases} \trace(\tau\times h^\vee,H_\beta) & \beta\in \GL_n(\cO_r)\operatorname{diag}(\varpi,1,\dots,1)\GL_n(\cO_r) \\ 0 & \text{otherwise} \end{cases}
+\end{equation*}
+Then $\phi_{\tau,h}\in C_c^\infty(\GL_n(F_r))$ has values in $\dQ$, independent 
+of $l$. Let $\pi$ be an irreducible admissible representation of $\GL_n(F)$. 
+We would like to characterize $\reciprocity(\pi)$ by: 
+\[
+  \trace(\phi_{\tau,h},\pi) = \trace(\tau,\reciprocity(\pi))\trace(h,\pi) ,
+\]
+but this does not work because $\phi_{\tau,h}$ does not act on $\pi$. We must 
+``push down'' $\phi_{\tau,h}$ to a function $f_{\tau,h}\in \GL_n(F)$. This is 
+done via requiring that orbital integrals match as follows. 
+
+Here, we loosely follow \cite[1.3]{arthur-clozel-1989}. For 
+$\gamma\in \GL_n(F)$ and $\delta\in \GL_n(F_r)$, put 
+\begin{align*}
+  G_\gamma &= \{x\in \GL_n(F):x^{-1} \gamma x = \gamma\} \\
+  G_{\delta,\frob} &= \{x\in \GL_n(F_r):x^{-1} \gamma \frob(x) = \gamma\} ,
+\end{align*}
+where $\frob:F_r\to F_r$ is the Frobenius map. Define 
+\begin{align*}
+  \orbital_\gamma(f) 
+    &= \int_{G_\gamma\backslash \GL_n(F)} f(x^{-1} \gamma x)\, \mathrm{d} \dot x && f\in C_c^\infty(\GL_n(F)) \\ 
+  \twistedorbital_\delta(\phi) 
+    &= \int_{G_{\delta,\frob}\backslash \GL_n(E)} \phi(x^{-1} \delta \frob(x))\, \mathrm{d}\dot x && \phi\in C_c^\infty(\GL_n(F_r)) .
+\end{align*}
+
+Define $\norm:\GL_n(F_r)\to \GL_n(F)$ by 
+\[
+  \norm(g) = g\cdot \frob(g)\dotsm \frob^{r-1}(g) .
+\]
+Given $\phi\in C_c^\infty(\GL_n(F_r))$, there exists 
+$f\in C_c^\infty(\GL_n(F))$, called the function \emph{associated to} $\phi$, 
+such that for all regular $\delta\in \GL_n(F_r)$, we have 
+\[
+  \orbital_\gamma(f) = 
+  \begin{cases} 
+    0 & \gamma\text{ is not a norm} \\ 
+    \twistedorbital_\delta(\phi) & \gamma=\norm(\delta)
+  \end{cases} .
+\]
+Even though the function $f$ associated to $\phi$ is not well-defined, 
+its trace is, so we have the following result. 
+
+\begin{theorem}
+Let $\pi$ be an irreducible admissible representation of $\GL_n(F)$. Then there 
+exists a unique $\rho\in \cG_n(F)$ such that 
+\[
+  \trace(f_{\tau,h},\pi) = \trace(\tau,\rho)\trace(h,\pi) 
+\]
+for all $\tau\in \frob^r\cdot I$ and $h\in C_c^\infty(\GL_n(F))$, where 
+$f_{\tau,h}$ is associated to $\phi_{\tau,h}$ defined as in 
+\eqref{eq:fun-def}. If we put 
+\[
+  \reciprocity(\pi) = \rho ,
+\]
+then $\pi\mapsto \reciprocity(\pi)$ realizes the local Langlands correspondence 
+of \autoref{conj:local-langlands}. 
+\end{theorem}
+
+
+
+
+
+\section{Global theory}
+
+todo. 
 
 
 
