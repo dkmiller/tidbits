@@ -13,6 +13,7 @@
   microtype,
   thmtools
 }
+\DeclareMathOperator{\adjoint}{ad}
 \DeclareMathOperator{\End}{End}
 \DeclareMathOperator{\galois}{Gal}
 \DeclareMathOperator{\GL}{GL}
@@ -130,7 +131,7 @@ $r:W_F\to \GL(V)$ is a continuous representation ($V$ is a finite-dimensional
 vector space with the discrete topology) and $N:V\to V$ is a nilpotent linear 
 map such that 
 \[
-  r(\gamma) N r(\gamma)^{-1} = |\gamma|\cdot N 
+  \adjoint r(\gamma)(N) = |\gamma|\cdot N 
 \]
 for all $\gamma\in W_F$. 
 \end{definition}
@@ -218,9 +219,11 @@ traditional one. The main examples are:
   \item If $A_{/S}$ is an abelian scheme, $\varinjlim A[p^n]$. 
 \end{enumerate}
 
-If $G_{/S}$ is a $p$-divisible group, we put $\lie(G)=\lie(G[p^n])$ for 
-$n\gg 0$. This is a locally free $\sO_S$-module. Recall that $\varpi$ is a 
-uniformizer in $\cO=\cO_F$. 
+If $G_{/S}$ is a $p$-divisible group, we put $\lie(G)=\lie(G[p^n])$ for any 
+$n\gg 0$. This is a locally free $\sO_S$-module. We put 
+$\dim(G)=\dim(\lie G)$. Each $G[p^n]$ will be locally free of rank 
+$p^{n h}$ for some fixed $h=\height(G)$, called the \emph{height} of $G$. 
+Recall that $\varpi$ is a uniformizer in $\cO=\cO_F$. 
 
 \begin{definition}
 Let $S_{/\cO}$ be a scheme. A \emph{$\varpi$-divisible group} on $S$ is a 
