@@ -24,10 +24,12 @@
 \DeclareMathOperator{\orbital}{O}
 \DeclareMathOperator{\reciprocity}{rec}
 \DeclareMathOperator{\sheaves}{Sh}
+\DeclareMathOperator{\shimura}{Sh}
 \DeclareMathOperator{\trace}{tr}
 \DeclareMathOperator{\twistedorbital}{TO}
 \DeclareMathOperator{\witt}{W}
 \newcommand{\etale}{\textnormal{\'et}}
+\newcommand{\finite}{\mathrm{f}}
 \newcommand{\frob}{\mathrm{fr}} % Frobenius
 \newcommand{\Ga}{\mathbf{G}_\mathrm{a}}
 \newcommand{\iso}{\xrightarrow\sim}
@@ -36,7 +38,10 @@
 \newcommand{\cA}{\mathcal{A}}
 \newcommand{\cG}{\mathcal{G}}
 \newcommand{\cO}{\mathcal{O}}
+\newcommand{\dA}{\mathbf{A}}
 \newcommand{\dC}{\mathbf{C}}
+\newcommand{\dD}{\mathbf{D}}
+\newcommand{\dF}{\mathbf{F}}
 \newcommand{\dmu}{\bm\mu}
 \newcommand{\dN}{\mathbf{N}}
 \newcommand{\dQ}{\mathbf{Q}}
@@ -48,6 +53,7 @@
 \newcommand{\fX}{\mathfrak{X}}
 \newcommand{\sF}{\mathscr{F}}
 \newcommand{\sO}{\mathscr{O}}
+\newcommand{\sV}{\mathscr{V}}
 \newtheorem{conjecture}[subsection]{Conjecture}
 \newtheorem{definition}[subsection]{Definition}
 \newtheorem{theorem}[subsection]{Theorem}
@@ -174,7 +180,12 @@ representations. The one example is:
 where $q=\# k$ and $I\subset W_F$ is the \emph{inertia group} of $F$.  
 Henniart proved in \cite{henniart-1993} that these requirements characterize 
 the reciprocity map uniquely. Moreover, for such a correspondence, $\pi$ is 
-supercuspidal if and only if $\reciprocity(\pi)$ is irreducible. 
+supercuspidal if and only if $\reciprocity(\pi)$ is irreducible. Moreover, 
+$\pi$ is a subquotient of the parabolic induction of some 
+$\pi_1\boxtimes\cdots\boxtimes \pi_r$ if and only if 
+$\reciprocity(\pi) = \reciprocity(\pi_1)\oplus \cdots \oplus \reciprocity(\pi_r)$. 
+The local Langlands conjecture for $\GL(n)$ was originally proved by 
+Harris and Taylor \cite{harris-taylor-2001}. 
 
 
 
@@ -308,9 +319,9 @@ such that for all regular $\delta\in \GL_n(F_r)$, we have
   \end{cases} .
 \]
 Even though the function $f$ associated to $\phi$ is not well-defined, 
-its trace is, so we have the following result. 
+its trace are, so we have the following result. 
 
-\begin{theorem}
+\begin{theorem}\label{thm:main-thm}
 Let $\pi$ be an irreducible admissible representation of $\GL_n(F)$. Then there 
 exists a unique $\rho\in \cG_n(F)$ such that 
 \[
@@ -332,7 +343,48 @@ of \autoref{conj:local-langlands}.
 
 \section{Global theory}
 
-todo. 
+Just as local class field theory was first proved via global class field 
+theory, we need to embed the ``local problem'' of defining 
+$\reciprocity(\pi)$ into the ``global problem'' of associating Galois 
+representations to automorphic representations. 
+
+First, Scholze uses induction on $n$ to show that \autoref{thm:main-thm} 
+follows from the result restricted to the class of either essentially 
+square-integrable (square-integrable up to a twist by a power of the 
+determinant) or ``generalized Speh representations.'' 
+
+One can realize $F$ as $\dF_v$ for $v\mid p$ a place of a CM field $\dF$ 
+satisfying certain technical hypotheses \cite[\S 8]{scholze-2013}. One then 
+constructs a central division algebra $\dD$ over $\dF$ together with an 
+involution $\dagger$ of the second kind such that the $\dF^\dagger$-group 
+$G_0$ defined by 
+\[
+  G_0(A) = \{g\in (A\otimes_{\dF^\dagger} \dD)^\times:g g^\dagger = 1\}
+\]
+is unitary of signature $(1,n-1)$ at one infinite place, and $(0,n)$ at all 
+other infinite places. Define an $\dF$-group by 
+\[
+  G(A) = \{g\in (A\otimes_\dF \dD)^\times:g g^\dagger = 1\} .
+\]
+For each irreducible representation $\xi$ of $G$, one has a 
+$\Gamma_\dF\times G(\dA_\finite)$ representation 
+\[
+  H_\xi = \varinjlim \h^\bullet_\etale\left(\shimura_K(G), \sV_\xi(\overline{\dQ_l})\right) ,
+\]
+in which $\sV_\xi$ is the standard automorphic vector bundle on the Shimura 
+variety $\shimura_K(G)$ associated to $\xi$. 
+
+If $\pi$ is an automorphic representation of $G$, put 
+$W_\xi(\pi) = \hom_{G(\dA_\finite)}(\pi_\finite, H_\xi)$. This is a 
+$\Gamma_\dF$-module. For a representation $\pi_p$ of $\GL_n(F)$ of the special 
+type specified above, the correspondence 
+$\pi_p\leftrightarrow \reciprocity(\pi_p)$ roughly occurs in 
+$W_\xi(\pi)$ for some $\xi$. Since 
+$G(\dQ_p) = \GL_n(F)\times D^\times \times \dQ_p^\times$ for the division 
+algebra $D_{/\dQ_p}$ of invariant $\frac 1 n$, this is at least plausible. In 
+fact, $\pi_p\leftrightarrow \reciprocity(\pi_p)$ only occurs at the level of 
+``Grothendieck groups tensored with $\dQ$.'' One needs Scholze's Lemma 3.2 to 
+deduce \autoref{thm:main-thm}. 
 
 
 
