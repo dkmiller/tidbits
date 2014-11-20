@@ -13,7 +13,7 @@
   microtype,
   thmtools
 }
-\DeclareMathOperator{\adjoint}{ad}
+\DeclareMathOperator{\adjoint}{Ad}
 \DeclareMathOperator{\End}{End}
 \DeclareMathOperator{\galois}{Gal}
 \DeclareMathOperator{\GL}{GL}
@@ -33,6 +33,7 @@
 \newcommand{\finite}{\mathrm{f}}
 \newcommand{\frob}{\mathrm{fr}} % Frobenius
 \newcommand{\Ga}{\mathbf{G}_\mathrm{a}}
+\newcommand{\Gm}{\mathbf{G}_\mathrm{m}}
 \newcommand{\iso}{\xrightarrow\sim}
 \newcommand{\transpose}[1]{\prescript{\mathrm{t}}{}{#1}}
 \newcommand{\WD}{\mathrm{WD}} % Weil-Deligne group
@@ -114,7 +115,7 @@ as an abstract field. We will only consider vector spaces over fields
 abstractly isomorphic to $\dC$, e.g.~$\overline{\dQ_l}$. 
 
 For each $n\geqslant 1$, let $\cA_n(F)$ be the set of isomorphism classes of 
-irreducible irreducible admissible representations of $\GL_n(F)$. This has 
+irreducible admissible representations of $\GL_n(F)$. This has 
 a subset $\cA_n^\mathrm{cusp}(F)$ consisting of those $\pi$ for which 
 $\hom(\pi,\induce_P^{\GL_n(F)} \rho)=0$ for all parabolic subgroups 
 $P\subset \GL_n(F)$. Such $\pi$ are called \emph{supercuspidal}; equivalently 
@@ -122,8 +123,8 @@ the matrix coefficients of $\pi$ are compact support modulo the center of
 $\GL_n(F)$. 
 
 Let $W_F\subset\galois(\overline F/F)$ be the set of $\sigma$ such that 
-for some fixed $r\in \dZ$, $\sigma(x)\equiv \frob^r(x)\pmod p$ for all 
-$x\in \cO_{\overline F}$. This is the \emph{Weil group} of $F$. 
+for some $r\in \dZ$, we have $\sigma(x)\equiv \frob^r(x)\mod \fm_{\overline F}$ 
+for all $x\in \cO_{\overline F}$. This is the \emph{Weil group} of $F$. 
 
 \begin{definition}
 A \emph{Weil-Deligne representation} of $W_F$ is a pair $\rho=(r,N)$, where 
@@ -144,7 +145,8 @@ over which $V$ is a vector space. As above, we will work with either $\dC$ or
 $\overline{\dQ_l}$. It turns out that a Weil-Deligne representation is the same 
 thing as an ``honest'' representation of the pro-algebraic \emph{Weil-Deligne 
 group} $\WD_F=W_F\ltimes \Ga$, via the action 
-$\gamma\cdot x = |\gamma|^{-1} x$. 
+$\gamma\cdot x = |\gamma|^{-1} x$. Essentially, this is because representations 
+of $\Ga$ are exactly ``choices of nilpotent endomorphisms.'' 
 
 For each $n\geqslant 1$, let $\cG_n(F)$ be the set of equivalence classes of 
 Frobenius-semisimple $n$-dimensional Weil-Deligne representations of $W_F$. It 
@@ -201,7 +203,7 @@ group sometimes called the Pr\"ufer group.
 
 \begin{definition}
 Let $S$ be a scheme. A \emph{$p$-divisible group} over $S$ is an fppf 
-sheaf $G$ such that: 
+sheaf $G_{/S}$ such that: 
 \begin{enumerate}
   \item $\hom(\dZ(p^\infty),G)\iso G$ ``$p$-torsion''
   \item $G\xrightarrow p G$ is an epimorphism ``$p$-divisible''
@@ -215,8 +217,8 @@ $G[p^{n+i}]\xrightarrow{p^i}G[p^n]$. Thus this definition agrees with the more
 traditional one. The main examples are: 
 \begin{enumerate}
   \item The constant $p$-divisible group $\dZ(p^\infty)$. 
-  \item $\dmu_{p^\infty} = \varinjlim \dmu_{p^n}$. 
-  \item If $A_{/S}$ is an abelian scheme, $\varinjlim A[p^n]$. 
+  \item $\Gm[p^\infty] = \dmu_{p^\infty} = \varinjlim \dmu_{p^n}$. 
+  \item If $A_{/S}$ is an abelian scheme, $A[p^\infty] = \varinjlim A[p^n]$. 
 \end{enumerate}
 
 If $G_{/S}$ is a $p$-divisible group, we put $\lie(G)=\lie(G[p^n])$ for any 
@@ -307,7 +309,7 @@ where $\frob:F_r\to F_r$ is the Frobenius map. Define
     &= \int_{G_{\delta,\frob}\backslash \GL_n(E)} \phi(x^{-1} \delta \frob(x))\, \mathrm{d}\dot x && \phi\in C_c^\infty(\GL_n(F_r)) .
 \end{align*}
 
-Define $\norm:\GL_n(F_r)\to \GL_n(F)$ by 
+Define the \emph{norm map} $\norm:\GL_n(F_r)\to \GL_n(F)$ by 
 \[
   \norm(g) = g\cdot \frob(g)\dotsm \frob^{r-1}(g) .
 \]
@@ -322,7 +324,7 @@ such that for all regular $\delta\in \GL_n(F_r)$, we have
   \end{cases} .
 \]
 Even though the function $f$ associated to $\phi$ is not well-defined, 
-its trace are, so we have the following result. 
+its traces are, so we have the following result. 
 
 \begin{theorem}\label{thm:main-thm}
 Let $\pi$ be an irreducible admissible representation of $\GL_n(F)$. Then there 
@@ -334,7 +336,7 @@ for all $\tau\in \frob^r\cdot I$ and $h\in C_c^\infty(\GL_n(F))$, where
 $f_{\tau,h}$ is associated to $\phi_{\tau,h}$ defined as in 
 \eqref{eq:fun-def}. If we put 
 \[
-  \reciprocity(\pi) = \rho ,
+  \reciprocity(\pi) = \rho\left(\frac{n-1}{2}\right) \qquad \text{(Tate twist)},
 \]
 then $\pi\mapsto \reciprocity(\pi)$ realizes the local Langlands correspondence 
 of \autoref{conj:local-langlands}. 
