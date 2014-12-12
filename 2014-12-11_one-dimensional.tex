@@ -1,0 +1,127 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb,bm}
+\DeclareMathOperator{\adjoint}{Ad}
+\DeclareMathOperator{\galois}{Gal}
+\DeclareMathOperator{\GL}{GL}
+\DeclareMathOperator{\h}{H}
+\DeclareMathOperator{\witt}{W}
+\newcommand{\cM}{\mathcal{M}}
+\newcommand{\cX}{\mathcal{X}}
+\newcommand{\dmu}{\bm\mu}
+\newcommand{\dQ}{\mathbf{Q}}
+\newcommand{\dZ}{\mathbf{Z}}
+\newcommand{\fm}{\mathfrak{m}}
+\newcommand{\ft}{\mathfrak{t}}
+\newcommand{\coefficient}{\mathsf{C}}
+\newcommand{\epic}{\twoheadrightarrow}
+\newcommand{\gl}{\mathfrak{gl}}
+\newcommand{\monic}{\hookrightarrow}
+\newcommand{\set}{\mathsf{Set}}
+
+\title{Lifting one-dimensional Galois representations}
+\author{Daniel Miller}
+
+\begin{document}
+\maketitle
+
+
+
+
+
+\section{Brief review of the setup}
+
+Throughout, $\Gamma=\galois(\overline{\dQ}/\dQ)$ and, for each finite set $S$ 
+of primes, $\Gamma_S=\galois(\dQ_S/S)$, where $\dQ_S$ is the maximal extension 
+of $\dQ$ unramified outside $S$. Let $k$ be a finite field of characteristic 
+$p$. Fix a continuous irreducible representation $\bar\rho:\Gamma\to \GL_n(k)$. 
+For each set $S$ of primes such that $\bar\rho$ factors through $\Gamma_S$, we 
+have a formal scheme $\cX_S=\cX_S(\bar\rho)$. It is given by its functor of 
+points $\cX_S:\coefficient_{\witt(k)}\to \set$. Here, $\witt(k)$ is the ring of 
+Witt vectors of $k$ and $\coefficient_{\witt(k)}$ is the category of artinian 
+local $\witt(k)$-algebras with residue field $k$. For $A$ such an algebra, the 
+set $\cX_S(A)$ consists of lifts $\rho:\Gamma_S\to \GL_n(A)$ of $\bar\rho$, up 
+to strict equivalence. Write $\ft_{\cX_S}=\cX_S(k[\varepsilon])$ for the 
+tangent space of $\cX_S$ at $\bar\rho$. It is well-known that there is a 
+natural isomorphism 
+\[
+  \ft_{\cX_S} = \h^1(\Gamma_S,\adjoint\bar\rho) ,
+\]
+where $\adjoint\bar\rho$ is $\Gamma_S$-module $\gl_n(k)$, with action 
+$\sigma\cdot x = \adjoint(\bar\rho(\sigma))(x)$. Moreover, there is a good 
+``obstruction theory'' for lifting deformations of $\bar\rho$. Given a 
+surjection $A\epic A_0$ in $\coefficient_{\witt(k)}$ for which the kernel 
+$I$ is principle and annihilated by $\fm_A$, there is associated to each 
+$\rho_0\in \cX_S(A_0)$ an \emph{obstruction class} 
+$o(\rho_0)\in \h^2(\Gamma_S,\adjoint\bar\rho)$, the vanishing of which is 
+necessary and sufficient for the existence of a lift of $\rho_0$ to 
+$A$. If such a lift $\rho$ exists, the set of lifts of $\rho_0$ admits a 
+natural action of $\ft_{\cX_S}$, which we denote 
+$(c,\rho)\mapsto c\cdot \rho$, which makes the set of lifts a 
+$\ft_{\cX_S}$-torsor. 
+
+For any rational prime $l$, write $\Gamma_l=\galois(\overline{\dQ_l}/\dQ)$. 
+The representation $\bar\rho:\Gamma_S\to \GL_n(k)$ restricts to a 
+representation $\bar\rho_l=\bar\rho|_{\Gamma_l}$, and we write 
+$\cX_l=\cX_l(\bar\rho)$ for the formal scheme classifying strict 
+equivalence classes of lifts of $\bar\rho_l$ to representations 
+$\rho_l:\Gamma_l\to \GL_n(A)$. The operation 
+$\rho\mapsto \rho|_{\Gamma_l}$ induces a morphism $\cX_S\to \cX_l$ for each 
+$l$. Just as above, there is a natural isomorphism 
+$\ft_{\cX_l} = \h^1(\Gamma_v,\adjoint\bar\rho)$, and obstructions to lifts 
+live in $\h^2(\Gamma_v,\adjoint\bar\rho)$. 
+
+Put $\cX_{\partial S}=\prod_{l\in S} \cX_l$. Clearly 
+$\ft_{\cX_{\partial S}} = \bigoplus_{l\in S} \ft_{\cX_l}$. For us, a 
+\emph{set of local conditions} is a formal subscheme 
+$\cM\subset \cX_{\partial S}$. Given a set of local conditions $\cM$, 
+define $\cX_\cM=\cX\times_{\cX_{\partial S}} \cM$. That is, for 
+$A\in\coefficient_{\witt(k)}$, the set $\cX_\cM(A)$ consists of those 
+$\rho\in\cX_S(A)$ such that $(\rho|_{\Gamma_l})_{l\in S}$ lies in 
+$\cM(A)$. If, as will always be the case, $\cM=\prod_{l\in S}\cM_l$ with each 
+$\cM_l\subset \cX_l$, it is clear that 
+\[
+  \ft_{\cX_\cM} = \ker\left(\ft_{\cX_S}\to \bigoplus_{l\in S} \ft_{\cX_l}/\ft_{\cM_l}\right) = \ker\left(\h^1(\Gamma_S,\adjoint\bar\rho) \to \bigoplus_{l\in S} \frac{\h^1(\Gamma_l,\adjoint\bar\rho)}{\ft_{\cM_l}}\right) .
+\]
+There is also an obstruction theory for $\cX_\cM$. [work this out!]
+
+It is natural to ask whether the morphism $\cX_S\to \cX_\cM$ is (formally) 
+smooth. This is true if and only if, for each square-zero extension 
+$A\epic A_0$, an element $\rho_0\in \cX_S(A_0)$ lifts to $A$ if and only if 
+$(\rho_0|_{\Gamma_l})_{l\in S}\in \cM(A_0)$ lifts to a 
+$(\rho_l)_{l\in S}\in \cX_\cM(A)$. It is easy to check that this holds if and 
+only if 
+\[
+  \h^1_{\cM^\bot}(\Gamma_S,\adjoint\bar\rho^\ast) = \ker\left(\h^1(\Gamma_S,\adjoint\bar\rho^\ast) \to \bigg(\bigoplus_{l\in S} \h^1(\Gamma_l,\adjoint\bar\rho^\ast)\bigg) / \ft_\cM^\bot\right) .
+\]
+Here, $\ft_\cM^\bot\subset \bigoplus_{l\in S} \h^1(\Gamma_l,\adjoint\bar\rho^\ast)$ 
+is the orthogonal complement of $\ft_\cM$ under the pairing 
+$\ft_\cM\times \bigoplus_{l\in S} \h^1(\Gamma_l,\adjoint\bar\rho^\ast)\to \dQ/\dZ$ 
+induced by the cup-products 
+\[
+  \smallsmile:\h^1(\Gamma_l,\adjoint\bar\rho)\times \h^1(\Gamma_l,\adjoint\bar\rho^\ast)\to \h^2(\Gamma_l,\dmu_p) \monic \dQ/\dZ .
+\]
+
+
+
+
+
+\section{The one-dimensional case}
+
+Let $\Gamma$, $k$ be as above. Fix a continuous character 
+$\bar\chi:\Gamma\to k^\times$. For each appropriate $S$, write 
+$\cX_S=\cX_S(\bar\chi)$. Note that $\adjoint\bar\chi=k$ (the trivial 
+representation). Because of this, a number of things can be computed using 
+various duality theorems. First, note that 
+$\ft_{\cX_S} = \h^1(\Gamma_S,k) = \h^1(\Gamma_S,\dZ/p)\otimes k$. By 
+[NSW, 8.6.9], there is a natural isomorphism 
+\[
+  \h^2(\Gamma_l,\dZ/p) = \h^0(\Gamma_l,\dmu_p) = 0 ,
+\]
+that is each $\cX_l$ is smooth. 
+
+
+
+
+
+\end{document}
