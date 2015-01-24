@@ -1,12 +1,13 @@
 \documentclass{article}
 
-\usepackage{amsmath,amssymb,bm}
+\usepackage{amsmath,amssymb,bm,bookmark}
 \DeclareMathOperator{\adjoint}{Ad}
 \DeclareMathOperator{\galois}{Gal}
 \DeclareMathOperator{\GL}{GL}
 \DeclareMathOperator{\h}{H}
 \DeclareMathOperator{\witt}{W}
 \newcommand{\cM}{\mathcal{M}}
+\newcommand{\cO}{\mathcal{O}}
 \newcommand{\cX}{\mathcal{X}}
 \newcommand{\dmu}{\bm\mu}
 \newcommand{\dQ}{\mathbf{Q}}
@@ -18,6 +19,26 @@
 \newcommand{\gl}{\mathfrak{gl}}
 \newcommand{\monic}{\hookrightarrow}
 \newcommand{\set}{\mathsf{Set}}
+
+% Tate-Shafarevich groups
+  \DeclareFontFamily{U}{wncy}{}
+  \DeclareFontShape{U}{wncy}{m}{n}{<->wncyr10}{}
+  \DeclareSymbolFont{mcy}{U}{wncy}{m}{n}
+  \DeclareMathSymbol{\sha}{\mathord}{mcy}{"58} 
+
+\usepackage[
+  hyperref = true,      % links to online documents
+  backend  = bibtex,    % use bibtex instead of biber
+  sorting  = nyt,       % sorts by (name, year, title)
+  style    = alphabetic % citations look like [Har77]
+]{biblatex}
+\addbibresource{tidbit-sources.bib}
+\hypersetup{
+  colorlinks = true,
+  linkcolor  = blue,
+  urlcolor   = cyan
+}
+\hypersetup{colorlinks=true,linkcolor=green}
 
 \title{Lifting one-dimensional Galois representations}
 \author{Daniel Miller}
@@ -112,16 +133,46 @@ Let $\Gamma$, $k$ be as above. Fix a continuous character
 $\bar\chi:\Gamma\to k^\times$. For each appropriate $S$, write 
 $\cX_S=\cX_S(\bar\chi)$. Note that $\adjoint\bar\chi=k$ (the trivial 
 representation). Because of this, a number of things can be computed using 
-various duality theorems. First, note that 
-$\ft_{\cX_S} = \h^1(\Gamma_S,k) = \h^1(\Gamma_S,\dZ/p)\otimes k$. By 
-[NSW, 8.6.9], there is a natural isomorphism 
+various duality theorems. First, note that for any profinite group $G$, we have 
+$\h^\bullet(G,k) = \h^\bullet(G,\dZ/p)\otimes k$. Thus by 
+\cite[8.6.9]{nsw08}, there is a natural isomorphism 
 \[
-  \h^2(\Gamma_l,\dZ/p) = \h^0(\Gamma_l,\dmu_p) = 0 ,
+  \h^2(\Gamma_l,k) = \h^0(\Gamma_l,\dmu_p)^\vee\otimes k = 
+  \begin{cases} 
+    k & \text{ if $l\equiv 1\pmod p$} \\
+    0 & \text{otherwise} 
+  \end{cases} ,
 \]
-that is each $\cX_l$ is smooth. 
+that is, $\cX_l$ is singular if and only if 
+$l\equiv 1\pmod p$. We can compute tangent spaces: 
+\begin{align*}
+  \ft_{\cX_l} 
+    &= \h^1(\Gamma_l,k) \\
+    &= \h^1(\Gamma_l,\dmu_p)^\vee\otimes k \\
+    &= \hom(\widehat\dZ\times \dZ/(l-1)\times \dZ_l,k) \\
+    &= 
+  \begin{cases}
+    k^2 & \text{if $l= p$ or $l\equiv 1\pmod p$} \\
+    k & \text{otherwise} 
+  \end{cases}
+\end{align*}
+In other words, $\cX_p$ is smooth and two-dimensional, and the 
+$\cX_l$ ($l\ne p$) are singular with $\dim(\ft_{\cX_l})=2$ ($l\equiv 1$) or 
+smooth and one-dimensional ($l\not\equiv 1$). 
+
+Let $K/\dQ_p$ be a finite extension with ring of integers $\cO$ and residue 
+field $k$. Write $\cO_n = \cO/\fm^{n+1}$. Given 
+$\bar\chi:\Gamma\to \cO_0^\times$ and a lift $\chi_n:\Gamma\to \cO_n^\times$
+($n\geqslant 2$), we are interested in the existence (possibly after enlarging 
+$S$) of a lift of $\chi_n$ to $\cO$. This will be accomplished by making 
+\[
+  \sha^1_S(\dmu_p) = \ker\left(\h^1(\Gamma_S,\dmu_p) \to \bigoplus_{l\in S} \h^1(\Gamma_l,\dmu_p)\right) 
+\]
+vanish, which should be possible via adding nice primes. 
 
 
 
 
 
+\printbibliography
 \end{document}

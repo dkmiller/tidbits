@@ -1,0 +1,189 @@
+\documentclass{article}
+
+\usepackage[a5paper, total={4.7in,7.25in}]{geometry}
+\usepackage{amsmath,amssymb,amsthm,tikz-cd}
+\DeclareMathOperator{\adjoint}{ad}
+\DeclareMathOperator{\gal}{Gal}
+\DeclareMathOperator{\GL}{GL}
+\DeclareMathOperator{\h}{H}
+\DeclareMathOperator{\rep}{\mathsf{Rep}}
+\DeclareMathOperator{\witt}{W}
+\newcommand{\cC}{\mathcal{C}}
+\newcommand{\cX}{\mathcal{X}}
+\newcommand{\cY}{\mathcal{Y}}
+\newcommand{\dQ}{\mathbf{Q}}
+\newcommand{\fa}{\mathfrak{a}}
+\newcommand{\fc}{\mathfrak{c}}
+\newcommand{\fm}{\mathfrak{m}}
+\newcommand{\ft}{\mathfrak{t}}
+\newcommand{\coef}{\mathsf{C}}
+\newcommand{\set}{\mathsf{set}}
+\DeclareFontFamily{U}{wncy}{}
+\DeclareFontShape{U}{wncy}{m}{n}{<->wncyr10}{}
+\DeclareSymbolFont{mcy}{U}{wncy}{m}{n}
+\DeclareMathSymbol{\sha}{\mathord}{mcy}{"58}
+\newtheorem{corollary}[subsection]{Corollary}
+\newtheorem{theorem}[subsection]{Theorem}
+
+\title{Smoothness and some deformation rings}
+\author{Daniel Miller}
+
+\begin{document}
+\maketitle
+
+
+
+
+
+\section{Notation}
+
+As is typical, if $G$ is a profinite group and $M$ a topological $G$-module, we 
+write $\h^\bullet(G,M)$ for the continuous cohomology of $G$ with coefficients 
+in $M$. If $k$ is a field and $\gal(k^\mathrm{sep}/k)$ acts continuously on 
+$M$, we write $\h^\bullet(k,M)$ instead of $\h^\bullet(\gal(k^\mathrm{sep}/k),M)$. 
+
+Suppose $\gal_\dQ=\gal(\overline\dQ/\dQ)$ acts on $M$. Then for each place $v$, the 
+we write $\h^\bullet(v,M)=\h^\bullet(\dQ_v,M)$. If $M$ is unramified outside a set 
+$S$ of places, we write $\h^\bullet(S,M)=\h^\bullet(\gal(\dQ_S/\dQ),M)$, where 
+$\dQ_S$ is the maximal extension of $\dQ$ unramified outside $S$. 
+
+Fix a finite field $k$ of characteristic $p$. Let $\witt(k)$ be the ring of Witt 
+vectors of $k$, and let $\coef_{\witt(k)}$ be the category of local artinian 
+$\witt(k)$-algebras with residue field $k$. Fix once and for all a continuous 
+representation $\bar\rho:\gal_\dQ\to \GL_2(k)$. If $S$ is a finite set of places 
+outside which $\bar\rho$ is unramified, define a functor 
+$\cX_S(\bar\rho)\colon \coef_{\witt(k)}\to \set$ by letting 
+\[
+  \cX_S(\bar\rho)(A) = \{\text{deformations of $\bar\rho$ to $\gal(\dQ_S/\dQ)\to \GL_2(A)$}\} .
+\]
+Since $\bar\rho$ is fixed, we will generally drop it from the notation. It is well known 
+that there is a canonical isomorphism $\ft_{\cX_S}\simeq \h^1(S,\adjoint\bar\rho)$. The functor 
+$\cX_S$ is smooth if and only if $\h^2(S,\adjoint\bar\rho) = 0$. More generally, if 
+$A_1\twoheadrightarrow A_0$ in $\coef_{\witt(k)}$ has kernel $\fa$ annihilated by $\fm_{A_1}$, 
+then for each $\rho_0\in \cX_S(A_0)$, there is an ``obstruction class'' 
+$o(\rho_0)\in \h^2(S,\adjoint\bar\rho)\otimes \fa$ whose vanishing is necessary and 
+sufficient for the existence of a lift of $\rho_0$ to $\rho_1\in \cX_S(A_1)$. 
+
+For a place $v$ of $\dQ$, let $\cX_v=\cX_v(\bar\rho)$ classify deformations of 
+$\bar\rho|_{\gal(\overline{\dQ_v}/\dQ)}$. If $S$ is a finite set of places of $\dQ$, write 
+$\cX_{\partial S}=\prod_{v\in S} \cX_v$. Clearly 
+$\ft_{\cX_{\partial S}} = \bigoplus_{v\in S} \h^1(v,\adjoint\bar\rho)$. 
+
+We will tacitly fix all determinants, which means that we deal with the cohomology of 
+$\adjoint^\circ\bar\rho$, the space of trace-zero matrices. 
+
+
+
+
+
+\section{Smoothness}
+
+Let $\cX,\cY\colon \coef_{\witt(k)}\to \set$, and $f\colon \cX\to \cY$ a morphism. One says 
+$f$ is \emph{formally smooth} if whenever $A_1\twoheadrightarrow A_0$ in 
+$\coef_{\witt(k)}$, the natural map 
+\[
+  \cX(A_1) \to \cX(A_0)\times_{\cY(A_0)} \cY(A_1)
+\]
+is surjective. In other words, if $x_0\in \cX(A_0)$ is such that $f(x_0)$ lifts to 
+$\cY(A_1)$, then $x_0$ lifts to $\cX(A_1)$. Clearly the composite of smooth morphisms is 
+smooth. 
+
+
+
+
+
+\section{Poitou-Tate duality}
+
+Let $V\in \rep_k(\dQ)$ be unramified outside a finite set $S$ of places. Suppose we 
+have a set $\{L_v:v\in S\}$, where $L_v\subset \h^1(v,V)$. Let $L^\bot=\{L_v^\bot:v\in S\}$, 
+where $L_v^\bot\subset \h^1(v,V^\ast)$ is the annihilator of $L_v$ under the cup product. 
+Define 
+\[
+  \h_L^1(S,V) = \ker\bigg(\h^1(S,V)\to \bigoplus_{v\in S} \frac{\h^1(v,V)}{L_v}\bigg) ,
+\]
+and similarly for $\h_{L^\bot}^1(S,V^\ast)$. Poitou-Tate duality gives us an exact 
+sequence 
+\[
+  \h^1(S,V)\to \bigoplus_{v\in S} \h^1(v,V)\to \h^1(S,V^\ast)^\vee\to \h^2(S,V)\to \bigoplus_{v\in V} \h^2(v,V) .
+\]
+Quotient out by $L$ to obtain 
+\begin{equation}\label{eq:pt}\tag{$\ast$}
+  \h^1(S,V)\to \bigoplus_{v\in S} \frac{\h^1(v,V)}{L_v}\to \h_{L^\bot}^1(S,V^\ast)^\vee\to \h^2(S,V)\to \bigoplus_{v\in V} \h^2(v,V) .
+\end{equation}
+When $L=0$, we write $\sha^1_S(V)=\h^1_0(S,V)$. 
+
+
+
+
+
+\section{Formal smoothness of deformation spaces}
+
+Let $\bar\rho$, $\cX_S$, $\cX_{\partial S}$ be as above. 
+
+\begin{theorem}
+$\partial\colon \cX_S\to \cX_{\partial S}$ is smooth if and only if 
+$\sha^1_S(\adjoint^\circ\bar\rho^\ast)=0$. 
+\end{theorem}
+\begin{proof}
+Suppose we have $A_1\twoheadrightarrow A_0$ in $\coef_{\witt(k)}$. Given 
+$\rho_0\in \cX_S(A_0)$, the image $\partial(\rho_0)=(\rho_0|_V)_{v\in S}$ lifts to 
+$\cX_{\partial S}(A_1)$ if and only if 
+$o(\partial \rho_0)\in \bigoplus_{v\in S} \h^2(v,\adjoint^\circ\bar\rho)$ vanishes. 
+The original $\rho_0$ lifts to $\cX_S(A_1)$ if and only if 
+$o(\rho_0)\in \h^2(S,\adjoint^\circ\bar\rho)$ vanishes. In other words, smoothness 
+is equivalent to the vanishing of 
+\[
+  \ker\bigg(\h^2(S,\adjoint^\circ\bar\rho)\to \bigoplus_{v\in S} \h^2(v,\adjoint^\circ\bar\rho)\bigg) \simeq \sha_S^1(\adjoint^\circ\bar\rho^\ast)^\vee ,
+\]
+the isomorphism being a part of Poitou-Tate duality. 
+\end{proof}
+
+Suppose we have a subfunctor 
+$\cC=\prod_{v\in S} \cC_v\subset X_{\partial S}$; put $\fc=\ft_\cC$. Define $\cX_\cC$ to be the 
+pullback 
+\[\begin{tikzcd}
+  \cX_\cC \ar[r] \ar[d] 
+    & \cC \ar[d, hook] \\
+  \cX_S \ar[r, "\partial"] 
+    & \cX_{\partial S}
+\end{tikzcd}\]
+
+\begin{theorem}
+If $\h^1_{\fc^\bot}(S,\adjoint^\circ\bar\rho^\ast)=0$, then $\cX_\cC\to \cC$ is smooth. 
+\end{theorem}
+\begin{proof}
+From \eqref{eq:pt}, we already know that 
+$\sha_S^1(\adjoint^\circ\bar\rho^\ast)=0$, so $\cX\to \cX_{\partial S}$ is 
+smooth. Suppose $A_1\twoheadrightarrow A_0$ in $\coef_{\witt(k)}$, and let 
+$\rho_0\in \cX_\cC(A_0)$. If $\partial(\rho_0)$ lifts to 
+$\widetilde{\partial\rho_0}\in \cC(A_1)$, then because 
+$\cX_S\to \cX_{\partial S}$ is smooth, $\rho_0$ lifts to 
+$\rho_1\in \cX_S(A_1)$. The exact sequence \eqref{eq:pt} tells us that 
+\[
+  \ft_{\cX_{\partial S}} = \partial_\ast \ft_{\cX_S} + \fc .
+\]
+It is well-known that lifts of $\partial(\rho_0)$ to $\cX_{\partial S}(A_1)$ form a 
+$\ft_{X_S}\otimes \fa$-torsor. In particular, there exists 
+$t=\partial_\ast c+d\in \ft_{\cX_{\partial S}}$ such that $c\in \ft_{\cX_S}$, 
+$d\in \fc$, and
+$t\cdot \partial(\rho_1) = \widetilde{\partial(\rho_0)}\in \cC(A_1)$. Then 
+\[
+  \partial(c\cdot \rho_1) = (\partial_\ast c)\cdot \partial(\rho_1) = (-l)\cdot \widetilde{\partial(\rho_0)} \in \cC(A_1) .
+\]
+So $c\cdot\rho_1$ is a lift of $\rho_0$ to $\cX_\cC(A_1)$. 
+\end{proof}
+
+\begin{corollary}
+If there is a smooth $\cC\subset \cX_{\partial S}$ such that 
+$\h_{\fc^\bot}^1(S,\adjoint^\circ\bar\rho^\ast)=0$, then $\cX_\cC$ is smooth.  
+\end{corollary}
+\begin{proof}
+Note that $\cX_\cC\to \ast$ is the composite of $\cX_\cC\to \cC$ and 
+$\cC\to \ast$, both of which are smooth. 
+\end{proof}
+
+
+
+
+
+\end{document}
