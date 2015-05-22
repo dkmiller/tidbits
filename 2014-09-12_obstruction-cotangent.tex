@@ -1,15 +1,23 @@
 \documentclass{article}
 
-\usepackage{amsmath,amssymb,amsthm,fullpage,mathrsfs,microtype,tikz-cd}
+\usepackage[a5paper]{geometry}
+\usepackage[cm]{fullpage}
+\usepackage{amsmath,amssymb,amsthm,bm,fullpage,mathrsfs,microtype,stmaryrd,tikz-cd}
 \DeclareMathOperator{\ext}{Ext}
 \DeclareMathOperator{\sheaves}{Sh}
 \DeclareMathOperator{\spf}{Spf}
 \DeclareMathOperator{\witt}{W}
+\newcommand{\bZ}{\mathbf{Z}}
 \newcommand{\cS}{\mathcal{S}}
 \newcommand{\cX}{\mathcal{X}}
 \newcommand{\cY}{\mathcal{Y}}
+\newcommand{\fa}{\mathfrak{a}}
 \newcommand{\sO}{\mathscr{O}}
+\newcommand{\dd}{\mathrm{d}}
+\newcommand{\kk}{\mathsf{k}} % finite field
+\newcommand{\LL}{\mathrm{L}} % cotangent complex
 \newcommand{\vaf}{\mathsf{Vaf}}
+\newcommand{\pow}[1]{\llbracket #1 \rrbracket}
 \newtheorem{definition}[subsection]{Definition}
 \newtheorem{theorem}[subsection]{Theorem}
 
@@ -102,6 +110,45 @@ group $\ext_{\cX_0}^0(L_{\cX_0/\cY},I)$.
 This is \cite[III 2.1.7]{illusie-1971}, where $\cY_0=\cY$ and the base topos is 
 hidden from notation.  
 \end{proof}
+
+
+
+
+
+\section{One-dimensional representations}
+
+Let $\Gamma$ be a finitely generated $\bZ_p$-module. Write $\cX_\Gamma$ for the 
+deformation space parameterizing lifts of $1\colon \Gamma\to \kk^\times$. So 
+$\cX_\Gamma$ is a (formal) scheme over $\witt(\kk)$. One way to understand the 
+cotangent complex $\LL_{\cX_\Gamma/\witt(\kk)}$ is by embedding $\cX_\Gamma$ 
+into a smooth scheme. 
+
+Let $\Gamma_\bullet\twoheadrightarrow \Gamma$ be a minimal free resolution of 
+$\Gamma$ as a $\bZ_p$-module. So 
+$\Gamma_\bullet=[\Gamma_1\hookrightarrow \Gamma_0]$. Then we have a closed embedding 
+$\cX_\Gamma\hookrightarrow\cX_{\Gamma_0} = \spf(\witt(\kk)\pow{\Gamma_0})$. 
+Then \cite[III 3.3.6]{illusie-1971} tells us that 
+\[
+	\LL_{\cX_\Gamma/\witt(\kk)} = \left[ \fa/\fa^2 \to \Omega^1_{\cX_{\Gamma_0} / \witt(\kk)}\otimes_{\witt(\kk)\pow{\Gamma_0}} \witt(\kk)\pow\Gamma] \right] ,
+\]
+where $\fa=\ker(\witt(\kk)\pow{\Gamma_0} \twoheadrightarrow \witt(\kk)[\Gamma])$. 
+
+
+
+
+
+\section{Take two}
+
+Suppose $\Gamma=\bZ_p^{\oplus r} \times \bigoplus_i \bZ/p^{n_i}$. Then 
+\[
+	R = \Lambda\pow{\Gamma}\simeq \Lambda\pow{s_1,\dots,s_r,t_i} / \langle 1-(1-t_i)^{p^{n_i}}\rangle .
+\]
+This gives us an obvious surjection 
+$\Lambda\pow{\bm s,\bm t}\twoheadrightarrow R$. Let $\fa$ be its kernel. Then 
+\[
+	\LL_{R/\Lambda} \simeq \left[\fa/\fa^2 \xrightarrow\dd R\, \dd(\bm s,\bm t) \right] .
+\]
+Now, more or less by definition, $\fa=\langle 1-(1-t_i)^{p^{n_i}}\rangle$. 
 
 
 

@@ -1,0 +1,129 @@
+\documentclass{article}
+
+\usepackage[a5paper]{geometry}
+\usepackage[cm]{fullpage}
+\usepackage{amsmath,amssymb,amsthm,bm,hyperref,microtype,stmaryrd,tikz-cd}
+\DeclareMathOperator{\PGL}{PGL}
+\DeclareMathOperator{\spf}{Spf}
+\DeclareMathOperator{\W}{W}
+\newcommand{\balpha}{{\bm\alpha}}
+\newcommand{\bF}{\mathbf{F}}
+\newcommand{\fm}{\mathfrak{m}}
+\newcommand{\Ar}{\mathfrak{Ar}}
+\newcommand{\Ga}{{\widehat{\mathbf{G}_\mathrm{a}}}}
+\newcommand{\pow}[1]{\llbracket #1 \rrbracket}
+\newtheorem{theorem}{Theorem}
+\theoremstyle{definition}
+\newtheorem{example}{Example}
+\hypersetup{colorlinks=true,linkcolor=blue}
+
+\title{Proving representability of deformation functors}
+\author{Daniel Miller}
+
+\begin{document}
+\maketitle
+
+
+
+
+
+Let $\bF$ be a finite field, $\W(\bF)$ its ring of Witt vectors, and 
+$\Ar_{\W(\bF)}$ the category of finite local $\W(\bF)$-algebras with residue 
+field $\bF$. Let $\widehat\Ar_{\W(\bF)}^\circ$ be the opposite of the category 
+of complete local noetherian $\W(\bF)$-algebras with residue field $\bF$. For 
+$R\in \widehat\Ar_{\W(\bF)}$, write $\spf(R)$ for the corresponding object of 
+$\widehat\Ar_{\W(\bF)}^\circ$. 
+
+Let $G$ be a profinite action, $V_\bF$ a finite-dimensional $\bF$-vector space 
+with continuous $G$-action. In proving the representability of the deformation 
+functor $D_{V_\bF}$, you use the following theorem of SGA: 
+
+\begin{theorem}[SGA 3, VIIb, Thm.~1.4]
+Let $R\rightrightarrows X$ be an equivalence relation in 
+$\widehat\Ar_{\W(\bF)}^\circ$ such that the first projection is flat. Then the 
+quotient of $X$ by $R$ exists. It represents the functor on points defined by 
+the equivalence relation. 
+\end{theorem}
+
+The problem is, \emph{this theorem is false}. 
+
+\begin{example}\label{thm1}
+Consider the following group object in $\widehat\Ar_{\W(\bF)}^\circ$:
+\[
+	\Ga_{/\bF}=\spf(\bF\pow{t}), \qquad A\mapsto (\fm_A,+) .
+\]
+It admits a Frobenius endomorphism $\varphi\colon \Ga_{/\bF}\to \Ga_{/\bF}$, 
+which on $A$-points is $\varphi(a) = a^p$. Let $\balpha_p=\ker(\varphi)$. Then 
+\[
+\begin{tikzcd}
+	0 \ar[r]
+		& \balpha_p \ar[r]
+		& \Ga_{/\bF} \ar[r, "\varphi"]
+		& \Ga_{/\bF} \ar[r]
+		& 0 
+\end{tikzcd}
+\]
+is exact in the flat topology. Apply Theorem \ref{thm1} to the equivalence 
+relation 
+\[
+  \balpha_p \times \Ga_{/\bF} \rightrightarrows \Ga_{/\bF}\times \Ga_{/\bF}\qquad (a,b)\mapsto (b,a+b) .
+\]
+The quotient has coordinate ring 
+\[
+  R = \{f\in\bF\pow{t}\colon f(t\otimes 1) = f(t\otimes 1+1\otimes t)\text{ in }\bF\pow{t}\otimes \bF[t]/(t^p)\} =\bF\pow{t^p}.
+\]
+In other words, the quotient $\Ga_{/\bF}/\balpha_p\simeq \Ga_{/\bF}$ via 
+$\varphi\colon \Ga_{/\bF}\to \Ga_{/\bF}$. If Theorem \ref{thm1} were true, 
+the sequence 
+\[
+\begin{tikzcd}
+	0 \ar[r]
+		& \balpha_p(A) \ar[r]
+		& \fm_A \ar[r, "\varphi"] 
+		& \fm_A \ar[r] 
+		& 0
+\end{tikzcd}
+\]
+would be exact for all $A\in \Ar_{\W(\bF})$. But this is clearly false. 
+\end{example}
+
+So Theorem \ref{thm1} as stated is false. The correct theorem (which does 
+apply in your setting) is the following: 
+
+\begin{theorem}\label{thm2}
+Let $R\rightrightarrows X$ be an equivalence relation in 
+$\widehat\Ar_{\W(\bF)}^\circ$ such that one projection is flat and one is 
+smooth. Then the quotient of $X$ by $R$ exists. It represents the functor on 
+points defined by the equivalence relation.  
+\end{theorem}
+\begin{proof}
+Let $X/R$ be the quotient. It suffices to prove that for all 
+$A\in \Ar_{\W(\bF)}$, the map $X(A) \to (X/R)(A)$ is surjective. It suffices to 
+prove the existence of a section $X/R\to X$ of the projection map $X\to X/R$. 
+The theorem in SGA tells us that $X\to X/R$ is a flat cover, so after 
+base-change, the projection $X\to X/R$ is $R\to X\times_{X/R} X$, as in the 
+following commutative diagram:
+\[
+\begin{tikzcd}[column sep=small, row sep=small]
+	R \ar[dr, equal] \ar[drr, bend left] \ar[ddr, bend right] \\
+	& X\times_{X/R}X \ar[r] \ar[d]
+		& X \ar[d] \\
+	& X \ar[r]
+		& X/R
+\end{tikzcd}
+\]
+So $X\to X/R$ becomes smooth after an fppf base-change. By descent, 
+$X\to X/R$ is itself smooth. In $\widehat\Ar_{\W(\bF)}$, smooth maps admit 
+sections. 
+\end{proof}
+
+To summarize. You define a framed deformation functor $D_{V_\bF}^\square$, and 
+want the categorical quotient $D_{V_\bF}^\square/\widehat{\PGL}_d$ to be the 
+same as the ``presheaf quotient'' $D_{V_\bF}$. The theorem in SGA does not 
+give you this---you really need the fact that $\widehat{\PGL}_d$ is smooth. 
+
+
+
+
+
+\end{document}

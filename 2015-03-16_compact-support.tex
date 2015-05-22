@@ -1,0 +1,192 @@
+\documentclass{article}
+
+\usepackage[a5paper, total={5in,7.5in}]{geometry}
+\usepackage{amsmath,amssymb,bm,microtype}
+\DeclareMathOperator{\derived}{D}
+\DeclareMathOperator{\galois}{Gal}
+\DeclareMathOperator{\h}{H}
+\DeclareMathOperator{\induce}{ind}
+\DeclareMathOperator{\modules}{Mod}
+\DeclareMathOperator{\norm}{N}
+\DeclareMathOperator{\picard}{Pic}
+\DeclareMathOperator{\restrict}{res}
+\DeclareMathOperator{\sheaves}{Sh}
+\DeclareMathOperator{\SL}{SL}
+\DeclareMathOperator{\sym}{sym}
+\DeclareMathOperator{\volume}{vol}
+\DeclareMathOperator{\weil}{R}
+\newcommand{\bA}{\mathbf{A}}
+\newcommand{\bC}{\mathbf{C}}
+\newcommand{\bmu}{{\bm\mu}}
+\newcommand{\bQ}{\mathbf{Q}}
+\newcommand{\bR}{\mathbf{R}}
+\newcommand{\bZ}{\mathbf{Z}}
+\newcommand{\dd}{\mathrm{d}}
+\newcommand{\fH}{\mathfrak{H}}
+\newcommand{\abelian}{\mathrm{Ab}}
+\newcommand{\compact}{\mathrm{c}}
+\newcommand{\finite}{\mathrm{f}}
+\newcommand{\Gm}{\mathbf{G}_\mathrm{m}}
+
+% Tate-Shafarevich groups
+	\DeclareFontFamily{U}{wncy}{}
+	\DeclareFontShape{U}{wncy}{m}{n}{<->wncyr10}{}
+	\DeclareSymbolFont{mcy}{U}{wncy}{m}{n}
+	\DeclareMathSymbol{\sha}{\mathord}{mcy}{"58} 
+
+\title{Compactly supported cohomology of discrete groups}
+\author{Daniel Miller}
+
+\begin{document}
+\maketitle
+
+
+
+
+
+\section{Motivation}
+
+Let $\Gamma\subset \SL_2(\bZ)$ be a congruence subgroup. We are interested in 
+the cohomology $\h^\bullet(\Gamma,\sym^k\bC)$. These groups are isomorphic to 
+$\h^\bullet(\Gamma\backslash \fH,\widetilde{\sym^k\bC})$, where $\fH$ is the 
+upper half plane and $\widetilde{\sym^k\bC}$ is the local system on 
+$\Gamma\backslash\fH$ with monodromy $\sym^k\bC$. Once we've introduced the 
+symmetric spaces $S_\Gamma = \Gamma\backslash \fH$, it seems natural to also 
+consider their cohomology with compact supports: 
+$\h^\bullet_\compact(S_\Gamma,\widetilde V)$, where $V=\sym^k \bC$. 
+
+More generally, let $G_{/\bQ}$ be a split semisimple group, $K\subset G(\bR)$ a 
+maximal compact subgroup, and $X=G(\bR)/Z(\bR) K$ the associated symmetric 
+space. For $\Gamma\subset G(\bQ)$ a congruence subgroup, we have the quotient 
+$S_\Gamma = \Gamma\backslash X$. If $V$ is a representation of $G$, there is an 
+induced local system $\widetilde V$ on $S_\Gamma$, and once again 
+$\h^\bullet(\Gamma,V) = \h^\bullet(S_\Gamma,\widetilde V)$. Once again, it is 
+natural to consider $\h_\compact^\bullet(S_\Gamma,\widetilde V)$. 
+
+Of course, we can work in the greatest possible generality. Suppose $\Gamma$ is 
+an arbitrary (discrete) group. Let $X$ be a contractible space on which 
+$\Gamma$ acts properly discontinuously. There is a natural (exact) functor 
+$\widetilde\cdot\colon \modules_\bC(\Gamma)\to \sheaves(\Gamma\backslash X)$, 
+$V\mapsto \bC_{\Gamma\backslash X}\otimes V$. And we have the functor 
+``sections with compact support'' 
+$\Gamma_\compact\colon \sheaves(\Gamma\backslash X)\to \abelian$. This gives 
+us two functors at the level of derived categories: 
+$\derived(\modules(\Gamma))\to \derived(\abelian)$, namely 
+\begin{align*}
+	V &\mapsto \mathrm R \Gamma (\widetilde V) \\
+	V &\mapsto \mathrm R \Gamma_\compact(\widetilde V) .
+\end{align*}
+First, it is not at all clear whether 
+$\h^\bullet_\compact(\Gamma\backslash X,\widetilde V)$ is independent of $X$. 
+
+
+
+
+
+\section{An example}
+
+Let $F$ be a number field, $G=\weil_{F/\bQ}\Gm$. Then 
+$G(\bR) = \prod_{v\mid\infty} F_v^\times$. If $\norm\colon F_\infty\to\bR$ is 
+the norm map, then (up to finite index), a maximal compact subgroup 
+$K\subset G(\bR)$ is given by the $\bR$-points of the anisotropic group 
+$G^{\norm=1}$. The quotient $G_\infty/\bR$ is topologically a finite disjoint 
+union of Euclidean spaces. Let $\Gamma\subset G(F)=F^\times$ be a congruence 
+subgroup---that is $\Gamma$ is commensurable with $O_F^\times$. What is the 
+quotient $\Gamma\backslash G_\infty / K$?
+
+For example, if $F=\bQ(\sqrt{d})$ is a real quadratic field, we want a 
+unit $\varepsilon\in O_F^\times$ of infinite order. We are then interested in 
+$\varepsilon^\bZ\backslash F_\infty^\times$. 
+
+\ldots
+
+Let $F$ be a number field, $\Gamma\subset F^\times$ a torsion-free group 
+commensurable with $O_F^\times$. We know that $\Gamma\simeq \bZ^{r+s-1}$. Does 
+$\Gamma\backslash F_\infty^\times / K$ have a natural volume? 
+
+More generally, let $K_\finite\subset \bA_{F,\finite}^\times$ be open compact. 
+Put 
+\[
+  Y_{K_\finite} = F^\times \backslash \bA_F^\times / K_\infty^\circ K_\finite .
+\]
+If $K_\finite$ is sufficiently small (i.e., torsion-free) then $Y_{K_\finite}$ 
+is naturally a Riemannian manifold. 
+
+Start with the stupidest example, $F=\bQ$. Then $K_\infty^\circ = 1$, so we 
+are interested in $\bQ^\times\backslash \bA^\times / K_\finite$. Suppose 
+$K_\finite = \Gamma(n) = \ker(\widehat\bZ^\times \to (\bZ/n)^\times)$\ldots this 
+won't have finite volume. 
+
+
+
+
+
+\section{Tamagawa numbers of tori}
+
+Let $T_{/F}$ be a torus. Takashi Ono has found a formula for the Tamagawa 
+number of $T$, i.e.~the volume $T(F)\backslash T(\bA_F)$. Put 
+\begin{align*}
+  h(T) &= \# \h^1(F,T^\vee) \\
+  i(T) &= \# \sha^1(T) .
+\end{align*}
+Then $\volume(T(F)\backslash T(\bA_F)) = \tau(T) = h(T)/i(T)$. [See 
+Milne, ADT. Here $T^\vee$ is the dual torus in the sense of Langlands.]
+
+[This isn't right, because $T(F)\backslash T(\bA_F)$ shouldn't have finite 
+volume! Never mind actually, it should have finite volume if and only if 
+$T(F)\backslash T(\bA_F)/K$ does.]
+
+First, let's review some stuff about tori, their character groups, and Galois 
+representations. Let $L/K$ be a finite (possibly non-Galois) extension, 
+$G=\weil_{L/K} T$. Then $T^\vee$ is a $\galois_L$-module, and 
+$(\weil_{L/K} T)^\vee = \induce_L^K T^\vee$. Thus 
+\[
+  h_L(T) = \# \h^1(L,T^\vee) = \# \h^1(K,\induce_L^K T^\vee) = h_K(\weil_{L/K} T) .
+\]
+So $h(T)$ does not really depend on $K$, as long as we restrict appropriately. 
+For example, $h_L({\Gm}_L) = h_K(\weil_{L/K} \Gm)$. I'm pretty sure the same 
+holds for $\sha(T)$. 
+
+So, if $T=\Gm$, we should have $h(T)=i(T)=1$, whence $\tau(\Gm)=1$. Let's try 
+this directly. Let $\omega=\frac{\dd t}{t}$. Let 
+\[
+  \rho({\Gm}_{/F}) = \lim_{s\to 1} \frac{1}{s-1} L(F,s) = \frac{2^r (2\pi)^s \# \picard(O_F) \Omega_F}{\# \bmu(F) \sqrt{|D_F|}},
+\]
+where $L(F,s)$ is the Artin $L$-function of $F$. 
+
+What is the maximal $\bQ$-split torus of $\weil_{F/\bQ} \Gm$? Clearly the 
+diagonal embedding $\Gm\hookrightarrow \weil_{F/\bQ} \Gm$ is split. Suppose 
+$F/\bQ$ is non-Galois, e.g.~$\bQ(\sqrt[4]{2})/\bQ$. 
+
+
+
+
+
+\subsection{Locally symmetric spaces for $\Gm$}
+
+Let $F$ be a number field, $G=\weil_{F/\bQ} \Gm$. We claim that the diagonal 
+$\Gm\subset G$ is a maximal split torus. Note that 
+\[
+  \hom(\Gm,G) = \hom_{\galois_\bQ}(G^\vee,\bZ) = \hom(\induce_F^\bQ \bZ,\bZ) = \hom(\bZ,\restrict_F^\bQ \bZ) = \bZ .
+\]
+The result follows. 
+
+Thus, the symmetric spaces we are interested in are of the form 
+\[
+  S_{K_\finite} = F^\times \backslash \bA_F^\times / \bR^+ K_\finite ,
+\]
+for $K_\finite\subset \bA_{F,\finite}^\times$ open compact. Here 
+$\bR_{>0}\hookrightarrow F_\infty^\times$ via the diagonal embedding. At 
+infinity, the space we're interested in is $F_\infty^\times/\bR^+$, which is 
+is isomorphic (as a Lie group) to $(F_\infty^\times)^{\norm=1}$. It is 
+well-known that $(F_\infty^\times)^{\norm=1}/O_F^\times$ is compact, which 
+tells us that for $\Gamma\subset F^\times$ a torsion-free arithmetic subgroup, 
+the double quotient $\Gamma\backslash F_\infty^\times / \bR^+$ is a torus. Its 
+volume (with respect to the natural Haar measure induced from $F_\infty$) 
+should be computed in a similar manner to the regulator of $F$. 
+
+
+
+
+
+\end{document}

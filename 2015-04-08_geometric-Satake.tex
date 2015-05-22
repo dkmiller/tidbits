@@ -1,0 +1,72 @@
+\documentclass{article}
+
+\usepackage[a5paper]{geometry}
+\usepackage[cm]{fullpage}
+\usepackage{amsmath,amssymb,microtype,stmaryrd,tikz-cd}
+\DeclareMathOperator{\chars}{X}
+\DeclareMathOperator{\Hom}{\mathbf{hom}}
+\DeclareMathOperator{\spec}{Spec}
+\newcommand{\bA}{\mathbf{A}}
+\newcommand{\bD}{\mathbf{D}}
+\newcommand{\bZ}{\mathbf{Z}}
+\newcommand{\Gm}{\mathbf{G}_\mathrm{m}}
+\newcommand{\Gr}{\mathrm{Gr}}
+\newcommand{\lau}[1]{(\!( #1 )\! )}
+\newcommand{\pow}[1]{\llbracket #1 \rrbracket}
+
+\title{The geometric Satake correspondence}
+\author{Daniel Miller}
+
+\begin{document}
+\maketitle
+
+
+
+
+
+First, recall that if $X_{/S}$ and $Y_{/S}$ are schemes, there is a 
+``hom-scheme'' defined by 
+\[
+	\Hom(X,Y)(T) = \hom_T(X_{/T},Y_{/T}) .
+\]
+In general, $\Hom(X,Y)$ will only be an fpqc sheaf. 
+
+Let $\bD = \spec(\bZ\pow{t})$ and $\bD^\ast=\spec(\bZ\lau{t})$. Then we have a 
+pullback diagram: 
+\[
+\begin{tikzcd}
+	\bD^\ast \ar[r, hook] \ar[d]
+		& \bD \ar[d] \\
+	\Gm \ar[r, hook]
+		& \bA^1 
+\end{tikzcd}
+\]
+Thus, if $X_{/S}$ is an arbitrary scheme, we get a commutative diagram:
+\[
+\begin{tikzcd}
+	\Hom(\bD^\ast,X)
+		& \Hom(\bD,X) \ar[l, hook] \\
+	\Hom(\Gm,X) \ar[u] 
+		& \Hom(\bA^1,X) \ar[l, hook] \ar[u] 
+\end{tikzcd}
+\]
+In particular, if $T$ is a torus, there is a natural map 
+\[
+	\chars_\ast(T) = \Hom(\Gm,T)\to \Hom(\bD^\ast,T) = G\lau{t} .
+\]
+For $\lambda\in \chars_\ast(T)$, write $t^\lambda$ for the image in 
+$G\lau{t}$. Let $G$ be a reductive group, and put $\Gr_G = G\lau{t}/G\pow{t}$. 
+It turns out that perverse sheaves on $\Gr_G$ are best understood in light of 
+orbits $\Gr_G^\lambda = \overline{G\pow{t}\cdot t^\lambda}$ for 
+$\lambda\in \chars_\ast(T)$, where $T\subset G$ is a maximal torus. 
+
+If $G=T$ is already a torus, then $\Gr_T = \chars_\ast(T)$, and each 
+$\Gr_T^\lambda$ is a single point. 
+
+Note that $\chars_\ast(T)(A) = T(A[t^{\pm 1}])$. 
+
+
+
+
+
+\end{document}
