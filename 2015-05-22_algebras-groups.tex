@@ -1,0 +1,175 @@
+\documentclass{article}
+
+\usepackage[a5paper,margin=1.5cm]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathrsfs}
+\DeclareMathOperator{\GL}{GL}
+\DeclareMathOperator{\lie}{Lie}
+\DeclareMathOperator{\M}{M}
+\newcommand{\bV}{\mathbf{V}}
+\newcommand{\bW}{\mathbf{W}}
+\newcommand{\sA}{\mathscr{A}}
+\newcommand{\sC}{\mathscr{C}}
+\newcommand{\sF}{\mathscr{F}}
+\newcommand{\sG}{\mathscr{G}}
+\newcommand{\sH}{\mathscr{H}}
+\newcommand{\sM}{\mathscr{M}}
+\newcommand{\sO}{\mathscr{O}}
+\newcommand{\coalg}{\mathsf{cAlg}}
+\newcommand{\lf}[1]{{#1}_\mathrm{lf}}
+\newcommand{\module}{\mathsf{Mod}}
+\newcommand{\qc}[1]{{#1}_\mathrm{qc}}
+\newcommand{\ring}{\mathsf{Rin}}
+\newcommand{\scheme}{\mathsf{Sch}}
+\newcommand{\set}{\mathsf{Set}}
+\newtheorem{lemma}[subsection]{Lemma}
+\newtheorem{theorem}[subsection]{Theorem}
+
+\title{Noncommutative algebras and algebraic groups}
+\author{Daniel Miller}
+
+\begin{document}
+\maketitle
+
+
+
+
+
+Let $k$ be a fixed commutative ring, not necessarily a field. Let $A$ be a 
+unital $k$-algebra. The functor $A^\times\colon \scheme_k\to\set$ given by 
+\[
+	A^\times(X) = \Gamma(X,\sO_X\otimes_k A)^\times 
+\]
+is, when $A$ is ``reasonable,'' represented by a group scheme which we denote 
+$A_{/k}^\times$, or just $A^\times$. The purpose of this note is to relate 
+algebraic properties of $A$ with the group $A^\times$. Note for example that 
+$\M_n(k)^\times = {\GL_n}_{/k}$.
+
+
+
+
+
+\section{Foundations}
+
+For the moment, we work in maximal possible generality. Let $S$ be a fixed base 
+scheme. If $\sF$ is a sheaf on $S$ and $f\colon X\to S$ is an object in 
+$\scheme_S$, we write $\sF_X=f^\ast \sF$ for the pullback of $\sF$ to $X$. 
+
+\begin{theorem}
+Let $\sF$ be a quasi-coherent $\sO_S$-module. Then the functor 
+$\bV(\sF)\colon \scheme_S\to \set$ given by 
+\[
+	\bV(\sF)(X) = \hom_{\sO_X}(\sF_X,\sO_X)
+\]
+is represented by an $S$-scheme, also denoted $\bV(\sF)$. The functor 
+$\bV\colon \qc S^\circ \to \scheme_S$ is left-exact. 
+\end{theorem}
+\begin{proof}
+That $\bV(\sF)$ is representable is standard. To check exactness of $\bV$, just 
+note that 
+\begin{align*}
+	\bV\left(\varinjlim \sF_\alpha\right)(X) 
+		&= \hom_{\sO_X}\left(\varinjlim \sF_\alpha,\sO_X\right) \\
+		&= \varprojlim \hom_{\sO_X}(\sF_\alpha,\sO_X) \\
+		&= \left(\varprojlim \bV(\sF_\alpha)\right)(X) .
+\end{align*}
+\end{proof}
+
+Thus, to give a morphism of schemes $\bV(\sF)\times \bV(\sG)\to \bV(\sH)$, it 
+suffices to give a morphism of sheaves $\sH\to \sF\oplus \sG$. Note that the 
+functor $\bV$, while trivially faithful, is definitely not full. Since 
+$\bV(\sF)(X)=\hom_{\sO_X}(\sF_X,\sO_X)$ is clearly a (commutative) group, 
+we see that $\bV(\sF)$ admits a group structure. 
+
+\begin{lemma}
+Let $\sC$ be a quasi-coherent $\sO_S$-coalgebra. Then $\bV(\sC)$ is naturally 
+an $S$-algebra. 
+\end{lemma}
+\begin{proof}
+In other words, the functor $\bV(\sC)\colon \scheme_S\to \set$ factors through 
+the category $\ring$ of associative unital rings. Let 
+$\Delta\colon \sC\to\sC\otimes_{\sO_S} \sC$ be the comultiplication map, and 
+$\eta\colon\sC\to\sO_S$ the conit. Then $\bV(\sC)(X)$ is given an algebra 
+structure via convolution: 
+\begin{align*}
+	1 &= \eta_X \\
+	f\cdot g &= (f\otimes g)\circ\Delta_X .
+\end{align*}
+The verification that with this structure, $\bV(\sC)$ is an $S$-algebra is 
+routine. 
+\end{proof}
+
+So $\bV$ gives us a functor $\coalg(\qc S)\to \ring_{/S}$. If $\sC$ is an 
+$\sO_S$-coalgebra, then its dual sheaf $\sC^\vee$ is naturally an 
+$\sO_S$-algebra. 
+
+\begin{theorem}
+Let $\sC$ be a locally free $\sO_S$-coalgebra. Then $\sM\mapsto \sM^\vee$ 
+gives an equivalence between the category of locally free (of finite type) 
+$\sC$-comodules and the category of locally free (of finite type) 
+$\sC^\vee$-modules. 
+\end{theorem}
+
+Let $\lf S$ be the category of locally free $\sO_S$-modules of finite type. 
+
+\begin{theorem}
+Let $\sM\in \lf S$. Then the functor $\bW(\sM)\colon \scheme_S\to \set$ given 
+by 
+\[
+	\bW(\sM)(X) = \Gamma(X,\sM_X) 
+\]
+is representable. Moreover, $\sM\mapsto \bW(\sM)$ gives a left-exact 
+tensor-functor from $\lf S$ to $\module(\bW(\sO_S))$. 
+\end{theorem}
+\begin{proof}
+We content ourselves with showing that $\bW(\sM)=\bV(\sM^\vee)$. Since 
+$\sM$ is locally free of finite type, it is self-dual. Thus 
+\[
+	\bV(\sM^\vee)(X) = \hom_{\sO_X}(\sM_X^\vee,\sO_X) = \Gamma(X,\sM_X^{\vee\vee}) = \Gamma(X,\sM_X) 
+\]
+as desired. 
+\end{proof}
+
+So we have a functor $\bW\colon \ring(\lf S)\to \ring_{/S}$. 
+
+
+
+
+
+\section{Representations of groups and algebras}
+
+If $\sA$ is a locally free $\sO_S$-algebra, we write $\GL(\sA)=\sA^\times$ for 
+the functor $X\mapsto \Gamma(X,\sA_X)^\times$. This is representable, as it can 
+easily be written as a fiber product of schemes. Many well-known algebraic 
+groups arise via this construction, or one of its generalizations. 
+
+\begin{theorem}
+Let $\sA\in \ring(\lf S)$. Then there is a natural isomorphism 
+$\lie(\sA^\times) = (\bW(\sA),[\cdot,\cdot])$. 
+\end{theorem}
+\begin{proof}
+Recall that for $X\in \scheme_S$, we write $X[\epsilon]$ for the scheme whose 
+underlying space is the same as $X$, but whose structure sheaf is 
+$\sO_X[\epsilon]/\epsilon^2$. Then 
+\begin{align*}
+	\lie(\sA^\times)(X) 
+		&= \ker(\Gamma(X,\sA_X[\epsilon])^\times\to \Gamma(X,\sA_X)^\times) \\
+		&= \Gamma(X,1+\epsilon \sA_X) \\
+		&\simeq \bW(\sA)(X) .
+\end{align*}
+Checking that the bracket comes from the commutator on $\sA$ is a simple 
+computation. 
+\end{proof}
+
+
+
+
+
+\section{The case of a field}
+
+Let $k$ be a field of characteristic zero. 
+
+
+
+
+
+\end{document}
