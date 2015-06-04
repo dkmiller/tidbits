@@ -1,0 +1,65 @@
+\documentclass{article}
+
+\usepackage[a5paper,margin=1.5cm]{geometry}
+\usepackage{amsmath,amssymb,bookmark}
+\DeclareMathOperator{\isom}{Isom}
+\DeclareMathOperator{\ob}{Ob}
+\DeclareMathOperator{\spec}{Spec}
+\newcommand{\cA}{\mathcal{A}}
+\newcommand{\var}{\mathsf{Var}}
+\newcommand{\vect}{\mathsf{Vec}}
+
+\usepackage[
+  hyperref = true,      % links to online documents
+  backend  = bibtex,    % use bibtex instead of biber
+  sorting  = nyt,       % sorts by (name, year, title)
+  style    = alphabetic % citations look like [Har77]
+]{biblatex}
+\addbibresource{tidbit-sources.bib}
+\hypersetup{
+  colorlinks = true,
+  linkcolor  = blue,
+  urlcolor   = cyan
+}
+
+\title{Coleman integration via Tannakian formalism}
+\author{Daniel Miller}
+
+\begin{document}
+\maketitle
+
+
+
+
+
+This is inspired by \cite{besser-2002}. Let $k$ and $K$ be fields and 
+$\cA\to \var_k$ a category fibered in abelian $K$-enriched tensor categories. 
+That is, for any variety $X_{/k}$, we have an abelian tensor category 
+$\cA(X)$, enriched over $K$. We suppose further that there is a natural 
+isomorphism $\cA(\spec k)=\vect_K$. Finally, we suppose that for 
+$f\colon X\to Y$, the pullback $f^\ast\colon \cA(Y)\to \cA(X)$ is exact. 
+
+For a variety $X_{/k}$, there is an ``$\cA$-fundamental groupoid,'' denoted 
+$\Pi_1^\cA(X)$. We have $\ob\Pi_1^\cA(X) = X(k)$. For 
+$x,y\in \ob\Pi_1^\cA(X)$, the ``hom-space'' $\hom_{\Pi_1^\cA(X)}(x,y)$ will 
+be a pro-variety over $K$, namely 
+\[
+	\hom_{\Pi_1^\cA(X)}(x,y)(A) = \isom^\otimes(x^\ast_A, y^\ast_A).
+\]
+Here $x^\ast\colon \cA(X)\to \cA(\spec k)=\vect_K$ is the pullback induced by 
+$x\colon \cA(\spec k)\to \cA(X)$, and $x^\ast_A$ is the base-change of 
+$x^\ast$ to the category of finite free $A$-modules. Similarly for $y$. 
+
+Given a morphism $f\colon X\to Y$, there is an induced morphism 
+$f_\ast\colon \Pi_1^\cA(X)\to \Pi_1^\cA(Y)$ of fundamental groupoids. On 
+objects, it is just $f\colon X(k)\to Y(k)$, and on morphisms, 
+\[
+	f^\ast(\lambda)_A = \lambda_{f^\ast A}\colon (f x)^\ast A = x^\ast(f^\ast A) \to y^\ast(f^\ast A) = (f y)^\ast A .
+\]
+
+
+
+
+
+\printbibliography
+\end{document}

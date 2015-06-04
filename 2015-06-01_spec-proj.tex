@@ -1,0 +1,35 @@
+\documentclass{article}
+
+\usepackage[a5paper,margin=1.5cm]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathrsfs}
+\DeclareMathOperator{\proj}{Proj}
+\DeclareMathOperator{\spec}{Spec}
+\newcommand{\sA}{\mathscr{A}}
+\newcommand{\sO}{\mathscr{O}}
+\newcommand{\alg}{\mathsf{Alg}}
+\newtheorem{lemma}[subsection]{Lemma}
+\newtheorem{theorem}[subsection]{Theorem}
+
+\title{Relative $\spec$ and $\proj$ constructions}
+\author{Daniel Miller}
+
+\begin{document}
+\maketitle
+
+
+
+
+
+Let $S$ be a base scheme. Fix a quasi-coherent sheaf $\sA$ of 
+$\sO_S$-algebras. If $X\xrightarrow f S$ is a scheme, write 
+$\sA_X=f^\ast \sA$. The \emph{relative spectrum} $\spec(\sA)_{/S}$ represents 
+the functor 
+\[
+	X\mapsto \hom_{\alg(\sO_S)}(\sA_X,\sO_X)
+\]
+
+
+
+
+
+\end{document}

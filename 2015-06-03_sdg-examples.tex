@@ -1,0 +1,68 @@
+\documentclass{article}
+
+\usepackage[a5paper,margin=1.5cm]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\DeclareMathOperator{\spec}{Spec}
+\DeclareMathOperator{\sym}{S}
+\newcommand{\bR}{\mathbf{R}}
+\newcommand{\cE}{\mathcal{E}}
+\newcommand{\dT}{\mathbb{T}}
+\newcommand{\alg}{\mathrm{alg}}
+\newcommand{\Aff}{\mathsf{Aff}}
+\newcommand{\Alg}{\mathsf{Alg}}
+\newcommand{\Cinfty}{C^\infty\textnormal{-}\mathsf{Alg}}
+\newcommand{\Man}{\mathsf{Man}}
+\newcommand{\Sets}{\mathsf{Set}}
+\newcommand{\sm}{\mathrm{sm}}
+\newcommand{\Weil}{\mathsf{Wei}}
+
+\title{Synthetic differential geometry via examples}
+\author{Daniel Miller}
+
+\begin{document}
+\maketitle
+
+
+
+
+
+\section{The main examples}
+
+Synthetic differential geometry (SDG) lives inside a topos $\cE$, where we have 
+fixed a commutative ring object $R$. We will construct two examples, denoted 
+$\cE_\sm$ and $\cE_\alg$, which represent ``smooth'' and ``algebraic'' 
+theories. Their construction works in parallel, starting with a Lawvere theory 
+$\dT$. The theory $\dT_\sm$ has as objects all finite-dimensional $\bR$-vector 
+spaces, with morphisms all smooth maps. The theory $\dT_\alg$ has as objects 
+all finite free $k$-modules (with polynomial maps) for some fixed base ring 
+$k$. That is, for $E,F$ finite free $k$-modules, we put 
+$\hom_{\dT_\alg}(E,F) = \sym(E^\vee)\otimes F$. 
+
+The category $\Alg_\dT$ of $\dT$-algebras is, by definition, the category 
+of product-preserving functors $\dT\to\Sets$. In particular, if $W\in \dT$ is a 
+commutative ring object (we shall call such objects ``Weil algebras'') then 
+$\hom(W,-)\colon \dT\to \Sets$ is a commutative ring object in $\Alg_\dT$. 
+Write $\Weil_\dT$ for the category of commutative ring objects in $\Alg_\dT$. 
+
+When $\dT=\dT_\sm$, write $\Cinfty=\Alg_{\dT_\sm}$; we call objects of 
+$\Cinfty$ ``smooth algebras.'' Write $C^\infty\colon \Man^\circ\to \Alg_{\dT_\sm}$ 
+for the functor $C^\infty(M)(V) = \hom_\sm(M,V)$. It is known that $C^\infty$ 
+is fully faithful. In particular, if $V\in \dT_\sm$, then 
+$C^\infty(V)\in \Cinfty$, and $C^\infty(V)(U) = \hom_\sm(V,U)$. 
+
+For $\dT=\dT_\alg$, the category $\Alg_{\dT_\alg}=\Alg_k$, the category of 
+``honest'' $k$-algebras. Namely, if $A$ is a $k$-algebra, consider the functor 
+$E\mapsto A\otimes_k E$ (this is a functor because polynomial maps of finite 
+free modules still make sense after base change). It is easy to check that all 
+objects of $\Alg_{\dT_\alg}$ are of this form. 
+
+If $\dT$ is a Lawvere theory, put $\Aff_\dT=\Alg_\dT^\circ$, and write 
+$\spec\colon \Alg_\dT^\circ\to \Aff_\dT$ for the obvious equivalence. Put 
+$\cE_\dT=\widehat{\Aff_\dT}$. For $A\in \Alg_\dT$, we also write $\spec(A)$ for 
+the presheaf $\spec(B)\mapsto \hom_{\Alg_\dT}(A,B)$. 
+
+
+
+
+
+\end{document}
