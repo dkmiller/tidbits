@@ -1,0 +1,73 @@
+\documentclass{article}
+
+\usepackage[a5paper,margin=1.5cm]{geometry}
+\usepackage{amsmath,amssymb,bookmark,tikz-cd}
+\DeclareMathOperator{\coind}{coind}
+\DeclareMathOperator{\h}{H}
+\DeclareMathOperator{\red}{red}
+\DeclareMathOperator{\res}{res}
+\DeclareMathOperator{\SL}{SL}
+\newcommand{\bQ}{\mathbf{Q}}
+\newcommand{\bZ}{\mathbf{Z}}
+\newcommand{\cO}{\mathcal{O}}
+\newcommand{\fa}{\mathfrak{a}}
+\newcommand{\fn}{\mathfrak{n}}
+
+\title{Torsion in the cohomology of Bianchi groups}
+\author{Daniel Miller}
+
+\begin{document}
+\maketitle
+
+
+
+
+
+For $d\in\bZ$ a square-free integer, write $\cO_d$ for the ring of integers of 
+the quadratic field $\bQ(\sqrt d)$. The plan is to compute explicitly, for any 
+ideals $\fa,\fn\subset \cO_d$, the cohomology 
+$H(\fn,\fa)=\h^1(\Gamma(\fn),\cO_d/\fa)$. Note that whenever 
+$\fa\mid \fa',\fn\mid\fn'$, we have a commutative diagram
+\[
+\begin{tikzcd}
+	H(\fn,\fa') \ar[r, "\res_\fn^{\fn'}"] \ar[d, "\red_\fa^{\fa'}"]
+		& H(\fn',\fa') \ar[d, "\red_\fa^{\fa'}"] \\
+	H(\fn,\fa) \ar[r, "\res_\fn^{\fn'}"]
+		& H(\fn',\fa) .
+\end{tikzcd}
+\]
+Put $H(\fa)=\varinjlim_\fn H(\fn,\fa)$. Commutativity of the above diagram 
+yields maps $\red_\fa^{\fa'}\colon H(\fa')\to H(\fa)$. I conjecture that 
+$\red_\fa^{\fa'}$ is surjective. In other words, for any 
+$c\in H(\fn,\fa)$ and $\fa\mid\fa'$, there exists $\fn\mid\fn'$ such that 
+$\res_\fn^{\fn'}(c)$ lies in $\red_\fa^{\fa'}H(\fn',\fa')$. My goal is to 
+computationally verify this conjecture in some special cases. 
+
+Recall 
+\[
+	\coind_{\Gamma(\fn)}^{\SL_2(\cO_d)}(\cO_d/\fa) = C(\SL_2(\cO_d/\fn),\cO_d/\fa) ,
+\]
+the space of $\cO_d/\fa$-valued functions on 
+$\SL_2(\cO_d/\fn) = \Gamma(\fn)\backslash \SL_2(\cO_d)$, with the usual action 
+$(\gamma\cdot\xi)(x) = \xi(x\gamma)$. If we denote by $I_{\fn,\fa}$ this 
+coinduced module, then Shapiro's lemma tells us that 
+\[
+	H(\fn,\fa) = \h^1\left(\SL_2(\cO_d),I_{\fn,\fa}\right) .
+\]
+
+Actually here, I can just compute $H_{\fn,\nu}=\h^1(\Gamma(\fn),\bZ/p^\nu)$. 
+Fix a presentation $\SL_2(\cO_d)=\langle G\mid R\rangle$. Then $H_{\fn,\nu}$ is 
+the cohomology of 
+\[
+\begin{tikzcd}
+	I_{\fn,\nu} \ar[r, "\mu"]
+		& C(G,I_{\fn,\nu}) \ar[r, "\Lambda"]
+		& C(R,I_{\fn,\nu}) .
+\end{tikzcd}
+\] 
+
+
+
+
+
+\end{document}
