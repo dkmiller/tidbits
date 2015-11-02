@@ -1,0 +1,66 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb,microtype}
+\usepackage[a5paper]{geometry}
+\DeclareMathOperator{\GL}{GL}
+\DeclareMathOperator{\sign}{sgn}
+\DeclareMathOperator{\trace}{tr}
+\newcommand{\bQ}{\mathbf{Q}}
+\newcommand{\bZ}{\mathbf{Z}}
+\newcommand{\frob}{\mathrm{fr}}
+
+\title{The statistics of the signed trace of Frobenius for elliptic curves}
+\author{Daniel Miller}
+
+\begin{document}
+\maketitle
+
+
+
+
+
+Let $E_{/\bQ}$ be an elliptic curve of conductor $N$, $l$ a rational prime and 
+$\rho=\rho_{E,l}\colon G_\bQ\to \GL_2(\bZ_l)$ the associated Galois 
+representation coming from the Tate module of $E$. We have the sequence 
+$\{a_p(E)\}_{p\nmid N}$, defined by 
+\[
+	a_p(E) = \trace \rho(\frob_p) .
+\]
+It is well-known that $a_p(E)\in \bZ$, are independent of $l$, and satisfy 
+the \emph{Hasse bound}:
+\[
+	|a_p(E)| \leqslant 2\sqrt p .
+\]
+Moreover, Faltings proved that the sequence $a(E) = \{a_p(E)\}$ determines the 
+isogeny class of $E$. 
+
+We can define a new sequence, $s(E) = \{s_p=s_p(E)\}_{p\nmid N}$, by 
+$s_p = \sign(a_p)$. Write $s_{\leqslant X}(E)$ for 
+$\{s_p(E)\colon p\leqslant X\}$. It is known [but prove this] that $s(E)$ 
+determines $E$. Consider the following function: 
+\[
+	C_\mathrm{prelim}(N) = \min\{X\textnormal{ s.t. }\{s_{\leqslant X}(E)\}_{\mathrm{cond}(E)\leqslant N}\textnormal{ are all distinct}\} ;
+\]
+here we have $E$ range over isogeny classes of elliptic curves. Experimental 
+data suggests that to tell elliptic curves with conductor $\leqslant X$ apart, 
+you need $s_p(E)$ for the first $O(\log X)$ primes. Since the $X$th prime is 
+$\approx X\log X$, this gives us the conjecture 
+\[
+	C_\mathrm{prelim}(N) = O(\log N) .
+\]
+
+The basic approach is as follows. For the symmetric groups $S_n$, it seems 
+[and I should prove] that the sign of the trace of a (complex) representation 
+determines the representation. Given $E_{/\bQ}$, pick the ``right'' $n$ and 
+look at the torsion representation $\rho_{E,n}\colon G_\bQ\to \GL_2(\bZ/n)$. 
+For $n$ sufficiently large ($\geqslant 4\sqrt p$ to be precise) this ``knows'' 
+$s_p(E)$. Also, if we choose $n$ right, $\rho_{E,n}$ will be surjective. If 
+automorphisms of $\GL_2(\bZ/n)$ are determined by ``signs of traces,'' then 
+the ``signs from $\GL_2(\bZ/n)$'' will ``know'' $\rho_{E,n}$. We then use 
+explicit Faltings to see how large $n$ needs to be. 
+
+
+
+
+
+\end{document}
