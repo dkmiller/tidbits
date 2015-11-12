@@ -1,0 +1,75 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\DeclareMathOperator{\lie}{Lie}
+\DeclareMathOperator{\tr}{tr}
+\newcommand{\bC}{\mathbf{C}}
+\newcommand{\cU}{\mathcal{U}}
+\newcommand{\cS}{\mathcal{S}}
+\newcommand{\dd}{\mathrm{d}}
+\newcommand{\fg}{\mathfrak{g}}
+
+\title{Fourier analysis on abelian Lie groups}
+\author{Daniel Miller}
+
+\begin{document}
+\maketitle
+
+
+
+
+
+Let $G$ be an abelian Lie group, $\widehat G=\hom(G,S^1)$ its unitary dual. 
+Given $x\in G, y\in \widehat G$, write $\langle x,y\rangle = y(x)$. For 
+$f\in L^1(G)$, we have its \emph{Fourier transform} 
+$\widehat f\colon \widehat G\to \bC$, defined by
+\[
+	\widehat f(x) = \int f(y)\langle y,x\rangle\, \dd y .
+\]
+Recall the \emph{convolution} of two functions is given by 
+\[
+	(f\ast g)(x) = \int f(x y^{-1}) g(y)\, \dd y .
+\]
+We now compute:
+\begin{align*}
+	\widehat{f\ast g}(x) 
+		&= \iint f(y z^{-1}) g(z)\, \dd z \langle y,x\rangle\, \dd y \\
+		&= \iint f(y z^{-1}) g(z) \langle y,x\rangle\, \dd y\dd z \\
+		&= \iint f(y) g(z)\langle y z, x\rangle\, \dd y \dd z \\
+		&= \int f(y)\langle y,x\rangle\, \dd y \int g(z) \langle z,x\rangle\, \dd z \\
+		&= \widehat f(x) \widehat g(x) .
+\end{align*}
+
+Now let $\fg=\lie(G)$. This Lie algebra acts on $C^\infty(G)$ by 
+\[
+	(X f)(x) = \left.\frac{\dd f}{\dd t}(\exp(t X)x)\right|_{t=0}
+\]
+hence the universal enveloping algebra $\cU(\fg)$ acts on $C^\infty(G)$ via the 
+obvious extension. Since $\fg$ is abelian, $\cU(\fg)=\cS(\fg)$, the symmetric 
+algebra on $\fg$.) There is a natural function 
+$\tr\colon \fg\to C^\infty(\widehat G)$, given by 
+\[
+	(\tr X)(x) = \left.\frac{\dd}{\dd t}\langle \exp(t X), x\rangle\right|_{t=0} .
+\]
+This extends to a ring homomorphism 
+$\tr\colon \cS(\fg)\to C^\infty(\widehat G)$. Now, we have an elementary 
+computation:
+\begin{align*}
+	\widehat{X f}(x) 
+		&= \int \left.\frac{\dd f}{\dd t} (\exp(t X) y)\right|_{t=0} \langle y,x\rangle\, \dd y \\
+		&= \left.\frac{\dd}{\dd t} \int f(\exp(t X) y)\langle y,x\rangle\, \dd y\right|_{t=0} \\
+		&= \left.\frac{\dd}{\dd t} \int f(y) \langle \exp(-t X) y, x\rangle\, \dd y\right|_{t=0} \\
+		&= \left.\frac{\dd}{\dd t} \langle \exp(-t X), x\rangle \int f(y) \langle y,x\rangle\, \dd y\right|_{t=0} \\
+		&= -\tr X \widehat f(x) .
+\end{align*}
+In other words, we have the following identities:
+\begin{align*}
+	\widehat{f\ast g} &= \widehat f \widehat g \\
+	\widehat{X f} &= -\tr X \widehat f
+\end{align*}
+
+
+
+
+
+\end{document}
