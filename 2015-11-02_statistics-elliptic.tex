@@ -1,10 +1,12 @@
 \documentclass{article}
 
-\usepackage{amsmath,amssymb,microtype}
-\usepackage[a5paper]{geometry}
+\usepackage{amsmath,amssymb,amsthm,microtype}
+\usepackage[a5paper,margin=1.5cm]{geometry}
 \DeclareMathOperator{\GL}{GL}
 \DeclareMathOperator{\sign}{sgn}
 \DeclareMathOperator{\trace}{tr}
+\newcommand{\bC}{\mathbf{C}}
+\newcommand{\bF}{\mathbf{F}}
 \newcommand{\bQ}{\mathbf{Q}}
 \newcommand{\bZ}{\mathbf{Z}}
 \newcommand{\frob}{\mathrm{fr}}
@@ -19,10 +21,12 @@
 
 
 
+\section{Introduction}
+
 Let $E_{/\bQ}$ be an elliptic curve of conductor $N$, $l$ a rational prime and 
 $\rho=\rho_{E,l}\colon G_\bQ\to \GL_2(\bZ_l)$ the associated Galois 
 representation coming from the Tate module of $E$. We have the sequence 
-$\{a_p(E)\}_{p\nmid N}$, defined by 
+$\{a_p(E)\}_{p\nmid N l}$, defined by 
 \[
 	a_p(E) = \trace \rho(\frob_p) .
 \]
@@ -36,28 +40,68 @@ isogeny class of $E$.
 
 We can define a new sequence, $s(E) = \{s_p=s_p(E)\}_{p\nmid N}$, by 
 $s_p = \sign(a_p)$. Write $s_{\leqslant X}(E)$ for 
-$\{s_p(E)\colon p\leqslant X\}$. It is known [but prove this] that $s(E)$ 
-determines $E$. Consider the following function: 
-\[
-	C_\mathrm{prelim}(N) = \min\{X\textnormal{ s.t. }\{s_{\leqslant X}(E)\}_{\mathrm{cond}(E)\leqslant N}\textnormal{ are all distinct}\} ;
-\]
-here we have $E$ range over isogeny classes of elliptic curves. Experimental 
-data suggests that to tell elliptic curves with conductor $\leqslant X$ apart, 
-you need $s_p(E)$ for the first $O(\log X)$ primes. Since the $X$th prime is 
-$\approx X\log X$, this gives us the conjecture 
-\[
-	C_\mathrm{prelim}(N) = O(\log N) .
-\]
+$\{s_p(E)\colon p\leqslant X\}$. It is known that $s(E)$ determines $E$, but 
+the proof depends on very deep results coming from Michael Harris 
+and his school. Our goal is to show that, with some elementary input from 
+representation theory, the fact that $s(E)$ determines $E$ follows from the 
+fact that $a(E)$ determines $E$. 
 
-The basic approach is as follows. For the symmetric groups $S_n$, it seems 
-[and I should prove] that the sign of the trace of a (complex) representation 
-determines the representation. Given $E_{/\bQ}$, pick the ``right'' $n$ and 
-look at the torsion representation $\rho_{E,n}\colon G_\bQ\to \GL_2(\bZ/n)$. 
-For $n$ sufficiently large ($\geqslant 4\sqrt p$ to be precise) this ``knows'' 
-$s_p(E)$. Also, if we choose $n$ right, $\rho_{E,n}$ will be surjective. If 
-automorphisms of $\GL_2(\bZ/n)$ are determined by ``signs of traces,'' then 
-the ``signs from $\GL_2(\bZ/n)$'' will ``know'' $\rho_{E,n}$. We then use 
-explicit Faltings to see how large $n$ needs to be. 
+
+
+
+
+\section{Motivation from characteristic zero}
+
+Let $\Gamma$ be a finite group, $\rho\colon \Gamma\to \GL(V)$ a 
+finite-dimensional absolutely irreducible real representation. Put 
+$\chi_\rho=\trace\rho$ and $\sigma_\rho = \sign(\chi_\rho)$. We conjecture that 
+$\sigma_\rho$, not just $\chi_\rho$,  determines $\rho$ up to isomorphism. For 
+symmetric groups $S_n$, all irreducible representations are real, and the 
+conjecture has been checked by the author for $S_n$ up to $n=17$.
+
+
+
+
+
+\section{The main idea}
+
+Let $E_{/\bQ}$ be an elliptic curve of conductor $N$. Since 
+$|a_p|\leqslant 2\sqrt p$, if $l>4\sqrt p$, then $a_p$ is determined by its 
+reduction modulo $l$. In fact, it is given by the function $\overline\sign$, 
+defined by 
+\[
+	\overline\sign(x) = 
+	\begin{cases}
+		0 & x=0 \\
+		1 & x\equiv 1,\dots,\frac{l-1}{2}\pmod l \\
+		-1 & x\equiv \frac{l+1}{2},\dots,l-1\pmod l .
+	\end{cases}
+\]
+If $l$ is not clear from the context, we write $\overline\sign_l$. 
+
+\textbf{Conjecture.} Let $\Gamma$ be a finite group, 
+$\rho_1,\rho_2\colon \Gamma\twoheadrightarrow \GL_2(\bF_l)$ two 
+representations. If $\det\rho_1=\det\rho_2$ and 
+$\overline\sign\trace\rho_1 = \overline\sign\trace\rho_2$, then 
+$\rho_1\simeq \rho_2$. 
+
+\textbf{Theorem.} If the conjecture is true, then $E$ is determined by the 
+first $O(N\log\log N)$ of the $s_p(E)$. 
+
+\begin{proof}
+Let $E_{/\bQ}$ be an elliptic curve with conductor $N$. It is known that the 
+first $O(N\log\log N)$ of the $a_p$ determine $E$. Choose a prime $l$ larger 
+than $4\sqrt p$ for $p$ the largest of the $O(N\log \log N)$ primes. Then 
+we can recover $a_p$ for all $p<\frac{1}{16} l^2$ from $a_p\mod l$. In other 
+words, $\bar\rho=\rho\mod l$ determines $E$. If $E_1$ and $E_2$ both have 
+conductor $\leqslant N$ and their first $O(N\log\log N)$ of the $s_p$ are 
+equal, then 
+$\overline\sign\trace \bar\rho_{E_1,l} = \overline\sign\trace \bar\rho_{E_2,l}$. 
+By the conjecture, $\bar\rho_{E_1,l}\simeq \bar\rho_{E_2,l}$, hence 
+$a_p(E_1)\equiv a_p(E_2)\mod l$ for $p<\frac{1}{16} l^2$. Together with the 
+Hasse bound, this implies $a_p(E_1) = a_p(E_2)$ for those $p$, hence 
+$E_1$ and $E_2$ are isogenous. 
+\end{proof}
 
 
 
