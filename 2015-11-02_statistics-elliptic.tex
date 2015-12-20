@@ -3,13 +3,19 @@
 \usepackage{amsmath,amssymb,amsthm,microtype}
 \usepackage[a5paper,margin=1.5cm]{geometry}
 \DeclareMathOperator{\GL}{GL}
+\DeclareMathOperator{\h}{H}
+\DeclareMathOperator{\PGL}{PGL}
 \DeclareMathOperator{\sign}{sgn}
 \DeclareMathOperator{\trace}{tr}
 \newcommand{\bC}{\mathbf{C}}
 \newcommand{\bF}{\mathbf{F}}
 \newcommand{\bQ}{\mathbf{Q}}
+\newcommand{\bR}{\mathbf{R}}
 \newcommand{\bZ}{\mathbf{Z}}
+\newcommand{\dd}{\mathrm{d}}
 \newcommand{\frob}{\mathrm{fr}}
+\newtheorem{theorem}{Theorem}
+\numberwithin{theorem}{section}
 
 \title{The statistics of the signed trace of Frobenius for elliptic curves}
 \author{Daniel Miller}
@@ -57,7 +63,29 @@ finite-dimensional absolutely irreducible real representation. Put
 $\chi_\rho=\trace\rho$ and $\sigma_\rho = \sign(\chi_\rho)$. We conjecture that 
 $\sigma_\rho$, not just $\chi_\rho$,  determines $\rho$ up to isomorphism. For 
 symmetric groups $S_n$, all irreducible representations are real, and the 
-conjecture has been checked by the author for $S_n$ up to $n=17$.
+conjecture has been checked by the author for $S_n$ up to $n=17$, $D_n$ up 
+to $n=20$, $A_n$ up to $n=11$, and $\PGL(2,\bF_p)$ up to $p=31$. Finally, this 
+can be proved directly. 
+
+\begin{theorem}
+Let $G$ be a compact group, $\rho_1,\rho_2$ two finite-dimensional, 
+continuous, irreducbile complex representations with real traces. If 
+$\sign(\trace \rho_1) = \sign(\trace \rho_2)$, then $\rho_1\simeq \rho_2$. 
+\end{theorem}
+\begin{proof}
+Representations of a compact group are self-dual, so 
+$\hom_\bC(\rho_1,\rho_2) = \rho_1\otimes \rho_2$. For there to be an 
+isomorphism between $\rho_1$ and $\rho_2$, we need 
+$\h^0(\rho_1\otimes \rho_2) \ne 0$. That is, we need 
+\[
+	\langle 1, \trace(\rho_1\otimes \rho_2)\rangle = \int_G \trace \rho_1(g) \trace \rho_2(g)\, \dd g
+\]
+to be nonzero. Since $\sign(\trace \rho_1) = \sign(\trace \rho_2)$, the 
+integrand is nonnegative. Moreover, since 
+$\rho_1(1) \rho_2(1) = 1$, continuity gives us an open neighborhood 
+$U$ of $1$ for which $\rho_1,\rho_2\geqslant 1/2$. We conclude that 
+$\langle 1, \trace(\rho_1\otimes \rho_2)\rangle>0$, and the result follows. 
+\end{proof}
 
 
 
