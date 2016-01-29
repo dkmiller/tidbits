@@ -1,0 +1,56 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\DeclareMathOperator{\norm}{N}
+\DeclareMathOperator{\sym}{sym}
+\newcommand{\fp}{\mathfrak{p}}
+\newcommand{\dd}{\mathrm{d}}
+\newcommand{\frob}{\mathrm{fr}}
+
+\title{On Sarnak's letter to Mazur}
+\author{Daniel Miller}
+
+\begin{document}
+\maketitle
+
+
+
+
+
+Suppose we have an Euler product of the form 
+\[
+	L(\rho,s) = \prod_\fp \frac{1}{\det(1-\rho(\frob_\fp) \norm (\fp)^{-s})}
+\]
+Write the characteristic polyomials 
+\[
+	\det(1-\rho(\frob_\fp) t) = \prod (1-\lambda_{\fp,i} t) .
+\]
+What follows is a well-known computation. First, note that 
+\[
+	\frac{\dd}{\dd s}\log f(s) = \frac{f'}{f}(s) .
+\]
+Thus, we know that: 
+\begin{align*}
+	-\frac{L'}{L}(\rho,s) 
+		&= -\frac{\dd}{\dd s}\log L(\rho,s) \\
+		&= -\frac{\dd}{\dd s} \sum_\fp \log \frac{1}{\prod_i (1-\lambda_{\fp,i} \norm(\fp)^{-s})} \\
+		&= \sum_\fp \sum_i \frac{\dd}{\dd s} \log(1-\lambda_{\fp,i} \norm(\fp)^{-s}) \\
+		&= -\sum_\fp \sum_i \frac{\dd}{\dd s} \sum_{j\geqslant 1} \frac{(\lambda_{\fp,i} \norm(\fp)^{-s})^j}{j} \\
+		&= -\sum_\fp \sum_i \sum_{j\geqslant 1} \frac{\dd}{\dd s} \frac{\lambda_{\fp,i}^j \norm(\fp)^{-j s}}{j} \\
+		&= \sum_\fp \sum_i \sum_{j\geqslant 1} (\lambda_{\fp,i}^j \log \norm(\fp)) \norm(\fp)^{-js} \\
+		&= \sum_{j\geqslant 1} \sum_\fp \frac{\log \norm(\fp)}{\norm(\fp)^{j s}} \sum_i \lambda_{\fp,i}^j
+\end{align*}
+This, as a computation, is some general nonsense. What if the 
+characteristic polynomials are $(1-e^{i\theta_\fp} t)(1-e^{-i\theta_\fp} t)$, 
+and we are taking $\sym^n \rho$? Then the characteristic polynomials of 
+$\sym^n\rho$ are 
+\[
+	\prod_{a+b=n} (1-e^{i \theta_\fp a} e^{-i\theta_\fp b} t)
+		= \prod_{a+b=n} (1-e^{i\theta_\fp (a-b)} t) .
+\]
+
+
+
+
+
+\end{document}
