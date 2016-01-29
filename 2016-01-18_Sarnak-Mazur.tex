@@ -3,6 +3,7 @@
 \usepackage{amsmath,amssymb}
 \DeclareMathOperator{\norm}{N}
 \DeclareMathOperator{\sym}{sym}
+\DeclareMathOperator{\trace}{tr}
 \newcommand{\fp}{\mathfrak{p}}
 \newcommand{\dd}{\mathrm{d}}
 \newcommand{\frob}{\mathrm{fr}}
@@ -48,6 +49,76 @@ $\sym^n\rho$ are
 	\prod_{a+b=n} (1-e^{i \theta_\fp a} e^{-i\theta_\fp b} t)
 		= \prod_{a+b=n} (1-e^{i\theta_\fp (a-b)} t) .
 \]
+
+
+
+
+
+\section{Deriving (6)}
+
+Here we prove that 
+\[
+	\sum_{j=0}^n e^{i(n-2j)\theta} = \frac{\sin((n+1)\theta)}{\sin\theta} .
+\]
+This is a basic computation:
+\begin{align*}
+	\sum_{j=0}^n e^{i(n-2j)\theta} 
+		&= e^{in\theta} \sum_{j=0}^n (e^{-2i\theta})^j \\
+		&= e^{i n \theta} \frac{(e^{-2i\theta})^{n+1}-1}{e^{-2i\theta}-1} \\
+		&= \frac{e^{i(n-2(n+1))\theta}-e^{i n\theta}}{e^{-2i\theta}-1} \\
+		&= \frac{e^{i(-n-2)\theta}-e^{i n\theta}}{e^{-2i\theta}-1} \\
+		&= \frac{e^{-i(n+1)\theta} - e^{i(n+1)\theta}}{e^{-i\theta} - e^{i\theta}} \\
+		&= \frac{\sin((n+1)\theta)}{\sin\theta} ,
+\end{align*}
+the last step following from the well-known identify 
+$\sin\theta=\frac{e^{i\theta}-e^{-i\theta}}{2i}$. Define $U_n(\theta)$ to be that 
+last function. 
+
+We know that 
+\[
+	-\frac{L'}{L}(s,\sym^n\pi) = \sum_{r\geqslant 1} \sum_p \frac{\log p}{p^{r s}} U_n(r\theta_p)
+\]
+
+
+
+
+
+\section{General theory}
+
+For the moment, we look at the local theory. Start with an arbitrary invertible 
+matrix $A(t)$ depending smoothly on $t$. Then Jacobi's formula tells us that 
+\[
+	\frac{\dd}{\dd t} \det A(t) = \det A(t) \trace\left(A(t)^{-1} \frac{\dd A}{\dd t}{t}\right) .
+\]
+In other words, 
+$\frac{\dd}{\dd t} \log \det A(t) = \trace\left(A(t)^{-1} \frac{\dd A}{\dd t}(t)\right)$. 
+
+So, for the function $L_\fp(\theta,s) = \det(1-\theta \norm(\fp)^{-s})^{-1}$, 
+we can compute 
+\begin{align*}
+	-\frac{L_\fp'}{L_\fp}(\theta,s) 
+		&= \trace \left((1-\theta \norm(\fp)^{-s})^{-1} \frac{\dd}{\dd s}(1-\theta \norm(\fp)^{-s})\right) \\
+		&= \trace\left(\sum_{r\geqslant 0} (\theta \norm(\fp)^{-s})^r \theta \norm(\fp)^{-s} \log \norm(\fp)\right) \\
+		&= \sum_{r\geqslant 0} \trace(\theta^r \norm(\fp)^{-r s} \theta \norm(\fp)^{-s} \log \norm(\fp)) \\
+		&= \log\norm(\fp) \sum_{r\geqslant 1} \frac{\trace(\theta^r)}{\norm(\fp)^{rs}}
+\end{align*}
+
+So let's look at a global $L$-function
+\[
+	L(s) = \prod_\fp \det(1-\theta_\fp \norm(\fp)^{-s})^{-1} .
+\]
+From the above computation, we have that 
+\begin{align*}
+	-\frac{L'}{L}(s) = \sum_{r\geqslant 1} \sum_\fp \frac{\log \norm(\fp)}{\norm(\fp)^{r s}} \trace(\theta_\fp^r) .
+\end{align*}
+
+
+
+
+
+\section{Riemann--Von-Mangoldt}
+
+d
 
 
 
