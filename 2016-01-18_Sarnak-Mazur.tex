@@ -2,10 +2,14 @@
 
 \usepackage{amsmath,amssymb}
 \DeclareMathOperator{\norm}{N}
+\DeclareMathOperator{\SU}{SU}
 \DeclareMathOperator{\sym}{sym}
 \DeclareMathOperator{\trace}{tr}
 \newcommand{\fp}{\mathfrak{p}}
+\newcommand{\bQ}{\mathbf{Q}}
 \newcommand{\dd}{\mathrm{d}}
+\newcommand{\an}{\mathrm{an}}
+\newcommand{\alg}{\mathrm{alg}}
 \newcommand{\frob}{\mathrm{fr}}
 
 \title{On Sarnak's letter to Mazur}
@@ -116,9 +120,49 @@ From the above computation, we have that
 
 
 
-\section{Riemann--Von-Mangoldt}
+\section{A misconception}
 
-d
+Let $f = \sum a_n q^n$ be a modular cusp eigenform of weight $k$. There are two 
+cadidates for the local $L$-factors of the $L$-function associated to $f$, 
+namely 
+\begin{align*}
+	L_p^\alg(f,s) &= (1-a_p p^{-s} + p^{k-1} p^{-2s})^{-1} \\
+	L_p^\an(f,s) &= (1-a_p p^{-(k-1)/2} p^{-s} + p^{-2s})^{-1} \\
+		&= L_p^\alg\left(s+\frac{k-1}{2}\right) .
+\end{align*}
+Essentially, the analytic $L$-function uses the normalized eigenvalues of 
+Frobenius. Since we'll be doing analysis, we will always use the analytic 
+$L$-function exclusively, and simply denote it by $L$. In particular, note if 
+$f$ is a weight-$2$ modular form correspoding to an elliptic curve $E_{/\bQ}$, 
+we have $L^\an(f,s) = L^\alg(E,s+1/2)$, so that $L^\an(f,1/2) = L^\alg(E,1)$ is 
+predicted by BSD. 
+
+
+
+
+
+\section{Fancy approach}
+
+Let $G=\SU(2)$; this is a compact group. Let $f$ be a weight-$k$ modular cusp 
+eigenform. We'll start without messing with symmetric powers. For each 
+unramified prime $p$, we put 
+\[
+	x_p = p^{-(k-1)/2}\begin{pmatrix} \alpha_1(p) \\ & \alpha_2(p)\end{pmatrix} \in G^\natural,
+\]
+where $\alpha_i(p)$ are the eigenvalues of $\rho_{E,l}(\frob_p)$. In other 
+words, $x_p$ is the (normalized ?) Satake parameter of $\pi_p$. The Sato-Tate 
+conjecture tells us that $\{x_p\}\subset G^\natural$ is equidistributed. 
+
+For any representation $\rho$ of $G$, we put, following Serre:
+\[
+	L(s,\rho) = \prod_p \det(1-\rho(x_p)p^{-s})^{-1} .
+\]
+From stuff we already know, we have the computation 
+\[
+	-\frac{L'}{L}(s,\sym^n) = \sum_{r\geqslant 1} \sum_p \frac{\log p}{p^{r s}} \trace \sym^n(x_p^r) .
+\]
+By Peter-Weil, the functions $\{\trace\sym^n\}$ form an orthonormal basis for 
+$L^2(G^\natural)$. 
 
 
 
