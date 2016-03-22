@@ -1,12 +1,27 @@
 \documentclass{article}
 
-\usepackage{amsmath,amssymb}
+\usepackage{amsmath,amssymb,hyperref,microtype}
+\usepackage[a5paper,margin=1.5cm]{geometry}
+\usepackage[
+  hyperref = true,      % links to online documents
+  backend  = bibtex,    % use bibtex instead of biber
+  sorting  = nyt,       % sorts by (name, year, title)
+  style    = alphabetic % citations look like [Har77]
+]{biblatex}
+\addbibresource{tidbit-sources.bib}
+\hypersetup{colorlinks=true,linkcolor=green}
+
+\DeclareMathOperator{\h}{H}
+\DeclareMathOperator{\GL}{GL}
 \DeclareMathOperator{\norm}{N}
 \DeclareMathOperator{\SU}{SU}
 \DeclareMathOperator{\sym}{sym}
 \DeclareMathOperator{\trace}{tr}
+\newcommand{\bC}{\mathbf{C}}
+\newcommand{\fa}{\mathfrak{a}}
 \newcommand{\fp}{\mathfrak{p}}
 \newcommand{\bQ}{\mathbf{Q}}
+\newcommand{\bZ}{\mathbf{Z}}
 \newcommand{\dd}{\mathrm{d}}
 \newcommand{\an}{\mathrm{an}}
 \newcommand{\alg}{\mathrm{alg}}
@@ -164,8 +179,65 @@ From stuff we already know, we have the computation
 By Peter-Weil, the functions $\{\trace\sym^n\}$ form an orthonormal basis for 
 $L^2(G^\natural)$. 
 
+More generally, 
+\[
+	-\frac{L'}{L}(s,\rho) 
+		= \sum_{\nu\geqslant 1} \sum_\fp \frac{\log \norm(\fp)}{\norm(\fp)^{\nu s}} \trace \rho(x_\fp^\nu)
+\]
+In other words, if we put the ``Von-Mangoldt function'' 
+\[
+	\Lambda_\rho(\fa) = 
+	\begin{cases}
+		\log \norm(\fp) \trace \rho(x_\fp^\nu) & \text{if }\fa=\fp^\nu \\
+		0 & \text{otherwise}
+	\end{cases} ,
+\]
+then 
+\[
+	-\frac{L'}{L}(s,\rho) = \sum_\fa \frac{\Lambda_\rho(\fa)}{\norm(\fa)^s} .
+\]
 
 
 
 
+
+\section{Functional equation for algebraic L-functions}
+
+Here we follow \cite{fontaine-perrin-riou-1994} in computing the conjectured 
+functional equation for symmetric powers of an elliptic curve. 
+
+Let $E_{/\bQ}$ be a non-CM elliptic curve. Consider the motive $\h^1(E)$. As 
+Galois representations, we have the isomorphism 
+$\h^1(E,\bZ_l)\simeq T_l(E)^\vee$. But since \cite{fontaine-perrin-riou-1994} 
+defines local $L$-functions using geometric Frobenius, we have 
+\[
+	P_p(\h^1(E),u) = \det(1-\rho_{\h^1(E),l}(\text{geom.~frob.}_p)u) = 1-a_p u + p u^2 .
+\]
+Now consider $\sym^n \h^1(E)$. In general, suppose we have a $2\times 2$ 
+diagonal matrix $\theta = \begin{pmatrix} \lambda \\ & \mu \end{pmatrix}$. 
+Here are a few of its symmetric powers:
+\begin{align*}
+	\sym^2 \theta &= \begin{pmatrix} \lambda^2 \\ & \lambda\mu \\ & & \mu^2 \end{pmatrix} \\
+	\sym^3 \theta &= \begin{pmatrix} \lambda^3 \\ & \lambda^2 \mu \\ & & \lambda \mu^2 \\ & & & \mu^3 \end{pmatrix} \\
+	&\cdots
+\end{align*}
+This tells us that 
+\[
+	\det(1-(\sym^n \theta) u) = \prod_{a+b=n} (1-\lambda^a \mu^b u) = \sum_{i=0}^n () u^i
+\]
+For $\sym^3$, we have 
+\begin{align*}
+	\det(1-(\sym^3\theta)u) 
+		&= (1-\lambda^3 u)(1-\lambda^2 \mu u)(1-\lambda\mu^2)(1-\mu^3 u) \\
+		&= 1 - (\lambda^3 + \lambda^2\mu + \lambda\mu^2 + \mu^3)u + \cdots \\
+\end{align*}
+
+Notation: $\omega_s(x) = |x|^s$, as $\omega\colon K^\times\to \bC^\times$. Here 
+$K$ is a local field. 
+
+
+
+
+
+\printbibliography
 \end{document}
