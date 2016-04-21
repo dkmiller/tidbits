@@ -1,7 +1,16 @@
 \documentclass{article}
 
-\usepackage{amsmath,amssymb,amsthm,microtype}
+\usepackage{amsmath,amssymb,amsthm,hyperref,microtype}
 \usepackage[a5paper,margin=1.5cm]{geometry}
+\usepackage[
+  hyperref = true,      % links to online documents
+  backend  = bibtex,    % use bibtex instead of biber
+  sorting  = nyt,       % sorts by (name, year, title)
+  style    = alphabetic % citations look like [Har77]
+]{biblatex}
+\addbibresource{tidbit-sources.bib}
+\hypersetup{colorlinks=true,linkcolor=green}
+
 \DeclareMathOperator{\GL}{GL}
 \DeclareMathOperator{\h}{H}
 \DeclareMathOperator{\PGL}{PGL}
@@ -18,6 +27,7 @@
 \newcommand{\dd}{\mathrm{d}}
 \newcommand{\frob}{\mathrm{fr}}
 \newtheorem{theorem}{Theorem}
+\newtheorem{conjecture}[theorem]{Conjecture}
 \numberwithin{theorem}{section}
 
 \title{The statistics of the signed trace of Frobenius for elliptic curves}
@@ -218,7 +228,7 @@ Suppose $s(E_1) = s(E_2)$.
 
 
 
-\section{$p$-adic Sato--Tate}
+\section{\texorpdfstring{$p$}{p}-adic Sato--Tate}
 
 Let $E_1,E_2$ be non-isogenous elliptic curves. Let 
 $\rho_{E_1\times E_2}\colon G_\bQ\to H(\hat\bZ)$ be the associated adelic 
@@ -312,4 +322,99 @@ contradiction.
 
 
 
+\section{Convergence of \texorpdfstring{$L$}{L}-functions}
+
+Suppose we have an $L$-function of the form 
+\[
+	L(s) = \prod_p \det(1-\sigma_p p^{-s})^{-1} ,
+\]
+where the $\sigma_p$ are matrices. One can show directly that 
+\[
+	-\frac{L'}{L}(s) = (\log L)'(s) = \sum_{p^\nu} \frac{\log(p)\trace(\sigma_p^\nu)}{(p^\nu)^s} ,
+\]
+which is again a Dirichlet series with the $a_n$ supported on prime powers. 
+
+Now let $E_{/\bQ}$ be an elliptic curve, $\eta\colon [0,\pi]\to \bR$ 
+piecewise continuous, and put 
+\[
+	L_\eta(E,s) = \prod_p \frac{1}{1-\eta(\theta_p) p^{-s}} .
+\]
+
+Rearrange:
+\begin{align*}
+	\sum_p \log(p) \sum_{\nu \geqslant 1} \left(\frac{\eta(\theta_p)}{p^s}\right)^\nu
+	&= \sum_p \log(p) \left(\frac{\eta(\theta_p)}{p^s}\right)\frac{1}{1-\frac{\eta(\theta_p)}{p^s}} \\
+	&= \sum_p \log(p) \frac{\eta(\theta_p)}{p^s-\eta(\theta_p)}
+\end{align*}
+Put $s>0$; then $p^s\to \infty$, while $\eta(\theta_p)$ is bounded. For 
+$p\gg 0$, $|\eta(\theta_p)| < \frac{1}{2} p^s$, so 
+\[
+	\frac{2}{3p^s} < \frac{1}{p^s-\eta(\theta_p)} < \frac{2}{p^s} .
+\]
+So convergence is equivalent to that of 
+\[
+	\sum_p \frac{\log(p) \eta(\theta_p)}{p^s} = \sum_p \frac{\log p}{p^s} \eta(\theta_p) .
+\]
+The first idea is to apply Dirichlet's test to $a_n=\eta(\theta_p)$, 
+$b_n=\frac{\log p}{p^s}$. Then $b_n\to 0$ from above (for $n\gg 0$) and 
+\begin{align*}
+	\sum_{p\leqslant X} \eta(\theta_p) &\approx \pi(X) \int_{[0,\pi]} \eta \, \dd \mu_{\ST} \\
+	\sum_{p\leqslant X} \frac{\log p}{p^s} &\approx \begin{cases} \log X & s=1 \\ \frac{s}{1-s} X^{1-s} & s<1 \end{cases} .
+\end{align*}
+So Dirichlet's test isn't very helpful. 
+
+Instead, we'll try Abel's formula:
+\[
+	\sum_{p\leqslant X} a_p \phi(p) = \phi(X) \sum_{p\leqslant X} a_n - \int_1^X \phi'(x) \left(\sum_{p\leqslant x} a_n \right) \, \dd x .
+\]
+where $\phi$ is any continuously differentiable function. Choose 
+$\phi(x)=\frac{\log x}{x^s}$ and $a_p = \eta(\theta_p)$. Then Abel summation 
+tells us that 
+\begin{align*}
+	\sum_{p\leqslant X} \eta(\theta_p) \frac{\log p}{p^s} 
+	&= \frac{\log X}{X^s} \sum_{p\leqslant X} \eta(\theta_p) - \int_1^X \frac{1-s\log x}{x^{s+1}} \sum_{p\leqslant x} \eta(\theta_p) \, \dd x \\
+&\approx \mu_{\ST}(\eta)X^{1-s} - \mu_{\ST}(\eta) \int_1^X \frac{1-s\log x}{x^{s+1}} \frac{x}{\log x} \, \dd x \\
+	&= \mu_{\ST}(\eta) \left(X^{1-s} - \int_1^X \frac{1-s\log x}{x^s\log x}\, \dd x \right) .
+\end{align*}
+
+The term $X^{1-s}$ diverges if $s<1$, and the integrand can be controlled by 
+removing the ``$1-$'' term. So we end up studying the convergence of 
+\[
+	\int_1^\infty \frac{\dd x}{x^s} ,
+\]
+which isn't helpful either as it only converges if $s>1$. But if 
+$\mu_{\ST}(\eta)=0$, everything should vanish. 
+
+
+
+\subsection{Some bounds}
+
+Let $\vartheta$ be Chebyshev's second function:
+\[
+	\vartheta(x) = \sum_{p\leqslant x} \log p .
+\]
+
+\begin{theorem}
+Assume the RH. Then $|\vartheta(X)-X| = O(\sqrt X\log^2 X)$. 
+\end{theorem}
+\begin{proof}
+This is \cite[Th.~10]{schoenfeld1976}
+\end{proof}
+
+\begin{conjecture}[Akiyama--Tanigawa]
+Let $f\colon [0,\pi]\to \bR$ be of bounded variation. For every $\epsilon>0$, 
+we have 
+\[
+	\left|\frac{1}{\pi(X)} \sum_{p\leqslant X} f(\theta_p) - \mu_{\mathrm{ST}}(f)\right| < X^{-\frac 1 2 + \epsilon}
+\]
+for $C\gg 0$. 
+\end{conjecture}
+
+This is from \cite{akiyama-tanigawa}. 
+
+
+
+
+
+\printbibliography
 \end{document}
