@@ -14,6 +14,7 @@
 \DeclareMathOperator{\GL}{GL}
 \DeclareMathOperator{\h}{H}
 \DeclareMathOperator{\PGL}{PGL}
+\DeclareMathOperator{\RH}{RH}
 \DeclareMathOperator{\sign}{sgn}
 \DeclareMathOperator{\SL}{SL}
 \DeclareMathOperator{\spec}{Spec}
@@ -410,11 +411,64 @@ we have
 for $C\gg 0$. 
 \end{conjecture}
 
-This is from \cite{akiyama-tanigawa}.
+This is from \cite{akiyama-tanigawa}? They conjecture something slightly 
+different. [Show that their conjecture and this is equivalent.]
 
 [Look at functions of bounded variation: it looks like the sequence 
 definition of $\mu_{\ST}(f)$ works if and only if $f$ is of bounded 
 variation.]
+
+
+
+
+
+\section{Akiyama--Tanigawa conjecture}
+
+Let $E_{/\bQ}$ be an elliptic curve, and let $\theta_p=\theta_p(E)$ be the 
+normalized frobenius eigenvalues. For $\eta\colon [0,\pi]\to \bR$ of bounded 
+variation, \cite{akiyama-tanigawa} defines the function 
+\[
+	D_X^{(\eta)} = \sup_{x\in [0,\pi]} \left|\frac{\#\{p\leqslant X : \theta_p\in [0,x)\}}{\pi(X)} - \eta(x)\right| ,
+\]
+and conjecture that $D_X^{(\eta)} = O(X^{-\frac 1 2+\epsilon})$ for all 
+$\epsilon>0$. Strictly speaking, \cite{akiyama-tanigawa} only conjecture this 
+for $\frac{2}{\pi}\sin^2\theta$. 
+
+We need a generalized Koksma--Hlawka inequality.
+
+For now, we imitate the proof of Theorem 2 in \cite{akiyama-tanigawa}. Note 
+that 
+\begin{align*}
+	\log L_\eta(E,s) &= -\sum_p \log(1-\eta(\theta_p)p^{-s}) \\
+		&= \sum_p \sum_{n\geqslant 1} \frac{\eta(\theta_p)^n}{n p^{n s}} \\
+		&= \sum_p\left(\frac{\eta(\theta_p)}{p^s} + \sum_{n\geqslant 2} \frac{1}{n} \left(\frac{\eta(\theta_p)}{p^s}\right)^n\right)
+\end{align*}
+
+Assume that $\eta$ takes values in $B_1(0) = \{z\in \bC : |z|\leqslant 1\}$. 
+If $s\geqslant 1/2$, then $|\eta(\theta_p) / p^s|<1$, so we can sum geometric 
+series
+\[
+	\left| \sum_{n\geqslant 2} \frac{1}{n} \left(\frac{\eta(\theta_p)}{p^s}\right)^n \right|
+		\leqslant p^{-2s} \frac{1}{1-p^{-s}} 
+		\leqslant 4 p^{-2s}.
+\]
+Now $\sum_p p^{-2s}$ is holomorphic on $\Re s>1/2$. In other words, we know 
+that $\log L_\eta(E,s)$ is holomorphic on $\Re s>1/2$ (and hence RH holds for 
+$L_\eta(E,s)$) if and only if $\sum_p \frac{\eta(\theta_p)}{p^s}$ converges 
+on that region. Now we apply Abel summation ($1/2<\Re s<1$):
+\begin{align*}
+	\sum_{p\leqslant X} \frac{\eta(\theta_p)}{p^s}
+		&= X^{-s} \sum_{p\leqslant X} \eta(\theta_p) - s\int_1^X \frac{1}{x^{s+1}} \sum_{p\leqslant x} \eta(\theta_p) \, \dd x
+\end{align*}
+For convergence we need 
+$\sum_{p\leqslant X} \eta(\theta_p) = O(X^{\frac 1 2 +\epsilon})$ for any 
+$\epsilon>0$. Since $\pi(X) \sim \frac{X}{\log X}$, if $\mu_{\ST}(\eta)=0$, 
+then RH for $L_\eta(E,s)$ is equivalent to 
+\[
+	\frac{1}{\pi(X)}\sum_{p\leqslant X} \eta(\theta_p) = O(X^{-\frac 1 2 + \epsilon}) .
+\]
+Put $\RH(E,\eta)$ for the associated Riemann Hypothesis for $L_\eta(E,s)$. 
+Can we prove $\RH(E,\ST)\Rightarrow \RH(E,\eta)$?
 
 
 
