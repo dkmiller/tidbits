@@ -25,6 +25,7 @@
 \newcommand{\bQ}{\mathbf{Q}}
 \newcommand{\bR}{\mathbf{R}}
 \newcommand{\bZ}{\mathbf{Z}}
+\newcommand{\cF}{\mathcal{F}}
 \newcommand{\dd}{\mathrm{d}}
 \newcommand{\frob}{\mathrm{fr}}
 \newtheorem{theorem}{Theorem}
@@ -422,7 +423,7 @@ variation.]
 
 
 
-\section{Akiyama--Tanigawa conjecture}
+\section{Riemann Hypothesis}
 
 Let $E_{/\bQ}$ be an elliptic curve, and let $\theta_p=\theta_p(E)$ be the 
 normalized frobenius eigenvalues. For $\eta\colon [0,\pi]\to \bR$ of bounded 
@@ -469,6 +470,121 @@ then RH for $L_\eta(E,s)$ is equivalent to
 \]
 Put $\RH(E,\eta)$ for the associated Riemann Hypothesis for $L_\eta(E,s)$. 
 Can we prove $\RH(E,\ST)\Rightarrow \RH(E,\eta)$?
+
+
+
+
+\section{Akiyama--Tanigawa conjecture}
+
+We give the precise statement of Conjecture 1 in \cite{akiyama-tanigawa}. 
+Let $E_{/\bQ}$ be an elliptic curve. Define the \emph{discrepancy} 
+\[
+	D(X) = \sup_{x\in [0,\pi]} \left| \frac{\# \{p\leqslant X : \theta_p\in [0,x)\}}{\pi(X)} - \int_0^x \dd \mu_{\ST} \right| .
+\]
+Akiyama and Tanigawa conjecture that $D(X)=O(X^{-\frac 1 2+\epsilon})$. 
+We can rewrite:
+\[
+	D(X) = \sup_{x\in [0,\pi]} \left| \frac{1}{\pi(X)} \sum_{p\leqslant X} \chi_{[0,x)}(\theta_p) - \mu_{\ST}(\chi_{[0,x)})\right|
+\]
+Here's some notation. Put
+\[
+	\mu_{\ST}^X = \frac{1}{\pi(X)} \sum_{p\leqslant X} \delta_{\theta_p} .
+\]
+Thus 
+$D(X)=\sup_{x\in [0,\pi]} |\mu_{\ST}^X(\chi_{[0,x)}) - \mu_{\ST}(\chi_{[0,x)})|$. 
+Let $f$ be of bounded variation. Then for $\epsilon>0$, we can choose 
+$a_i,x_i$ such that $\|f-\sum a_i \chi_{[0,x_0)}\|_\infty<\epsilon$. 
+
+******************************
+
+Let $(X,\mu)$ be a probability space, $S\subset X$ a finite set, and 
+$\cF$ a collection of functions on $X$. Then 
+\[
+	D_\cF^\mu(S) = \sup_{f\in \cF} \left|\frac{1}{\# S} \sum_{s\in S} f(s) - \int f \, \dd \mu \right| .
+\]
+
+
+*********************
+
+Let $S\subset \bR$ be finite, let $f$ be a function on $\bR$ of bounded 
+variation. Let $\mu=g(t)\, \dd t$ be a probability measure. Write 
+$S=\{s_1,\dots,s_n\}$. 
+
+We have 
+\begin{align*}
+	\frac{1}{\# S} \sum_{s\in S} f(s) 
+		&= \frac{1}{n} \sum_{i=1}^n f(s_i) \\
+		&= 
+\end{align*}
+
+[de Bruijn--Post theorem: $f$ is Riemann integrable iff for all 
+equidistributed sequences, ``convergence works for $f$.'']
+
+\begin{theorem}
+Let $(X,\mu)$ be a compact space with Radon probability measure. Then for 
+$f\in L^1(X,\mu)$, 
+\[
+	\lim_{X\to \infty} \left| \frac{1}{X} \sum_{n\leqslant X} f(x_n) - \int_X f\, \dd \mu\right| = 0
+\]
+for all $\mu$-equidistributed $\{x_n\}$ if and only if $f$ is continuous 
+almost everywhere. 
+\end{theorem}
+\begin{proof}
+Suppose $f$ is a.e.~continuous and $\{x_n\}$ is $\mu$-equidistributed. 
+Then for any $\epsilon>0$, there is open $U\subset X$ such that $f$ is 
+continuous on $U$ and $\mu(U)<\epsilon$. 
+\end{proof}
+
+****************************
+
+Basic idea: let $\mu,\nu$ be Radon measures on $X$ and $\cF\subset C(X)$. THen 
+\[
+	d_\cF(\mu,\nu) = \sup_{f\in \cF} \frac{1}{\|f\|_0}\left| \int f\, \dd \mu - \int f \, \dd \nu\right| = \sup_{f\in \cF} \frac{1}{\|f\|_0}\left| \int f\, \dd (\mu-\nu)\right| .
+\]
+Put $|\mu-\nu| = d(\mu,\nu)=d_{C(X)}(\mu,\nu)$. 
+
+\ldots
+
+Better, for $X$ a compact space, put 
+\[
+	|\mu| = \sup_{f\in C(X)} \frac{1}{\|f\|_0} \int f\, \dd \mu = \sup_{\|f\|_0\leqslant 1} \int f\, \dd \mu .
+\]
+
+\begin{theorem}
+Let $E_{/\bQ}$ be an elliptic curve. Then the Akiyama--Tanigawa conjecture for 
+$E$ implies 
+\[
+	\left| \frac{1}{\pi(X)} \sum_{p\leqslant X} \eta(\theta_p) - \int \eta\, \dd \mu_{\ST}\right| = O_\eta(X^{-\frac 1 2+\epsilon})
+\]
+for all $\eta\colon [0,\pi] \to [-1,1]$ continuous almost everywhere. 
+\end{theorem}
+\begin{proof}
+Write $\mu=\mu_{\ST}$ and 
+$\mu^X = \frac{1}{\pi(X)} \sum_{p\leqslant X} \delta_{\theta_p}$. Then we wish 
+to show that 
+\[
+	\sup_{x\in [0,\pi]} |(\mu^X-\mu)(\chi_{[x,\pi]})| = O(X^{-\frac 1 2+\epsilon})
+\]
+implies 
+\[
+	|(\mu^X-\mu)(\eta)| = O_\eta(X^{-\frac 1 2+\epsilon}) .
+\]
+Let $S$ be the vector space spanned by the $\chi_{[x,\pi]}$. We start by 
+showing that the A--K conjecture implies that for $s\in S$:
+\[
+	|(\mu^X-\mu)(s)| = O_s(X^{-\frac 1 2+\epsilon}) .
+\]
+This follows from an easy computation. Put $s=\sum \lambda_i \chi_{[x_i,\pi]}$. 
+Then 
+\begin{align*}
+	|(\mu^X-\mu)(s)| 
+		&= \left| \sum \lambda_i (\mu^X-\mu)(\chi_{[x_i,\pi]})\right| \\
+		&\leqslant \sum |\lambda_i| (\mu^X-\mu)(\chi_{[x_i,\pi]}) \\
+		&= \left(\sum |\lambda_i|\right) O(X^{-\frac 1 2+\epsilon}) \\
+		&= O_s(X^{-\frac 1 2 +\epsilon}) .
+\end{align*}
+We've proved things for $S$ (the space of all step functions). 
+\end{proof}
 
 
 

@@ -1,0 +1,161 @@
+\documentclass{article}
+
+\usepackage{
+	amsmath,
+	amssymb,
+	amsthm,
+	hyperref,
+	microtype
+}
+\usepackage[a5paper,margin=1.5cm]{geometry}
+\usepackage[
+  hyperref = true,
+  backend  = bibtex,
+  sorting  = nyt,
+  style    = alphabetic
+]{biblatex}
+\addbibresource{tidbit-sources.bib}
+\hypersetup{colorlinks=true,linkcolor=green}
+
+\DeclareMathOperator{\GL}{GL}
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\Var}{Var}
+\newcommand{\bE}{\mathbf{E}}
+\newcommand{\bF}{\mathbf{F}}
+\newcommand{\bQ}{\mathbf{Q}}
+\newcommand{\bZ}{\mathbf{Z}}
+\newcommand{\dd}{\mathrm{d}}
+\newcommand{\fr}{\mathrm{fr}}
+\newcommand{\ST}{\mathrm{ST}}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{lemma}[theorem]{Lemma}
+\numberwithin{theorem}{section}
+
+\title{Riemann Hypothesis for ``fake $L$-functions'' coming from elliptic curves}
+\author{Daniel Miller}
+
+\begin{document}
+\maketitle
+
+
+
+
+
+\section{Introduction}
+
+Let $E_{/\bQ}$ be an elliptic curve, $l$ an odd prime, and 
+$\rho_{E,l}:G_\bQ\to \GL_2(\bZ_l)$ the associated Galois representation. 
+For $p$ not dividing the conductor of $E$, we define 
+\begin{align*}
+	a_p &= p+1-\# E(\bF_p) \\
+		&= \tr \rho_{E,l}(\fr_p) .
+\end{align*}
+Then the Hasse bound $|a_p|\leqslant 2\sqrt p$ allows us to define an angle 
+$\theta_p=\theta_p(E)\in [0,\pi]$ by the equation 
+\[
+	2\cos \theta_p = \frac{a_p}{\sqrt p} .
+\]
+Let $S([0,\pi])$ be the space of step functions on $[0,\pi]$. For 
+$\eta\in S([0,\pi])$ with $\|\eta\|_\infty\leqslant 1$, we define a ``fake 
+$L$-function'' $L_\eta(E,s)$ by an infinite product 
+\[
+	L_\eta(E,s) = \prod_p \left(1-\eta(\theta_p) p^{-s}\right)^{-1}
+\]
+where here and in the remainder of the document we take the product over all 
+unramified primes of $E$. 
+
+Our goal is to show that, assuming a kind of ``strong Sato--Tate conjecture'' 
+for $E$, the $L_\eta(E,s)$ satisfy the appropriate analogue of the Riemann 
+Hypothesis. 
+
+
+
+
+
+\section{Heuristics}
+
+Just for this section, let $\{\theta_p\}$ be a collection of i.i.d.~random 
+variables with joint distribution $\mu_\ST$ and $f$ a function on $[0,\pi]$. 
+Then $\{f(\theta_p)\}$ is a collection of i.i.d.~random variables with 
+expected value $\bE[f(\theta_p)] = \mu_\ST(f)$. The strong law of large 
+numbers tells us that 
+\[
+	\frac{1}{\pi(X)} \sum_{p\leqslant X} f(\theta_p) \to \mu_\ST(f) .
+\]
+We want quantitative bound on the convergence. A basic but involved computation 
+yields 
+\[
+	\bE\left[\left(\frac{1}{\pi(X)} \sum_{p\leqslant X} f(\theta_p) - \mu_\ST(f)\right)^2\right] 
+	= \frac{1}{\pi(X)} \Var(f)
+\]
+So heuristically, if the $\theta_p$ come from an elliptic curve, we expect 
+\[
+	\left| \frac{1}{\pi(X)} \sum_{p\leqslant X} f(\theta_p) - \int f\, \dd \mu_\ST\right| = O\left(\Var(f) X^{-\frac 1 2+\epsilon}\right) .
+\]
+
+
+
+
+
+\section{First properties}
+
+Throughout this section, $E_{/\bQ}$ is an elliptic curve and all notation is as 
+above. 
+
+\begin{lemma}
+The product for $L_\eta(E,s)$ converges absolutely on the region 
+$\{\Re s>1\}$. 
+\end{lemma}
+\begin{proof}
+By \cite[\S3.7, Th.~5]{knopp-1956}, it suffices to prove that the sum 
+$\sum_p \frac{|\eta(\theta_p)|}{p^s}$ converges when $\Re s>1$. This is 
+simple: 
+\[
+	\sum_p \frac{|\eta(\theta_p)|}{p^s} \leqslant \sum_n n^{-s} = \zeta(s)
+\]
+which is already known to converge. 
+\end{proof}
+
+Let $\mu_\ST$ be the Sato--Tate measure 
+$\frac{2}{\pi}\sin^2\theta\, \dd \theta$ and, for each $X>0$, define a measure 
+$\mu^X=\frac{1}{\pi(X)}\sum_{p\leqslant X} \delta_{\theta_p}$. Then the 
+Sato--Tate conjecture states that $\mu^X\to^\ast \mu_\ST$, in the sense that 
+for each $f\in C([0,\pi])$, 
+\[
+	\lim_{X\to \infty} \frac{1}{\pi(X)} \sum_{p\leqslant X} f(\theta_p) = \int_{[0,\pi]} f\, \dd \mu_\ST .
+\]
+To simplify notation, for any measure $\mu$, write $\mu(f)=\int f\, \dd \mu$. 
+
+\begin{conjecture}[Akiyama--Tanigawa]
+\[
+	\sup_{x\in [0,\pi]} \left| (\mu^X - \mu_\ST)(\chi_{[x,\pi]})\right| = O(X^{-\frac 1 2+\epsilon}) .
+\]
+\end{conjecture}
+This is a trivial rewriting of the statement in 
+\cite[Conj.~1]{akiyama-tanigawa}. 
+
+\begin{theorem}
+Assume the Akiyama--Tanigawa conjecture. Then for any step function 
+$\eta\colon [0,\pi] \to [-1,1]$, we have 
+\[
+	\left| (\mu^X-\mu_\ST)(\eta)\right| = O_\eta(X^{-\frac 1 2+\epsilon}) .
+\]
+\end{theorem}
+\begin{proof}
+We may write $\eta = \sum \lambda_i \chi_{[x_i,\pi]}$. Then 
+\begin{align*}
+	\left| (\mu^X-\mu_\ST)(\eta)\right|
+		&= \left| \sum \lambda_i (\mu^X-\mu_\ST)(\chi_{[x_i,\pi]}) \right| \\
+		&\leqslant \sum |\lambda_i| \left| (\mu^X-\mu_\ast)(\chi_{[x_i,\pi]})\right| \\
+		&= \left(\sum |\lambda_i|\right) O(X^{-\frac 1 2+\epsilon}) .
+\end{align*}
+\end{proof}
+
+
+
+
+
+\printbibliography
+\end{document}
