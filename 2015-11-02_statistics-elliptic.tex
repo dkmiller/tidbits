@@ -26,10 +26,12 @@
 \newcommand{\bR}{\mathbf{R}}
 \newcommand{\bZ}{\mathbf{Z}}
 \newcommand{\cF}{\mathcal{F}}
+\newcommand{\cS}{\mathcal{S}}
 \newcommand{\dd}{\mathrm{d}}
 \newcommand{\frob}{\mathrm{fr}}
 \newtheorem{theorem}{Theorem}
 \newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{lemma}[theorem]{Lemma}
 \numberwithin{theorem}{section}
 
 \title{The statistics of the signed trace of Frobenius for elliptic curves}
@@ -585,6 +587,68 @@ Then
 \end{align*}
 We've proved things for $S$ (the space of all step functions). 
 \end{proof}
+
+
+
+
+
+\section{Zeta functions and distributions}
+
+Let $G$ be a LCA group. If $\chi\colon G\to \bC^\times$ is a character, we 
+have the associated representation of $C^\ast$-algebras: 
+$\chi\colon L^1(G) \to \bC$,  
+\[
+	\chi(f) = \int_G \chi(x) f(x)\, \dd x .
+\]
+Thus we can think of $\chi\in S'(G)$, the space of distributions on $G$. As a 
+distribution, $\chi$ transforms in the following way:
+\begin{align*}
+	(g\cdot \chi)f &= \chi(g^{-1}\cdot \phi) \\
+		&= \chi(x\mapsto f(g x)) \\
+		&= \int_G \chi(x) f(g x)\, \dd x \\
+&= \chi(g)^{-1} \chi(f) .
+\end{align*}
+In other words, $\chi\in \cS'(G)[\chi^{-1}]$. These are the so-called ``zeta 
+distributions'' from Tate's Thesis. 
+
+\begin{lemma}
+$\cS'(G)[\chi^{-1}] = \bC\cdot \chi$. 
+\end{lemma}
+\begin{proof}
+We use a tempered distribution $D\in \cS'(G)[\chi^{-1}]$ to construct a 
+measure $\mu$ on $G$ that transforms by $\chi$. 
+\end{proof}
+
+[
+More generally, claim that the $(\mathfrak{g},K)$-module underlying $S'(G)$ is 
+isomorphic to $\bigoplus \chi$. 
+]
+
+Now let $F$ be a local field. Let $\cS(F)$ be the space of Schwartz functions 
+on $F$, $\chi\colon F^\times \to\bC^\times$ a character. Recall that for 
+$\Phi\in \cS(F)$, the \emph{zeta function} is 
+\[
+	\chi(\Phi) = Z(\Phi,\chi) = \int_{F^\times} \chi(x) \Phi(x) \, \dd^\times x .
+\]
+Let $\cS'(F)$ be the space of continuous linear functionals on $\cS(F)$. 
+
+\begin{theorem}
+$\cS'(F)[\chi^{-1}] = \bC\cdot Z(-,\chi)$. 
+\end{theorem}
+
+Let $\psi\colon F\to \bC^\times$ be a non-trivial additive character. It gives 
+an isomorphism $F = \widehat F$ and thus an automorphism 
+$\Phi\mapsto \hat\Phi$. 
+\[
+	\hat\Phi(x) = \int_F \Phi(y) \psi(xy)\, \dd y .
+\]
+Moreover, 
+\begin{align*}
+	Z(\hat\Phi,|\cdot|\chi^{-1}) &= \epsilon_0(\chi,\psi) Z(\Phi,\chi) \\
+	L(\chi) &= \frac{1}{1-\chi(p)} \\
+	L(\chi,s) &= L(\chi |\cdot|^s) .
+\end{align*}
+
 
 
 

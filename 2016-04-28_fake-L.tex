@@ -20,10 +20,14 @@
 \DeclareMathOperator{\GL}{GL}
 \DeclareMathOperator{\tr}{tr}
 \DeclareMathOperator{\Var}{Var}
+\newcommand{\bA}{\mathbf{A}}
+\newcommand{\bC}{\mathbf{C}}
 \newcommand{\bE}{\mathbf{E}}
 \newcommand{\bF}{\mathbf{F}}
 \newcommand{\bQ}{\mathbf{Q}}
+\newcommand{\bR}{\mathbf{R}}
 \newcommand{\bZ}{\mathbf{Z}}
+\newcommand{\cS}{\mathcal{S}}
 \newcommand{\dd}{\mathrm{d}}
 \newcommand{\fr}{\mathrm{fr}}
 \newcommand{\ST}{\mathrm{ST}}
@@ -152,6 +156,24 @@ We may write $\eta = \sum \lambda_i \chi_{[x_i,\pi]}$. Then
 		&= \left(\sum |\lambda_i|\right) O(X^{-\frac 1 2+\epsilon}) .
 \end{align*}
 \end{proof}
+
+\begin{theorem}
+
+\end{theorem}
+
+
+
+
+
+\section{Functions with non-zero expected value}
+
+Any integrable function on $[0,\pi]$ can be written as $c+\eta$, where 
+$c\in \bR$ and $\mu_\ST(\eta)=0$. Then 
+\begin{align*}
+	L_{c+\eta}(E,s) 
+		&= \prod_p \left(1-(c+\eta(\theta_p))p^{-s}\right)^{-1} \\
+		&= \prod_p \left(1-\eta(\theta_p) p^{-s + \log_p c}\right)^{-1} .
+\end{align*}
 
 
 
