@@ -1,0 +1,105 @@
+\documentclass{article}
+
+\usepackage[a5paper,margin=1.5cm]{geometry}
+\usepackage{
+	amsmath,
+	amssymb,
+	amsthm,
+	hyperref,
+	microtype
+}
+\usepackage[
+  hyperref = true,
+  backend  = bibtex,
+  sorting  = nyt,
+  style    = alphabetic
+]{biblatex}
+\addbibresource{tidbit-sources.bib}
+\hypersetup{colorlinks=true,linkcolor=green}
+
+\DeclareMathOperator{\GL}{GL}
+\DeclareMathOperator{\sgn}{sgn}
+\DeclareMathOperator{\ST}{ST}
+\DeclareMathOperator{\tr}{tr}
+\newcommand{\bQ}{\mathbf{Q}}
+\newcommand{\bR}{\mathbf{R}}
+\newcommand{\bZ}{\mathbf{Z}}
+\newcommand{\dd}{\mathrm{d}}
+\newcommand{\ddiv}{\mathrm{div}}
+\newcommand{\fr}{\mathrm{fr}}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\numberwithin{theorem}{section}
+
+\title{Analytic and arithmetic properties of a new class of \texorpdfstring{$L$}{L}-functions}
+\author{Daniel Miller}
+
+\begin{document}
+\maketitle
+
+
+
+
+
+\section{Introduction}
+
+The work in this paper is inspired by the following example of Ramakrishna. Let 
+$E_{/\bQ}$ be a non-CM elliptic curve. Let $l$ be an odd prime and 
+$\rho_{E,l}\colon G_\bQ \to \GL_2(\bZ_l)$ the associated representation. Recall 
+that $a_p = \tr(\rho_{E,l}(\fr_p))$. Then we have the following curious 
+$L$-function with only one Euler factor at each prime: 
+\[
+	L_{\sgn}(E,s) = \prod_p \frac{1}{1-\sgn(a_p) p^{-s}} .
+\]
+We are interested in the analytic and arithmetic properties of a class of 
+$L$-functions generalized from this one. 
+
+\begin{definition}
+Let $\rho\colon G_\bQ \to \GL_n(\bZ_l)$ be geometric in the sense of 
+\cite{fontain-mazur-1995}. Assume the Sato--Tate group of $\rho$ is 
+well-defined; denote it by $\ST(\rho)$. Let 
+$\eta\colon \ST(\rho)^\natural \to \bR$ be a function of bounded variation.  
+\end{definition}
+
+
+
+
+
+\begin{lemma}
+Let $X$ be a compact Riemannian manifold with associated probability measure 
+$\dd x$, and $f\in L^1(X, \dd x)$. Then the following two conditions are 
+equivalent:
+\begin{enumerate}
+\item
+For every equidistributed sequence $\{x_p\}$ on $X$, we have 
+\[
+	\lim_{X\to \infty} \frac{1}{\pi(X)} \sum_{p\leqslant X} f(x_p) = \int f(x)\, \dd x .
+\]
+\item
+There exists a finite Radon measure $D f$ on $X$ such that for all 
+$\phi\in C^\infty(X)$, we have 
+\[
+	\int f\ddiv \phi\, \dd x = -\int \phi\, \dd Df .
+\]
+\end{enumerate}
+\end{lemma}
+\begin{proof}
+We can write (if $f\in L^2$ and $X=G^\natural$), 
+\[
+	f = \sum_{\rho\in \widehat G} a_\rho \tr \rho .
+\]
+This series converges absolutely always. So we have:
+\begin{align*}
+	\lim_{X\to \infty} \frac{1}{\pi(X)} \sum_{p\leqslant X} \sum_\rho a_\rho \tr \rho(x_p)
+		&= \sum_\rho a_\rho \lim_{X\to \infty} \frac{1}{\pi(X)}\sum_{p\leqslant X} \tr \rho(x_p)
+\end{align*}
+\end{proof}
+
+
+
+
+
+\printbibliography
+\end{document}
