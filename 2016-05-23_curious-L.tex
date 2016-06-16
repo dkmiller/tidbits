@@ -48,8 +48,9 @@
 The work in this paper is inspired by the following example of Ramakrishna. Let 
 $E_{/\bQ}$ be a non-CM elliptic curve. Let $l$ be an odd prime and 
 $\rho_{E,l}\colon G_\bQ \to \GL_2(\bZ_l)$ the associated representation. Recall 
-that $a_p = \tr(\rho_{E,l}(\fr_p))$. Then we have the following curious 
-$L$-function with only one Euler factor at each prime: 
+that $a_p = \tr(\rho_{E,l}(\fr_p))$, and these satisfy the Hasse bound 
+$|a_p|<2\sqrt p$. Then we have the following curious $L$-function with only one 
+Euler factor at each prime: 
 \[
 	L_{\sgn}(E,s) = \prod_p \frac{1}{1-\sgn(a_p) p^{-s}} .
 \]
@@ -95,6 +96,59 @@ This series converges absolutely always. So we have:
 	\lim_{X\to \infty} \frac{1}{\pi(X)} \sum_{p\leqslant X} \sum_\rho a_\rho \tr \rho(x_p)
 		&= \sum_\rho a_\rho \lim_{X\to \infty} \frac{1}{\pi(X)}\sum_{p\leqslant X} \tr \rho(x_p)
 \end{align*}
+\end{proof}
+
+
+
+
+
+\begin{lemma}[Abel summation]
+Let $\{x_p\}$ be a sequence of real numbers, $\phi\in C^1(\bR)$. Then 
+\[
+	\sum_{p\leqslant X} \phi(p) x_p = \phi(X) \sum_{p\leqslant X} x_p - \int_2^X \phi'(x) \sum_{p\leqslant x} x_p\, \dd x .
+\]
+\end{lemma}
+\begin{proof}
+Simply note that if $p_1,\dots,p_n$ is an enumeration of the primes 
+$\leqslant X$, we have 
+\begin{align*}
+	\int_2^X \phi'(x) \sum_{p\leqslant x} x_p\, \dd x 
+		&= \sum_{p\leqslant X} x_p\int_{p_n}^X \phi' + \sum_{i=1}^{n-1} \sum_{p\leqslant p_{i+1}}x_p\int_{p_i}^{p_{i+1}} \phi' \\
+		&= (\phi(X)-\phi(p_n))\sum_{p\leqslant X} x_p + \sum_{i=1}^{n-1} (\phi(p_{i+1})-\phi(p_i)) \sum_{p\leqslant p_{i+1}} x_p \\
+		&= \phi(X) \sum_{p\leqslant X} x_p - \sum_{p\leqslant X} \phi(p) x_p ,
+\end{align*}
+as desired.
+\end{proof}
+
+
+
+
+
+\begin{lemma}
+Let $(X,\mu)$ be a compact topological space with Borel measure $\mu$. Let 
+$\{x_p\}$ be $\mu$-equidistributed on $X$. If $f$ is a bounded, 
+almost-everywhere continuous function on $X$, then 
+\[
+	\int_X f\, \dd \mu = \lim_{X\to \infty} \frac{1}{\pi(X)} \sum_{p\leqslant X} f(x_p) .
+\]
+\end{lemma}
+\begin{proof}
+Let $\epsilon>0$. Then there exists open $U\subset X$ such that $f$ is 
+continuous on $U$, and $\mu(X\smallsetminus U)<\epsilon$. We now note that 
+\[
+	\lim_{X\to \infty} \frac{1}{\pi(X)} \sum_{p\leqslant X} f(x_p)
+		= \frac{1}{\pi(X)} \sum_{\substack{p\leqslant X \\ x_p\in U}} f(x_p) + \frac{1}{\pi(X)} \sum_{\substack{p\leqslant X \\ x_p\notin U}} f(x_p) .
+\]
+The second term is bounded above in absolute value by $\epsilon  \|f\|_\infty$, 
+and the first term converges to $\int_U f\, \dd\mu$. Since 
+\[
+	\left|\int f\, \dd\mu - \int_U f\, \dd\mu\right| \leqslant \mu(X\smallsetminus U)\|f\|_\infty ,
+\]
+we get that 
+\[
+	\left|\int_X f\, \dd \mu - \lim_{X\to \infty} \frac{1}{\pi(X)} \sum_{p\leqslant X} f(x_p)\right| < 2\epsilon \|f\|_\infty ,
+\]
+which proves the desired result.
 \end{proof}
 
 
