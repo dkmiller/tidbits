@@ -125,30 +125,45 @@ as desired.
 
 
 \begin{lemma}
-Let $(X,\mu)$ be a compact topological space with Borel measure $\mu$. Let 
-$\{x_p\}$ be $\mu$-equidistributed on $X$. If $f$ is a bounded, 
-almost-everywhere continuous function on $X$, then 
+Let $(X,\mu)$ be a compact topological space with Radon measure. Let $f$ be a 
+bounded function on $X$. Then the following condition holds:
+\begin{quote}
+For all $\mu$-equidistributed sequences $\{x_p\}$ on $X$, 
 \[
-	\int_X f\, \dd \mu = \lim_{X\to \infty} \frac{1}{\pi(X)} \sum_{p\leqslant X} f(x_p) .
+	\lim_{X\to \infty} \frac{1}{\pi(X)} \sum_{p\leqslant X} f(x_p) = \int_X f\, \dd \mu .
 \]
+\end{quote}
+if and only if $f$ is continuous almost everywhere.
 \end{lemma}
 \begin{proof}
-Let $\epsilon>0$. Then there exists open $U\subset X$ such that $f$ is 
-continuous on $U$, and $\mu(X\smallsetminus U)<\epsilon$. We now note that 
+Suppose $f$ is a.e.~continuous. Let $\epsilon>0$. Then there exists open 
+$U\subset X$ such that $f$ is continuous away from $U$ and $\mu(U)<\epsilon$. 
+We now note that 
 \[
 	\lim_{X\to \infty} \frac{1}{\pi(X)} \sum_{p\leqslant X} f(x_p)
 		= \frac{1}{\pi(X)} \sum_{\substack{p\leqslant X \\ x_p\in U}} f(x_p) + \frac{1}{\pi(X)} \sum_{\substack{p\leqslant X \\ x_p\notin U}} f(x_p) .
 \]
-The second term is bounded above in absolute value by $\epsilon  \|f\|_\infty$, 
-and the first term converges to $\int_U f\, \dd\mu$. Since 
+The first term is bounded above in absolute value by $\epsilon  \|f\|_\infty$, 
+and the second term converges to $\int_{X\smallsetminus U} f\, \dd\mu$. Since 
 \[
-	\left|\int f\, \dd\mu - \int_U f\, \dd\mu\right| \leqslant \mu(X\smallsetminus U)\|f\|_\infty ,
+	\left|\int f\, \dd\mu - \int_{X\smallsetminus U} f\, \dd\mu\right| \leqslant \mu(U)\|f\|_\infty ,
 \]
 we get that 
 \[
-	\left|\int_X f\, \dd \mu - \lim_{X\to \infty} \frac{1}{\pi(X)} \sum_{p\leqslant X} f(x_p)\right| < 2\epsilon \|f\|_\infty ,
+	\left|\lim_{X\to \infty} \frac{1}{\pi(X)} \sum_{p\leqslant X} f(x_p) - \int_X f\, \dd \mu\right| < 2\epsilon \|f\|_\infty ,
 \]
 which proves the desired result.
+
+Conversely, suppose $f$ satisfies the condition. Let the \emph{oscillation} of 
+$f$ be 
+\[
+	\omega_f(x) = \inf_{U\ni x} \sup_{u,v\in U} |f(u)-f(v)| ,
+\] 
+where the infimum ranges over all open $U$ containing $x$. Clearly $f$ is 
+continuous at $x$ if and only if $\omega_f(x)=0$. 
+
+We need to show that each set $\{\omega_f > \epsilon\}$ has measure zero, since 
+$\{\omega_f>0\}$ is a countable union of such sets with $\epsilon>0$. 
 \end{proof}
 
 
