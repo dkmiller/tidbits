@@ -18,15 +18,19 @@
 \hypersetup{colorlinks=true,linkcolor=green}
 
 \DeclareMathOperator{\GL}{GL}
+\DeclareMathOperator{\Lie}{Lie}
 \DeclareMathOperator{\sgn}{sgn}
 \DeclareMathOperator{\ST}{ST}
 \DeclareMathOperator{\tr}{tr}
 \newcommand{\bQ}{\mathbf{Q}}
 \newcommand{\bR}{\mathbf{R}}
+\newcommand{\bx}{\boldsymbol{x}}
+\newcommand{\by}{\boldsymbol{y}}
 \newcommand{\bZ}{\mathbf{Z}}
 \newcommand{\dd}{\mathrm{d}}
 \newcommand{\ddiv}{\mathrm{div}}
-\newcommand{\fr}{\mathrm{fr}}
+\newcommand{\frob}{\mathrm{fr}}
+\newcommand{\ft}{\mathfrak{t}}
 \newtheorem{theorem}{Theorem}
 \newtheorem{lemma}[theorem]{Lemma}
 \theoremstyle{definition}
@@ -48,7 +52,7 @@
 The work in this paper is inspired by the following example of Ramakrishna. Let 
 $E_{/\bQ}$ be a non-CM elliptic curve. Let $l$ be an odd prime and 
 $\rho_{E,l}\colon G_\bQ \to \GL_2(\bZ_l)$ the associated representation. Recall 
-that $a_p = \tr(\rho_{E,l}(\fr_p))$, and these satisfy the Hasse bound 
+that $a_p = \tr(\rho_{E,l}(\frob_p))$, and these satisfy the Hasse bound 
 $|a_p|<2\sqrt p$. Then we have the following curious $L$-function with only one 
 Euler factor at each prime: 
 \[
@@ -64,39 +68,13 @@ well-defined; denote it by $\ST(\rho)$. Let
 $\eta\colon \ST(\rho)^\natural \to \bR$ be a function of bounded variation.  
 \end{definition}
 
-
-
-
-
-\begin{lemma}
-Let $X$ be a compact Riemannian manifold with associated probability measure 
-$\dd x$, and $f\in L^1(X, \dd x)$. Then the following two conditions are 
-equivalent:
-\begin{enumerate}
-\item
-For every equidistributed sequence $\{x_p\}$ on $X$, we have 
+Some conventions. Let $X$ be a compact topological space and 
+write $\bx = (x_2,x_3,\dots)$, $\by$, etc.~for sequences in $X$ 
+indexed by the prime numbers. Given such a sequence, we write 
 \[
-	\lim_{X\to \infty} \frac{1}{\pi(X)} \sum_{p\leqslant X} f(x_p) = \int f(x)\, \dd x .
+	\bx^C(f) = \frac{1}{\pi(C)}\sum_{p\leqslant C} f(x_p) .
 \]
-\item
-There exists a finite Radon measure $D f$ on $X$ such that for all 
-$\phi\in C^\infty(X)$, we have 
-\[
-	\int f\ddiv \phi\, \dd x = -\int \phi\, \dd Df .
-\]
-\end{enumerate}
-\end{lemma}
-\begin{proof}
-We can write (if $f\in L^2$ and $X=G^\natural$), 
-\[
-	f = \sum_{\rho\in \widehat G} a_\rho \tr \rho .
-\]
-This series converges absolutely always. So we have:
-\begin{align*}
-	\lim_{X\to \infty} \frac{1}{\pi(X)} \sum_{p\leqslant X} \sum_\rho a_\rho \tr \rho(x_p)
-		&= \sum_\rho a_\rho \lim_{X\to \infty} \frac{1}{\pi(X)}\sum_{p\leqslant X} \tr \rho(x_p)
-\end{align*}
-\end{proof}
+So the $\bx^C$ are probability measures on $X$. 
 
 
 
@@ -105,17 +83,17 @@ This series converges absolutely always. So we have:
 \begin{lemma}[Abel summation]
 Let $\{x_p\}$ be a sequence of real numbers, $\phi\in C^1(\bR)$. Then 
 \[
-	\sum_{p\leqslant X} \phi(p) x_p = \phi(X) \sum_{p\leqslant X} x_p - \int_2^X \phi'(x) \sum_{p\leqslant x} x_p\, \dd x .
+	\sum_{p\leqslant C} \phi(p) x_p = \phi(C) \sum_{p\leqslant C} x_p - \int_2^C \phi'(x) \sum_{p\leqslant x} x_p\, \dd x .
 \]
 \end{lemma}
 \begin{proof}
 Simply note that if $p_1,\dots,p_n$ is an enumeration of the primes 
 $\leqslant X$, we have 
 \begin{align*}
-	\int_2^X \phi'(x) \sum_{p\leqslant x} x_p\, \dd x 
-		&= \sum_{p\leqslant X} x_p\int_{p_n}^X \phi' + \sum_{i=1}^{n-1} \sum_{p\leqslant p_{i+1}}x_p\int_{p_i}^{p_{i+1}} \phi' \\
-		&= (\phi(X)-\phi(p_n))\sum_{p\leqslant X} x_p + \sum_{i=1}^{n-1} (\phi(p_{i+1})-\phi(p_i)) \sum_{p\leqslant p_{i+1}} x_p \\
-		&= \phi(X) \sum_{p\leqslant X} x_p - \sum_{p\leqslant X} \phi(p) x_p ,
+	\int_2^C \phi'(x) \sum_{p\leqslant x} x_p\, \dd x 
+		&= \sum_{p\leqslant C} x_p\int_{p_n}^C \phi' + \sum_{i=1}^{n-1} \sum_{p\leqslant p_{i+1}}x_p\int_{p_i}^{p_{i+1}} \phi' \\
+		&= (\phi(C)-\phi(p_n))\sum_{p\leqslant C} x_p + \sum_{i=1}^{n-1} (\phi(p_{i+1})-\phi(p_i)) \sum_{p\leqslant p_{i+1}} x_p \\
+		&= \phi(C) \sum_{p\leqslant C} x_p - \sum_{p\leqslant X} \phi(p) x_p ,
 \end{align*}
 as desired.
 \end{proof}
@@ -125,13 +103,10 @@ as desired.
 
 
 \begin{lemma}
-Let $(X,\mu)$ be a compact topological space with Radon measure. Let $f$ be a 
-bounded function on $X$. Then the following condition holds:
+Let $(X,\mu)$ be a compact separable space with Radon measure whose support is 
+$X$. Let $f$ be a bounded function on $X$. Then the following condition holds:
 \begin{quote}
-For all $\mu$-equidistributed sequences $\{x_p\}$ on $X$, 
-\[
-	\lim_{X\to \infty} \frac{1}{\pi(X)} \sum_{p\leqslant X} f(x_p) = \int_X f\, \dd \mu .
-\]
+$\lim_{C\to \infty} \bx^C(f) = \mu(f)$ for all $\mu$-equidistributed sequences $\bx$
 \end{quote}
 if and only if $f$ is continuous almost everywhere.
 \end{lemma}
@@ -140,8 +115,8 @@ Suppose $f$ is a.e.~continuous. Let $\epsilon>0$. Then there exists open
 $U\subset X$ such that $f$ is continuous away from $U$ and $\mu(U)<\epsilon$. 
 We now note that 
 \[
-	\lim_{X\to \infty} \frac{1}{\pi(X)} \sum_{p\leqslant X} f(x_p)
-		= \frac{1}{\pi(X)} \sum_{\substack{p\leqslant X \\ x_p\in U}} f(x_p) + \frac{1}{\pi(X)} \sum_{\substack{p\leqslant X \\ x_p\notin U}} f(x_p) .
+	\lim_{C\to \infty} \bx^C(f)
+		= \frac{1}{\pi(C)} \sum_{\substack{p\leqslant C \\ x_p\in U}} f(x_p) + \frac{1}{\pi(C)} \sum_{\substack{p\leqslant C \\ x_p\notin U}} f(x_p) .
 \]
 The first term is bounded above in absolute value by $\epsilon  \|f\|_\infty$, 
 and the second term converges to $\int_{X\smallsetminus U} f\, \dd\mu$. Since 
@@ -150,7 +125,7 @@ and the second term converges to $\int_{X\smallsetminus U} f\, \dd\mu$. Since
 \]
 we get that 
 \[
-	\left|\lim_{X\to \infty} \frac{1}{\pi(X)} \sum_{p\leqslant X} f(x_p) - \int_X f\, \dd \mu\right| < 2\epsilon \|f\|_\infty ,
+	\left|\lim_{C\to \infty} \bx^C(f) - \mu(f)\right| < 2\epsilon \|f\|_\infty ,
 \]
 which proves the desired result.
 
@@ -163,8 +138,40 @@ where the infimum ranges over all open $U$ containing $x$. Clearly $f$ is
 continuous at $x$ if and only if $\omega_f(x)=0$. 
 
 We need to show that each set $\{\omega_f > \epsilon\}$ has measure zero, since 
-$\{\omega_f>0\}$ is a countable union of such sets with $\epsilon>0$. 
+$\{\omega_f>0\}$ is a countable union of such sets with $\epsilon>0$. Suppose 
+for contradiction that $\mu(\omega_f>\epsilon)>0$. Then $\{\omega_f>\epsilon\}$ 
+contains a compact set $K$ with positive measure. For every point $k\in K$ and 
+every neighborhood $U\ni k$, there are points $x,y\in U\cap K$ such that 
+$f(x)-f(y) > \epsilon$. Choose a countable dense set of the $k$, and extend 
+the corresponding $x$'s and $y$'s (by the same points) to a dense set in $X$. 
+By \cite[Th.~2.4, Ch.~3]{kuipers-niederreiter-1974}, the (extended) $x$'s and 
+$y$'s can be rearranged to be $\mu$-equidistributed. Call these rearranged 
+sequences $\bx$ and $\by$. Note that 
+$\bx \smallsetminus K = \by \smallsetminus K$. Thus 
+\begin{align*}
+	\lim_{C\to \infty} (\bx^C-\by^C)(f) 
+		&= \sum_{\substack{p\leqslant X \\ x_p\in K}}
+\end{align*}
 \end{proof}
+
+
+
+
+
+\section{General setting}
+
+Let $\rho\colon G_\bQ\to \GL(V)$ be a $\bQ_l$-representation that is ``nice.'' Let 
+$\ST(\rho)$ be its Sato--Tate group; this is a compact Lie group. Recall that if 
+$T\subset \ST(\rho)$ is a maximal torus and $W$ the corresponding Weyl group, 
+then the natural map $T/W\to \ST(\rho)^\natural$ is an isomorphism. Since $T/W$ 
+is the quotient of a torus, it makes sense to talk about (images of) cubes in 
+$\ST(\rho)^\natural$, so the usual notion of discrepancy makes sense:
+\[
+	D_C
+\]
+
+Let $\ft=\Lie(T)$. Then $T=\ft/\pi_1(T)$, and the exponential map gives us a 
+surjection $\ft/\pi_1(T) \twoheadrightarrow \ST(\rho)^\natural$. 
 
 
 
