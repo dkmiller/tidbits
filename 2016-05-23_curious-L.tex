@@ -103,7 +103,7 @@ as desired.
 
 
 \begin{lemma}
-Let $(X,\mu)$ be a compact separable space with Radon measure whose support is 
+Let $(X,\mu)$ be a separable metric space with Radon measure whose support is 
 $X$. Let $f$ be a bounded function on $X$. Then the following condition holds:
 \begin{quote}
 $\lim_{C\to \infty} \bx^C(f) = \mu(f)$ for all $\mu$-equidistributed sequences $\bx$
@@ -111,47 +111,7 @@ $\lim_{C\to \infty} \bx^C(f) = \mu(f)$ for all $\mu$-equidistributed sequences $
 if and only if $f$ is continuous almost everywhere.
 \end{lemma}
 \begin{proof}
-Suppose $f$ is a.e.~continuous. Let $\epsilon>0$. Then there exists open 
-$U\subset X$ such that $f$ is continuous away from $U$ and $\mu(U)<\epsilon$. 
-We now note that 
-\[
-	\lim_{C\to \infty} \bx^C(f)
-		= \frac{1}{\pi(C)} \sum_{\substack{p\leqslant C \\ x_p\in U}} f(x_p) + \frac{1}{\pi(C)} \sum_{\substack{p\leqslant C \\ x_p\notin U}} f(x_p) .
-\]
-The first term is bounded above in absolute value by $\epsilon  \|f\|_\infty$, 
-and the second term converges to $\int_{X\smallsetminus U} f\, \dd\mu$. Since 
-\[
-	\left|\int f\, \dd\mu - \int_{X\smallsetminus U} f\, \dd\mu\right| \leqslant \mu(U)\|f\|_\infty ,
-\]
-we get that 
-\[
-	\left|\lim_{C\to \infty} \bx^C(f) - \mu(f)\right| < 2\epsilon \|f\|_\infty ,
-\]
-which proves the desired result.
-
-Conversely, suppose $f$ satisfies the condition. Let the \emph{oscillation} of 
-$f$ be 
-\[
-	\omega_f(x) = \inf_{U\ni x} \sup_{u,v\in U} |f(u)-f(v)| ,
-\] 
-where the infimum ranges over all open $U$ containing $x$. Clearly $f$ is 
-continuous at $x$ if and only if $\omega_f(x)=0$. 
-
-We need to show that each set $\{\omega_f > \epsilon\}$ has measure zero, since 
-$\{\omega_f>0\}$ is a countable union of such sets with $\epsilon>0$. Suppose 
-for contradiction that $\mu(\omega_f>\epsilon)>0$. Then $\{\omega_f>\epsilon\}$ 
-contains a compact set $K$ with positive measure. For every point $k\in K$ and 
-every neighborhood $U\ni k$, there are points $x,y\in U\cap K$ such that 
-$f(x)-f(y) > \epsilon$. Choose a countable dense set of the $k$, and extend 
-the corresponding $x$'s and $y$'s (by the same points) to a dense set in $X$. 
-By \cite[Th.~2.4, Ch.~3]{kuipers-niederreiter-1974}, the (extended) $x$'s and 
-$y$'s can be rearranged to be $\mu$-equidistributed. Call these rearranged 
-sequences $\bx$ and $\by$. Note that 
-$\bx \smallsetminus K = \by \smallsetminus K$. Thus 
-\begin{align*}
-	\lim_{C\to \infty} (\bx^C-\by^C)(f) 
-		&= \sum_{\substack{p\leqslant X \\ x_p\in K}}
-\end{align*}
+This follows from \cite{chersi-volcic-1992}, Corollary 1 and Remark 3. 
 \end{proof}
 
 
