@@ -5,8 +5,9 @@
 	amsmath,
 	amssymb,
 	amsthm,
-	hyperref,
-	microtype
+	bookmark,
+	microtype,
+	thmtools
 }
 \usepackage[
   hyperref = true,
@@ -17,11 +18,14 @@
 \addbibresource{tidbit-sources.bib}
 \hypersetup{colorlinks=true,linkcolor=green}
 
+\DeclareMathOperator{\disc}{disc}
 \DeclareMathOperator{\GL}{GL}
+\DeclareMathOperator{\Li}{Li}
 \DeclareMathOperator{\Lie}{Lie}
 \DeclareMathOperator{\sgn}{sgn}
 \DeclareMathOperator{\ST}{ST}
 \DeclareMathOperator{\tr}{tr}
+\newcommand{\bC}{\mathbf{C}}
 \newcommand{\bQ}{\mathbf{Q}}
 \newcommand{\bR}{\mathbf{R}}
 \newcommand{\bx}{\boldsymbol{x}}
@@ -31,11 +35,10 @@
 \newcommand{\ddiv}{\mathrm{div}}
 \newcommand{\frob}{\mathrm{fr}}
 \newcommand{\ft}{\mathfrak{t}}
-\newtheorem{theorem}{Theorem}
-\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{theorem}[subsection]{Theorem}
+\newtheorem{lemma}[subsection]{Lemma}
 \theoremstyle{definition}
-\newtheorem{definition}[theorem]{Definition}
-\numberwithin{theorem}{section}
+\newtheorem{definition}[subsection]{Definition}
 
 \title{Analytic and arithmetic properties of a new class of \texorpdfstring{$L$}{L}-functions}
 \author{Daniel Miller}
@@ -80,7 +83,7 @@ So the $\bx^C$ are probability measures on $X$.
 
 
 
-\begin{lemma}[Abel summation]
+\begin{lemma}[Abel summation]\label{lem:abel}
 Let $\{x_p\}$ be a sequence of real numbers, $\phi\in C^1(\bR)$. Then 
 \[
 	\sum_{p\leqslant C} \phi(p) x_p = \phi(C) \sum_{p\leqslant C} x_p - \int_2^C \phi'(x) \sum_{p\leqslant x} x_p\, \dd x .
@@ -102,7 +105,7 @@ as desired.
 
 
 
-\begin{lemma}
+\begin{lemma}\label{debruijn-post}
 Let $(X,\mu)$ be a separable metric space with Radon measure whose support is 
 $X$. Let $f$ be a bounded function on $X$. Then the following condition holds:
 \begin{quote}
@@ -112,6 +115,8 @@ if and only if $f$ is continuous almost everywhere.
 \end{lemma}
 \begin{proof}
 This follows from \cite{chersi-volcic-1992}, Corollary 1 and Remark 3. 
+
+[Give my own proof.]
 \end{proof}
 
 
@@ -120,18 +125,84 @@ This follows from \cite{chersi-volcic-1992}, Corollary 1 and Remark 3.
 
 \section{General setting}
 
-Let $\rho\colon G_\bQ\to \GL(V)$ be a $\bQ_l$-representation that is ``nice.'' Let 
-$\ST(\rho)$ be its Sato--Tate group; this is a compact Lie group. Recall that if 
-$T\subset \ST(\rho)$ is a maximal torus and $W$ the corresponding Weyl group, 
-then the natural map $T/W\to \ST(\rho)^\natural$ is an isomorphism. Since $T/W$ 
-is the quotient of a torus, it makes sense to talk about (images of) cubes in 
-$\ST(\rho)^\natural$, so the usual notion of discrepancy makes sense:
-\[
-	D_C
-\]
+Let $G$ be a compact, connected Lie group, $\bx=\{x_p\}$ a sequence in 
+$G^\natural$. 
 
-Let $\ft=\Lie(T)$. Then $T=\ft/\pi_1(T)$, and the exponential map gives us a 
-surjection $\ft/\pi_1(T) \twoheadrightarrow \ST(\rho)^\natural$. 
+\begin{definition}
+Let $\eta\colon G^\natural \to \bC$ be bounded and continuous almost 
+everywhere. Then the associated \emph{curious $L$-function} is 
+\[
+	L_\eta(s) = \prod_p \frac{1}{1-\eta(x_p) p^{-s}} ,
+\]
+wherever the product converges. 
+\end{definition}
+
+\begin{lemma}
+Assume $\|\eta\|_\infty \leqslant 1$. Then the product formula for 
+$L_\eta(s)$ converges absolutely on $\{\Re s>1\}$. The function $L_\eta$ is 
+holomorphic on that region. 
+\end{lemma}
+\begin{proof}
+By \cite[\S3.7, Th.~5]{knopp-1956}, the product for $L_\eta(s)$ converges 
+whenever $\Re s>1$. The rest is well-known ``general nonsense'' about Dirichlet 
+series. 
+\end{proof}
+
+We are interested in the analytic continuation of $L_\eta(s)$ past $\Re s=1$, 
+in particular to line $\Re s=\frac 1 2$. 
+
+\begin{lemma}
+Assume $\sum \frac{\eta(x_p)}{p^s}$ converges to a holomorphic function on  
+$\{\Re s>s_0\}$, $s_0\in \left[\frac 1 2, 1\right]$. Then $L_\eta(s)$ can be 
+analytically continued to a holomorphic function on $\{\Re s > s_0\}$. 
+\end{lemma}
+\begin{proof}
+By \cite[11.9, Ex.~2]{apostol-1976}, on the domain of absolute convergence for 
+$L_\eta$, we have 
+\[
+	L_\eta(s) = \exp\left(\sum_p \sum_{\nu\geqslant 1} \frac{\eta(x_p)^\nu}{\nu p^{\nu s}}\right) .
+\]
+So, it suffices to prove that the argument of $\exp$ converges on 
+$\{\Re s>s_0\}$. Now note that 
+\[
+	\left|\sum_{n\geqslant 2} \frac{\eta(x_p)^\nu}{\nu p^{\nu s}}\right|
+		\leqslant \sum_{\nu\geqslant 2} (p^{-\Re s})^\nu 
+		= p^{-2 s} \frac{1}{1-p^{-s}} .
+\]
+Since $p\geqslant 2$ and $\Re s>1/2$, we have $1-2^{-1/2}<1-p^{-s}<1$, so the 
+argument of $\exp$ converges if and only if 
+$\sum_p \left(\frac{\eta(x_p)}{p^s} + p^{-2\Re s}\right)$ does. But 
+$\sum p^{-2\Re s}$ converges absolutely, so we the desired result. 
+\end{proof}
+
+\ldots definition of star-discrepancy on $G^\natural$\ldots
+
+\begin{theorem}
+If $\disc^\ast(\bx^C) = O(C^{-\frac 1 2+\epsilon})$, then 
+$\left|\int f - \bx^C(f)\right| = O_f(C^{-\frac 1 2+\epsilon})$
+\end{theorem}
+
+\begin{theorem}
+Assume that $\left|\int_{G^\natural} f - \bx^C(f)\right| = O_f(C^{-\frac 1 2+\epsilon})$. 
+If $\int \eta = 0$, then $L_\eta$ has analytic continuation to $\{\Re s=1/2\}$, and 
+$\log L_\eta$ has no poles in that region. 
+
+\end{theorem}
+\begin{proof}
+By \autoref{lem:abel} with $\phi(x)=x^{-s}$, we have 
+\begin{align*}
+	\sum_{p\leqslant C} \frac{\eta(x_p)}{p^s} 
+		&= C^{-s} \sum_{p\leqslant C} \eta(x_p) + s \int_2^C \sum_{p\leqslant x} \eta(x_p)\, \frac{\dd x}{x^{s+1}} \\
+		&= C^{-s}\Li(C) O(C^{-\frac 1 2+\epsilon}) + s \int_2^C \Li(x) O(x^{-\frac 1 2+\epsilon})\, \frac{\dd x}{x^{s+1}} .
+\end{align*}
+Since $\Li(x)=O(x/\log x)$, the first term is 
+$O(C^{\frac 1 2 -s+\epsilon}/\log C) = o(1)$. We prove that the integral is 
+absolutely convergent. Since $\Re s+\frac 1 2>1$ and $\epsilon$ is arbitrary, 
+\[
+	\int_2^C \frac{x^{\epsilon-\frac 1 2-\Re s}}{\log x}\, \dd x
+\]
+converges, and the proof is complete. 
+\end{proof}
 
 
 
