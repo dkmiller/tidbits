@@ -1,0 +1,42 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+
+\title{Computing discrepancy with respect to non-Lebesgue measure}
+\author{Daniel Miller}
+
+\begin{document}
+\maketitle
+
+The basic idea is this. We have a set $\boldsymbol x = \{x_1,x_2,\dots\}$ in 
+the unit square $[0,1]\times [0,1]$. Recall the classical \emph{star discrepancy}:
+\[
+	D_N^\ast(\boldsymbol x) = \sup_{0\leqslant \alpha_1,\alpha_2 < 1} \left| \frac{\#(\{x_n : n\leqslant N\}\cap [0,\alpha_1)\times [0,\alpha_2))}{N} - \alpha_1 \alpha_2\right| .
+\]
+I am interested in a variant of this using measures other than the Lebesgue. 
+
+In the one-dimensional case, I am interested in the following discrepancy for 
+sequences $\boldsymbol x$ in $[0,\pi]$:
+\[
+	D_N^{(\mathrm{ST}),\ast}(\boldsymbol x) = \sup_{0\leqslant \alpha < \pi} \left| \frac{\# (\{x_n : n\leqslant N\}\cap [0,\alpha))}{N} - \frac{2}{\pi}\int_0^\alpha \sin^2(\theta)\, \mathrm{d}\theta \right| ,
+\]
+or the obvious generalization to $[0,\pi]^2$ with respect to the measure
+\[
+	\frac{8}{\pi^2} (\cos \theta_1-\cos\theta_2)^2 \sin^2 \theta_1 \sin^2 \theta_2\, \mathrm{d} \theta_1 \mathrm{d} \theta_2 .
+\]
+
+The point is: the literature I've read on computing discrepancy deals 
+exclusively with Lebesgue discrepancy, and can take advantage of the fact that 
+the function:
+\[
+	(\alpha_1,\alpha_2) \mapsto \int_0^{\alpha_1} \int_0^{\alpha_2} \, \mathrm{d} \theta_2 \mathrm{d} \theta_1 
+\]
+is convex. 
+
+
+\subsection*{My question}
+
+Do you know of any computational resources and/or papers on computing 
+$D_N^{(\mathrm{ST}),\ast}$ or its' two-dimensional analogue?
+
+\end{document}
