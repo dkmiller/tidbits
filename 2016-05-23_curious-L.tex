@@ -20,11 +20,13 @@
 
 \DeclareMathOperator{\Ad}{Ad}
 \DeclareMathOperator{\disc}{disc}
+\DeclareMathOperator{\Ei}{Ei}
 \DeclareMathOperator{\GL}{GL}
 \DeclareMathOperator{\Li}{Li}
 \DeclareMathOperator{\Lie}{Lie}
 \DeclareMathOperator{\sgn}{sgn}
 \DeclareMathOperator{\ST}{ST}
+\DeclareMathOperator{\SU}{SU}
 \DeclareMathOperator{\tr}{tr}
 \newcommand{\bC}{\mathbf{C}}
 \newcommand{\bQ}{\mathbf{Q}}
@@ -32,6 +34,7 @@
 \newcommand{\bx}{\boldsymbol{x}}
 \newcommand{\by}{\boldsymbol{y}}
 \newcommand{\bZ}{\mathbf{Z}}
+\newcommand{\cM}{\mathcal{M}}
 \newcommand{\dd}{\mathrm{d}}
 \newcommand{\ddiv}{\mathrm{div}}
 \newcommand{\frob}{\mathrm{fr}}
@@ -290,6 +293,176 @@ for example $\alpha=\sqrt 2$. Then the corresponding $L$-function is:
 \[
 	L_{\exp(2\pi it)}(\alpha,s) = \prod_p \frac{1}{1-\exp(2\pi i \alpha p) p^{-s}}
 \]
+
+
+
+
+
+\section{Special Unitary group}
+
+For $G=\SU(2)$, the space of conjugacy classes is $[0,\pi]$, with $\theta$ 
+corresponding to the matrix $\begin{pmatrix} e^{i\theta} \\ & e^{-i\theta} \end{pmatrix}$. Note that the trace of the $n$-th symmetric power is 
+$\sin((n+1)\theta)/\sin(\theta)$. 
+\[
+	f(\pi-x) = f(\pi) + \mu([0,x]) \Rightarrow \mu([0,x]) = f(\pi-x)-f(\pi)
+\]
+So
+\[
+	\int_0^x \frac{\dd}{\dd t}(f(\pi-t)) = f(\pi-x)-f(\pi)
+\]
+Moreover
+\[
+	\frac{\dd}{\dd t} f(\pi-t) = -f'(\pi-t) .
+\]
+So the variation is:
+\[
+	\int_0^\pi \left|\frac{\dd}{\dd \theta} \frac{\sin((n+1)\theta)}{\sin\theta}\right|\, \dd \theta 
+\]
+
+$n=1$,4
+
+$n=2$, 8
+
+$n=3$, $(8 (9 + 2 \sqrt 6))/9$
+
+$n=4$, 17
+
+Let $G$ be a compact connected Lie group, $T\subset G$ a maximal torus. Then 
+we have the exponential map $\exp\colon \ft\twoheadrightarrow T$ with kernel 
+$\Gamma$. 
+
+E.g. $\bR^2/\bZ^2$. Here $\{(1,3),(0,1)\}$ is a basis, so we could get, as 
+basic sets:
+\[
+	\{(\lambda+3\mu,\mu)\mod 1\}
+\]
+
+Suppose we have a lattice $\Gamma\subset V$ with basis 
+$\gamma_1,\dots,\gamma_r$. Call a ``rectangle'' a set of the form:
+\[
+	I_{\boldsymbol\alpha} = \{t_1 \gamma_1 + \cdots + t_r \gamma_r : 0\leqslant t_1 < \alpha_1,\dots,0\leqslant t_r < \alpha_r\}
+\]
+Suppose $\Gamma=\bZ^r\subset \bR^r$. If $r=2$ and we choose a basis as above, 
+we are looking at:
+\[
+	I_{\alpha_1,\alpha_2} = \{(t_1,3t_1+t_2) : t_1\in [0,\alpha_1),t_2\in [0,\alpha_2)\}
+\]
+
+
+
+
+
+\section{Koksma--Hlawka}
+
+Let $[0,\pi]^r$ be our space. The $\mu$-star discrepancy is:
+\[
+	D^\ast(\bx^N) = \sup_{x\in [0,\pi]^r} \left| \frac{1}{N} \sum_{n\leqslant N} 1_{[0,x]}(x_n) - \int 1_{[0,x]} \, \dd\mu\right|
+\]
+Let $f$ be a function on $[0,\pi]^r$. We say $f$ has \emph{bounded 
+variation} if there is a measure $\mu$ such that 
+\[
+	\int_{[0,x]} f' = \mu[0,x] = f(x)
+\]
+Thus, the variation of $f$ is $\int |f'|$. 
+
+For $[0,\pi]^r$, we have 
+\[
+	\mu([0,\alpha_1]\times [0,\alpha_2]) = \int_0^{\alpha_2} \int_0^{\alpha_1} \frac{\dd}{\dd x_1} \frac{\dd}{\dd x_2} f = f(\alpha_1,\alpha_2) - f(0,0)
+\]
+Note:
+\[
+	f(x_1,\dots,x_n) = f(0) + \int_0^{x_n} \dots \int_0^{x_1} g(t_1,\dots,t_n)\,  \dd t_1\dotsm \dd t_n
+\]
+\begin{align*}
+	\int_0^{x_2} \int_0^{x_1} \partial_{1,2} g(t_1,t_2)\,  \dd t_1\dd t_2 
+		&= \int_0^{x_2} \partial_2g(x_1,t_2) - \partial_2 g(0,t_2)\, \dd t_2 \\
+		&= g(x_1,x_2) - g(x_1,0) - g(0,x_2) + g(0,0)
+\end{align*}
+
+
+
+
+
+\section{Analytic continuation}
+
+Consider our usual $L_\eta(s)$. Recall that $(-L'/L)_\eta(s)$ is governed by 
+\[
+	\log L_\eta(s) = \sum_{p^\nu} \frac{\eta(x_p)}{\nu p^{\nu s}} .
+\]
+This we split up as follows:
+\begin{align*}
+	\log L_\eta(s) = \sum_p \frac{\eta(x_p)}{p^s} + \sum_{\nu\geqslant 2}\frac{1}{\nu} \sum_p \frac{\eta(x_p)}{p^{\nu s}}
+\end{align*}
+Let $H(s) = \sum_p \eta(x_p) p^{-s}$; then 
+\[
+	\log L_\eta(s) = H(s) + \sum_{\nu\geqslant 2} \frac{1}{\nu} H(\nu s)
+\]
+
+\begin{theorem}
+Suppose $|\bx^C(f)-\int f| = O(C^{-\frac 1 2+\epsilon})$. If $\int \eta\ne 0$, 
+then $L_\eta$ has a pole of order $\int\eta$ at $s=1$. 
+\end{theorem}
+\begin{proof}
+It suffices to prove that 
+$\log L_\eta(1+\epsilon) = -(\int\eta) \log\epsilon+O(1)$. This is a simple 
+computation:
+\begin{align*}
+	\log L_\eta(1+\epsilon) 
+		&= \sum_p \frac{\eta(x_p)}{p^{1+\epsilon}} + O(1) \\
+		&= \int_2^\infty \frac{x}{\log x} (\mu(\eta)+x^{-\frac 1 2+})\, \frac{\dd x}{x^{2+\epsilon}} + O(1) \\
+		&= \mu(\eta) \int_2^\infty \frac{\dd x}{x^{1+\epsilon}\log x} + O(1) \\
+		&= -\mu(\eta) \Ei(-\epsilon \log 2) + O(1) \\
+		&= -\mu(\eta) \log \epsilon + O(1) .
+\end{align*}
+\end{proof}
+
+Try analytically continuing 
+\[
+	(-L'/L)_\eta(s) = \sum_{p^\nu} \frac{\log(p)\eta(x_p)^\nu}{p^{\nu s}}
+\]
+We follow the easy proof. Start with:
+\[
+	\pi^{-s} \Gamma(s) \frac{1}{n^{2s}} = \int_0^\infty e^{-\pi n^2 y} y^s \frac{\dd y}{y}
+\]
+Make a sum:
+\begin{align*}
+	\sum_{p^\nu} \log(p) \eta(x_p)^\nu \pi^{-s} \Gamma(s) \frac{1}{(p^\nu)^{2s}}
+		&= \sum_{p^\nu} \log(p) \eta(x_p)^\nu \int_0^\infty e^{-\pi n^2 y} y^s \frac{\dd y}{y} \\
+	\pi^{-s} \Gamma(s) (-L'/L)_\eta(2s) 
+		&=\int_0^\infty \sum_{p^\nu} \log(p) \eta(x_p)^\nu e^{-\pi (p^\nu)^2 y} y^s \frac{\dd y}{y}
+\end{align*}
+So we are interested in the ``series under the integral'':
+\[
+	\varphi(y) = \sum_{p^\nu} \log(p) \eta(x_p)^\nu e^{-\pi p^{2\nu} y} 
+\]
+The series for $\varphi$ converges absolutely on $\{\Re>0\}$. Better, 
+\[
+	\sum_p\log(p)\sum_{\nu\geqslant 1}  M^\nu (e^{-\pi})^{(p^2)^\nu y}
+\]
+
+Recall the \emph{Mellin transform}:
+\[
+	(\cM f)(s) = \int_0^\infty (f(t)-f(\infty))t^s\, \frac{\dd t}{t}
+\]
+Thus we have the identity:
+\[
+	\pi^{-s} \Gamma(s) (-L'/L)_\eta(2s) = (\cM \varphi)(s)
+\]
+First, we need good bounds for $\varphi(y)$, i.e. it needs to be a constant 
+plus $O(e^{-c y^\alpha})$, i.e.~very fast decay. Better, write 
+\[
+	\varphi(y) = \sum_{\nu\geqslant 1}\sum_p  \log(p) \eta(x_p)^\nu \exp(-\pi p^{2\nu}y)
+\]
+Try Abel summation for some fixed $\nu$:
+\begin{align*}
+	& \sum_{p\leqslant C}\log(p) \eta(x_p)^\nu \exp(-\pi p^{2\nu}y) \\
+		&= \log(C)\exp(-\pi C^{2\nu} y) \sum_{p\leqslant C} \eta^\nu(x_p) + \int_2^C (1-2\pi \nu y x^{2\nu}\log x) \exp(-\pi y x^{2\nu})\,(*) \frac{\dd x}{x} \\
+		&= C \exp(-\pi C^{2\nu} y) (\mu(\eta^\nu)+O(C^{-\frac 1 2+\epsilon})) + \int_2^\infty \ldots \\
+		&\approx \int_2^\infty (1-2\pi \nu y x^{2\nu}\log x) \exp(-\pi y x^{2\nu})\sum_{p\leqslant x} \eta^\nu(x_p)\, \frac{\dd x}{x} \\
+		&\ll \int_2^\infty \nu y x^{2\nu}\log(x) \exp(-\pi y x^{2\nu}) \frac{x}{\log x}(\mu(\eta^\nu) + x^{-\frac 1 2+\epsilon})\, \frac{\dd x}{x} \\
+		&\ll \int_2^\infty \nu y x^{2\nu} \exp(-\pi y x^{2\nu})(\mu(\eta^\nu)+x^{-\frac 1 2+\epsilon})\, \dd x \\
+		&= \nu y \mu(\eta^\nu) \int_2^\infty x^{2\nu} (e^{-\pi y})^{ x^{2\nu}}\, \dd x + 
+\end{align*}
 
 
 
