@@ -29,6 +29,7 @@
 \DeclareMathOperator{\SU}{SU}
 \DeclareMathOperator{\tr}{tr}
 \newcommand{\bC}{\mathbf{C}}
+\newcommand{\bN}{\mathbf{N}}
 \newcommand{\bQ}{\mathbf{Q}}
 \newcommand{\bR}{\mathbf{R}}
 \newcommand{\bx}{\boldsymbol{x}}
@@ -463,6 +464,19 @@ Try Abel summation for some fixed $\nu$:
 		&\ll \int_2^\infty \nu y x^{2\nu} \exp(-\pi y x^{2\nu})(\mu(\eta^\nu)+x^{-\frac 1 2+\epsilon})\, \dd x \\
 		&= \nu y \mu(\eta^\nu) \int_2^\infty x^{2\nu} (e^{-\pi y})^{ x^{2\nu}}\, \dd x + 
 \end{align*}
+
+
+
+
+
+\section{Different perspective}
+
+Recall that our curious $L$-function can be written as a Dirichlet series:
+\[
+	L_\eta(s) = \sum_{n\geqslant 1} \frac{\prod_{p^\nu \| n} \eta(x_p)^\nu}{n^s}
+\]
+We can write $\eta(n) = \prod_{p^\nu\| n} \eta(x_p)^\nu$; then $\eta$ is a 
+completely multiplicative function $\bN\to \bC$. 
 
 
 
