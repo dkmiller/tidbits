@@ -28,6 +28,7 @@
 \DeclareMathOperator{\ST}{ST}
 \DeclareMathOperator{\SU}{SU}
 \DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\Var}{Var}
 \newcommand{\bC}{\mathbf{C}}
 \newcommand{\bN}{\mathbf{N}}
 \newcommand{\bQ}{\mathbf{Q}}
@@ -476,7 +477,49 @@ Recall that our curious $L$-function can be written as a Dirichlet series:
 	L_\eta(s) = \sum_{n\geqslant 1} \frac{\prod_{p^\nu \| n} \eta(x_p)^\nu}{n^s}
 \]
 We can write $\eta(n) = \prod_{p^\nu\| n} \eta(x_p)^\nu$; then $\eta$ is a 
-completely multiplicative function $\bN\to \bC$. 
+completely multiplicative function $\bN\to \bC$. Then 
+$L_\eta(s) = \sum \eta(n) n^{-s} = \prod (1-\eta(p) p^{-s})^{-1}$. 
+
+Again, we have 
+\[
+	\pi^{-s} \Gamma(s) \frac{1}{n^{2s}} = \int_0^\infty e^{-\pi n^2 y} y^{s} \frac{\dd y}{y} .
+\]
+Sum over $n$ and we get:
+\[
+	\pi^{-s} \Gamma(s) \sum_{n\geqslant 1} \frac{\eta(n)}{n^{2s}} =  \int_0^\infty\sum_{n\geqslant 1} \eta(n) e^{-\pi n^2 y} y^{s} \frac{\dd y}{y} .
+\]
+Thus $\pi^{-s} \Gamma(s) L_\eta(2s) = (\cM\varphi)(s)$, for 
+\[
+	\varphi(y) = \sum_{n\geqslant 1} \eta(n) e^{-\pi n^2 y}
+\]
+We are now interested in:
+\[
+	\varphi(1/y) = \sum_{n\geqslant 1} \eta(n) e^{-\pi n^2 / y}
+\]
+The main question is: can we approximate $\sum_{n\leqslant N} \eta(n)$ in terms 
+of stuff we know? Start with something easier:
+\begin{align*}
+	\sum_{p^\nu\leqslant N} \eta(x_p)^\nu
+		&= \sum_{\nu\leqslant \log_2 N} \sum_{p\leqslant N^{1/\nu}} \eta(x_p)^\nu \\
+		&= \sum_{\nu\leqslant \log_2 N} \pi(N^{1/\nu}) \bx^{N^{1/\nu}}(\eta^\nu) \\
+		&= \sum_{\nu\leqslant \log_2 N} \frac{\nu N^{1/\nu}}{\log N} (\mu(\eta^\nu)+O(N^{1/\nu})^{-\frac 1 2+\epsilon}) \\
+		&= \sum_{\nu\leqslant \log_2 N} \frac{\nu N^{1/\nu}}{\log N} \mu(\eta^\nu) + O \sum_{\nu\geqslant 1} \frac{\nu N^{\frac{1+2\epsilon}{2\nu}}}{\log N} \\
+		&=
+\end{align*}
+
+
+
+
+
+\section{Following Bucar--Kedlaya}
+
+Can we sum:
+\begin{align*}
+	\sum_{p\leqslant C} \eta(x_p) \log p 
+		&= \log C \sum_{p\leqslant C} \eta(x_p) - \int_2^C \frac{1}{x} \sum_{p\leqslant x} \eta(x_p) \, \dd x \\
+		&= C (\mu(\eta)+O(C^{-\frac 1 2+\epsilon})) + O \int_2^\infty x^{-\frac 3 2+\epsilon}\, \dd x \\
+		&= C \mu(\eta)+ O(C^{\frac 1 2+\epsilon})
+\end{align*}
 
 
 
