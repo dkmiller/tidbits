@@ -1,0 +1,222 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb,amsthm,bookmark,thmtools}
+\DeclareMathOperator{\sgn}{sgn}
+\DeclareMathOperator{\sym}{sym}
+\DeclareMathOperator{\tr}{tr}
+\newcommand{\bC}{\mathbf{C}}
+\newcommand{\bF}{\mathbf{F}}
+\newcommand{\blambda}{{\boldsymbol{\lambda}}}
+\newcommand{\bQ}{\mathbf{Q}}
+\newcommand{\bx}{\boldsymbol{x}}
+\newcommand{\alev}{\mathrm{ae}}
+\newcommand{\dd}{\mathrm{d}}
+\newcommand{\fr}{\mathrm{fr}}
+\newcommand{\ST}{\mathrm{ST}}
+\newtheorem{theorem}[subsection]{Theorem}
+\newtheorem{lemma}[subsection]{Lemma}
+\newtheorem{corollary}[subsection]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[subsection]{Definition}
+
+\usepackage[
+  hyperref = true,
+  backend  = bibtex,
+  sorting  = nyt,
+  style    = alphabetic
+]{biblatex}
+\addbibresource{tidbit-sources.bib}
+\hypersetup{colorlinks=true,linkcolor=green}
+
+\title{Equidistributed sequences and the analytic properties of a strange class of $L$-functions}
+\author{Daniel Miller}
+
+\begin{document}
+\maketitle
+
+
+
+
+
+\section{Motivation}
+
+Let $E_{/\bQ}$ be an elliptic curve without complex multiplication. By an old 
+theorem of Faltings, the quantities 
+\[
+	a_p(E) = p + 1 - \# E(\bF_p) = \tr \rho_{E,l} (\fr_p)
+\]
+determine $E$ up to isogeny. The starting point of this investigation is the 
+corollary of a theorem of Harris, that the collection $\{\sgn a_p(E)\}_p$ in 
+fact determines $E$ up to isogeny. Ramakrishna had the insight that this fact 
+means the ``strange $L$-function''
+\[
+	L_{\sgn}(E,s) = \prod_p \frac{1}{1-\sgn a_p(E) p^{-s}} 
+\]
+determines $E$ up to isogeny. In this note, I define a more general class of 
+strange $L$-functions, and show that their analytic properties are closely 
+tied to the equidistribution of the $a_p(E)$. 
+
+Here is a brief discussion of this generalization in the case of a non-CM curve 
+$E_{/\bQ}$. It is convenient to repackage these traces of 
+Frobenius as follows:
+\[
+	\theta_p(E) = \cos^{-1}(a_p(E)/2\sqrt p) .
+\]
+The Hasse Bound guarantees that the $\theta_p(E)$ are well-defined angles 
+laying in the interval $[0,\pi]$. Write 
+$\mu_\ST = \frac{2}{\pi} \sin^2\theta\, \dd\theta$. Then the Sato--Tate 
+conjecture (now a theorem) tells us that for any continuous function 
+$f\colon [0,\pi]\to \bC$, we have:
+\[
+	\left| \frac{1}{\pi(C)} \sum_{p\leqslant C} f(\theta_p) - \int_0^\pi f\, \dd \mu_\ST\right| = o(1)
+\]
+as $C\to \infty$. It is well-known that this is equivalent to the analytic 
+continuation of all the $L$-functions $L(\sym^k E,s)$. We take as our starting 
+point the stronger conjecture, due to Akiyama--Tanigawa 
+\cite{akiyama-tanigawa}, that 
+\[
+	\left| \frac{1}{\pi(C)} \sum_{p\leqslant C} f(\theta_p) - \int_0^\pi f\, \dd \mu_\ST\right| = O_f(C^{-\frac 1 2+\epsilon}) .
+\]
+They prove that this conjecture implies the Riemann Hypothesis for $E$. I 
+prove that not only does their conjecture imply the Riemann Hypothesis for all 
+$L(\sym^k E,s)$, it also does for all the strange $L$-functions 
+\[
+	L_f(E,s) = \prod_p \frac{1}{1-f(\theta_p(E)) p^{-s}}
+\]
+
+These results make perfect sense in a much more general context, and I will 
+prove them there. In \autoref{sec:definition} I set up this context and 
+carefully define strange $L$-functions there. In \autoref{sec:prelim-result}, I 
+prove basic analytic properties of the strange $L$-functions, and in 
+\autoref{sec:main-result}, I prove the main results connecting the analytic 
+properties of strange $L$-functions with the equidistribution of a sequence. 
+Finally, in \autoref{sec:application}, I apply the general results to the 
+following cases: a non-CM elliptic curve $E_{/\bQ}$, the product 
+$E_1\times E_2$ of a pair of non-isogenous non-CM elliptic curves over $\bQ$, 
+and the Jacobian of a generic genus-$2$ curve $C_{/\bQ}$. 
+
+
+
+
+
+\section{Definitions}\label{sec:definition}
+
+Throughout this section, let $X$ be a compact separable metric space with no 
+isolated points. We write $X^\infty$ for the space of sequences in $X$ indexed 
+by rational primes, i.e.~points $\bx\in X^\infty$ are of the form 
+$\bx=(x_2,x_3,\dots)$. By \cite[Cor.~2.3.16 \& Th.~4.2.2]{engelking-1989}, the 
+compact space $X^\infty$ is metrizable and separable, also with no isolated 
+points. 
+
+\begin{definition}
+For $\bx\in X^\infty$ and $C>0$, write $\bx^C$ for the probability measure 
+given by 
+\[
+	\int_X f\, \dd \bx^C = \bx^C(f) = \frac{1}{\pi(C)} \sum_{p\leqslant C} f(x_p) .
+\]
+\end{definition}
+
+Let $\mu$ be a Borel measure on $X$. Recall that $\bx$ is 
+\emph{$\mu$-equidistributed} if $\bx^C\to \mu$ weakly, i.e. 
+$\bx^C(f) \to \mu(f)$ for all $f\in C(X)$. In fact, we can extend this to 
+not-necessarily-continuous functions as follows:
+
+\begin{theorem}[Mazzone]
+Let $\mu$ be a Borel measure on $X$ and let $f\colon X\to \bC$ be bounded and 
+measurable. Then $f$ is continuous almost everywhere if and only if 
+$\bx^C(f) \to \mu(f)$ for all $\mu$-equidistributed $\bx$. 
+\end{theorem}
+\begin{proof}
+This follows directly from the proof of \cite[Th.~1]{mazzone-1995}.
+\end{proof}
+
+Fix a Borel measure $\mu$ on $X$, and write $C^\alev(X,\mu)$ for the space of 
+bounded, almost-everywhere continuous functions $f\colon X\to \bC$. 
+
+
+\begin{theorem}
+Endowed with the supremum norm $\|f\|_\infty=\sup_{x\in X} |f(x)|$, 
+$C^\alev(X,\mu)$ is a Banach space. 
+\end{theorem}
+\begin{proof}
+This is an elementary corollary of the fact that a countable union of 
+measure-zero sets has measure zero. 
+\end{proof}
+
+\begin{definition}
+Let $f\in C^\alev(X,\mu)$, $\bx\in X^\infty$. The associated \emph{strange 
+$L$-function} is defined as 
+\[
+	L_f(\bx,s) = \prod_p \frac{1}{1-f(x_p) p^{-s}} 
+\]
+for all $s\in \bC$ for which the product converges. 
+\end{definition}
+
+The rest of our definitions concern discrepancy, which for now we define only 
+in a special context. Let $G$ be a compact connected Lie group. 
+
+
+
+
+
+\section{Preliminary results}\label{sec:prelim-result}
+
+Here we make a yet more general definition. Given 
+$\blambda=(\lambda_2,\lambda_3,\dots)$, with 
+$\|\blambda\|=\sup_p |\lambda_p|\leqslant 1$, define 
+\[
+	L(\blambda,s) = \prod_p \frac{1}{1-\lambda_p p^{-s}} .
+\]
+Write 
+$A_\blambda(x) = \sum_{p\leqslant x} \lambda_p$. We make the following 
+assumption: $A_\blambda(x) = O(x^{\frac 1 2+\epsilon})$. 
+
+\begin{theorem}
+Assume $A_\blambda(x) = O(x^{\frac 1 2 +\epsilon})$. Then $L(\blambda,s)$ 
+converges on $\{\Re>\frac 1 2\}$, and $\log L(\blambda,s)$ has no poles on that 
+region. 
+\end{theorem}
+\begin{proof}
+Standard reductions reduce this to showing that 
+\[
+	\sum_p \frac{\lambda_p}{p^s} \qquad \textnormal{and}\qquad \sum_p \frac{\log(p) \lambda_p}{p^s} 
+\]
+converge on that region. We deal with $\sum \log(p)\lambda_p p^{-s}$; the 
+other is similar. Use Abel summation:
+\[
+	\sum_{p\leqslant x} \frac{\lambda_p}{p^s}
+		= \frac{\log x}{x^s} A_\blambda(x) - \int_2^x \frac{1-s\log t}{t^{s+1}} A_\blambda(t)\, \dd t .
+\]
+We show that the first term approaches zero and that the integral converges 
+absolutely. We have: 
+\[
+	\left| \frac{\log x}{x^s} A_\blambda(x)\right| \ll \frac{\log x}{x^{\Re s}} x^{\frac 1 2+\epsilon}  .
+\]
+Since $\epsilon$ is arbitrary, the exponent of $x$ is negative. Moreover, 
+\begin{align*}
+	\int_2^x \frac{1}{t^{s+1}} | A_\lambda(t)|\, \dd t
+		& \ll \int_2^x \frac{1}{t^{\Re s+1}} t^{\frac 1 2+\epsilon} \, \dd t \\
+	\int_2^x \frac{\log t}{t^{s+1}} |A_\blambda(t)|\, \dd t
+		& \ll \int_2^x \frac{\log t}{t^{\Re s+1}} t^{\frac 1 2+\epsilon}\, \dd t .
+\end{align*}
+Both these integrals converge because $\epsilon$ is arbitrary. 
+\end{proof}
+
+
+
+
+
+\section{Main results}\label{sec:main-result}
+
+
+
+
+
+\section{Applications}\label{sec:application}
+
+
+
+
+
+\printbibliography
+\end{document}

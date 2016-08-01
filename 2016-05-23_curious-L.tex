@@ -133,6 +133,29 @@ This follows from \cite{chersi-volcic-1992}, Corollary 1 and Remark 3.
 
 \section{General setting}
 
+** new **
+
+If $X$ is a space, we write $X^\infty$ be the set of sequences 
+in $X$ indexed by primes, i.e. $\bx\in X^\infty$ is of the form 
+$\bx=(x_2,x_3,\dots)$. 
+
+\begin{theorem}
+Let $(X,\mu)$ be a compact topological space with positive Radon measure, 
+$\eta\colon X\to \bC$ almost-everywhere continuous with $\|\eta\|_\infty<2$. 
+Then 
+\begin{equation}\label{def:curious-L}
+	L_\eta(s,\bx) = \prod_p \frac{1}{1-\eta(x_p) p^{-s}} .
+\end{equation}
+defines a continuous function on the domain 
+$\bC^{\Re>1}\times X^\infty$, which is holomorphic in the first variable. 
+\end{theorem}
+\begin{proof}
+The assumption $\|\eta\|_\infty<2$ means that each denominator is non-zero, so 
+each term in the product is finite. 
+\end{proof}
+
+** old **
+
 Let $G$ be a compact, connected Lie group, $\bx=\{x_p\}$ a sequence in 
 $G^\natural$. We write $\widehat G$ for the collection of irreducible unitary 
 representations of $G$. 
