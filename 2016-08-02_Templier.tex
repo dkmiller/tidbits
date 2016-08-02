@@ -1,0 +1,51 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\DeclareMathOperator{\sym}{sym}
+\newcommand{\blambda}{{\boldsymbol\lambda}}
+\newcommand{\bQ}{\mathbf{Q}}
+\newcommand{\btheta}{{\boldsymbol\theta}}
+
+\title{A strange class of $L$-functions}
+\author{Daniel Miller}
+
+\begin{document}
+\maketitle
+
+
+
+
+
+Let $E_{/\bQ}$ be an elliptic curve, and write 
+$\theta_p = \cos^{-1}\left(\frac{a_p(E)}{2\sqrt p}\right)$. Then the 
+$k$-th symmetric power (analytic) $L$-function of $E$ has product formula: 
+\[
+	L(\sym^k E,s) = \prod_p \prod_{j=0}^k \frac{1}{1-e^{i(n-2j)\theta_p} p^{-s}} .
+\]
+Rewrite this as 
+\[
+	L(\sym^k E,s) = \prod_{j=0}^k \prod_p \frac{1}{1-e^{i(n-2j)\theta_p} p^{-s}} .
+\]
+This writes $L(\sym^k E,s)$ as a product of ``strange $L$-functions.''
+
+
+Write $\blambda=(\lambda_2,\lambda_3,\lambda_5,\dots)$ for a sequence of 
+complex numbers indexed by the primes. Given such a $\blambda$, we have 
+\[
+	L(\blambda,s) = \prod_p \frac{1}{1-\lambda_p p^{-s}} .
+\]
+Given this definition, we have 
+\[
+	L(\sym^k E,s) = \prod_{j=0}^k L(e^{i(n-2j)\btheta},s)
+\]
+with $e^{i(n-2j)\btheta} = (e^{i(n-2j)\theta_2},e^{i(n-2j)\theta_3},\dots)$. 
+
+It is now known that $L(\sym^k E,s)$ has analytic continuation and functional 
+equation. I'm wondering: does this imply anything about analytic continuation 
+of the $L(e^{i(n-2j)\btheta},s)$? 
+
+
+
+
+
+\end{document}

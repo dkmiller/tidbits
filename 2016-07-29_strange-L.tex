@@ -8,7 +8,9 @@
 \newcommand{\bF}{\mathbf{F}}
 \newcommand{\blambda}{{\boldsymbol{\lambda}}}
 \newcommand{\bQ}{\mathbf{Q}}
+\newcommand{\btheta}{{\boldsymbol{\theta}}}
 \newcommand{\bx}{\boldsymbol{x}}
+\newcommand{\bZ}{\mathbf{Z}}
 \newcommand{\alev}{\mathrm{ae}}
 \newcommand{\dd}{\mathrm{d}}
 \newcommand{\fr}{\mathrm{fr}}
@@ -207,6 +209,30 @@ Both these integrals converge because $\epsilon$ is arbitrary.
 
 
 \section{Main results}\label{sec:main-result}
+
+Let $E_{/\bQ}$ be an elliptic curve, or more generally, let 
+$M$ be a motive. The associated analytic $L$-function $L(M,s)$ is of the form 
+\[
+	L(M,s) = \prod_p P_p(M,p^{-s})^{-1} ,
+\]
+where the $P_p(M,t)\in \bZ[t]$ have absolute value $1$. In the case of 
+$E_{/\bQ}$, we have $p t^2-a_p t + 1$, which are normalized to 
+\[
+	(t-e^{i\theta_p})(t-e^{-i\theta_p}) = t^2 - 2\cos(\theta_p) t + 1 = t^2 - \frac{a_p}{\sqrt p} t + 1 .
+\]
+Let $d=\deg P_p(M,t)$. Then we can write 
+\[
+	P_p(M,t) = (t-e^{i\theta_p^{(1)}}) \dots (t-e^{-i\theta_p^{(d)}}) ,
+\]
+where $\theta^{(1)} < \cdots < \theta^{(d)}$ in $[0,2\pi]$. Then 
+\[
+	L(M,s) = L(\btheta^{(1)},s) \dotsm L(\btheta^{(d)},s)
+\]
+
+More general example:
+\[
+	L(\sym^k E,s) = L(\btheta^k, s) L(\btheta^{k-1}
+\]
 
 
 
