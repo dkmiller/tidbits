@@ -1,0 +1,29 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\newcommand{\bR}{\mathbf{R}}
+\newcommand{\cdf}{\mathrm{cdf}}
+
+\title{Computing $G$-star discrepancy}
+\author{Daniel Miller}
+
+\begin{document}
+\maketitle
+
+
+
+
+
+The basic idea is this. Suppose we have two probability measures 
+$\mu$ and $\nu$ on $\bR$. These will be given by explicitly computable 
+cumulative distribution functions $\cdf_\mu$, $\cdf_\nu$. For example, we might 
+have 
+\begin{align*}
+	\cdf_\mu(x) = \begin{cases} 0 & x\leqslant 0 \\ \frac{x-\sin(x)\cos(x)}{\pi} & 0\leqslant x \leqslant \pi \\ 1 & x\geqslant \pi\end{cases}
+\end{align*}
+
+
+
+
+
+\end{document}
