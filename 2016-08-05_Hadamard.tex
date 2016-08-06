@@ -1,0 +1,183 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\DeclareMathOperator{\GL}{GL}
+\DeclareMathOperator{\tr}{tr}
+\newcommand{\bC}{\mathbf{C}}
+\newcommand{\bR}{\mathbf{R}}
+\newcommand{\bZ}{\mathbf{Z}}
+\newcommand{\dd}{\mathrm{d}}
+\newcommand{\N}{\mathrm{N}}
+
+\title{The method of Hadamard--de la Vall\'ee-Poussin}
+\author{Daniel Miller}
+
+\begin{document}
+\maketitle
+
+
+
+
+
+We follow Deligne's \emph{Weil II}. Let $\Gamma$ be a group isomorphic to 
+either $\bR$ or $\bZ$, $\omega_1$ a non-trivial quasi-character 
+$\omega_1\colon \Gamma\to \bR^+$. Let $G$ a locally compact group which is an 
+extension of $\Gamma$ by a compact group $G^\circ$. Let $\Sigma$ be a 
+countably infinite set, $(x_v)_{v\in \Sigma}\subset G^\natural$ a family of 
+conjugacy classes in $G$. We assume: 
+\begin{itemize}
+\item[A'] If $\Gamma\simeq \bR$, the extension $G$ is trivial.
+\end{itemize}
+The following hypothesis is automatically true:
+\begin{itemize}
+\item[A''] If $\Gamma\simeq \bZ$, the center of $G$ maps to a subgroup of 
+finite index in $\Gamma$. 
+\end{itemize}
+
+For $s\in \bC$, put $\omega_s = \omega_1^s$. Write also $\omega_s$ for the 
+composite map $G\to \Gamma\to \bC^\times$, and put $\N v = \omega_{-1}(x_v)$. 
+If $\Gamma\simeq \bZ$, write $q$ and $\deg$ the number $>1$ such that the 
+isomorphism between $\Gamma$ and $\bZ$ such that 
+$\omega_1(\gamma) = q^{-\deg(\gamma)}$. One has 
+$\omega_s = \omega_{s+2\pi i\log q}$. Writing $\deg$ for the composite 
+map $G\to \Gamma^{\deg}\to \bZ$, we have $\deg(v)=\deg(x_v)$. 
+
+Let $g$ be an element of the center of $G$ with non-trivial image in $\Gamma$. 
+It exists by hypothesis. A complex representation $\tau\colon G\to \GL(V)$ is 
+unitarisable if and only if $\tau(g)$ is: a $g$-invariant Hermitian structure 
+yields a $G$-invariant structure by integration on the compact group 
+$G/g^\bZ$. If $\tau$ is irreducible, then $\tau(g)$ is a scalar, so there 
+exists a unique real number $\sigma$ such that $|\tau(g)|=\omega_\sigma(g)$, 
+and $\tau\cdot \omega_{-\sigma}$ is unitarizable. We call $\sigma$ the 
+\emph{real part} $\Re\tau$ of $\tau$. We have 
+$\Re(\tau\omega_s)=\Re(\tau)+\Re(s)$. 
+
+Let $\widetilde G$ the set of isomorphism classes of irreducible 
+representations of $G$, and $\widehat G$ the set of unitary such 
+representations. The sets $\{\tau \omega_s : s\in \bC\}$ form a partition of 
+$\widetilde G$, and the application $s\mapsto \tau \omega_s$ identifies 
+$\{\tau\omega_s\}$ with the quotient of $\bC$ by a discrete subgroup of 
+$i\bR$ if $\Gamma\simeq \bZ$, and with $\bC$ if $\Gamma\simeq \bR$. We give 
+$\widetilde G$ the structure of a Riemann surface via the disjoint union of 
+these quotients. 
+\begin{itemize}
+\item[B'] For each $v\in\Sigma$, $\N v>1$.
+\item[B''] The infinite product $\prod_{v\in \Sigma} (1-\N v^{-s})^{-1}$ 
+converges absolutely for $\Re s>1$. 
+\end{itemize}
+
+For $\Gamma\simeq \bZ$, these conditions tells us that $\deg(v)>0$, and, for 
+each $\epsilon>0$:
+\[
+	\#\{v : \deg(v)=n\} = O(q^{(1+\epsilon)n}) .
+\]
+
+The hypothesis (B'') tells us that for $\tau\in \widetilde G$, the infinite 
+product 
+\[
+	L(\tau) = \prod_{v\in \Sigma} \det(1-\tau(x_v))^{-1} 
+\]
+converges absolutely for $\Re(\tau)>1$. Each factor is holomorphic in $\tau$ 
+for $\Re(\tau)>0$, and $L(\tau)$ is holomorphic for $\Re(\tau)>1$. We put 
+$L(\tau,s)=L(\tau\omega_s)$. 
+
+For a representation $\tau$ not necessarily irreducible, we define $L(\tau)$ 
+and $L(\tau,s)$ as above. Put 
+$L'(\tau)=\left.\frac{\dd}{\dd s} L(\tau,s)\right|_{s=0}$. On the domain of 
+convergence:
+\[
+	-\frac{L'}{L}(\tau) = \sum_{v\in \Sigma,n>0} \log(\N v) \tr \tau(x_v^n) .
+\]
+We can generalize this to $\tau$ a virtual representation, i.e.~an element of 
+the Grothendieck group of representations of $G$. For $\tau$ unitary and 
+$\sigma$ real $>1$, $\omega_\sigma \tau$ in the domain of convergence, we get 
+\[
+	-\frac{L'}{L}(\omega_\sigma\tau) = \sum_{v\in\Sigma,n>0} (\log(\N v) (\N v)^{-n\sigma}) \tr \tau(x_v^n) .
+\]
+
+Let $mu$ be a measure on $G^\natural$. For each virtual unitary representation 
+$\tau$ of $G$, we put 
+\[
+	\widehat\mu(\tau) = \int \tr \tau\, \dd\mu .
+\]
+The integral converges if the total mass $|\mu|<\infty$. We call the function 
+$\tau\mapsto\widehat\mu(\tau)$ the \emph{Fourier transform} of $\mu$. If we 
+don't require that $\tau$ be unitary, we call it the \emph{Fourier--Laplace 
+transform}. If $\mu$ is positive with finite total mass, we have for each 
+unitary virtual representation $\rho$:
+\[
+	\widehat\mu(\rho\otimes \bar\rho)\geqslant 0 \qquad \textnormal{(for $\mu\geqslant 0$).}
+\]
+
+We see that, for each $\sigma>1$, 
+$\Lambda_\sigma(\tau) = -\frac{L'}{L}(\omega_\sigma\tau)$ is the Fourier 
+transform of the positive measure with finite total mass:
+\[
+	\mu_\sigma = \sum_{v\in\Sigma,n>0} \log(\N v) \N v^{-n\sigma} \delta_{x_v^n} .
+\]
+on $G$. For each virtual unitary representation $\rho$, with real character 
+$\geqslant 0$, one has $\Lambda_\sigma(\rho)\geqslant 0$ for $\sigma>1$; in 
+particular, for each unitary virtual representation $\rho$, one has:
+\[
+	\Lambda_\sigma(\rho\otimes\bar\rho)\geqslant 0 \qquad \textnormal{(for $\sigma>1$).}
+\]
+
+For $\tau\in \widehat G$, let $\nu(\tau)$ be the order of the pole (or opposite 
+of the order of zero) of $L$ at $\tau\omega_1$. We extend $\nu$ to an additive 
+function on the Grothendieck group of $G$. For $\tau$ in this group, the 
+function $-\frac{L'}{L}(\tau\omega_s)$ has at most simple poles, and the residue 
+at $\tau\omega_1$ is $\nu(\tau)$. We get that for each unitary virtual 
+representation of $G$:
+\[
+	\nu(\rho\otimes\bar\rho)\geqslant 0 .
+\]
+
+It is classic that the non-vanishing of $L(\tau)$ on $\Re(\tau)=1$ implies the 
+equidistribution of the $x_v$. The case where $\Gamma\simeq \bR$ is treated in 
+detail in Serre's \emph{Abelian $l$-adic representations and elliptic curves}. 
+We treat here the case where $\Gamma\simeq \bZ$. Assume the following:
+\begin{itemize}
+\item[C] The function $L(\tau)$ admits a meromorphic continuation to 
+$\Re\tau\geqslant 1$; on this domain at has a simple pole at $\omega_1$, and at 
+the other pole, it does not vanish on $\Re(\tau)=1$.
+\item[D] $\Gamma\simeq\bZ$. 
+\end{itemize}
+
+Let $z$ be a central element of $G$, with degree $d>0$. The space $G^\natural$ 
+is the quotient of $G$ by the compact group $G/g^\bZ$ acting by interior 
+automorphisms. It is the disjoint union of $G_n^\natural$, where $G_n^\natural$ 
+is the set of conjugacy classes of degree $n$, and multiplication by $z^k$ 
+induces an isomorphism from $G_n^\natural$ to $G_{n+k d}^\natural$. 
+
+Consider the following measure on $G^\natural$:
+\[
+	\mu^\natural = \sum_{v\in\Sigma,n>0} \deg(v) q^{-n\deg(v)} \delta_{x_v^n} ,
+\]
+where 
+\begin{itemize}
+\item $\dd g=$ the Haar measure, where $G^\circ$ has volume $1$,
+\item $\mu_0=$ the product of $\dd g$ with the characteristic function of 
+$\{\omega_{-1}>1\}$. 
+\item $\mu_0^\natural$ the projection of $\mu_0$ onto $G^\natural$.
+\end{itemize}
+
+Prop. If (C) and (D) are true, the Fourier-Laplace transform of 
+$\mu^\natural-\mu_0^\natural$ (which converges for $\tau\in \widehat G$ with 
+$\Re(\tau)>0$) extends to a holomorphic function on $\{\Re\tau>0\}$. 
+
+The Fourier--Laplace transform of $\mu$ is 
+$-\frac{1}{\log q} \frac{L'}{L}(\omega_1\tau)$. That of $\mu_0^\natural$ 
+vanishes away from $\omega_s$, where it has value 
+$\frac{q^{-s}}{1-q^{-s}}$. On the domain $\{\Re \tau\geqslant 0\}$, 
+both $\widehat\mu^\natural$ and $\widehat \mu_0^\natural$ are meromorphic, 
+with a simple pole with residue $1/\log q$ at $\omega_0$. The proposition follows. 
+
+Theorem: assuming (C) and (D), for each $i$, the measure 
+$z^{-n} \mu^\natural |_{G_{i+n d}^\natural}$ on $G_i^\natural$ converges 
+weakly to $z^{-n}\mu_0^\natural|_{G_{i+n d}^\natural}$ as $n\to \infty$. 
+
+
+
+
+
+\end{document}

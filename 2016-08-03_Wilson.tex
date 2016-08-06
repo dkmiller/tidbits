@@ -3,6 +3,7 @@
 \usepackage{amsmath,amssymb}
 \newcommand{\bR}{\mathbf{R}}
 \newcommand{\cdf}{\mathrm{cdf}}
+\newcommand{\disc}{\mathrm{disc}}
 
 \title{Computing $G$-star discrepancy}
 \author{Daniel Miller}
@@ -19,8 +20,19 @@ $\mu$ and $\nu$ on $\bR$. These will be given by explicitly computable
 cumulative distribution functions $\cdf_\mu$, $\cdf_\nu$. For example, we might 
 have 
 \begin{align*}
-	\cdf_\mu(x) = \begin{cases} 0 & x\leqslant 0 \\ \frac{x-\sin(x)\cos(x)}{\pi} & 0\leqslant x \leqslant \pi \\ 1 & x\geqslant \pi\end{cases}
+	\cdf_\mu(x) &= \begin{cases} 0 & x\leqslant 0 \\ \frac{x-\sin(x)\cos(x)}{\pi} & 0\leqslant x \leqslant \pi \\ 1 & x\geqslant \pi\end{cases} \\
+	\cdf_\nu(x) &= \frac{\#\{n : x_n <x\}}{N} ,
 \end{align*}
+where $(x_1,\dots,x_N)$ is a sequence of points in $[0,\pi]$. The 
+\emph{star discrepancy} of $\nu$ with respect to $\mu$ is just the supremum of 
+the difference between their CDFs:
+\[
+	\disc(\mu,\nu) = \sup_x |\cdf_\mu(x)-\cdf_\nu(x)| .
+\]
+
+The question I am interested in is: when $\cdf_\mu$ is an explicit smooth 
+function and $\cdf_\nu$ is an explicit step function as above, how can we 
+compute $\disc(\mu,\nu)$ quickly?
 
 
 
