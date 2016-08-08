@@ -93,9 +93,8 @@ $L(\sym^k E,s)$, it also does for all the strange $L$-functions
 These results make perfect sense in a much more general context, and I will 
 prove them there. In \autoref{sec:definition} I set up this context and 
 carefully define strange $L$-functions there. In \autoref{sec:prelim-result}, I 
-prove basic analytic properties of the strange $L$-functions, and in 
-\autoref{sec:main-result}, I prove the main results connecting the analytic 
-properties of strange $L$-functions with the equidistribution of a sequence. 
+prove basic analytic properties of the strange $L$-functions and 
+connect their analytic properties with the equidistribution of a sequence. 
 Finally, in \autoref{sec:application}, I apply the general results to the 
 following cases: a non-CM elliptic curve $E_{/\bQ}$, the product 
 $E_1\times E_2$ of a pair of non-isogenous non-CM elliptic curves over $\bQ$, 
@@ -216,6 +215,8 @@ measure with bounded variation. Let $\mu$ be a probability measure on $X$. Then
 This is \cite[Th.~3.2]{okten-1999}. 
 \end{proof}
 
+Recall that if $f$ on $[0,a]$ is $C^2$, then $\Var(f)=\int |f'|^2$. 
+
 
 
 
@@ -240,7 +241,7 @@ the product formula holds on the same region. The formula for
 $\log L(\blambda,s)$ comes from \cite[11.9 Ex.~2]{apostol-1976}.
 \end{proof}
 
-\begin{theorem}
+\begin{theorem}\label{thm:main-for-sequences}
 Assume $A_\blambda(x) = O(x^{\frac 1 2 +\epsilon})$. Then $L(\blambda,s)$ 
 converges on $\{\Re>\frac 1 2\}$, and $\log L(\blambda,s)$ has no poles on that 
 region. 
@@ -271,62 +272,45 @@ Since $\epsilon$ is arbitrary, the exponent of $x$ is negative. Moreover,
 Both these integrals converge because $\epsilon$ is arbitrary. 
 \end{proof}
 
-
-
-
-
-\section{Main results}\label{sec:main-result}
-
-Let $E_{/\bQ}$ be an elliptic curve, or more generally, let 
-$M$ be a motive. The associated analytic $L$-function $L(M,s)$ is of the form 
-\[
-	L(M,s) = \prod_p P_p(M,p^{-s})^{-1} ,
-\]
-where the $P_p(M,t)\in \bZ[t]$ have absolute value $1$. In the case of 
-$E_{/\bQ}$, we have $p t^2-a_p t + 1$, which are normalized to 
-\[
-	(t-e^{i\theta_p})(t-e^{-i\theta_p}) = t^2 - 2\cos(\theta_p) t + 1 = t^2 - \frac{a_p}{\sqrt p} t + 1 .
-\]
-Let $d=\deg P_p(M,t)$. Then we can write 
-\[
-	P_p(M,t) = (t-e^{i\theta_p^{(1)}}) \dots (t-e^{-i\theta_p^{(d)}}) ,
-\]
-where $\theta^{(1)} < \cdots < \theta^{(d)}$ in $[0,2\pi]$. Then 
-\[
-	L(M,s) = L(\btheta^{(1)},s) \dotsm L(\btheta^{(d)},s)
-\]
-
-More general example:
-\[
-	L(\sym^k E,s) = L(\btheta^k, s) L(\btheta^{k-1}
-\]
-
-
-
-
-
-\section{Connection to Serre's perspective}
-
-Let $G$ be a compact connected Lie group, $G^\natural$ the space of conjugacy 
-classes in $G$, and $\bx$ a sequence in $G^\natural$. Given 
-$\rho\in \widehat G$, Serre defines an $L$-function 
-\[
-	L(\rho,s) =\prod_p \det(1-\rho(x_p)p^{-s})^{-1} .
-\]
-Given $x\in G^\natural$, the matrix $\rho(x)$ has eigenvalues 
-$\lambda_p^{(1),\rho},\dots,\lambda_p^{(\deg\rho),\rho}$ whose angles form a 
-nondecreasing sequence in $[0,2\pi]$. The functions 
-$\lambda_p^{(j),\rho}\colon G^\natural\to \bC$ are almost-everywhere 
-continuous, and 
-\[
-	L(\rho,s) = \prod_{j=0}^{\deg\rho} L(\lambda_p^{(j),\rho},s) = \prod_{j=0}^{\deg\rho} L_{\lambda^{(j),\rho}}(\bx,s).
-\]
+\begin{corollary}\label{cor:ATRH}
+Let $X=[0,a_1)\times\cdots\times[0,a_r)$, with probability measure $\mu$. If 
+$\bx\in X^\infty$ satisfies $\disc(\bx^C,\mu)\ll C^{-\frac 1 2+\epsilon}$, then 
+$L_f(\bx,s)$ has analytic continuation to $\{\Re s>\frac 1 2\}$, and satisfies 
+the Riemann Hypothesis, for all $f$ bounded and almost-everywhere continuous 
+with $\mu(f)=0$. 
+\end{corollary}
+\begin{proof}
+Koksma--Hlawka tells that if $\mu(f)=0$, then 
+$|\bx^C(f)|\leqslant \Var(f) \disc(\bx^C,\mu)$, 
+i.e.~$\bx^C(f)\ll C^{-\frac 1 2+\epsilon}$. Thus the sequence 
+$f(\bx)$ satisfies $A_{f(\bx)}(x) \ll x^{\frac 1 2+\epsilon}$, and the result 
+follows from \autoref{thm:main-for-sequences}. 
+\end{proof}
 
 
 
 
 
 \section{Applications}\label{sec:application}
+
+\begin{theorem}
+Let $E_{/\bQ}$ be a non-CM elliptic curve. Assume the Akiyama--Tanigawa 
+conjecture for $E$. Then all the $L$-functions $L_f(\btheta,s)$ have 
+analytic continuation to $\{\Re s>\frac 1 2\}$ and satisfy the Riemann 
+Hypothesis. In particular, this holds for all $L(\sym^k E,s)$. 
+\end{theorem}
+\begin{proof}
+Akiyama--Tanigawa conjecture that 
+$\disc(\btheta^C,\ST)\ll C^{-\frac 1 2+\epsilon}$ implies the first by
+\autoref{cor:ATRH}. The second part follows from the fact that any 
+$L(\sym^k E,s)$ can be written as a product of $L_f$'s. 
+\end{proof}
+
+\begin{theorem}
+Let $E_1,E_2$ be two non-isogenous, non-CM elliptic curves over $\bQ$. 
+Assume the Akiyama--Tanigawa conjecture for the product $E_1\times E_2$. 
+Then for any $f\colon [0,\pi]\to \bC$ that is not almost everywhere 
+\end{theorem}
 
 
 
