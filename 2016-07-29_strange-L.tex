@@ -1,10 +1,14 @@
 \documentclass{article}
 
 \usepackage{amsmath,amssymb,amsthm,bookmark,thmtools}
+\DeclareMathOperator{\disc}{disc}
 \DeclareMathOperator{\sgn}{sgn}
 \DeclareMathOperator{\sym}{sym}
 \DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\U}{U}
+\DeclareMathOperator{\Var}{Var}
 \newcommand{\bC}{\mathbf{C}}
+\newcommand{\bD}{\mathbf{D}}
 \newcommand{\bF}{\mathbf{F}}
 \newcommand{\blambda}{{\boldsymbol{\lambda}}}
 \newcommand{\bQ}{\mathbf{Q}}
@@ -103,7 +107,25 @@ and the Jacobian of a generic genus-$2$ curve $C_{/\bQ}$.
 
 \section{Definitions}\label{sec:definition}
 
-Throughout this section, let $X$ be a compact separable metric space with no 
+Let $\bD=\{z\in \bC : |z|\leqslant 1\}$. Write $\bD^\infty$ for the set of 
+sequences in $\bD$ indexed by the primes, i.e.~$\blambda\in\bD^\infty$ is 
+$(\lambda_2,\lambda_3,\dots)$. 
+
+\begin{definition}
+Let $\blambda\in\bD^\infty$. The associated \emph{strange $L$-function} is 
+given by 
+\[
+	L(\blambda,s) = \prod_p \frac{1}{1-\lambda_p p^{-s}} ,
+\]
+wherever this product converges. 
+\end{definition}
+
+We will see that the analytic properties of $L(\blambda,s)$ are closely tied to 
+estimates for the sums $A_\blambda(x) = \sum_{p\leqslant x} \lambda_p$. One 
+often gets such estimates in the context of equidistribution, which we consider 
+next.
+
+For the remainder of this section, let $X$ be a compact separable metric space with no 
 isolated points. We write $X^\infty$ for the space of sequences in $X$ indexed 
 by rational primes, i.e.~points $\bx\in X^\infty$ are of the form 
 $\bx=(x_2,x_3,\dots)$. By \cite[Cor.~2.3.16 \& Th.~4.2.2]{engelking-1989}, the 
@@ -149,13 +171,50 @@ measure-zero sets has measure zero.
 Let $f\in C^\alev(X,\mu)$, $\bx\in X^\infty$. The associated \emph{strange 
 $L$-function} is defined as 
 \[
-	L_f(\bx,s) = \prod_p \frac{1}{1-f(x_p) p^{-s}} 
+	L_f(\bx,s) = L(f(\bx),s) = \prod_p \frac{1}{1-f(x_p) p^{-s}} 
 \]
 for all $s\in \bC$ for which the product converges. 
 \end{definition}
 
+Our typical source of a strange $L$-function is as follows. $X=G^\natural$, the 
+space of conjugacy classes in a compact Lie group, and 
+$f\colon G^\natural\to \bC$ one of the ``angles'' of \cite{katz-sarnak-1999}. 
+More precisely, let $G$ be a compact Lie group and $\rho\colon G\to \U(d)$ an 
+irreducible representation. Following \cite[Le.~1.0.9]{katz-sarnak-1999}, write 
+$\varphi_1^\rho,\dots,\varphi_d^\rho$ for the sequence of functions 
+$G^\natural\to [0,2\pi)$ such that for each $x\in G^\natural$, the unitary 
+conjugacy class $\rho(x)$ has eigenvalues 
+$e^{i\varphi_1^\rho(x)},\dots,e^{i \varphi_d^\rho(x)}$, and 
+$\varphi_1^\rho(x) \leqslant \cdots \leqslant \varphi_d^\rho(x)$. We have, 
+using Serre's notation $L(\rho,s)$, the identity:
+\[
+	L(\rho,s) = \prod_{j=1}^{\deg\rho} L_{\exp(i\varphi_j^\rho)}(\bx,s) .
+\]
+
 The rest of our definitions concern discrepancy, which for now we define only 
-in a special context. Let $G$ be a compact connected Lie group. 
+in a special context. Let $X=[0,a_1)\times \cdots \times [0,a_r)$. Given 
+$x=(x_1,\dots,x_r)\in X$, we write $[0,x)=[0,x_1)\times \cdots \times [0,x_r)$. 
+
+\begin{definition}
+Given $X$ as above, and $\bx\in X^\infty$, the \emph{star-discrepancy} of $\bx$ 
+with respect to a Borel measure $\mu$ on $X$ is:
+\[
+	\disc(\bx^C,\mu) = \sup_{x\in X} \left|\bx^C(1_{[0,x)}) - \mu(1_{[0,x)})\right| .
+\]
+\end{definition}
+
+The following result is essential:
+
+\begin{theorem}[Koksma--Hlawka]
+Let $X$ be as above. Let $f\colon X\to \bC$ be such that $f\, \dd x$ is a 
+measure with bounded variation. Let $\mu$ be a probability measure on $X$. Then 
+\[
+	|\bx^C(f) - \mu(f)| \leqslant \Var(f) \disc(\bx^C,\mu) .
+\]
+\end{theorem}
+\begin{proof}
+This is \cite[Th.~3.2]{okten-1999}. 
+\end{proof}
 
 
 
@@ -163,15 +222,23 @@ in a special context. Let $G$ be a compact connected Lie group.
 
 \section{Preliminary results}\label{sec:prelim-result}
 
-Here we make a yet more general definition. Given 
-$\blambda=(\lambda_2,\lambda_3,\dots)$, with 
-$\|\blambda\|=\sup_p |\lambda_p|\leqslant 1$, define 
+\begin{theorem}
+Let $\blambda\in \bD^\infty$. Then $L(\blambda,s)$ defines a holomorphic 
+function on the region $\{\Re s>1\}$. Moreover, on that region, 
 \[
-	L(\blambda,s) = \prod_p \frac{1}{1-\lambda_p p^{-s}} .
+	\log L(\blambda,s) = \sum_{p^n} \frac{\lambda_p^n}{p^{n s}} .
 \]
-Write 
-$A_\blambda(x) = \sum_{p\leqslant x} \lambda_p$. We make the following 
-assumption: $A_\blambda(x) = O(x^{\frac 1 2+\epsilon})$. 
+\end{theorem}
+\begin{proof}
+Expanding the product for $L(\blambda,s)$ formally, we have 
+\[
+	L(\blambda,s) = \sum_{n\geqslant 1} \frac{\prod_{p\mid n} \lambda_p^{v_p(n)}}{n^s} .
+\]
+An easy comparison with Riemann's zeta function tells us that the series 
+expansion is holomorphic on $\{\Re s>1\}$. By \cite[Th.~11.7]{apostol-1976}, 
+the product formula holds on the same region. The formula for 
+$\log L(\blambda,s)$ comes from \cite[11.9 Ex.~2]{apostol-1976}.
+\end{proof}
 
 \begin{theorem}
 Assume $A_\blambda(x) = O(x^{\frac 1 2 +\epsilon})$. Then $L(\blambda,s)$ 
