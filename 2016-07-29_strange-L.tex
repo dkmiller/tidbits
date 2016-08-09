@@ -2,6 +2,10 @@
 
 \usepackage{amsmath,amssymb,amsthm,bookmark,thmtools}
 \DeclareMathOperator{\disc}{disc}
+\DeclareMathOperator{\GL}{GL}
+\DeclareMathOperator{\Lie}{Lie}
+\DeclareMathOperator{\N}{N}
+\DeclareMathOperator{\R}{R}
 \DeclareMathOperator{\sgn}{sgn}
 \DeclareMathOperator{\sym}{sym}
 \DeclareMathOperator{\tr}{tr}
@@ -10,15 +14,21 @@
 \newcommand{\bC}{\mathbf{C}}
 \newcommand{\bD}{\mathbf{D}}
 \newcommand{\bF}{\mathbf{F}}
-\newcommand{\blambda}{{\boldsymbol{\lambda}}}
 \newcommand{\bQ}{\mathbf{Q}}
 \newcommand{\btheta}{{\boldsymbol{\theta}}}
 \newcommand{\bx}{\boldsymbol{x}}
+\newcommand{\bz}{{\boldsymbol z}}
 \newcommand{\bZ}{\mathbf{Z}}
+\newcommand{\cF}{\mathcal{F}}
+\newcommand{\ft}{\mathfrak{t}}
+
 \newcommand{\alev}{\mathrm{ae}}
 \newcommand{\dd}{\mathrm{d}}
 \newcommand{\fr}{\mathrm{fr}}
+\newcommand{\simplc}{\mathrm{sc}}
+\newcommand{\semis}{\mathrm{ss}}
 \newcommand{\ST}{\mathrm{ST}}
+\newcommand{\Zar}{\mathrm{Zar}}
 \newtheorem{theorem}[subsection]{Theorem}
 \newtheorem{lemma}[subsection]{Lemma}
 \newtheorem{corollary}[subsection]{Corollary}
@@ -34,7 +44,10 @@
 \addbibresource{tidbit-sources.bib}
 \hypersetup{colorlinks=true,linkcolor=green}
 
-\title{Equidistributed sequences and the analytic properties of a strange class of $L$-functions}
+
+
+\title{Equidistribution and the analytic properties of a strange class of 
+$L$-functions}
 \author{Daniel Miller}
 
 \begin{document}
@@ -47,11 +60,13 @@
 \section{Motivation}
 
 Let $E_{/\bQ}$ be an elliptic curve without complex multiplication. By an old 
-theorem of Faltings, the quantities 
+theorem of Faltings \cite{faltings-1983}, the quantities 
 \[
 	a_p(E) = p + 1 - \# E(\bF_p) = \tr \rho_{E,l} (\fr_p)
 \]
-determine $E$ up to isogeny. The starting point of this investigation is the 
+determine $E$ up to isogeny. That is, if $E_1$ and $E_2$ satisfy 
+$a_p(E_1)=a_p(E_2)$ for all $E$, then $E_1$ and $E_2$ are isogenous. The 
+starting point of this investigation is the 
 corollary of a theorem of Harris, that the collection $\{\sgn a_p(E)\}_p$ in 
 fact determines $E$ up to isogeny. Ramakrishna had the insight that this fact 
 means the ``strange $L$-function''
@@ -63,26 +78,28 @@ strange $L$-functions, and show that their analytic properties are closely
 tied to the equidistribution of the $a_p(E)$. 
 
 Here is a brief discussion of this generalization in the case of a non-CM curve 
-$E_{/\bQ}$. It is convenient to repackage these traces of 
-Frobenius as follows:
+$E_{/\bQ}$. It is convenient to repackage the traces of Frobenius as follows:
 \[
 	\theta_p(E) = \cos^{-1}(a_p(E)/2\sqrt p) .
 \]
 The Hasse Bound guarantees that the $\theta_p(E)$ are well-defined angles 
 laying in the interval $[0,\pi]$. Write 
-$\mu_\ST = \frac{2}{\pi} \sin^2\theta\, \dd\theta$. Then the Sato--Tate 
-conjecture (now a theorem) tells us that for any continuous function 
-$f\colon [0,\pi]\to \bC$, we have:
+$\dd\ST = \frac{2}{\pi} \sin^2\theta\, \dd\theta$. Then the Sato--Tate 
+conjecture (now a theorem \cite{barnet-lamb-etal-2011}) tells us that for any 
+continuous function $f\colon [0,\pi]\to \bC$, we have
 \[
-	\left| \frac{1}{\pi(C)} \sum_{p\leqslant C} f(\theta_p) - \int_0^\pi f\, \dd \mu_\ST\right| = o(1)
+	\left| \frac{1}{\pi(C)} \sum_{p\leqslant C} f(\theta_p) - \int_0^\pi f\, \dd\ST\right| = o(1)
 \]
-as $C\to \infty$. It is well-known that this is equivalent to the analytic 
-continuation of all the $L$-functions $L(\sym^k E,s)$. We take as our starting 
-point the stronger conjecture, due to Akiyama--Tanigawa 
+as $C\to \infty$. It is well-known that this follows from the analytic 
+continuation (past $\Re s=1$) and non-vanishing except at $s=1$ of all the 
+$L$-functions $L(\sym^k E,s)$ \cite[A.1, Th.1]{serre-1968}. We take as our 
+starting point the much stronger conjecture, due to Akiyama--Tanigawa 
 \cite{akiyama-tanigawa}, that 
 \[
-	\left| \frac{1}{\pi(C)} \sum_{p\leqslant C} f(\theta_p) - \int_0^\pi f\, \dd \mu_\ST\right| = O_f(C^{-\frac 1 2+\epsilon}) .
+	\left| \frac{1}{\pi(C)} \sum_{p\leqslant C} f(\theta_p) - \int_0^\pi f\, \dd \mu_\ST\right| = O_f(C^{-\frac 1 2+\epsilon}) 
 \]
+for all continuous $f$. (Their conjecture is actually more general; we will 
+discuss the precise statement later.)
 They prove that this conjecture implies the Riemann Hypothesis for $E$. I 
 prove that not only does their conjecture imply the Riemann Hypothesis for all 
 $L(\sym^k E,s)$, it also does for all the strange $L$-functions 
@@ -92,9 +109,11 @@ $L(\sym^k E,s)$, it also does for all the strange $L$-functions
 
 These results make perfect sense in a much more general context, and I will 
 prove them there. In \autoref{sec:definition} I set up this context and 
-carefully define strange $L$-functions there. In \autoref{sec:prelim-result}, I 
+carefully define strange $L$-functions. In \autoref{sec:prelim-result}, I 
 prove basic analytic properties of the strange $L$-functions and 
 connect their analytic properties with the equidistribution of a sequence. 
+In \autoref{sec:function-field}, I apply these results where ``everything is 
+known,'' i.e.~varieties over function fields.
 Finally, in \autoref{sec:application}, I apply the general results to the 
 following cases: a non-CM elliptic curve $E_{/\bQ}$, the product 
 $E_1\times E_2$ of a pair of non-isogenous non-CM elliptic curves over $\bQ$, 
@@ -107,27 +126,30 @@ and the Jacobian of a generic genus-$2$ curve $C_{/\bQ}$.
 \section{Definitions}\label{sec:definition}
 
 Let $\bD=\{z\in \bC : |z|\leqslant 1\}$. Write $\bD^\infty$ for the set of 
-sequences in $\bD$ indexed by the primes, i.e.~$\blambda\in\bD^\infty$ is 
-$(\lambda_2,\lambda_3,\dots)$. 
+sequences in $\bD$ indexed by the primes, i.e.~$\bz\in\bD^\infty$ is 
+$(z_2,z_3,\dots)$. The space $\bD^\infty$ is compact, and comes naturally 
+equipped with the (product) Lebesgue measure, normalized to have mass $1$. 
 
 \begin{definition}
-Let $\blambda\in\bD^\infty$. The associated \emph{strange $L$-function} is 
-given by 
+Let $\bz\in\bD^\infty$. The associated \emph{strange $L$-function} is given by 
 \[
-	L(\blambda,s) = \prod_p \frac{1}{1-\lambda_p p^{-s}} ,
+	L(\bz,s) = \prod_p \frac{1}{1-z_p p^{-s}} ,
 \]
 wherever this product converges. 
 \end{definition}
 
-We will see that the analytic properties of $L(\blambda,s)$ are closely tied to 
-estimates for the sums $A_\blambda(x) = \sum_{p\leqslant x} \lambda_p$. One 
+Elementary topology tells us that $L\colon \bD^\infty\times \bC^{\Re>1}\to \bC$ 
+is continuous. 
+We will see that for fixed $\bz\in \bD^\infty$, the analytic properties of 
+$L(\bz,s)$ are closely tied to 
+estimates for the sums $A_\bz(x) = \sum_{p\leqslant x} z_p$. One 
 often gets such estimates in the context of equidistribution, which we consider 
 next.
 
 For the remainder of this section, let $X$ be a compact separable metric space with no 
 isolated points. We write $X^\infty$ for the space of sequences in $X$ indexed 
 by rational primes, i.e.~points $\bx\in X^\infty$ are of the form 
-$\bx=(x_2,x_3,\dots)$. By \cite[Cor.~2.3.16 \& Th.~4.2.2]{engelking-1989}, the 
+$\bx=(x_2,x_3,\dots)$. By \cite[Cor.2.3.16, Th.4.2.2]{engelking-1989}, the 
 compact space $X^\infty$ is metrizable and separable, also with no isolated 
 points. 
 
@@ -150,7 +172,7 @@ measurable. Then $f$ is continuous almost everywhere if and only if
 $\bx^C(f) \to \mu(f)$ for all $\mu$-equidistributed $\bx$. 
 \end{theorem}
 \begin{proof}
-This follows directly from the proof of \cite[Th.~1]{mazzone-1995}.
+This follows directly from the proof of \cite[Th.1]{mazzone-1995}.
 \end{proof}
 
 Fix a Borel measure $\mu$ on $X$, and write $C^\alev(X,\mu)$ for the space of 
@@ -167,125 +189,213 @@ measure-zero sets has measure zero.
 \end{proof}
 
 \begin{definition}
-Let $f\in C^\alev(X,\mu)$, $\bx\in X^\infty$. The associated \emph{strange 
-$L$-function} is defined as 
+Let $f\in C^\alev(X,\mu)^{\|\cdot\|_\infty\leqslant 1}$, $\bx\in X^\infty$. The 
+associated \emph{strange $L$-function} is defined as 
 \[
 	L_f(\bx,s) = L(f(\bx),s) = \prod_p \frac{1}{1-f(x_p) p^{-s}} 
 \]
 for all $s\in \bC$ for which the product converges. 
 \end{definition}
 
-Our typical source of a strange $L$-function is as follows. $X=G^\natural$, the 
-space of conjugacy classes in a compact Lie group, and 
-$f\colon G^\natural\to \bC$ one of the ``angles'' of \cite{katz-sarnak-1999}. 
-More precisely, let $G$ be a compact Lie group and $\rho\colon G\to \U(d)$ an 
-irreducible representation. Following \cite[Le.~1.0.9]{katz-sarnak-1999}, write 
-$\varphi_1^\rho,\dots,\varphi_d^\rho$ for the sequence of functions 
-$G^\natural\to [0,2\pi)$ such that for each $x\in G^\natural$, the unitary 
-conjugacy class $\rho(x)$ has eigenvalues 
-$e^{i\varphi_1^\rho(x)},\dots,e^{i \varphi_d^\rho(x)}$, and 
-$\varphi_1^\rho(x) \leqslant \cdots \leqslant \varphi_d^\rho(x)$. We have, 
-using Serre's notation $L(\rho,s)$, the identity:
+Our typical source of a strange $L$-function is as follows. Let $G$ be a 
+compact connected Lie group and $X=G^\natural$, the space of conjugacy 
+classes of $G$. Then $G^\natural$ inherits the Haar measure from $G$. Given 
+any sequence $\bx\in (G^\natural)^\infty = G^{\natural,\infty}$ and 
+function $f\in C^\alev(G^\natural)^{\|\cdot\|_\infty\leqslant 1}$, we can 
+define $L_f(\bx,s)$. This is 
+related to Serre's $L$-functions from \cite[A.2]{serre-1968} as follows. 
+
+\begin{theorem}
+Let $G$ be a compact connected Lie group, $\rho\in\widehat G$ an irreducible 
+unitary representation of $G$. Then there exist functions 
+$\lambda_\rho^1,\dots,\lambda_\rho^{\deg\rho}\colon G^\natural \to S^1$, 
+continuous away from the set $\{\det(1-\rho)=0\}$, such that for every 
+$x\in G^\natural$, there are angles 
+$\theta_1,\dots,\theta_{\deg\rho}\in [0,2\pi)$, satisfying 
+$\theta_1\leqslant \cdots \leqslant \theta_{\deg\rho}$, such that 
+$\lambda_\rho^j(x) = e^{i \theta_j}$ and moreover
 \[
-	L(\rho,s) = \prod_{j=1}^{\deg\rho} L_{\exp(i\varphi_j^\rho)}(\bx,s) .
+	\det(1-\rho(x) t) = \prod_{j=0}^{\deg \rho} (1-\lambda_\rho^j(x) t) .
+\]
+\end{theorem}
+\begin{proof}
+This follows easily from \cite[Lem.1.0.9]{katz-sarnak-1999}. 
+\end{proof}
+
+Recall that for $\rho\in \widehat G$, Serre defines 
+$L(\rho,s) = \prod_p \det(1-\rho(x_p) p^{-s})^{-1}$. Using his notation, there 
+is the identity 
+\[
+	L(\rho,s) = \prod_{j=1}^{\deg\rho} L_{\lambda_\rho^j}(\bx,s) .
 \]
 
+
+
 The rest of our definitions concern discrepancy, which for now we define only 
-in a special context. Let $X=[0,a_1)\times \cdots \times [0,a_r)$. Given 
-$x=(x_1,\dots,x_r)\in X$, we write $[0,x)=[0,x_1)\times \cdots \times [0,x_r)$. 
+in a special context. Let $G$ be a compact connected semisimple Lie group. We 
+will define discrepancy for sequences in $G^\natural$. 
+
+Let $G^\simplc$ be the simply-connected cover of $G$. Choose a maximal torus 
+$T\subset G^\simplc$; let $W=\N(T)/T$ be the Weyl group. Let $\ft=\Lie(T)$ and 
+recall that the kernel of $\exp\colon \ft\twoheadrightarrow T$ is generated by 
+the nodal vectors associated to the root system $\R(G^\simplc,T)$ 
+\cite[9.6 Pr.11]{bourbaki-lie-alg-7-9}. Write $\{t_1,\dots,t_r\}\subset \ft$ 
+for these vectors. The exponential map $\exp\colon \ft\to T$ induces an 
+isomorphism $\ft/(\langle t_i\rangle \rtimes W) \to G^\natural$.  Given 
+$x=(x_1,\dots,x_r)\in [0,1]^r$, write 
+\[
+	I_x = \left\{\sum_{i=1}^r a_i t_i : a_i \in [0,x_i] \right\} \subset \ft .
+\]
 
 \begin{definition}
-Given $X$ as above, and $\bx\in X^\infty$, the \emph{star-discrepancy} of $\bx$ 
-with respect to a Borel measure $\mu$ on $X$ is:
+With the setup as above, let $\mu,\nu$ be probability measures on $G^\natural$. 
+The \emph{discrepancy} between $\mu$ and $\nu$ is
 \[
-	\disc(\bx^C,\mu) = \sup_{x\in X} \left|\bx^C(1_{[0,x)}) - \mu(1_{[0,x)})\right| .
+	\disc(\mu,\nu) = \sup_{x\in [0,1]^r} \left|\mu(\exp I_x) - \nu(\exp I_x) \right| .
 \]
 \end{definition}
 
+If $\nu=\dd x$, the Haar measure on $G^\natural$, we simply write 
+$\disc(\mu)$ for $\disc(\mu,\dd x)$. 
+
+The Koksma--Hlawka inequality bounds the difference between the Haar integral 
+and weighted average of a function on $G^\natural$ in terms of the discrepancy 
+of the sequence and the variation of the function. 
+
 The following result is essential:
 
-\begin{theorem}[Koksma--Hlawka]
-Let $X$ be as above. Let $f\colon X\to \bC$ be such that $f\, \dd x$ is a 
-measure with bounded variation. Let $\mu$ be a probability measure on $X$. Then 
+\begin{theorem}[Koksma, Hlawka]
+Let $G$ be as above. Let $f\colon G^\natural\to \bC$ be such that $f\, \dd x$ 
+is a measure with bounded variation. Then 
 \[
-	|\bx^C(f) - \mu(f)| \leqslant \Var(f) \disc(\bx^C,\mu) .
+	\left|\bx^C(f) - \int f\, \dd x\right| \leqslant \Var(f) \disc(\bx^C) .
 \]
 \end{theorem}
 \begin{proof}
 This is \cite[Th.~3.2]{okten-1999}. 
 \end{proof}
 
-Recall that if $f$ on $[0,a]$ is $C^2$, then $\Var(f)=\int |f'|^2$. 
+We will often use the soft version of this inequality. Namely, assume 
+$\int f\, \dd x=0$. Then $|\bx^C(f)| \ll_f \disc(\bx^C)$ as $C\to \infty$. 
+Here is another way of putting it. The sequence $f(\bx)$ has
+$|A_{f(\bx)}(C)| \ll_f \pi(C) \disc(\bx^C)$. 
 
 
 
 
 
-\section{Preliminary results}\label{sec:prelim-result}
+\section{Main results}\label{sec:prelim-result}
 
 \begin{theorem}
-Let $\blambda\in \bD^\infty$. Then $L(\blambda,s)$ defines a holomorphic 
+Let $\bz\in \bD^\infty$. Then $L(\bz,s)$ defines a holomorphic 
 function on the region $\{\Re s>1\}$. Moreover, on that region, 
 \[
-	\log L(\blambda,s) = \sum_{p^n} \frac{\lambda_p^n}{p^{n s}} .
+	\log L(\bz,s) = \sum_{p^n} \frac{z_p^n}{n p^{n s}} .
 \]
 \end{theorem}
 \begin{proof}
-Expanding the product for $L(\blambda,s)$ formally, we have 
+Expanding the product for $L(\bz,s)$ formally, we have 
 \[
-	L(\blambda,s) = \sum_{n\geqslant 1} \frac{\prod_{p\mid n} \lambda_p^{v_p(n)}}{n^s} .
+	L(\bz,s) = \sum_{n\geqslant 1} \frac{\prod_{p\mid n} z_p^{v_p(n)}}{n^s} .
 \]
 An easy comparison with Riemann's zeta function tells us that the series 
 expansion is holomorphic on $\{\Re s>1\}$. By \cite[Th.~11.7]{apostol-1976}, 
 the product formula holds on the same region. The formula for 
-$\log L(\blambda,s)$ comes from \cite[11.9 Ex.~2]{apostol-1976}.
+$\log L(\bz,s)$ comes from \cite[11.9 Ex.2]{apostol-1976}.
 \end{proof}
 
 \begin{theorem}\label{thm:main-for-sequences}
-Assume $A_\blambda(x) = O(x^{\frac 1 2 +\epsilon})$. Then $L(\blambda,s)$ 
-converges on $\{\Re>\frac 1 2\}$, and $\log L(\blambda,s)$ has no poles on that 
-region. 
+Assume $A_\bz(x) \ll x^{\alpha +\epsilon}$, $\alpha\in [\frac 1 2,1]$. 
+Then $\log L(\bz,s)$ is holomorphic on $\{\Re>\alpha\}$.
 \end{theorem}
 \begin{proof}
-Standard reductions reduce this to showing that 
+Split the sum for $\log L$ into two pieces:
 \[
-	\sum_p \frac{\lambda_p}{p^s} \qquad \textnormal{and}\qquad \sum_p \frac{\log(p) \lambda_p}{p^s} 
+	\log L(\bz,s) = \sum_p \frac{z_p}{p^s} + \sum_p \sum_{n\geqslant 2} \frac{z_p^n}{n p^{n s}} .
 \]
-converge on that region. We deal with $\sum \log(p)\lambda_p p^{-s}$; the 
-other is similar. Use Abel summation:
+For each $p$, we have 
 \[
-	\sum_{p\leqslant x} \frac{\lambda_p}{p^s}
-		= \frac{\log x}{x^s} A_\blambda(x) - \int_2^x \frac{1-s\log t}{t^{s+1}} A_\blambda(t)\, \dd t .
+	\left|\sum_{n\geqslant 2} \frac{z_p^n}{n p^{ns}} \right| \leqslant \sum_{n\geqslant 2} p^{-n \Re s} = p^{-2\Re s} \frac{1}{1-p^{-\Re s}} .
 \]
-We show that the first term approaches zero and that the integral converges 
-absolutely. We have: 
+Elementary analysis gives 
 \[
-	\left| \frac{\log x}{x^s} A_\blambda(x)\right| \ll \frac{\log x}{x^{\Re s}} x^{\frac 1 2+\epsilon}  .
+	1 \leqslant \frac{1}{1-p^{-\Re s}} \leqslant 2+2\sqrt 2 ,
 \]
-Since $\epsilon$ is arbitrary, the exponent of $x$ is negative. Moreover, 
-\begin{align*}
-	\int_2^x \frac{1}{t^{s+1}} | A_\lambda(t)|\, \dd t
-		& \ll \int_2^x \frac{1}{t^{\Re s+1}} t^{\frac 1 2+\epsilon} \, \dd t \\
-	\int_2^x \frac{\log t}{t^{s+1}} |A_\blambda(t)|\, \dd t
-		& \ll \int_2^x \frac{\log t}{t^{\Re s+1}} t^{\frac 1 2+\epsilon}\, \dd t .
-\end{align*}
-Both these integrals converge because $\epsilon$ is arbitrary. 
+so the second piece of $\log L(\bz,s)$ converges absolutely when 
+$\Re(s)>\frac 1 2$. By \cite[II.1 Th.10]{tenenbaum-1995}, our bound on 
+$A_\bz(x)$ yields the holomorphy of $\sum z_p p^{-s}$ on $\{\Re >\alpha\}$. 
 \end{proof}
 
 \begin{corollary}\label{cor:ATRH}
-Let $X=[0,a_1)\times\cdots\times[0,a_r)$, with probability measure $\mu$. If 
-$\bx\in X^\infty$ satisfies $\disc(\bx^C,\mu)\ll C^{-\frac 1 2+\epsilon}$, then 
+Let $G$ be a compact connected semisimple Lie group, 
+$\bx\in G^{\natural,\infty}$ satisfy 
+$\disc(\bx^C,\dd x)\ll C^{-\frac 1 2+\epsilon}$. Then for every 
+$f\in C^\alev(G^\natural)^{\|\cdot\|\leqslant 1}$, 
 $L_f(\bx,s)$ has analytic continuation to $\{\Re s>\frac 1 2\}$, and satisfies 
 the Riemann Hypothesis, for all $f$ bounded and almost-everywhere continuous 
 with $\mu(f)=0$. 
 \end{corollary}
 \begin{proof}
 Koksma--Hlawka tells that if $\mu(f)=0$, then 
-$|\bx^C(f)|\leqslant \Var(f) \disc(\bx^C,\mu)$, 
-i.e.~$\bx^C(f)\ll C^{-\frac 1 2+\epsilon}$. Thus the sequence 
+$\bx^C(f)\ll C^{-\frac 1 2+\epsilon}$. Thus the sequence 
 $f(\bx)$ satisfies $A_{f(\bx)}(x) \ll x^{\frac 1 2+\epsilon}$, and the result 
 follows from \autoref{thm:main-for-sequences}. 
 \end{proof}
+
+
+
+
+
+\section{Strange \texorpdfstring{$L$}{L}-functions over function fields}\label{sec:function-field}
+
+Let $k$ be a finite field of characteristic $p$ and cardinality $q$. Let 
+$C_{/k}$ be a nice curve in the sense of Poonen (i.e., $C$ is smooth, 
+projective, and geometrically integral). Write $K=k(C)$ for the function field 
+of $C$. Fix a non-empty open subset $U\subset C$ and a geometric point 
+$\infty\in U(\bar k)$. Fix a prime $l\ne p$ and an embedding 
+$\overline{\bQ_l}\hookrightarrow \bC$. 
+
+\begin{definition}\label{def:good-sheaf}
+An $l$-adic sheaf $\cF$ on $U$ is \emph{good} if the following conditions hold. 
+\begin{enumerate}
+\item 
+$\cF$ is pure of weight zero.
+\item
+Let $G=\overline{\rho_\cF(\pi_1(U_{\overline k},\infty))}^{\Zar}$. 
+Assume $\rho_\cF(\pi_1(U,\infty))\subset G(\overline\bQ_l)$. 
+\end{enumerate}
+\end{definition}
+
+For any good sheaf $\cF$, let $\ST(\cF)$ be a maximal compact subgroup of 
+$G(\bC)$.For each $u\in U$, there is a well-defined conjugacy class 
+$\theta(u) = \rho(\fr_u)^\semis \in \ST(\cF)^\natural$. For any $C>0$, write 
+\[
+	\btheta^C_\cF = \frac{1}{\#\{u\in U : q_u \leqslant C\}} \sum_{q_u\leqslant C} \delta_{\theta(u)} .
+\]
+Katz proves an equidistribution estimate for the $\theta(u)$'s. 
+
+\begin{theorem}
+Let $\sigma$ be a non-trivial irreducible representation of $\ST(\cF)$. Then 
+\[
+	|\btheta^C_\cF(\tr\sigma)| \ll_\cF \dim(\sigma) C^{-\frac 1 2} .
+\]
+\end{theorem}
+\begin{proof}
+This is \cite[p.39]{katz-1988}.
+\end{proof}
+
+Now let $C^\natural(\ST(\cF))$ be the space of functions 
+$f\colon \ST(\cF)^\natural\to \bC$ satisfying:
+\[
+	\|f\|^\natural = \sum_\sigma \dim(\sigma)|\widehat f(\sigma)| < \infty .
+\]
+For such functions, we have:
+\[
+	|\btheta_\cF^C(f) - \mu(f)| \ll_\cF \|f\|^\natural C^{-\frac 1 2} .
+\]
+Thus for any $f\in C^\natural(\ST(\cF))$, the strange $L$-function 
+$L_f(\btheta_\cF,s)$ has analytic continuation to $\{\Re s>\frac 1 2\}$ and 
+satisfies the Riemann Hypothesis.
 
 
 
