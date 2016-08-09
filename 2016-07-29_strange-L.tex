@@ -404,19 +404,23 @@ satisfies the Riemann Hypothesis.
 \section{Applications}\label{sec:application}
 
 \begin{theorem}
-Let $E_{/\bQ}$ be a non-CM elliptic curve. Assume the Akiyama--Tanigawa 
-conjecture for $E$. Then all the $L$-functions $L_f(\btheta,s)$ have 
-analytic continuation to $\{\Re s>\frac 1 2\}$ and satisfy the Riemann 
-Hypothesis. In particular, this holds for all $L(\sym^k E,s)$. 
+Let $E_{/\bQ}$ be a non-CM elliptic curve, and put $\btheta=\btheta(E)$. 
+Assume that $\disc(\btheta^C) \ll C^{-\frac 1 2+\epsilon}$. Then if 
+$f\in C^\alev([0,\pi],\ST)^{\|\cdot\|_\infty\leqslant 1}$, the strange 
+$L$-function $L_f(\btheta,s)$ has analytic continuation to 
+$\{\Re >\frac 1 2\}$ and satisfy the Riemann Hypothesis. In particular, 
+this holds for all $L(\sym^k E,s)$. 
 \end{theorem}
 \begin{proof}
-Akiyama--Tanigawa conjecture that 
-$\disc(\btheta^C,\ST)\ll C^{-\frac 1 2+\epsilon}$ implies the first by
-\autoref{cor:ATRH}. The second part follows from the fact that any 
-$L(\sym^k E,s)$ can be written as a product of $L_f$'s. 
+The first conclusion follows from \autoref{cor:ATRH}. The second part follows 
+from the fact that any $L(\sym^k E,s)$ can be written as a product of $L_f$'s, 
+namely the $L_{\lambda_{\sym^k}^j}$'s in \autoref{sec:definition}.  
 \end{proof}
 
 \begin{theorem}
+Fix $f\in C^\alev([0,\pi],\ST)^{\|\cdot\|_\infty\leqslant 1}$ that is not 
+almost everywhere constant. 
+
 Let $E_1,E_2$ be two non-isogenous, non-CM elliptic curves over $\bQ$. 
 Assume the Akiyama--Tanigawa conjecture for the product $E_1\times E_2$. 
 Then for any $f\colon [0,\pi]\to \bC$ that is not almost everywhere 
