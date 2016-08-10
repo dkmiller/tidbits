@@ -397,6 +397,50 @@ Thus for any $f\in C^\natural(\ST(\cF))$, the strange $L$-function
 $L_f(\btheta_\cF,s)$ has analytic continuation to $\{\Re s>\frac 1 2\}$ and 
 satisfies the Riemann Hypothesis.
 
+\begin{theorem}
+Let $\bz\in \bD^\infty$, and assume $\log L(\bz,s)$ has analytic continuation 
+to $\{\Re >\alpha\}$, $\alpha\in [\frac 1 2,1]$, and that for $\sigma>\alpha$, 
+we have $|\log L(\bz,\sigma+i t)| \ll |t|^{1-\epsilon}$. Then 
+$|A_\bz(x)| \ll x^{\alpha+\epsilon}$. 
+\end{theorem}
+\begin{proof}
+Recall that we can write 
+\[
+	\log L(\bz,p) = \sum_p \frac{z_p}{p^s} + \sum_p \sum_{n\geqslant 2} \frac{z_p^n}{n p^{n s}} = \sum_p \frac{z_p}{p^s} + O(\zeta(2\Re s)).
+\]
+Thus, for any $\epsilon>0$, our bound on $|\log L(\bz,\sigma+i t)|$ implies the 
+same bound for $\sum \frac{z_p}{p^s}$ on $\{\Re >\alpha+\epsilon\}$. 
+
+Let $\gamma_T=\gamma_{1,T}+\gamma_{2,T}-\gamma_{3,T}-\gamma_{4,T}$ be the 
+following contour:
+\begin{align*}
+	\gamma_{1,T}(t) &= (\alpha+\epsilon)+i t\qquad t\in [-T,T] \\
+	\gamma_{2,T}(t) &= t+i T \qquad t\in [\alpha+\epsilon,1+\epsilon] \\
+	\gamma_{3,T}(t) &= (1+\epsilon) + i t \qquad t\in [-T,T] \\
+	\gamma_{4,T}(t) &= t - i T \qquad t\in [\alpha+\epsilon,1+\epsilon] .
+\end{align*}
+By \cite[?]{?}, 
+\[
+	\lim_{T\to \infty} \frac{1}{2\pi i} \int_{-\gamma_{3,T}} \sum_p \frac{z_p}{p^s} x^z\, \frac{\dd z}{z} =^\ast \sum_{p\leqslant x} z_p .
+\]
+Let $h(z)$ be the analytic continuation of $\sum z_p p^{-s}$ to 
+$\{\Re >\alpha\}$. Since $\int_\gamma h(z) \frac{\dd z}{z} = 0$, we obtain
+\[
+	\left| \sum_{p\leqslant z} z_p\right| \ll \left|\int_{\gamma_{T,1}}h(z)x^z\frac{\dd z}{z}\right| + \left|\int_{\gamma_{T,2}}h(z)x^z\frac{\dd z}{z}\right| + \left|\int_{\gamma_{T,4}}h(z)x^z\frac{\dd z}{z}\right| .
+\]
+We know that $|h(\sigma+ i t)| \ll |t|$, so we can bound:
+\[
+	\left|\int_{\gamma_{T,2}}h(z)\frac{\dd z}{z}\right|
+		= \left| \int_{\alpha+\epsilon}^{1+\epsilon} \frac{h(t+i T)x^{t+i T}}{t+i T}\, \dd t\right| 
+		\ll (1+\alpha)x^{1+\alpha} T^{-1} ,
+\]
+and similarly for $\int_{\gamma_{4,T}}$. Finally, we note that 
+\[
+	\left|\int_{\gamma_{T,1}}h(z)x^z\frac{\dd z}{z}\right| \ll \int_{-T}^T |t|^{1-\epsilon} \frac{x^{\alpha+\epsilon}}{(\alpha+\epsilon)^2+t^2}\, \dd t \ll x^{\alpha+\epsilon} .
+\]
+Letting $T\to \infty$ we obtain the desired result.
+\end{proof}
+
 
 
 
