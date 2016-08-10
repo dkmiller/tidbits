@@ -1,0 +1,37 @@
+\documentclass{article}
+
+\usepackage[a5paper,margin=1cm]{geometry}
+
+\usepackage{fontspec}
+\newcommand{\bR}{\mathbf{R}}
+\setmainfont{Roboto}
+
+\title{Notes on machine learning}
+\author{Daniel Miller}
+
+\begin{document}
+\maketitle
+
+
+
+
+
+\section{Supervised machine learning}
+
+
+\subsection{Univariate linear regression}
+
+The basic idea is as follows. We have a set $\{x_1,\dots,x_m\}$ of ``input 
+variables,'' lying in some domain $D$, a set $\{y_1,\dots,y_m\}$ ``output'' or 
+``target'' variables in some range $R$, i.e.~a map $[1,\dots,m]\to D\times R$. 
+Given this, we want to select a ``hypothesis function'' $h\colon D\to R$, such 
+that $h(x)=y$ is a good fit for the $(x_i,y_i)$. 
+
+Univariate linear regression concerns $D=\bR$, $R=\bR$, and 
+$h_\theta(x)=\theta_0+\theta_1 x$. 
+
+
+
+
+
+\end{document}
