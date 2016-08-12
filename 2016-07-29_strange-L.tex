@@ -13,7 +13,7 @@
 \newcommand{\blambda}{{\boldsymbol{\lambda}}}
 \newcommand{\bQ}{\mathbf{Q}}
 \newcommand{\btheta}{{\boldsymbol{\theta}}}
-\newcommand{\bx}{\boldsymbol{x}}
+\newcommand{\bx}{{\boldsymbol x}}
 \newcommand{\bZ}{\mathbf{Z}}
 \newcommand{\alev}{\mathrm{ae}}
 \newcommand{\dd}{\mathrm{d}}
@@ -327,6 +327,36 @@ continuous, and
 
 
 \section{Applications}\label{sec:application}
+
+Recall, following \cite{bugeaud-2008} that the \emph{irrationality exponent} 
+$\mu(\alpha)$ a real irrational number $\alpha$ is the supremum of all real 
+numbers $\mu$ such that 
+\[
+	\left|\alpha-\frac{p}{q}\right| < q^{-\mu}
+\]
+for infinitely many $p/q\in \bQ$. Bugeaud proves that for any 
+$\mu\geqslant 2$, there is an element $\xi_\mu$ of the Cantor set with 
+$\mu(\xi_\mu)=\mu$. Moreover, by \cite[?]{kuipers-niederreiter-1974}, for 
+every $\epsilon>0$, the sequence $x_n=n\alpha\mod 1$ has discrepancy 
+$\disc(\bx^C)=\Omega(C^{-\frac{1}{\mu(\alpha)-1}-\epsilon})$. 
+
+\begin{theorem}
+Let $X=S^1$ with the natural Haar measure. For every $\eta\in (0,\frac 1 2)$, 
+there is a sequence $\bx=(x_2,x_3,\dots)\in (S^1)^\infty$ such that for all 
+$f\in C^\infty(S^1)^{\|\cdot\|_\infty\leqslant 1}$, the function 
+$\log L_f(\bx,s)$ has analytic continuation to $\{\Re>\frac 1 2\}$, but for 
+all $\epsilon>0$, $|\disc(\bx^C)|=\Omega(C^{-\eta-\epsilon})$. 
+\end{theorem}
+\begin{proof}
+Let $\mu>3$, and let 
+$\bx=\{x_2,x_3,\dots\}$ be the sequence $x_{p_n}=e^{2\pi i n \xi_\mu}$. To 
+prove that $\log L_f(\bx,s)$ has analytic continuation to $\{\Re >\frac 1 2\}$, 
+we need only to prove that $|A_{\exp(2\pi i m \bx)}(t)| \ll t^{1/2}$, uniformly 
+for each $m\in \bZ$. This follows easily from:
+\[
+	\left| \sum_{n=1}^N e^{2\pi i m n \alpha}\right| \leqslant \frac{|-1+e^{2\pi i M n \alpha}|}{|-1+e^{2\pi i a m}|} \leqslant ? \leqslant \frac 1 2 m (\eta-1) \ll_\eta m
+\]
+\end{proof}
 
 
 
