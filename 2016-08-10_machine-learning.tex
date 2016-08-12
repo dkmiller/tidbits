@@ -4,7 +4,9 @@
 
 \usepackage{fontspec}
 \newcommand{\bR}{\mathbf{R}}
-\setmainfont{Roboto}
+\newcommand{\bx}{\mathbf{x}}
+\newcommand{\by}{\mathbf{y}}
+\setmainfont{Roboto Light}
 
 \title{Notes on machine learning}
 \author{Daniel Miller}
@@ -21,14 +23,22 @@
 
 \subsection{Univariate linear regression}
 
-The basic idea is as follows. We have a set $\{x_1,\dots,x_m\}$ of ``input 
-variables,'' lying in some domain $D$, a set $\{y_1,\dots,y_m\}$ ``output'' or 
-``target'' variables in some range $R$, i.e.~a map $[1,\dots,m]\to D\times R$. 
-Given this, we want to select a ``hypothesis function'' $h\colon D\to R$, such 
-that $h(x)=y$ is a good fit for the $(x_i,y_i)$. 
+The basic idea is as follows. We have a set $\bx=\{x^{(1)},\dots,x^{(m)}\}$ of 
+``input variables,'' lying in some domain $D$, a set 
+$\by=\{y^{(1)},\dots,y^{(m)}\}$ ``output'' or ``target'' variables in some 
+range $R$, i.e.~a map $[1,\dots,m]\to D\times R$. Given this, we want to select 
+a ``hypothesis function'' $h\colon D\to R$, such that $h(x)=y$ is a good fit 
+for the data, i.e.~$h(x^{(i)})\approx y^{(i)}$ for some reasonable definition 
+of $\approx$. 
 
 Univariate linear regression concerns $D=\bR$, $R=\bR$, and 
-$h_\theta(x)=\theta_0+\theta_1 x$. 
+$h_\theta(x)=\theta_0+\theta_1 x$. We try to find $\theta$ that minimizes the 
+``cost function'' 
+\[
+	J_{\bx,\by}(\theta) = \frac{1}{2m} \sum_{i=1}^m (h_\theta(x^{(i)}) - y^{(i)})^2 .
+\]
+The function $J_{\bx,\by}$ is quadratic in $\theta$, so it should be easy to 
+find the minimum point.
 
 
 
