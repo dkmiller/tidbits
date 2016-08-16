@@ -1,14 +1,18 @@
+% !TeX program = XeLaTeX
+
 \documentclass{article}
 
 \usepackage[a5paper,margin=1cm]{geometry}
 
-\usepackage{fontspec}
+\usepackage{amsmath,amssymb,fontspec}
 \newcommand{\bR}{\mathbf{R}}
 \newcommand{\bx}{\mathbf{x}}
 \newcommand{\by}{\mathbf{y}}
+\newcommand{\dd}{\mathrm{d}}
+\newcommand{\transpose}[1]{{#1}^\mathrm{t}}
 \setmainfont{Roboto Light}
 
-\title{Notes on machine learning}
+\title{Notes on machine learning\thanks{From Andrew Ng's Coursera class}}
 \author{Daniel Miller}
 
 \begin{document}
@@ -39,6 +43,78 @@ $h_\theta(x)=\theta_0+\theta_1 x$. We try to find $\theta$ that minimizes the
 \]
 The function $J_{\bx,\by}$ is quadratic in $\theta$, so it should be easy to 
 find the minimum point.
+
+
+\subsection{Gradient descent}
+
+Basic idea, we have some function $J(\theta)$ that we would like to minimize. 
+Start with some $\theta_0$, then put 
+$\theta_{n+1} = \theta_n-\alpha \nabla J(\theta_n)$. That is, we walk in the 
+direction that $J$ is decreasing most rapidly. 
+
+Apply gradient descent to the cost function $J_{\bx,\by}$ above. One has:
+\begin{align*}
+	\frac{\dd}{\dd \theta_0} J_{\bx,\by}(\theta_0,\theta_1) &= \frac{1}{m} \sum_{i=1}^m (h_\theta(x^{(i)})-y^{(i)}) \\
+	\frac{\dd}{\dd \theta_1} J_{\bx,\by} J(\theta_0,\theta_1) &= \sum_{i=1}^m (h_\theta(x^{(i)})-y^{(i)}) x^{(i)}
+\end{align*}
+So one repeats the following updates until convergence:
+\begin{align*}
+	\theta_0 &= \theta_0-\alpha\frac{1}{m} \sum_{i=1}^m (h_\theta(x^{(i)})-y^{(i)}) \\
+	\theta_1 &= \theta_1-\alpha \sum_{i=1}^m (h_\theta(x^{(i)})-y^{(i)}) x^{(i)}
+\end{align*}
+Here, our cost function $J_{\bx,\by}$ has a single minimum (it is a convex 
+function), so any local optimum is actually global. 
+
+This is actually ``batch'' gradient descent, i.e.~each step uses all the 
+training examples $x^{(i)},y^{(i)}$. 
+
+
+\subsection{Multivariate linear regression}
+
+Suppose we have multiple ``features (variables)'' of our data set. That is, we 
+have $\{\bx_j\}$. Our hypothesis will be: 
+\[
+	h_\theta(x) = \sum_{i=0}^n \theta_i x_i .
+\]
+For convenience, put $x_0=1$. So the ``feature vector'' is 
+$x=(x_0,\dots,x_n)$, and our ``parameter vector'' is 
+$\theta=(\theta_0,\dots,\theta_n)$. Our hypothesis is 
+$h_\theta(x) = \transpose\theta x$. Define the ``cost function'' $J(\theta)$ 
+and apply gradient descent as above. 
+
+It is useful to use \emph{feature scaling}, which ensures that features lie in 
+the range $[-1,1]$ or something similar. Also, we use \emph{mean 
+normalization}, to ensure all features but $\bx_0$ have zero mean. The general 
+rule is:
+\[
+	\bx_i = \frac{\bx_i-\mu_i}{s_i} ,
+\]
+where $\mu_i$ is the mean and $s_i$ is the standard deviation. 
+
+It is important to choose the ``learning rate'' $\alpha$ well. One way to do 
+this is, given $\alpha$, plot the points $(n,J(\theta_n))$. One can ``declare 
+convergence'' if $J(\theta)$ decreases by less than some given quantity in one 
+iteration. If $J(\theta_n)$ increases, try using a smaller $\alpha$. 
+
+
+\subsection{Polynomial regression}
+
+If we want to make a hypothesis $h_\theta$ that depends not just linearly, but 
+polynomially, on $\bx$, just set $\bx_n=\bx^n$ and feature-scale. Really, we 
+can add $\bx^\eta$ for any real $\eta$. 
+
+
+\subsection{Normal equation}
+
+This is a method to solve for $\theta$ analytically, instead of approximating 
+it. Let $X$ be the matrix $(\bx_0,\dots,\bx_n)$. Then 
+$\theta=(\transpose X X)^{-1} \transpose X y$. The Octave command is 
+\texttt{pinv(X'*X)*X'*y}. The normal equation is very slow if $n$ is large, 
+since the cost of inverting an $n\times n$ matrix is $O(n^3)$. If 
+$\transpose X X$ is non-invertible, then Octave's function \texttt{pinv} does 
+the ``right'' thing anyways. Usually, $\transpose X X$ is non-invertible if 
+there are redundant (i.e., linearly dependent) features, or too many features 
+($m\leqslant n$). 
 
 
 
