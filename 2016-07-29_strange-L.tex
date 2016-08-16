@@ -1,6 +1,7 @@
 \documentclass{article}
 
-\usepackage{amsmath,amssymb,amsthm,bookmark,thmtools}
+
+\usepackage{amsmath,amssymb,amsthm,bookmark,fixltx2e,thmtools}
 \DeclareMathOperator{\disc}{disc}
 \DeclareMathOperator{\GL}{GL}
 \DeclareMathOperator{\Lie}{Lie}
@@ -15,6 +16,7 @@
 \newcommand{\bD}{\mathbf{D}}
 \newcommand{\bF}{\mathbf{F}}
 \newcommand{\bQ}{\mathbf{Q}}
+\newcommand{\bR}{\mathbf{R}}
 \newcommand{\btheta}{{\boldsymbol{\theta}}}
 \newcommand{\bx}{{\boldsymbol x}}
 \newcommand{\bz}{{\boldsymbol z}}
@@ -419,7 +421,7 @@ following contour:
 	\gamma_{3,T}(t) &= (1+\epsilon) + i t \qquad t\in [-T,T] \\
 	\gamma_{4,T}(t) &= t - i T \qquad t\in [\alpha+\epsilon,1+\epsilon] .
 \end{align*}
-By \cite[?]{?}, 
+By \cite[Th.11.18]{apostol-1976}, 
 \[
 	\lim_{T\to \infty} \frac{1}{2\pi i} \int_{-\gamma_{3,T}} \sum_p \frac{z_p}{p^s} x^z\, \frac{\dd z}{z} =^\ast \sum_{p\leqslant x} z_p .
 \]
@@ -500,6 +502,32 @@ Let $E_1,E_2$ be two non-isogenous, non-CM elliptic curves over $\bQ$.
 Assume the Akiyama--Tanigawa conjecture for the product $E_1\times E_2$. 
 Then for any $f\colon [0,\pi]\to \bC$ that is not almost everywhere 
 \end{theorem}
+
+*****
+
+\begin{definition}
+Let $x\in \bR^r$. Following \cite{bugeaud-2008}, we say that the 
+\emph{irrationality exponent} of $x$ is the supremum of all real numbers $\mu$ 
+such that 
+\end{definition}
+
+\begin{theorem}
+For $x\in \bR^d$, write $d(x,\bZ)=\min\{|x-n| : n\in \bZ\}$. For $x\in \bR$, we 
+have the error bound:
+\[
+	\left|\sum_{n\leqslant N} e^{2\pi i \langle x,n m\rangle}\right| \leqslant\frac{1}{d(\langle x,m\rangle,\bZ)} .
+\]
+\end{theorem}
+\begin{proof}
+
+Note that 
+$d(x,\bZ) \leqslant |\sin(\pi x)|$. This, combined with the duplication formula 
+$\cos(2x)=1-2\sin^2(x)$ gives us
+\[
+	\left|\sum_{n\leqslant N} e^{2\pi i \langle x,n m\rangle}\right| \leqslant \frac{2}{|e^{2\pi i \langle x,m\rangle}-1|} = \frac{1}{|\sin(\pi \langle x,m\rangle)|} \leqslant \frac{1}{d(\langle x,m\rangle,\bZ)} .
+\]
+\end{proof}
+
 
 
 
