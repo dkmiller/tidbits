@@ -1,7 +1,11 @@
+% !TEX encoding = UTF-8
+% !TeX spellcheck = en_US
+% !BIB program = bibtex
+
 \documentclass{article}
 
-
-\usepackage{amsmath,amssymb,amsthm,bookmark,fixltx2e,thmtools}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amssymb,amsthm,bookmark,thmtools}
 \DeclareMathOperator{\disc}{disc}
 \DeclareMathOperator{\GL}{GL}
 \DeclareMathOperator{\Lie}{Lie}
@@ -15,8 +19,10 @@
 \newcommand{\bC}{\mathbf{C}}
 \newcommand{\bD}{\mathbf{D}}
 \newcommand{\bF}{\mathbf{F}}
+\newcommand{\bN}{\mathbf{N}}
 \newcommand{\bQ}{\mathbf{Q}}
 \newcommand{\bR}{\mathbf{R}}
+\newcommand{\bT}{\mathbf{T}}
 \newcommand{\btheta}{{\boldsymbol{\theta}}}
 \newcommand{\bx}{{\boldsymbol x}}
 \newcommand{\bz}{{\boldsymbol z}}
@@ -38,10 +44,10 @@
 \newtheorem{definition}[subsection]{Definition}
 
 \usepackage[
-  hyperref = true,
-  backend  = bibtex,
-  sorting  = nyt,
-  style    = alphabetic
+	backend  = bibtex,
+	hyperref = true,
+	sorting  = nyt,
+	style    = alphabetic
 ]{biblatex}
 \addbibresource{tidbit-sources.bib}
 \hypersetup{colorlinks=true,linkcolor=green}
@@ -505,29 +511,142 @@ Then for any $f\colon [0,\pi]\to \bC$ that is not almost everywhere
 
 *****
 
-\begin{definition}
-Let $x\in \bR^r$. Following \cite{bugeaud-2008}, we say that the 
-\emph{irrationality exponent} of $x$ is the supremum of all real numbers $\mu$ 
-such that 
+Throughout this section, $|\cdot|_\infty$ is the sup-norm, and $|\cdot|$ can be 
+any of the (commensurable) $p$-norms on a finite-dimensional real vector space. 
+
+\begin{definition}\label{def:irrationality-exponent}
+Let $x\in \bR^r$ be such that $x_1,\dots,x_r$ are $\bQ$-linearly independent. 
+Following \cite{laurent-2009}, we define $r$-dimensional \emph{irrationality 
+exponents} as the suprema $\omega_0(x)$ and $\omega_{r-1}(x)$ of the sets of 
+$w$ for which there are infinitely many $m=(m_0,\dots,m_r)\in \bZ^{r+1}$ for 
+which 
+\begin{align*}
+	\max \{ |m_0x_i-m_i| \} &\leqslant |m|_\infty^{-w} \\
+	|m_0 + m_1 x_1 + \cdots + m_r x_r| &\leqslant |m|_\infty^{-w} 
+\end{align*}
+respectively. 
 \end{definition}
 
-\begin{theorem}
-For $x\in \bR^d$, write $d(x,\bZ)=\min\{|x-n| : n\in \bZ\}$. For $x\in \bR$, we 
-have the error bound:
+Given $x\in \bR^r$, write $d(x,\bZ^r)=\min_{m\in \bZ^r} |x-m|$. 
+
+\begin{lemma}\label{lem:distance-asymptotic}
+Let $x\in \bR^r$ with $|x|_\infty\leqslant 1$ and $\omega_0(x)$
+(resp.~$\omega_{r-1}(x)$) is finite. Then 
+\begin{align*}
+	\frac{1}{d(n x,\bZ^r)} &\ll_{\epsilon,x} n^{\omega_0(x)+\epsilon} \qquad \text{as $n\to \infty$, (resp.)}\\
+	\frac{1}{d(m\cdot x,\bZ)} &\ll_{\epsilon,x} |m|^{\omega_{r-1}(x)+\epsilon}\qquad \text{as $m\to \infty$ in $\bZ^r$ .}
+\end{align*}
+\end{lemma}
+\begin{proof}
+Let $\epsilon>0$. Then there are only finitely many $n\in \bN$ 
+(resp.~$m\in \bZ^r$) such that the inequalities in 
+\autoref{def:irrationality-exponent} hold with $\omega_0(x)+\epsilon$ 
+(resp.~$\omega_{r-1}(x)+\epsilon$). In other words, there exist 
+$C_0,C_{r-1}>0$ such that 
+\begin{align*}
+	\max\{|m_0 x_i - m_i|\} &\geqslant C_0 |m|_\infty^{-\omega_0(x)-\epsilon} \\
+	|m_0 + m_1 x_1 + \cdots + m_r x_r| &\geqslant C_{r-1} |m|_\infty^{-\omega_{r-1}(x)-\epsilon} .
+\end{align*}
+for all $m\ne 0$. We consider the first inequality, temporarily setting 
+$|\cdot|=|\cdot|_\infty$. Then $d(n x,\bZ^r)=\max\{|n x_i-m_i|\}$ for some 
+$m_i$ such that $|m_i-n x_i|< 1$. Thus 
+$|(n,m_1,\dots,m_r)| \leqslant \max\{|n|,|n x_i|\}\leqslant |n|$. In 
+particular, 
 \[
-	\left|\sum_{n\leqslant N} e^{2\pi i \langle x,n m\rangle}\right| \leqslant\frac{1}{d(\langle x,m\rangle,\bZ)} .
+	d(nx,\bZ^r) \geqslant C_0 |n|^{-\omega_0(x)-\epsilon} ,
+\]
+which implies $\frac{1}{d(n x,\bZ^r)} \ll |n|^{\omega_0(x)+\epsilon}$, the 
+implied constant depending on both $x$ and $\epsilon$. 
+
+For the second inequality, temporarily set $|\cdot|=|\cdot|_1$, and note that 
+$d(m_1 x_1+\cdots+m_r x_r,\bZ)=|m_0+m_1 x_1+\cdots + m_r x_r|$ for 
+$|m_0| \leqslant |(m_1,\dots,m_r)|\cdot |x|+1$. Thus 
+$|(m_0,\dots,m_r)|_\infty \leqslant 2 |x| |(m_1,\dots,m_r)|$, giving us 
+\[
+	d(m_1x_1 + \cdots m_r x_r,\bZ) \geqslant C_{r-1}' |(m_1,\dots,m_r)|^{-\omega_{r-1}(x)-\epsilon} ,
+\]
+which implies $\frac{1}{d(m\cdot x,\bZ)} \ll |m|^{\omega_{r-1}(x)+\epsilon}$, 
+the implied constant again depending on both $x$ and $\epsilon$. 
+\end{proof}
+
+Let $\bT^r=(\bR/\bZ)^r$, with Haar measure normalized to have total mass one. 
+Given $x\in \bT^r$, we define $\omega_0(x)$ and $\omega_{r-1}(x)$ as in 
+\autoref{def:irrationality-exponent}, choosing any coset representative of $x$. 
+This definition is independent of the choice. Recall that for 
+$f\in L^1(\bT^r)$, the \emph{Fourier coefficients} of $f$ are, for $m\in \bZ^r$ 
+\[
+	\widehat f(m) = \int_{\bT^r} e^{2\pi i (m\cdot x)}\, \dd x .
+\]
+
+
+\begin{theorem}[Jarník]
+Let $w\geqslant 1/r$. Then there exists $x\in \bR^r$ such that 
+$\omega_0(x)=w$ and $\omega_{r-1}(x)=r w+r-1$. 
+\end{theorem}
+
+\begin{theorem}
+Fix $x\in \bT^r$ with $\omega_{r-1}(x)$ finite. Then 
+\[
+	\left| \sum_{n\leqslant N} e^{2\pi i n (m\cdot x)}\right| \ll_{\epsilon,x} |m|^{\omega_{r-1}(x)+\epsilon} 
+\]
+as $m$ ranges over $\bZ^r\smallsetminus 0$. 
+\end{theorem}
+\begin{proof}
+First, note the easy bound:
+\[
+	\left| \sum_{n\leqslant N} e^{2\pi in(m\cdot x)}\right|
+		= \left|\frac{e^{2\pi i N (m\cdot x)}-1}{e^{2\pi i m\cdot x}-1}\right| 
+		\leqslant \frac{2}{|e^{2\pi i m x}-1|} .
+\]
+Since $|e^{2\pi i m x}-1| = \sqrt{2-2\cos(2\pi m\cdot x)}$ and 
+$\cos(2\theta)=1-2\sin^2(\theta)$, we obtain 
+$\left|\sum_{n\leqslant N} e^{2\pi i n (m\cdot x)}\right| \leqslant \frac{1}{|\sin(\pi m\cdot x)|}$. 
+It is easy to check that $|\sin(\pi t)|\geqslant d(t,\bZ)$, hence 
+$\left|\sum_{n\leqslant N} e^{2\pi i n (m\cdot x)}\right| \leqslant \frac{1}{d(m\cdot x,\bZ)}$. 
+The final estimate comes from \autoref{lem:distance-asymptotic}. 
+\end{proof}
+
+\begin{theorem}\label{thm:hard-sum-bound}
+Assume $\omega_{r-1}(x)<\infty$. Let $f\in L^1(\bT^r)$ with 
+$\widehat f(0)=0$ and suppose the Fourier coefficients of $f$ satisfy the bound 
+$|\widehat f(m)| \ll |m|^{-\frac{1}{r-1}-\omega_{r-1}-\epsilon}$. Then 
+\[
+	\left|\sum_{n\leqslant N} f(n x)\right| \ll_{f,x} 1 .
 \]
 \end{theorem}
 \begin{proof}
-
-Note that 
-$d(x,\bZ) \leqslant |\sin(\pi x)|$. This, combined with the duplication formula 
-$\cos(2x)=1-2\sin^2(x)$ gives us
+Write $f$ as a Fourier series:
 \[
-	\left|\sum_{n\leqslant N} e^{2\pi i \langle x,n m\rangle}\right| \leqslant \frac{2}{|e^{2\pi i \langle x,m\rangle}-1|} = \frac{1}{|\sin(\pi \langle x,m\rangle)|} \leqslant \frac{1}{d(\langle x,m\rangle,\bZ)} .
+	f(x) = \sum_{m\in \bZ^r} \widehat f(m) e^{2\pi i (m\cdot x)} .
 \]
+Since $\int f=0$, we have $\widehat f(0)=0$. Thus we can compute 
+\begin{align*}
+	\left|\sum_{n\leqslant N} f(n x)\right| 
+		&= \left| \sum_{n\leqslant N} \sum_{m\in \bZ^r\smallsetminus 0} \widehat f(m) e^{2\pi i n (m\cdot x)} \right| \\
+		&\leqslant \sum_{m\in \bZ^r\smallsetminus 0} |\widehat f(m)| \left| \sum_{n\leqslant N} e^{2\pi i n (m\cdot x)}\right| \\
+		&\ll_{x,\epsilon} \sum_{m\in \bZ^r\smallsetminus 0} |m|^{-\frac{1}{r-1}-\omega_{r-1}(x)-\epsilon} |m|^{\omega_{r-1}(x)+\epsilon/2} \\
+		&\ll_{x,\epsilon} \sum_{m\in \bZ^r\smallsetminus 0} |m|^{-\frac{1}{r-1}-\epsilon/2}.
+\end{align*}
+The sum converges since the exponent is less than $-\frac{1}{r-1}$, and it 
+doesn't depend on $N$, whence the result.
 \end{proof}
 
+\begin{corollary}
+Assume $\omega_{r-1}(x)<\infty$, and let $f\in C^\infty(\bT^r)$ with 
+$\widehat f(0)=0$. Then $\left|\sum_{n\leqslant N} f(n x)\right| \ll_{f,x} 1$. 
+\end{corollary}
+\begin{proof}
+This follows from \autoref{thm:hard-sum-bound} and the fact that the Fourier 
+coefficients of a smooth function decay faster than $|m|^k$, for any 
+$k\in (-\infty,-1]$. 
+\end{proof}
+
+\begin{theorem}
+If $\omega_0(x)<\infty$, then the sequence $x_n=n x$ has discrepancy 
+\[
+	\disc(\bx^C) = \Omega(C^?) .
+\]
+\end{theorem}
 
 
 
