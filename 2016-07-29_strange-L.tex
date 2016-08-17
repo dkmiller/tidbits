@@ -509,7 +509,18 @@ Assume the Akiyama--Tanigawa conjecture for the product $E_1\times E_2$.
 Then for any $f\colon [0,\pi]\to \bC$ that is not almost everywhere 
 \end{theorem}
 
-*****
+
+
+
+
+
+\section{A collection of counterexamples}
+
+In \cite[?]{akiyama-tanigawa}, Akiyama and Tanigawa claim that for $E_{/\bQ}$, 
+the ``discrepancy conjecture'' $\disc(\btheta^C)\ll C^{-\frac 1 2+\epsilon}$ is 
+equivalent to the Riemann Hypothesis for $L(E,s)$. In this section, I construct 
+a collection of examples which show that their conjecture is false for any 
+motive with positive-dimensional Sato--Tate group. 
 
 Throughout this section, $|\cdot|_\infty$ is the sup-norm, and $|\cdot|$ can be 
 any of the (commensurable) $p$-norms on a finite-dimensional real vector space. 
@@ -534,7 +545,7 @@ Let $x\in \bR^r$ with $|x|_\infty\leqslant 1$ and $\omega_0(x)$
 (resp.~$\omega_{r-1}(x)$) is finite. Then 
 \begin{align*}
 	\frac{1}{d(n x,\bZ^r)} &\ll_{\epsilon,x} n^{\omega_0(x)+\epsilon} \qquad \text{as $n\to \infty$, (resp.)}\\
-	\frac{1}{d(m\cdot x,\bZ)} &\ll_{\epsilon,x} |m|^{\omega_{r-1}(x)+\epsilon}\qquad \text{as $m\to \infty$ in $\bZ^r$ .}
+	\frac{1}{d(\langle m,x\rangle,\bZ)} &\ll_{\epsilon,x} |m|^{\omega_{r-1}(x)+\epsilon}\qquad \text{as $m\to \infty$ in $\bZ^r$ .}
 \end{align*}
 \end{lemma}
 \begin{proof}
@@ -565,7 +576,7 @@ $|(m_0,\dots,m_r)|_\infty \leqslant 2 |x| |(m_1,\dots,m_r)|$, giving us
 \[
 	d(m_1x_1 + \cdots m_r x_r,\bZ) \geqslant C_{r-1}' |(m_1,\dots,m_r)|^{-\omega_{r-1}(x)-\epsilon} ,
 \]
-which implies $\frac{1}{d(m\cdot x,\bZ)} \ll |m|^{\omega_{r-1}(x)+\epsilon}$, 
+which implies $\frac{1}{d(\langle m,x\rangle,\bZ)} \ll |m|^{\omega_{r-1}(x)+\epsilon}$, 
 the implied constant again depending on both $x$ and $\epsilon$. 
 \end{proof}
 
@@ -575,11 +586,13 @@ Given $x\in \bT^r$, we define $\omega_0(x)$ and $\omega_{r-1}(x)$ as in
 This definition is independent of the choice. Recall that for 
 $f\in L^1(\bT^r)$, the \emph{Fourier coefficients} of $f$ are, for $m\in \bZ^r$ 
 \[
-	\widehat f(m) = \int_{\bT^r} e^{2\pi i (m\cdot x)}\, \dd x .
+	\widehat f(m) = \int_{\bT^r} e^{2\pi i \langle m,x\rangle}\, \dd x ,
 \]
+where $\langle m,x\rangle=m_1 x_1 + \cdots + m_r x_r$ is the usual inner 
+product. 
 
 
-\begin{theorem}[Jarník]
+\begin{theorem}[Jarník]\label{thm:existence-exponent}
 Let $w\geqslant 1/r$. Then there exists $x\in \bR^r$ such that 
 $\omega_0(x)=w$ and $\omega_{r-1}(x)=r w+r-1$. 
 \end{theorem}
@@ -587,22 +600,22 @@ $\omega_0(x)=w$ and $\omega_{r-1}(x)=r w+r-1$.
 \begin{theorem}
 Fix $x\in \bT^r$ with $\omega_{r-1}(x)$ finite. Then 
 \[
-	\left| \sum_{n\leqslant N} e^{2\pi i n (m\cdot x)}\right| \ll_{\epsilon,x} |m|^{\omega_{r-1}(x)+\epsilon} 
+	\left| \sum_{n\leqslant N} e^{2\pi i \langle m, nx\rangle}\right| \ll_{\epsilon,x} |m|^{\omega_{r-1}(x)+\epsilon} 
 \]
 as $m$ ranges over $\bZ^r\smallsetminus 0$. 
 \end{theorem}
 \begin{proof}
 First, note the easy bound:
 \[
-	\left| \sum_{n\leqslant N} e^{2\pi in(m\cdot x)}\right|
-		= \left|\frac{e^{2\pi i N (m\cdot x)}-1}{e^{2\pi i m\cdot x}-1}\right| 
-		\leqslant \frac{2}{|e^{2\pi i m x}-1|} .
+	\left| \sum_{n\leqslant N} e^{2\pi in\langle m,x\rangle}\right|
+		= \left|\frac{e^{2\pi i N \langle m,x\rangle}-1}{e^{2\pi i \langle m,x\rangle}-1}\right| 
+		\leqslant \frac{2}{|e^{2\pi i \langle m,x\rangle}-1|} .
 \]
-Since $|e^{2\pi i m x}-1| = \sqrt{2-2\cos(2\pi m\cdot x)}$ and 
+Since $|e^{2\pi i \langle m,x\rangle}-1| = \sqrt{2-2\cos(2\pi \langle m,x\rangle)}$ and 
 $\cos(2\theta)=1-2\sin^2(\theta)$, we obtain 
-$\left|\sum_{n\leqslant N} e^{2\pi i n (m\cdot x)}\right| \leqslant \frac{1}{|\sin(\pi m\cdot x)|}$. 
+$\left|\sum_{n\leqslant N} e^{2\pi i n \langle m,x\rangle}\right| \leqslant \frac{1}{|\sin(\pi \langle m,x\rangle)|}$. 
 It is easy to check that $|\sin(\pi t)|\geqslant d(t,\bZ)$, hence 
-$\left|\sum_{n\leqslant N} e^{2\pi i n (m\cdot x)}\right| \leqslant \frac{1}{d(m\cdot x,\bZ)}$. 
+$\left|\sum_{n\leqslant N} e^{2\pi i n \langle m,x\rangle}\right| \leqslant \frac{1}{d(\langle m,x\rangle,\bZ)}$. 
 The final estimate comes from \autoref{lem:distance-asymptotic}. 
 \end{proof}
 
@@ -631,7 +644,7 @@ The sum converges since the exponent is less than $-\frac{1}{r-1}$, and it
 doesn't depend on $N$, whence the result.
 \end{proof}
 
-\begin{corollary}
+\begin{corollary}\label{cor:smooth-bounds}
 Assume $\omega_{r-1}(x)<\infty$, and let $f\in C^\infty(\bT^r)$ with 
 $\widehat f(0)=0$. Then $\left|\sum_{n\leqslant N} f(n x)\right| \ll_{f,x} 1$. 
 \end{corollary}
@@ -641,12 +654,65 @@ coefficients of a smooth function decay faster than $|m|^k$, for any
 $k\in (-\infty,-1]$. 
 \end{proof}
 
-\begin{theorem}
-If $\omega_0(x)<\infty$, then the sequence $x_n=n x$ has discrepancy 
+\begin{theorem}\label{thm:discrepancy-lower-bound}
+If $\omega_0(x)<\infty$, then the sequence $\bx=(n x)_{n\geqslant 1}$ in 
+$\bT^r$ has discrepancy 
 \[
-	\disc(\bx^C) = \Omega(C^?) .
+	\disc(\bx^N) = \Omega\left(2^{-r\left(2+\frac{1}{\omega_0(x)}\right)-\epsilon} N^{-\frac{r}{\omega_0(x)}-\epsilon}\right) .
 \]
 \end{theorem}
+\begin{proof}
+We follow the proof of \cite[Ch.2, Th.3.3]{kuipers-niederreiter-1974}. First, 
+given $\epsilon>0$, there exists $\delta>0$ such that 
+$\frac{r}{\omega_0(x)-\delta} = \frac{r}{\omega_0(x)}+\epsilon$. 
+
+By the definition of $\omega_0(x)$, there exist infinitely many 
+$(q,m_1,\dots,m_r)$ with $q>0$ such that 
+\[
+	|q x-m|_\infty \leqslant (\max \{q,|m|_\infty|\})^{-\omega_0(x)+\delta/2} .	
+\]
+Since $\max\{q,|m|_\infty\}\geqslant q$, we derive the stronger statement 
+that for infinitely many $q\to \infty$, there exists 
+$m=(m_1,\dots,m_r)\in \bZ^r$ such that 
+$|q x-m|_\infty \leqslant q^{-\omega_0(x)+\delta/2}$, or, equivalently, 
+$|x-\frac{m}{q}| \leqslant q^{-1-\omega_0(x)+\delta/2}$. Pick such a $q$, and 
+let $N=\lfloor q^{\omega_0(x)-\delta}\rfloor$. Then for $n\leqslant N$, we have 
+$|n x-\frac n q m| \leqslant q^{-1-\delta/2}$. Thus, for $n\leqslant N$, each 
+$n x$ is within $q^{-1-\delta/2}$ of the grid $\frac{1}{q} \bZ^r\subset \bT^r$. 
+Thus, they miss a box with side lengths $q^{-1}-2 q^{-1-\delta/2}$. For 
+$q$ sufficiently large, $q^{-1}-2 q^{-1-\delta/2} \geqslant 1/2q$, so the 
+(non-star) discrepancy of $\bx^N$ is bounded below by $2^{-r} q^{-r}$. Since 
+$q^{\omega_0(x)-\delta}\leqslant 2 N$, the (non-star) discrepancy at $N$ is 
+bounded below by 
+\[
+	2^{-r} \left((2N)^{\frac{1}{\omega_0(x)+\delta}}\right)^{-r} = 2^{-r-\frac{r}{\omega_0(x)+\delta}} N^{-\frac{r}{\omega_0(x)+\delta}} = 2^{-r\left(1+\frac{1}{\omega_0(x)}\right)-\epsilon} N^{-\frac{r}{\omega_0(x)}-\epsilon} .
+\]
+Since $r$-dimensional star-discrepancy is bounded below by 
+$2^{-r}$ times non-star discrepancy, we obtain the final result.
+\end{proof}
+
+The key point in the above theorem is that 
+\[
+	\disc(\bx^N) = \Omega_{x,r,\epsilon}\left(N^{-\frac{r}{\omega_0(x)}-\epsilon}\right) .
+\]
+
+\begin{theorem}
+Let $\eta\in (0,1)$. Then there exists $x\in \bT^r$ such that for all 
+$f\in C^\infty(\bT^r)$ with $\widehat f(0)=0$, the estimate 
+\[
+	\left| \sum_{n\leqslant N} f(n x)\right|\ll_{f,x} 1
+\]
+holds, but for which 
+\[
+	\disc(\bx^N) = \Omega_{\epsilon,r,x}\left(N^{-\eta - \epsilon}\right) .
+\]
+\end{theorem}
+\begin{proof}
+Let $w=\frac{r}{\eta} \geqslant \frac 1 r$. By 
+\autoref{thm:existence-exponent}, there exists $x\in \bT^r$ with 
+$\omega_0(x)=w$ and $\omega_{r-1}(x)=r w+r-1$. The result follows easily 
+from \autoref{cor:smooth-bounds} and \autoref{thm:discrepancy-lower-bound}. 
+\end{proof}
 
 
 
