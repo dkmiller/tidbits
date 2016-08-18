@@ -25,6 +25,7 @@
 \newcommand{\bT}{\mathbf{T}}
 \newcommand{\btheta}{{\boldsymbol{\theta}}}
 \newcommand{\bx}{{\boldsymbol x}}
+\newcommand{\by}{{\boldsymbol y}}
 \newcommand{\bz}{{\boldsymbol z}}
 \newcommand{\bZ}{\mathbf{Z}}
 \newcommand{\cF}{\mathcal{F}}
@@ -696,7 +697,7 @@ The key point in the above theorem is that
 	\disc(\bx^N) = \Omega_{x,r,\epsilon}\left(N^{-\frac{r}{\omega_0(x)}-\epsilon}\right) .
 \]
 
-\begin{theorem}
+\begin{theorem}\label{thm:fast-decay}
 Let $\eta\in (0,1)$. Then there exists $x\in \bT^r$ such that for all 
 $f\in C^\infty(\bT^r)$ with $\widehat f(0)=0$, the estimate 
 \[
@@ -713,6 +714,42 @@ Let $w=\frac{r}{\eta} \geqslant \frac 1 r$. By
 $\omega_0(x)=w$ and $\omega_{r-1}(x)=r w+r-1$. The result follows easily 
 from \autoref{cor:smooth-bounds} and \autoref{thm:discrepancy-lower-bound}. 
 \end{proof}
+
+
+\begin{lemma}
+Let $\lambda$ be the Lebesgue measure on $[0,1]^r$, and $\mu=f\lambda$ 
+where $f\geqslant 0$ is smooth, and $f\ne 0$ on the interior of $[0,1]^r$. Then 
+there is a diffeomorphism $u\colon [0,1]^r\to [0,1]^r$, identity on the 
+boundary, such that $u_\ast \lambda = \mu$. 
+\end{lemma}
+\begin{proof}
+Follow \cite{moser-1965}. 
+\end{proof}
+
+\begin{theorem}
+Let $\lambda$, $\mu$, $f$ be as above. Then there exists a sequence 
+$\bx$ in $[0,1]^r$ such that $\disc(\bx^N)=\Omega(N^?)$, but for which 
+$|\sum g(x_n)| \ll_g 1$ for all smooth $g$ with $\mu(g)=0$. 
+\end{theorem}
+\begin{proof}
+Use the sequence $y_n=n y\mod 1$, where $y$ is as in \autoref{thm:fast-decay}. 
+Consider $\bx=u_\ast \by$. We easily have, assuming $\mu(f)=0$, the result:
+\[
+	\left|\sum_{n\leqslant N} g(u(x_n))\right| = \left| \sum_{n\leqslant N} (g\circ u)(x_n)\right| \ll_{g\circ u,y} 1 ,
+\]
+since $\lambda(g\circ u)=0$. All that we need is a lower bound on the discrepancy 
+of $u_\ast \by$, and this comes relating ``honest discrepancy'' with 
+``isotropic discrepancy'' (coming from convex sets). By 
+\cite{polyak-2001}, the image under $u$ of a small enough ball is convex, 
+which gets us what we need.
+\end{proof}
+
+\begin{theorem}
+Let $[0,1]^r,\mu$ be as above. Then there exists $\bx$ such that for all smooth 
+$f$, $L_f(\bx,s)$ satisfies the Riemann Hypothesis (analytic continuation and 
+no zeros on $\{\Re>\frac 1 2\}$, but for which 
+$\disc(\bx^N)=\Omega(N^?)$. 
+\end{theorem}
 
 
 
