@@ -1,0 +1,58 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\DeclareMathOperator{\GL}{GL}
+\DeclareMathOperator{\SU}{SU}
+\DeclareMathOperator{\tr}{tr}
+\newcommand{\bC}{\mathbf{C}}
+\newcommand{\bF}{\mathbf{F}}
+\newcommand{\bQ}{\mathbf{Q}}
+\newcommand{\cF}{\mathcal{F}}
+
+\title{Discrepancy bounds over function fields}
+\author{Daniel Miller}
+
+\begin{document}
+\maketitle
+
+
+
+
+
+Let $C_{/\bF_p}$ be smooth proper curve, $\cF$ a smooth $l$-adic sheaf, pure of 
+weight zero on $C$. Let $G^\mathrm{geom}$ be the geometric monodromy group of 
+$\cF$, and assume what is necessary (see \S9.0 of Katz--Sarnak) for the 
+Sato--Tate conjecture to hold. That is, let $K$ be a maximal compact subgroup 
+of $G^\mathrm{geom}(\bC)$ and $K^\natural$ the set of conjugacy classes in $K$. 
+For each $c\in C$, we have the Frobenius conjugacy class 
+$\vartheta(c)\in K^\natural$. Katz--Sarnak prove that, for each irreducible 
+$\rho\colon K\to \GL(n,\bC)$, we have the bound
+\[
+	\left| \frac{1}{\#\{c\in |C|:\deg c\leqslant N\}} \sum_{c\in |C|:\deg c\leqslant N} \tr \rho(\vartheta(c))\right| \ll \#\{c\in |C|:\deg c\leqslant N\}^{-\frac 1 2} .
+\]
+In simpler terms, if we enumerate the $c\in |C|$ as $c_1,c_2,\dots$ with ascending 
+degree, then 
+\begin{equation}\label{trace-bound}
+	\left| \frac{1}{N} \sum_{n\leqslant N} \tr \rho(\vartheta(c_n))\right| \ll N^{-\frac 1 2} .
+\end{equation}
+
+I am wondering whether a similar bound is known on the discrepancy of the $\vartheta(c_n)$. 
+For example, assume $K=\SU(2)$, so that $K^\natural=[0,\pi]$. Put 
+\[
+	D_N(\{\vartheta(c_n)\}) = \sup_{0\leqslant \alpha\leqslant \pi} \left| \frac{\#\{n\leqslant N : \vartheta(c_n)\in [0,\alpha)\}}{N} - \int_0^\alpha \frac{2}{\pi} \sin^2(\theta)\, \mathrm{d}\theta\right| .
+\]
+It is natural to conjecture (Akiyama and Tanigawa have for elliptic curves over 
+$\bQ$) that 
+\begin{equation}\label{disc-bound}
+	D_N(\{\vartheta(c_n)\}) \ll N^{-\frac 1 2+\epsilon} .
+\end{equation}
+Is this known in the above case? Via the Koksma--Hlawka inequality, a discrepancy 
+bound like \eqref{disc-bound} certainly implies the estimate \eqref{trace-bound}, 
+but I am wondering if \eqref{disc-bound} is known even in the case where $\cF$ comes 
+from a family of elliptic curves $E_{/C}$. 
+
+
+
+
+
+\end{document}
