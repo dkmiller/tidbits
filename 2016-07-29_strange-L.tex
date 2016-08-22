@@ -1,17 +1,15 @@
-% !TEX encoding = UTF-8
 % !TeX spellcheck = en_US
-% !BIB program = bibtex
 
 \documentclass{article}
 
-\usepackage[utf8]{inputenc}
-\usepackage{amsmath,amssymb,amsthm,bookmark,thmtools}
+\usepackage{amsmath,amssymb,amsthm}
 \DeclareMathOperator{\disc}{disc}
 \DeclareMathOperator{\GL}{GL}
 \DeclareMathOperator{\Lie}{Lie}
 \DeclareMathOperator{\N}{N}
 \DeclareMathOperator{\R}{R}
 \DeclareMathOperator{\sgn}{sgn}
+\DeclareMathOperator{\SU}{SU}
 \DeclareMathOperator{\sym}{sym}
 \DeclareMathOperator{\tr}{tr}
 \DeclareMathOperator{\U}{U}
@@ -33,7 +31,9 @@
 
 \newcommand{\alev}{\mathrm{ae}}
 \newcommand{\dd}{\mathrm{d}}
+\newcommand{\iso}{\mathrm{iso}}
 \newcommand{\fr}{\mathrm{fr}}
+\newcommand{\Haar}{\mathrm{Haar}}
 \newcommand{\simplc}{\mathrm{sc}}
 \newcommand{\semis}{\mathrm{ss}}
 \newcommand{\ST}{\mathrm{ST}}
@@ -43,15 +43,9 @@
 \newtheorem{corollary}[subsection]{Corollary}
 \theoremstyle{definition}
 \newtheorem{definition}[subsection]{Definition}
+\newtheorem{example}[subsection]{Example}
 
-\usepackage[
-	backend  = bibtex,
-	hyperref = true,
-	sorting  = nyt,
-	style    = alphabetic
-]{biblatex}
-\addbibresource{tidbit-sources.bib}
-\hypersetup{colorlinks=true,linkcolor=green}
+ 
 
 
 
@@ -82,7 +76,7 @@ means the ``strange $L$-function''
 \[
 	L_{\sgn}(E,s) = \prod_p \frac{1}{1-\sgn a_p(E) p^{-s}} 
 \]
-determines $E$ up to isogeny. In this note, I define a more general class of 
+determines $E$ up to isogeny. In this note, we define a more general class of 
 strange $L$-functions, and show that their analytic properties are closely 
 tied to the equidistribution of the $a_p(E)$. 
 
@@ -94,36 +88,37 @@ $E_{/\bQ}$. It is convenient to repackage the traces of Frobenius as follows:
 The Hasse Bound guarantees that the $\theta_p(E)$ are well-defined angles 
 laying in the interval $[0,\pi]$. Write 
 $\dd\ST = \frac{2}{\pi} \sin^2\theta\, \dd\theta$. Then the Sato--Tate 
-conjecture (now a theorem \cite{barnet-lamb-etal-2011}) tells us that for any 
+conjecture, now a theorem \cite{barnet-lamb-etal-2011}, tells us that for any 
 continuous function $f\colon [0,\pi]\to \bC$, we have
 \[
-	\left| \frac{1}{\pi(C)} \sum_{p\leqslant C} f(\theta_p) - \int_0^\pi f\, \dd\ST\right| = o(1)
+	\left| \frac{1}{\pi(N)} \sum_{p\leqslant N} f(\theta_p) - \int_0^\pi f\, \dd\ST\right| = o(1)
 \]
-as $C\to \infty$. It is well-known that this follows from the analytic 
+as $N\to \infty$. It is well-known that this follows from the analytic 
 continuation (past $\Re s=1$) and non-vanishing except at $s=1$ of all the 
 $L$-functions $L(\sym^k E,s)$ \cite[A.1, Th.1]{serre-1968}. We take as our 
 starting point the much stronger conjecture, due to Akiyama--Tanigawa 
 \cite{akiyama-tanigawa}, that 
 \[
-	\left| \frac{1}{\pi(C)} \sum_{p\leqslant C} f(\theta_p) - \int_0^\pi f\, \dd \mu_\ST\right| = O_f(C^{-\frac 1 2+\epsilon}) 
+	\left| \frac{1}{\pi(N)} \sum_{p\leqslant N} f(\theta_p) - \int_0^\pi f\, \dd \mu_\ST\right| \ll_f N^{-\frac 1 2+\epsilon}
 \]
-for all continuous $f$. (Their conjecture is actually more general; we will 
+for all $f$ of bounded variation. (Their conjecture is actually more general; we will 
 discuss the precise statement later.)
-They prove that this conjecture implies the Riemann Hypothesis for $E$. I 
+They prove that this conjecture implies the Riemann Hypothesis for $E$. We 
 prove that not only does their conjecture imply the Riemann Hypothesis for all 
 $L(\sym^k E,s)$, it also does for all the strange $L$-functions 
 \[
 	L_f(E,s) = \prod_p \frac{1}{1-f(\theta_p(E)) p^{-s}}
 \]
+where $f$ varies over almost-everywhere continuous functions on $[0,\pi]$. 
 
-These results make perfect sense in a much more general context, and I will 
-prove them there. In \autoref{sec:definition} I set up this context and 
-carefully define strange $L$-functions. In \autoref{sec:prelim-result}, I 
+These results make perfect sense in a much more general context, and we
+prove them there. In Section ? I set up this context and 
+carefully define strange $L$-functions. In Section ?, I 
 prove basic analytic properties of the strange $L$-functions and 
 connect their analytic properties with the equidistribution of a sequence. 
-In \autoref{sec:function-field}, I apply these results where ``everything is 
+In Section ?, I apply these results where ``everything is 
 known,'' i.e.~varieties over function fields.
-Finally, in \autoref{sec:application}, I apply the general results to the 
+Finally, in Section ?, I apply the general results to the 
 following cases: a non-CM elliptic curve $E_{/\bQ}$, the product 
 $E_1\times E_2$ of a pair of non-isogenous non-CM elliptic curves over $\bQ$, 
 and the Jacobian of a generic genus-$2$ curve $C_{/\bQ}$. 
@@ -132,7 +127,7 @@ and the Jacobian of a generic genus-$2$ curve $C_{/\bQ}$.
 
 
 
-\section{Definitions}\label{sec:definition}
+\section{Strange $L$-functions}\label{sec:strange-L}
 
 Let $\bD=\{z\in \bC : |z|\leqslant 1\}$. Write $\bD^\infty$ for the set of 
 sequences in $\bD$ indexed by the primes, i.e.~$\bz\in\bD^\infty$ is 
@@ -163,22 +158,22 @@ compact space $X^\infty$ is metrizable and separable, also with no isolated
 points. 
 
 \begin{definition}
-For $\bx\in X^\infty$ and $C>0$, write $\bx^C$ for the probability measure 
-given by 
+For $\bx\in X^\infty$ and $N>0$, write $\bx^N$ for the probability measure on 
+$\bD$ given by 
 \[
-	\int_X f\, \dd \bx^C = \bx^C(f) = \frac{1}{\pi(C)} \sum_{p\leqslant C} f(x_p) .
+	\int_X f\, \dd \bx^N = \bx^N(f) = \frac{1}{\pi(N)} \sum_{p\leqslant N} f(x_p) .
 \]
 \end{definition}
 
 Let $\mu$ be a Borel measure on $X$. Recall that $\bx$ is 
-\emph{$\mu$-equidistributed} if $\bx^C\to \mu$ weakly, i.e. 
-$\bx^C(f) \to \mu(f)$ for all $f\in C(X)$. In fact, we can extend this to 
-not-necessarily-continuous functions as follows:
+\emph{$\mu$-equidistributed} if $\bx^N\to \mu$ weakly, i.e. 
+$\mu(f) = \lim_{N\to \infty}\bx^N(f)$ for all $f\in C(X)$. In fact, we can 
+extend this to not-necessarily-continuous functions as follows:
 
 \begin{theorem}[Mazzone]
 Let $\mu$ be a Borel measure on $X$ and let $f\colon X\to \bC$ be bounded and 
 measurable. Then $f$ is continuous almost everywhere if and only if 
-$\bx^C(f) \to \mu(f)$ for all $\mu$-equidistributed $\bx$. 
+$\mu(f)=\lim_{N\to \infty}\bx^N(f)$ for all $\mu$-equidistributed $\bx$. 
 \end{theorem}
 \begin{proof}
 This follows directly from the proof of \cite[Th.1]{mazzone-1995}.
@@ -240,9 +235,55 @@ is the identity
 
 
 
+
+
+\section{Discrepancy}\label{sec:discrepancy}
+
 The rest of our definitions concern discrepancy, which for now we define only 
-in a special context. Let $G$ be a compact connected semisimple Lie group. We 
-will define discrepancy for sequences in $G^\natural$. 
+in a special context. Let $r\geqslant 1$ be an integer, and consider the space 
+$[0,1]^r$. For $x,y\in [0,1]^r$, we write $x<y$ (resp.~$x\leqslant y$) if 
+$x=(x_1,\dots,x_r)$, $y=(y_1,\dots,y_r)$ and $x_i<y_i$ 
+(resp.~$x_i\leqslant y_i$) for all $i$. Given $x<y\in [0,1]^r$, write 
+\begin{align*}
+	I_x &= \{z\in [0,1]^r : z<x\} \\
+	I_{x,y} &= \{z\in [0,1]^r : x\leqslant z<y\} .
+\end{align*}
+
+\begin{definition}
+Let $\mu$, $\nu$ be probability measures on $[0,1]^r$. The 
+\emph{star-discrepancy} between $\mu$ and $\nu$ is 
+\[
+	\disc^\star(\mu,\nu) = \sup_{x\in [0,1]^r} |\mu(I_x)-\nu(I_x)| ,
+\]
+the \emph{discrepancy} between $\mu$ and $\nu$ is 
+\[
+	\disc(\mu,\nu) = \sup_{x<y\in [0,1]^r} |\mu(I_{x,y})-\nu(I_{x,y})| ,
+\]
+and the \emph{isotropic discrepancy} between $\mu$ and $\nu$ is 
+\[
+	\disc^\iso(\mu,\nu) = \sup_{C\subset [0,1]^r} |\mu(C)-\nu(C)| ,
+\]
+where $C$ ranges over convex subsets of $[0,1]^r$. 
+\end{definition}
+
+Let $\lambda$ be the Lebesgue measure on $[0,1]^r$, $\bx$ a sequence in 
+$[0,1]^r$. We write $\disc^\ast(\bx^N)=\disc^\ast(\bx^N,\lambda)$ for 
+$\ast\in \{\varnothing,\star,\iso\}$. 
+
+\begin{theorem}
+Let $\bx$ be a sequence in $[0,1]^r$. Then 
+\begin{align*}
+	\disc(\bx^N) &\leqslant \disc^\iso(\bx^N) \leqslant (4 r \sqrt r+1) \disc(\bx^N)^{1/r} ,\\
+	\disc^\star(\bx^N) &\leqslant \disc(\bx^N) \leqslant 2^r \disc^\star(\bx^N) .
+\end{align*}
+\end{theorem}
+\begin{proof}
+The first inequality is Theorem 1.6, and the second is Example 1.2, both from 
+\cite[Ch.2]{kuipers-niederreiter-1974}. 
+\end{proof}
+
+We can use the above to define discrepancy for sequences in $G^\natural$, the 
+space of conjugacy classes in a compact connected semisimple Lie group.
 
 Let $G^\simplc$ be the simply-connected cover of $G$. Choose a maximal torus 
 $T\subset G^\simplc$; let $W=\N(T)/T$ be the Weyl group. Let $\ft=\Lie(T)$ and 
@@ -250,22 +291,35 @@ recall that the kernel of $\exp\colon \ft\twoheadrightarrow T$ is generated by
 the nodal vectors associated to the root system $\R(G^\simplc,T)$ 
 \cite[9.6 Pr.11]{bourbaki-lie-alg-7-9}. Write $\{t_1,\dots,t_r\}\subset \ft$ 
 for these vectors. The exponential map $\exp\colon \ft\to T$ induces an 
-isomorphism $\ft/(\langle t_i\rangle \rtimes W) \to G^\natural$.  Given 
-$x=(x_1,\dots,x_r)\in [0,1]^r$, write 
+isomorphism $\ft/(\langle t_i\rangle \rtimes W) \to G^\natural$. In particular, 
+we can use the basis $\{t_1,\dots,t_r\}$ to identify $\ft/\langle t_i\rangle$ 
+with $[0,1]^r/W$. Let $p_G\colon [0,1]^r \twoheadrightarrow G^\natural$ be the 
+surjection $(x_1,\dots,x_r)\mapsto \exp(\sum x_i t_i)$. This is a $\# W$-to-one 
+map almost everywhere, so for a measure $\mu$ on $G^\natural$ the ``pullback 
+measure'' 
 \[
-	I_x = \left\{\sum_{i=1}^r a_i t_i : a_i \in [0,x_i] \right\} \subset \ft .
+	p_G^\ast \mu(f) = \mu\left(\frac{1}{\# W} \sum_{w\in W} w^\ast f\right)
 \]
+makes sense. 
 
 \begin{definition}
 With the setup as above, let $\mu,\nu$ be probability measures on $G^\natural$. 
-The \emph{discrepancy} between $\mu$ and $\nu$ is
+The \emph{$\ast$-discrepancy} between $\mu$ and $\nu$ is
 \[
-	\disc(\mu,\nu) = \sup_{x\in [0,1]^r} \left|\mu(\exp I_x) - \nu(\exp I_x) \right| .
+	\disc^\ast(\mu,\nu) = \disc^\ast(p_G^\ast \mu,p_G^\ast \nu).
 \]
 \end{definition}
 
-If $\nu=\dd x$, the Haar measure on $G^\natural$, we simply write 
-$\disc(\mu)$ for $\disc(\mu,\dd x)$. 
+\begin{example}
+Let $G=\SU(2)$ with maximal torus 
+\[
+	T = \left\{ \begin{pmatrix} e^{2\pi i t} \\ & e^{-2\pi i t} \end{pmatrix} : -1\leqslant t <1\right\} .
+\]
+Then $W=S_2$, whose nontrivial element acts via $t\mapsto -t$. 
+\end{example}
+
+If $\nu$ is the Haar measure on $G^\natural$, we simply write 
+$\disc(\mu)$ for $\disc(\mu,\Haar)$. 
 
 The Koksma--Hlawka inequality bounds the difference between the Haar integral 
 and weighted average of a function on $G^\natural$ in terms of the discrepancy 
@@ -348,14 +402,14 @@ with $\mu(f)=0$.
 Koksma--Hlawka tells that if $\mu(f)=0$, then 
 $\bx^C(f)\ll C^{-\frac 1 2+\epsilon}$. Thus the sequence 
 $f(\bx)$ satisfies $A_{f(\bx)}(x) \ll x^{\frac 1 2+\epsilon}$, and the result 
-follows from \autoref{thm:main-for-sequences}. 
+follows from Theorem \ref{thm:main-for-sequences}. 
 \end{proof}
 
 
 
 
 
-\section{Strange \texorpdfstring{$L$}{L}-functions over function fields}\label{sec:function-field}
+\section{Strange $L$-functions over function fields}\label{sec:function-field}
 
 Let $k$ be a finite field of characteristic $p$ and cardinality $q$. Let 
 $C_{/k}$ be a nice curve in the sense of Poonen (i.e., $C$ is smooth, 
@@ -496,9 +550,9 @@ $\{\Re >\frac 1 2\}$ and satisfy the Riemann Hypothesis. In particular,
 this holds for all $L(\sym^k E,s)$. 
 \end{theorem}
 \begin{proof}
-The first conclusion follows from \autoref{cor:ATRH}. The second part follows 
+The first conclusion follows from Corollary \ref{cor:ATRH}. The second part follows 
 from the fact that any $L(\sym^k E,s)$ can be written as a product of $L_f$'s, 
-namely the $L_{\lambda_{\sym^k}^j}$'s in \autoref{sec:definition}.  
+namely the $L_{\lambda_{\sym^k}^j}$'s in Section \ref{sec:definition}.  
 \end{proof}
 
 \begin{theorem}
@@ -552,7 +606,7 @@ Let $x\in \bR^r$ with $|x|_\infty\leqslant 1$ and $\omega_0(x)$
 \begin{proof}
 Let $\epsilon>0$. Then there are only finitely many $n\in \bN$ 
 (resp.~$m\in \bZ^r$) such that the inequalities in 
-\autoref{def:irrationality-exponent} hold with $\omega_0(x)+\epsilon$ 
+Definition \ref{def:irrationality-exponent} hold with $\omega_0(x)+\epsilon$ 
 (resp.~$\omega_{r-1}(x)+\epsilon$). In other words, there exist 
 $C_0,C_{r-1}>0$ such that 
 \begin{align*}
@@ -583,7 +637,7 @@ the implied constant again depending on both $x$ and $\epsilon$.
 
 Let $\bT^r=(\bR/\bZ)^r$, with Haar measure normalized to have total mass one. 
 Given $x\in \bT^r$, we define $\omega_0(x)$ and $\omega_{r-1}(x)$ as in 
-\autoref{def:irrationality-exponent}, choosing any coset representative of $x$. 
+Definition \ref{def:irrationality-exponent}, choosing any coset representative of $x$. 
 This definition is independent of the choice. Recall that for 
 $f\in L^1(\bT^r)$, the \emph{Fourier coefficients} of $f$ are, for $m\in \bZ^r$ 
 \[
@@ -593,7 +647,7 @@ where $\langle m,x\rangle=m_1 x_1 + \cdots + m_r x_r$ is the usual inner
 product. 
 
 
-\begin{theorem}[Jarník]\label{thm:existence-exponent}
+\begin{theorem}[Jarn\'{i}k]\label{thm:existence-exponent}
 Let $w\geqslant 1/r$. Then there exists $x\in \bR^r$ such that 
 $\omega_0(x)=w$ and $\omega_{r-1}(x)=r w+r-1$. 
 \end{theorem}
@@ -617,7 +671,7 @@ $\cos(2\theta)=1-2\sin^2(\theta)$, we obtain
 $\left|\sum_{n\leqslant N} e^{2\pi i n \langle m,x\rangle}\right| \leqslant \frac{1}{|\sin(\pi \langle m,x\rangle)|}$. 
 It is easy to check that $|\sin(\pi t)|\geqslant d(t,\bZ)$, hence 
 $\left|\sum_{n\leqslant N} e^{2\pi i n \langle m,x\rangle}\right| \leqslant \frac{1}{d(\langle m,x\rangle,\bZ)}$. 
-The final estimate comes from \autoref{lem:distance-asymptotic}. 
+The final estimate comes from Lemma \ref{lem:distance-asymptotic}. 
 \end{proof}
 
 \begin{theorem}\label{thm:hard-sum-bound}
@@ -650,7 +704,7 @@ Assume $\omega_{r-1}(x)<\infty$, and let $f\in C^\infty(\bT^r)$ with
 $\widehat f(0)=0$. Then $\left|\sum_{n\leqslant N} f(n x)\right| \ll_{f,x} 1$. 
 \end{corollary}
 \begin{proof}
-This follows from \autoref{thm:hard-sum-bound} and the fact that the Fourier 
+This follows from Theorem \ref{thm:hard-sum-bound} and the fact that the Fourier 
 coefficients of a smooth function decay faster than $|m|^k$, for any 
 $k\in (-\infty,-1]$. 
 \end{proof}
@@ -710,9 +764,9 @@ holds, but for which
 \end{theorem}
 \begin{proof}
 Let $w=\frac{r}{\eta} \geqslant \frac 1 r$. By 
-\autoref{thm:existence-exponent}, there exists $x\in \bT^r$ with 
+Theorem \ref{thm:existence-exponent}, there exists $x\in \bT^r$ with 
 $\omega_0(x)=w$ and $\omega_{r-1}(x)=r w+r-1$. The result follows easily 
-from \autoref{cor:smooth-bounds} and \autoref{thm:discrepancy-lower-bound}. 
+from Corollary \ref{cor:smooth-bounds} and Theorem \ref{thm:discrepancy-lower-bound}. 
 \end{proof}
 
 
@@ -732,7 +786,7 @@ $\bx$ in $[0,1]^r$ such that $\disc(\bx^N)=\Omega(N^?)$, but for which
 $|\sum g(x_n)| \ll_g 1$ for all smooth $g$ with $\mu(g)=0$. 
 \end{theorem}
 \begin{proof}
-Use the sequence $y_n=n y\mod 1$, where $y$ is as in \autoref{thm:fast-decay}. 
+Use the sequence $y_n=n y\mod 1$, where $y$ is as in Theorem \ref{thm:fast-decay}. 
 Consider $\bx=u_\ast \by$. We easily have, assuming $\mu(f)=0$, the result:
 \[
 	\left|\sum_{n\leqslant N} g(u(x_n))\right| = \left| \sum_{n\leqslant N} (g\circ u)(x_n)\right| \ll_{g\circ u,y} 1 ,
@@ -755,5 +809,7 @@ $\disc(\bx^N)=\Omega(N^?)$.
 
 
 
-\printbibliography
+
+\bibliographystyle{alpha}
+\bibliography{tidbit-sources}
 \end{document}
