@@ -5,6 +5,7 @@
 \usepackage{amsmath,amssymb,amsthm}
 \DeclareMathOperator{\disc}{disc}
 \DeclareMathOperator{\GL}{GL}
+\DeclareMathOperator{\Jac}{Jac}
 \DeclareMathOperator{\Lie}{Lie}
 \DeclareMathOperator{\N}{N}
 \DeclareMathOperator{\R}{R}
@@ -63,14 +64,14 @@ $L$-functions}
 \section{Motivation}
 
 Let $E_{/\bQ}$ be an elliptic curve without complex multiplication. By an old 
-theorem of Faltings \cite{faltings-1983}, the quantities 
+theorem of Faltings \cite{faltings-1983}, the sequence 
 \[
 	a_p(E) = p + 1 - \# E(\bF_p) = \tr \rho_{E,l} (\fr_p)
 \]
-determine $E$ up to isogeny. That is, if $E_1$ and $E_2$ satisfy 
+determines $E$ up to isogeny. That is, if $E_1$ and $E_2$ satisfy 
 $a_p(E_1)=a_p(E_2)$ for all $E$, then $E_1$ and $E_2$ are isogenous. The 
 starting point of this investigation is the 
-corollary of a theorem of Harris, that the collection $\{\sgn a_p(E)\}_p$ in 
+corollary of a theorem of Harris, that the sequence $(\sgn a_p(E))_p$ in 
 fact determines $E$ up to isogeny. Ramakrishna had the insight that this fact 
 means the ``strange $L$-function''
 \[
@@ -78,7 +79,7 @@ means the ``strange $L$-function''
 \]
 determines $E$ up to isogeny. In this note, we define a more general class of 
 strange $L$-functions, and show that their analytic properties are closely 
-tied to the equidistribution of the $a_p(E)$. 
+tied to the distribution of the $a_p(E)$. 
 
 Here is a brief discussion of this generalization in the case of a non-CM curve 
 $E_{/\bQ}$. It is convenient to repackage the traces of Frobenius as follows:
@@ -94,15 +95,15 @@ continuous function $f\colon [0,\pi]\to \bC$, we have
 	\left| \frac{1}{\pi(N)} \sum_{p\leqslant N} f(\theta_p) - \int_0^\pi f\, \dd\ST\right| = o(1)
 \]
 as $N\to \infty$. It is well-known that this follows from the analytic 
-continuation (past $\Re s=1$) and non-vanishing except at $s=1$ of all the 
-$L$-functions $L(\sym^k E,s)$ \cite[A.1, Th.1]{serre-1968}. We take as our 
+continuation past $\Re s=1$ and non-vanishing except at $s=1$ of all the 
+$L$-functions $L(\sym^k E,s)$ \cite[A.1 Th.1]{serre-1968}. We take as our 
 starting point the much stronger conjecture, due to Akiyama--Tanigawa 
 \cite{akiyama-tanigawa}, that 
 \[
 	\left| \frac{1}{\pi(N)} \sum_{p\leqslant N} f(\theta_p) - \int_0^\pi f\, \dd \mu_\ST\right| \ll_f N^{-\frac 1 2+\epsilon}
 \]
-for all $f$ of bounded variation. (Their conjecture is actually more general; we will 
-discuss the precise statement later.)
+for all $f$ of bounded variation. (Their conjecture is actually more precise; 
+we will discuss their exact statement later.)
 They prove that this conjecture implies the Riemann Hypothesis for $E$. We 
 prove that not only does their conjecture imply the Riemann Hypothesis for all 
 $L(\sym^k E,s)$, it also does for all the strange $L$-functions 
@@ -158,7 +159,7 @@ compact space $X^\infty$ is metrizable and separable, also with no isolated
 points. 
 
 \begin{definition}
-For $\bx\in X^\infty$ and $N>0$, write $\bx^N$ for the probability measure on 
+For $\bx\in \bD^\infty$ and $N>0$, write $\bx^N$ for the probability measure on 
 $\bD$ given by 
 \[
 	\int_X f\, \dd \bx^N = \bx^N(f) = \frac{1}{\pi(N)} \sum_{p\leqslant N} f(x_p) .
@@ -183,10 +184,10 @@ Fix a Borel measure $\mu$ on $X$, and write $C^\alev(X,\mu)$ for the space of
 bounded, almost-everywhere continuous functions $f\colon X\to \bC$. 
 
 
-\begin{theorem}
+\begin{lemma}
 Endowed with the supremum norm $\|f\|_\infty=\sup_{x\in X} |f(x)|$, 
 $C^\alev(X,\mu)$ is a Banach space. 
-\end{theorem}
+\end{lemma}
 \begin{proof}
 This is an elementary corollary of the fact that a countable union of 
 measure-zero sets has measure zero. 
@@ -270,7 +271,7 @@ Let $\lambda$ be the Lebesgue measure on $[0,1]^r$, $\bx$ a sequence in
 $[0,1]^r$. We write $\disc^\ast(\bx^N)=\disc^\ast(\bx^N,\lambda)$ for 
 $\ast\in \{\varnothing,\star,\iso\}$. 
 
-\begin{theorem}
+\begin{theorem}\label{thm:discrepancy-related}
 Let $\bx$ be a sequence in $[0,1]^r$. Then 
 \begin{align*}
 	\disc(\bx^N) &\leqslant \disc^\iso(\bx^N) \leqslant (4 r \sqrt r+1) \disc(\bx^N)^{1/r} ,\\
@@ -769,33 +770,94 @@ $\omega_0(x)=w$ and $\omega_{r-1}(x)=r w+r-1$. The result follows easily
 from Corollary \ref{cor:smooth-bounds} and Theorem \ref{thm:discrepancy-lower-bound}. 
 \end{proof}
 
+\begin{lemma}[Moser]\label{lem:factorization}
+Let $f$ be a smooth, nonnegative function on $[0,1]^r$ such that $\int f=1$ and 
+$f$ vanishes only on the boundary of $[0,1]^r$. Then there is a unique 
+factorization 
+\[
+	f(x_1,\dots,x_r) = f_1(x_1) f_2(x_1,x_2) \dotsm f_r(x_1,\dots,x_r)
+\]
+of $f$ into smooth functions such that 
+\[
+	\int_0^1 f_i(x_1,\dots,x_{i-1},t)\, \dd t = 1
+\]
+for all $1\leqslant i\leqslant r$. 
+\end{lemma}
+\begin{proof}
+We prove this by induction on $r$. For $r=1$, the claim is trivial. Otherwise, 
+fix $(x_1,\dots,x_{r-1})$. Then we are trying to solve the following problem. 
+Find a factorization $g(t) = \lambda h(t)$, where $\int h=1$. This has the 
+obvious (unique) solution $h(t) = g(t)/(\int g)$. Thus, we have:
+\begin{align*}
+	f_{r-1}(x_1,\dots,x_{r-1}) &= \int_0^1 f(x_1,\dots,x_{r-1},t)\, \dd t \\
+	f_r(x_1,\dots,x_r) &= f(x_1,\dots,x_r) / f_{r-1}(x_1,\dots,x_{r-1}) .
+\end{align*}
+\end{proof}
 
-\begin{lemma}
+\begin{lemma}\label{lem:translate-measure}
 Let $\lambda$ be the Lebesgue measure on $[0,1]^r$, and $\mu=f\lambda$ 
 where $f\geqslant 0$ is smooth, and $f\ne 0$ on the interior of $[0,1]^r$. Then 
 there is a diffeomorphism $u\colon [0,1]^r\to [0,1]^r$, identity on the 
 boundary, such that $u_\ast \lambda = \mu$. 
 \end{lemma}
 \begin{proof}
-Follow \cite{moser-1965}. 
+We follow \cite{moser-1965}. First, use Lemma \ref{lem:factorization} to 
+factor $f$ as a product 
+\[
+	f(x_1,\dots,x_r) = f_1(x_1) f_2(x_1,x_2) \dotsm f_r(x_1,\dots,x_r) .
+\]
+Let 
+\[
+	u_i(x_1,\dots,x_i) = \int_0^{x_i} f_i(x_1,\dots,x_{i-1},t)\, \dd t .
+\]
+Then each $u_i$ is a strictly increasing function, and 
+$u=(u_1,\dots,u_r)$ is a diffeomorphism of the unit square, which is the 
+identity on the boundary. Moreover, 
+\[
+	\det (\Jac u) = \prod \frac{\dd u_i}{\dd x_i} = \prod f_i = f .
+\]
+Now, by the change of variables formula, 
+\[
+	\int \phi\, \dd u_\ast^{-1} \lambda = \int \phi\circ u^{-1}\, \dd\lambda = \int \phi \det(\Jac u)\, \dd \lambda = \int \phi\, \dd\mu ,
+\]
+i.e.~$\mu=u_\ast^{-1} \lambda$. 
 \end{proof}
 
 \begin{theorem}
-Let $\lambda$, $\mu$, $f$ be as above. Then there exists a sequence 
-$\bx$ in $[0,1]^r$ such that $\disc(\bx^N)=\Omega(N^?)$, but for which 
+Let $\mu$, $f$ be as above. Then there exists a sequence 
+$\bx$ in $[0,1]^r$ such that $\disc(\bx^N,\mu)=\Omega(N^{-r\eta-\epsilon})$, 
+but for which 
 $|\sum g(x_n)| \ll_g 1$ for all smooth $g$ with $\mu(g)=0$. 
 \end{theorem}
 \begin{proof}
-Use the sequence $y_n=n y\mod 1$, where $y$ is as in Theorem \ref{thm:fast-decay}. 
-Consider $\bx=u_\ast \by$. We easily have, assuming $\mu(f)=0$, the result:
+By Lemma \ref{lem:translate-measure}, there exists a boundary-preserving 
+diffeomorphism $u\colon [0,1]^r \to [0,1]^r$, such that $u_\ast \lambda=\mu$, 
+where $\lambda$ is the Lebesgue measure as above. 
+
+Start with a sequence $\by_n=n y$, where $y$ is as in Theorem 
+\ref{thm:fast-decay}. Let $\bx=u_\ast \by$, i.e.~$x_n = u(y_n)$. Then, if 
+$\phi\in C^\infty([0,1]^r)$, the composite $\phi\circ u$ is also smooth, so 
 \[
-	\left|\sum_{n\leqslant N} g(u(x_n))\right| = \left| \sum_{n\leqslant N} (g\circ u)(x_n)\right| \ll_{g\circ u,y} 1 ,
+	\left| \sum_{n\leqslant N} \phi(u_\ast y_n)\right| = \left| \sum_{n\leqslant N} (\phi\circ u)(y_n)\right| \ll_{\phi\circ u, y} 1 .
 \]
-since $\lambda(g\circ u)=0$. All that we need is a lower bound on the discrepancy 
-of $u_\ast \by$, and this comes relating ``honest discrepancy'' with 
-``isotropic discrepancy'' (coming from convex sets). By 
-\cite{polyak-2001}, the image under $u$ of a small enough ball is convex, 
-which gets us what we need.
+Thus, all we need is a lower bound on the discrepancy. The proof of 
+Theorem \ref{thm:discrepancy-lower-bound} tells us that for infinitely 
+many $N\to \infty$, there is an $r$-ball $B_N$ with volume 
+$C N^{-\eta-\epsilon}$ ($C$ not depending on $N$) that does not contain any of 
+$y_1,\dots,y_N$. By \cite[Th.2.1]{polyak-2001}, for $N$ sufficiently large, the 
+set $u(B_N)$ is convex, and moreover $\mu(u(B_N)) = \lambda(B_N)$. Thus, since 
+$\bx^N(u(B_N))=\varnothing$, we have 
+\[
+	\disc^\iso(\bx^N,\mu) \geqslant C N^{-\eta-\epsilon} ,
+\]
+and thus 
+\[
+	\disc(\bx^N,\mu) = \Omega( N^{-r\eta- \epsilon})
+\]
+as desired.
+
+[Need: bounds relating discrepancy and isotropic discrepancy to hold for 
+non-Lebesgue measure.]
 \end{proof}
 
 \begin{theorem}
