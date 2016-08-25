@@ -1,0 +1,64 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\newcommand{\bR}{\mathbf{R}}
+\newcommand{\cdf}{\mathrm{cdf}}
+\newcommand{\disc}{\mathrm{disc}}
+
+\title{Computing $G$-star discrepancy}
+\author{Daniel Miller}
+
+\begin{document}
+\maketitle
+
+
+
+
+
+The basic idea is this. Suppose we have two probability measures 
+$\mu$ and $\nu$ on $[0,\pi]$. These will be given by explicitly computable 
+cumulative distribution functions $\cdf_\mu$, $\cdf_\nu$. For example, we might 
+have 
+\begin{align*}
+	\cdf_\mu(x) &= \frac{x-\sin(x)\cos(x)}{\pi} \\
+	\cdf_\nu(x) &= \frac{\#\{n : x_n <x\}}{N} ,
+\end{align*}
+where $(x_1,\dots,x_N)$ is a sequence of points in $[0,\pi]$. The 
+\emph{star discrepancy} of $\nu$ with respect to $\mu$ is just the supremum of 
+the difference between their CDFs:
+\[
+	\disc(\mu,\nu) = \sup_{x\in [0,\pi]} |\cdf_\mu(x)-\cdf_\nu(x)| .
+\]
+
+The question I am interested in is: when $\cdf_\mu$ is an explicit smooth 
+function and $\cdf_\nu$ is an explicit step function as above, how can we 
+compute $\disc(\mu,\nu)$ quickly? Better yet, for $n\leqslant N$, write 
+\[
+	\cdf_{\nu_n}(x) = \frac{\# \{i\leqslant n : x_i<x\}}{n}  .
+\]
+Is there a fast way of computing the sequence 
+\[
+	\disc(\nu_1,\mu),\dots,\cdf(\nu_N,\mu) ?
+\]
+
+A little bit of motivation. Sort the list of $x_i$'s so that 
+$x_1 \leqslant \cdots \leqslant x_N$. Then the star discrepancy 
+can be proved to be equal to:
+\[
+	\max\left\{ \left|\frac{1}{N} - \cdf_\mu(x_{1})\right|,\left|\frac{2}{N}-\cdf_\mu(x_1)\right|,\dots,\left| \frac{N-1}{N}-\cdf_\mu(x_{N-1})\right|,\left| 1-\cdf_\mu(x_{N-1})\right|\right\} .
+\]
+In particular, we need to maximize the function
+\[
+	(x,i) \mapsto \left| \frac{i}{N} - \cdf_\mu(x)\right|
+\]
+over the set $\{(x_1,1),\dots,(x_N,N)\}$. If $\cdf_\mu(x)=x$ is convex, then 
+only need to maximize and minimize the function $(x,i)\mapsto \frac{i}{N}-x$ 
+over a finite set. This comes down to finding the convex hull of the set 
+$\{(x_i,i)\}_{i=1}^N$
+
+
+
+
+
+
+\end{document}
