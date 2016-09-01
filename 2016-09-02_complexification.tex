@@ -3,10 +3,18 @@
 \usepackage[a5paper,margin=1.5cm]{geometry}
 \usepackage{amsmath,amssymb,amsthm,microtype}
 \DeclareMathOperator{\GL}{GL}
+\DeclareMathOperator{\Lie}{Lie}
+\DeclareMathOperator{\SL}{SL}
 \DeclareMathOperator{\Sp}{Sp}
+\DeclareMathOperator{\U}{U}
 \newcommand{\bC}{{\mathbf C}}
 \newcommand{\bR}{{\mathbf R}}
+\newcommand{\fg}{{\mathfrak g}}
+\newcommand{\fh}{{\mathfrak h}}
+\newcommand{\fk}{{\mathfrak k}}
+\newcommand{\dd}{\mathrm{d}}
 \newcommand{\real}{\mathrm{real}}
+\newtheorem{theorem}{Theorem}
 \theoremstyle{definition}
 \newtheorem{definition}{Definition}
 
@@ -37,6 +45,46 @@ is, we have a kind of map (a functor, for those in the know)
 \[
 	(-)^\real \colon \{\textnormal{complex Lie groups}\} \to \{\textnormal{real Lie groups}\} .
 \]
+It would be nice for there to be a kind of ``inverse'' map in the opposite 
+direction (an adjoint functor, for those who care). That is, given a real Lie 
+group $G$, we would like there to be a complex Lie group $G_\bC$, together 
+with a homomorphism $G\to G_\bC$, such that for any complex Lie group $H$ and 
+a homomorphism $f\colon G\to H$, there exists a unique extension 
+$\widetilde f\colon G_\bC \to H$. We call $G_\bC$ the \emph{complexification} 
+of $G$. 
+
+(Brief interlude on universal properties and uniqueness.)
+
+\begin{theorem}
+Let $G\to H$ be a map from a real Lie group to a complex one, both connected, 
+that induces an isomorphism $\fg_\bC \to \fh$. If $\pi_1(H)=1$, then $H$ is a 
+complexification of $G$. 
+\end{theorem}
+\begin{proof}
+We only need to check that $H$ satisfies the universal property. Let 
+$H'$ be an arbitrary complex Lie group together with a homomorphism 
+$f\colon G\to H'$. This gives us a real Lie algebra map 
+$\dd f\colon \fg \to \fh'$, which uniquely extends to a complex Lie algebra 
+map $(\dd f)_\bC\colon \fg_\bC\to \fh'$. Equivalently, $\dd f$ extends uniquely 
+to a complex Lie algebra map $\widetilde{\dd f}\colon \fh\to \fh'$. Since 
+$H$ is simply connected, we get a unique homomorphism of real Lie groups 
+$\widetilde f\colon H\to H'$, extending $f$. Since 
+$\dd \widetilde f = \widetilde{\dd f}$, a $\bC$-linear map, $\widetilde f$ is 
+in fact complex analytic. 
+\end{proof}
+
+As an example, since $\pi_1(\SL(n,\bC))=1$, the inclusion 
+$\SL(n,\bR)\hookrightarrow \SL(n,\bC)$ makes $\SL(n,\bC)$ the complexification 
+of $\SL(n,\bR)$. 
+
+\begin{theorem}
+Let $K$ be a compact connected Lie group. Then the complexification of $K$ 
+exists. 
+\end{theorem}
+\begin{proof}
+We know there is an embedding $K\subset \U(n)$ for some $n\geqslant 1$. Put 
+$\fk=\Lie(K)$, $P=\exp(i \fk)$, and $G=K\cdot P\subset \GL(n,\bC)$. 
+\end{proof}
 
 
 
