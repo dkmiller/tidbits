@@ -57,8 +57,9 @@ of $G$.
 
 \begin{theorem}
 Let $G\to H$ be a map from a real Lie group to a complex one, both connected, 
-that induces an isomorphism $\fg_\bC \to \fh$. If $\pi_1(H)=1$, then $H$ is a 
-complexification of $G$. 
+that induces an isomorphism $\fg_\bC \to \fh$. If the induced map 
+$\pi_1(G) \to \pi_1(H)$ is an isomorphism, then $H$ is a complexification of 
+$G$. 
 \end{theorem}
 \begin{proof}
 We only need to check that $H$ satisfies the universal property. Let 
@@ -66,7 +67,11 @@ $H'$ be an arbitrary complex Lie group together with a homomorphism
 $f\colon G\to H'$. This gives us a real Lie algebra map 
 $\dd f\colon \fg \to \fh'$, which uniquely extends to a complex Lie algebra 
 map $(\dd f)_\bC\colon \fg_\bC\to \fh'$. Equivalently, $\dd f$ extends uniquely 
-to a complex Lie algebra map $\widetilde{\dd f}\colon \fh\to \fh'$. Since 
+to a complex Lie algebra map $\widetilde{\dd f}\colon \fh\to \fh'$. 
+
+(Show that $\dd f$ can be extended to Lie group map. Use universal cover.)
+
+Since 
 $H$ is simply connected, we get a unique homomorphism of real Lie groups 
 $\widetilde f\colon H\to H'$, extending $f$. Since 
 $\dd \widetilde f = \widetilde{\dd f}$, a $\bC$-linear map, $\widetilde f$ is 
@@ -83,7 +88,13 @@ exists.
 \end{theorem}
 \begin{proof}
 We know there is an embedding $K\subset \U(n)$ for some $n\geqslant 1$. Put 
-$\fk=\Lie(K)$, $P=\exp(i \fk)$, and $G=K\cdot P\subset \GL(n,\bC)$. 
+$\fk=\Lie(K)$, $P=\exp(i \fk)$, and $G=K\cdot P\subset \GL(n,\bC)$. Since 
+$G$ is the product of a closed subgroup and a compact subgroup of $\GL(n,\bC)$, 
+general nonsense tells us that $G$ is closed in $\GL(n,\bC)$. Moreover, 
+$\Lie(G)=\Lie(K)+\Lie(P) = \fk+i\fk = \fk_\bC$, a complex vector space, so we 
+can use the exponential map $\fk_\bC \to G$ to give $G$ a complex structure. 
+Since $P$ is contractible (why?), $K\to G$ induces an isomorphism 
+$\pi_1(K)\to \pi_1(G)$. Thus $G=K_\bC$. 
 \end{proof}
 
 
