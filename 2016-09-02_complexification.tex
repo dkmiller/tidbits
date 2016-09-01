@@ -1,0 +1,45 @@
+\documentclass{article}
+
+\usepackage[a5paper,margin=1.5cm]{geometry}
+\usepackage{amsmath,amssymb,amsthm,microtype}
+\DeclareMathOperator{\GL}{GL}
+\DeclareMathOperator{\Sp}{Sp}
+\newcommand{\bC}{{\mathbf C}}
+\newcommand{\bR}{{\mathbf R}}
+\newcommand{\real}{\mathrm{real}}
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+
+\title{Complexification}
+\author{Daniel Miller}
+\date{2 September 2016}
+
+\begin{document}
+\maketitle
+
+
+
+
+
+So far we have only considered real Lie groups, even though some of our 
+examples, like $\GL(n,\bC)$, seem like they should be ``complex'' objects in 
+some way. So, without further ado, we make a definition. 
+
+\begin{definition}
+A \emph{complex Lie group} is a group which is also a complex manifold, such 
+that all the group operations are analytic maps.  
+\end{definition}
+
+With this definition, it is easy to see that $\GL(n,\bC)$ is a complex Lie 
+group, as is $\Sp(2n,\bC)$. Clearly, every complex Lie group can be made into 
+a real Lie group in a trivial way, by forgetting the complex structure. That 
+is, we have a kind of map (a functor, for those in the know)
+\[
+	(-)^\real \colon \{\textnormal{complex Lie groups}\} \to \{\textnormal{real Lie groups}\} .
+\]
+
+
+
+
+
+\end{document}
