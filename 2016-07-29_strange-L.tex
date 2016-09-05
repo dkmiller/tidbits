@@ -264,7 +264,7 @@ and the \emph{isotropic discrepancy} between $\mu$ and $\nu$ is
 \[
 	\disc^\iso(\mu,\nu) = \sup_{C\subset [0,1]^r} |\mu(C)-\nu(C)| ,
 \]
-where $C$ ranges over convex subsets of $[0,1]^r$. 
+where $C$ ranges over open and closed convex subsets of $[0,1]^r$. 
 \end{definition}
 
 Let $\lambda$ be the Lebesgue measure on $[0,1]^r$, $\bx$ a sequence in 
@@ -343,6 +343,31 @@ We will often use the soft version of this inequality. Namely, assume
 $\int f\, \dd x=0$. Then $|\bx^C(f)| \ll_f \disc(\bx^C)$ as $C\to \infty$. 
 Here is another way of putting it. The sequence $f(\bx)$ has
 $|A_{f(\bx)}(C)| \ll_f \pi(C) \disc(\bx^C)$. 
+
+\begin{theorem}
+Let $\bx$ be a sequence in $[0,1]^r$. Then 
+\[
+	\disc^\iso(\bx^N,\mu) = \sup_{P\subset [0,1]^r} \left| \bx^N(P)-\mu(P)\right| ,
+\]
+where $P$ ranges over all open and closed convex polytopes contained in 
+$[0,1]^r$. 
+\end{theorem}
+\begin{proof}
+We follow the proof of \cite[Ch.2~Th.1.5]{kuipers-niederreiter-1974}. Clearly 
+the supremum in question is bounded above by isotropic discrepancy, so we only 
+need to show the opposite bound. Let $C\subset [0,1]^r$ be a convex 
+set. Suppose $C$ contains $x_{i_1},\dots,x_{i_a}$. Then $C$ contains $P$, the 
+convex hull of $\{x_{i_1},\dots,x_{i_a}\}$. 
+
+Use the fact that given a convex set, and a point not in the interior of the 
+set, the two can be separated by a hyperplane. Intersect half-planes, and get 
+$P\subset C\subset Q$, with $P$ and $Q$ polytopes, and 
+$\bx^N(P)=\bx^N(C)=\bx^N(Q)$. This yields (via $a\leqslant b\leqslant c$ implies 
+$|b|\leqslant\max\{|a|,|c|\}$)
+\[
+	|\bx^N(C)-\mu(C)| \leqslant \max\{|\bx^N(P)-\mu(P)|,|\bx^N(Q)-\mu(Q)|\} .
+\]
+\end{proof}
 
 
 
