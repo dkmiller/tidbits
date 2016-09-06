@@ -369,6 +369,39 @@ $|b|\leqslant\max\{|a|,|c|\}$)
 \]
 \end{proof}
 
+\begin{theorem}
+Let $\bx$ be a sequence in $[0,1]^r$. Then 
+\[
+	\disc^\iso(\bx^N,\mu) \leqslant ? \disc(\bx^N,\mu)^? .
+\]
+\end{theorem}
+\begin{proof}
+We follow the proof of \cite[Ch.2~Th.1.6]{kuipers-niederreiter-1974}. First, 
+note that $\mu=f\lambda$ where $\lambda$ is Lebesgue, thus 
+\[
+	\mu(S) = \int_S f\, \dd\lambda \leqslant \|f\|_\infty \lambda(S) .
+\]
+We write this as: $\mu\leqslant \|\mu\|_\infty \lambda$. 
+
+Let $P$ be a convex polytope in $[0,1]^r$. For any integer 
+$n\geqslant 1$, we have a partition of $[0,1]^r$ as follows. Given 
+$h\in \bZ^r$ with $|h|_\infty < n$, let 
+\[
+	I_h^{(n)} = \left\{ x\in [0,1]^r : \frac{h_i}{n} \leqslant x_i < \frac{h_i+1}{n}\right\} .
+\]
+Define:
+\begin{align*}
+	P_1^{(r)} &= \bigcup_{I_h^{(r)}\subset P} I_h^{(r)} \\
+	P_2^{(r)} &= \bigcup_{I_h^{(r)}\cap P\ne \varnothing} I_h^{(r)} .
+\end{align*}
+Then clearly $P_1\subset P \subset P_2$. Moreover, for each 
+$(h_1,\dots,h_{r-1})\in \bZ^{r-1}$, the set of $m\in \bZ$ such that 
+for $h=(h_1,\dots,h_{r-1},m)$, 
+$I_h^{(r)}\subset P$ (resp.~$I_h^{(r)}\cap P\ne \varnothing$) is a sequence 
+with no gaps. This is an easy consequence of the convexity of $P$. (Prove 
+this.) bla bla bla the rest works. 
+\end{proof}
+
 
 
 
