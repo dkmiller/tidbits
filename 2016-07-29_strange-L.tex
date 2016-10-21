@@ -316,7 +316,11 @@ Let $G=\SU(2)$ with maximal torus
 \[
 	T = \left\{ \begin{pmatrix} e^{2\pi i t} \\ & e^{-2\pi i t} \end{pmatrix} : -1\leqslant t <1\right\} .
 \]
-Then $W=S_2$, whose nontrivial element acts via $t\mapsto -t$. 
+Then $W=S_2$, whose nontrivial element acts via $t\mapsto -t$. The Lie algebra 
+$\ft=\bR$, with exponential map 
+\[
+	\exp(t) = \begin{pmatrix} e^{2\pi i t} \\ & e^{-2\pi i t} \end{pmatrix} .
+\]
 \end{example}
 
 If $\nu$ is the Haar measure on $G^\natural$, we simply write 
@@ -925,6 +929,27 @@ no zeros on $\{\Re>\frac 1 2\}$, but for which
 $\disc(\bx^N)=\Omega(N^?)$. 
 \end{theorem}
 
+
+
+
+
+\section{A refined counterexample}
+
+We have proved above that there exists a sequence $\btheta=(\theta_p)$ such 
+that for all smooth $f$ on $[0,\pi]$ with $\int f\, \dd\ST=0$, we have 
+\[
+	\left| \sum_{p\leqslant N} f(\theta_p)\right| \ll_{f,\btheta} 1 ,
+\]
+and thus all $\log L(\sym^k,s)$ have analytic continuation to $\{\Re >0\}$, but 
+for which $\disc(\btheta^N,\ST)$ is not $\ll \Omega(N^{-\eta-\epsilon})$. 
+(Here, $\eta\in (0,1)$ is fixed beforehand.)
+
+We want to ``fudge'' $\btheta$ to a new sequence $\widetilde\btheta$, such that 
+the values 
+\[
+	\widetilde a_p = 2\sqrt p \cos(\widetilde\theta_p)
+\]
+are integers satisfying $|\widetilde a_p| \leqslant 2\sqrt p$. 
 
 
 
