@@ -1,0 +1,65 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\DeclareMathOperator{\Lie}{Lie}
+\newcommand{\bR}{\mathbf{R}}
+\newcommand{\bZ}{\mathbf{Z}}
+\newcommand{\dd}{\mathrm{d}}
+\newcommand{\ft}{\mathfrak{t}}
+
+\title{Absolute continuity and Fourier coefficients}
+\author{Daniel Miller}
+
+\begin{document}
+\maketitle
+
+
+
+
+
+Let $T$ be a compact connected abelian Lie group, i.e.~a torus. Let 
+$\ft=\Lie T$, and $\widehat T=\hom(T,S^1)$ the (discrete) group of characters 
+of $T$. 
+
+We start with the baby example: $T=\bR/(2\pi \bZ)$, which we identify with the 
+set $[-\pi,\pi)$. The Lie algebra is $\ft=\bR$ and $\exp(X) = X$. Here 
+$\widehat T=\bZ$, with $m(x) = e^{i m x}$. The action of $\ft$ on $C^\infty(T)$ 
+via differential operators is:
+\[
+	(X\cdot f)(x) 
+		= \left.\frac{\dd}{\dd t} f(x+t X)\right|_{t=0} 
+		= X \frac{\dd f}{\dd x}(x) .
+\]
+Moreover, note that the Fourier coefficients, defined as:
+\[
+	\widehat f(m) = \frac{1}{2\pi} \int_{-\pi}^\pi f(x) e^{i m x}\, \dd x
+\]
+behave with respect to the action of $\ft$ as:
+\begin{align*}
+	\widehat{X\cdot f}(m) 
+		&= \frac{1}{2\pi}\int_{-\pi}^\pi (X\cdot f)(x) e^{i m x}\, \dd x \\
+		&= \frac{X}{2\pi} \int_{-\pi}^\pi f'(x) e^{i m x}\, \dd x \\
+		&= \frac{X}{2\pi} \int_{-\pi}^\pi (f(x) e^{i m x})' - i m f(x) e^{i m x}\, \dd x \\
+		&= -\frac{i m X}{2\pi} \int_{-\pi}^\pi f(x) e^{i m x} \, \dd x \\
+		&= -i m X \widehat f(m) .
+\end{align*}
+
+Better, suppose that $f$ is a function on $T$ which is absolutely continuous, 
+in the sense that $f$ is continuous, and there is $g\in L^1(T)$ such that 
+\[
+	f(x) = \int_{-\pi}^x g(t)\, \dd t .
+\]
+(Even if we may require $f(x) = f(-x)$, we don't necessarily require this for 
+$g$.) Then there is an easy computation:
+\begin{align*}
+	\widehat f(m) 
+		&= \frac{1}{2\pi} \int_{-\pi}^\pi \int_{-\pi}^x g(t)\, \dd t e^{i m x}\, \dd x \\
+		&= \frac{1}{2\pi} \int_{-\pi}^\pi \int_t^\pi g(t) e^{i m x}\, \dd x \dd t \\
+		&= \ldots 
+\end{align*}
+
+
+
+
+
+\end{document}
