@@ -1,11 +1,17 @@
 \documentclass{article}
 
-\usepackage{amsmath,amssymb}
+\usepackage{amsmath,amssymb,amsthm}
+\DeclareMathOperator{\AC}{AC}
 \DeclareMathOperator{\Lie}{Lie}
+\DeclareMathOperator{\SU}{SU}
 \newcommand{\bR}{\mathbf{R}}
 \newcommand{\bZ}{\mathbf{Z}}
 \newcommand{\dd}{\mathrm{d}}
 \newcommand{\ft}{\mathfrak{t}}
+
+\newtheorem{theorem}{Theorem}
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
 
 \title{Absolute continuity and Fourier coefficients}
 \author{Daniel Miller}
@@ -17,46 +23,72 @@
 
 
 
-Let $T$ be a compact connected abelian Lie group, i.e.~a torus. Let 
-$\ft=\Lie T$, and $\widehat T=\hom(T,S^1)$ the (discrete) group of characters 
-of $T$. 
+Consider the compact Lie group $\SU(2)$. It has an obvious maximal torus, 
+namely 
+\[
+	T = \left\{\begin{pmatrix} e^{i\theta} \\ & e^{-i\theta}\end{pmatrix} : \theta\in [0,2\pi)\right\} .
+\]
+The Weyl group is 
+\[
+	W = \left\{\begin{pmatrix} 1 \\ & 1 \end{pmatrix}, \begin{pmatrix} & -1 \\ 1 \end{pmatrix}\right\} ,
+\]
+whose non-trivial element acts on $T$ by $\theta\mapsto -\theta$. It is 
+well-known that the map $T/W \to \SU(2)^\natural$ is a bijection. We use it to 
+make a couple definitions. First, note that for any function on $T$, we will 
+write 
+\[
+	f(\theta) = f\begin{pmatrix} e^{i\theta} \\ & e^{-i\theta} \end{pmatrix} .
+\]
+Moreover, for $f\in L^1(T)$, we have the Fourier coefficients:
+\[
+	\widehat f(m) = \frac{1}{2\pi} \int_0^{2\pi} f(\theta) e^{i m \theta}\, \dd \theta .
+\]
 
-We start with the baby example: $T=\bR/(2\pi \bZ)$, which we identify with the 
-set $[-\pi,\pi)$. The Lie algebra is $\ft=\bR$ and $\exp(X) = X$. Here 
-$\widehat T=\bZ$, with $m(x) = e^{i m x}$. The action of $\ft$ on $C^\infty(T)$ 
-via differential operators is:
-\[
-	(X\cdot f)(x) 
-		= \left.\frac{\dd}{\dd t} f(x+t X)\right|_{t=0} 
-		= X \frac{\dd f}{\dd x}(x) .
-\]
-Moreover, note that the Fourier coefficients, defined as:
-\[
-	\widehat f(m) = \frac{1}{2\pi} \int_{-\pi}^\pi f(x) e^{i m x}\, \dd x
-\]
-behave with respect to the action of $\ft$ as:
-\begin{align*}
-	\widehat{X\cdot f}(m) 
-		&= \frac{1}{2\pi}\int_{-\pi}^\pi (X\cdot f)(x) e^{i m x}\, \dd x \\
-		&= \frac{X}{2\pi} \int_{-\pi}^\pi f'(x) e^{i m x}\, \dd x \\
-		&= \frac{X}{2\pi} \int_{-\pi}^\pi (f(x) e^{i m x})' - i m f(x) e^{i m x}\, \dd x \\
-		&= -\frac{i m X}{2\pi} \int_{-\pi}^\pi f(x) e^{i m x} \, \dd x \\
-		&= -i m X \widehat f(m) .
-\end{align*}
+\begin{definition}
+A function $f\in L^1(\SU(2)^\natural)$ is \emph{absolutely continuous} if it is 
+the descent of a $W$-invariant absolutely continuous function on $T$. In 
+other words, $\AC(T/W) = \AC(T)^W$. 
+\end{definition}
 
-Better, suppose that $f$ is a function on $T$ which is absolutely continuous, 
-in the sense that $f$ is continuous, and there is $g\in L^1(T)$ such that 
+Recall that $f\in C(T)$ is absolutely continuous if there exists $g\in L^1(T)$ 
+for which 
 \[
-	f(x) = \int_{-\pi}^x g(t)\, \dd t .
+	f(\theta) = f(0) + \int_0^\theta g(t)\, \dd t, \qquad \theta\in [0,2\pi) .
 \]
-(Even if we may require $f(x) = f(-x)$, we don't necessarily require this for 
-$g$.) Then there is an easy computation:
+Note that if $f\in \AC(T/W)$, the corresponding $g$ may not descend to 
+$T/W$. 
+
+\begin{theorem}
+If $f\in \AC(T/W)$, then $\widehat f(m) = ? \widehat g(m)$. 
+\end{theorem}
+\begin{proof}
+We compute directly:
 \begin{align*}
 	\widehat f(m) 
-		&= \frac{1}{2\pi} \int_{-\pi}^\pi \int_{-\pi}^x g(t)\, \dd t e^{i m x}\, \dd x \\
-		&= \frac{1}{2\pi} \int_{-\pi}^\pi \int_t^\pi g(t) e^{i m x}\, \dd x \dd t \\
-		&= \ldots 
+		&= \frac{1}{2\pi} \int_0^{2\pi} \left(f(0) + \int_0^\theta g(t)\, \dd t\right) e^{i m \theta}\, \dd \theta \\
+		&= \frac{f(0)}{2\pi} \int_0^{2\pi} e^{i m \theta}\, \dd\theta + \frac{1}{2\pi} \int_0^{2\pi} g(t)\int_t^{2\pi} e^{i m \theta} \,\dd\theta\dd t \\
+		&= f(0) \delta_{m=0} -\frac{i}{2m\pi} \int_0^{2\pi} g(t) (e^{2\pi i m} - e^{i m t})\, \dd t \\
+		&= \begin{cases} f(0) & m=0 \\ \frac{i}{m} \widehat g(m) & \text{else} \end{cases} .
 \end{align*}
+\end{proof}
+
+\begin{theorem}
+Let $f\in \AC(T/W)$. Then 
+\[
+	\|S_k f - f\|_\infty \ll k^{-1/2}\cdot \|f'\|_2 .
+\]
+\end{theorem}
+\begin{proof}
+Recall that $S_k f(x) = \sum_{|m|\leqslant k} \widehat f(m) e^{i m x}$. Note 
+that 
+\begin{align*}
+	|S_k f(x) - f(x)| 
+		&\leqslant \sum_{|m|>k} |\widehat f(m)| \\
+		&\ll \sum_{|m|>k} \frac{1}{m} |\widehat g(m)| \\
+		&\leqslant \sqrt{\sum_{|m|>k} m^{-2}} \sqrt{\sum_{|m|>k} |\widehat g(m)|^2} \\
+		&\ll k^{-1/2}\cdot \|f'\|_2.
+\end{align*}
+\end{proof}
 
 
 
