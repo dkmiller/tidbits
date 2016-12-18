@@ -10,3 +10,4 @@
 *.brf
 *-blx.bib
 *.run.xml
+*.pyc

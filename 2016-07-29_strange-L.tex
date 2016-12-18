@@ -951,6 +951,15 @@ the values
 \]
 are integers satisfying $|\widetilde a_p| \leqslant 2\sqrt p$. 
 
+$|e^{i x}-e^{i y}| \leqslant |x-y|$. 
+
+\begin{align*}
+	\left|\sum_{p\leqslant N} \sum_{|m|< k} \widehat f(m) e^{2\pi i m x_p} - \sum_{p\leqslant N} \sum_{|m|< k} \widehat f(m) e^{2\pi i m y_p}\right| \\
+	= \left| \sum_{p\leqslant N} \sum_{|m|< k} \widehat f(m) (e^{2\pi i m x_p} - e^{2\pi i m y_p}) \right| \\
+	= \left| \sum_{|m| < k} \widehat f(m) \sum_{p\leqslant N} (e^{2\pi i m x_p} - e^{2\pi i m y_p}) \right| \\
+	\leqslant 2\pi \sum_{|m| < k} |m\widehat f(m)| \sum_{p\leqslant N} |x_p - y_p|
+\end{align*}
+
 
 
 

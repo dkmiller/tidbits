@@ -41,7 +41,7 @@ write
 \]
 Moreover, for $f\in L^1(T)$, we have the Fourier coefficients:
 \[
-	\widehat f(m) = \frac{1}{2\pi} \int_0^{2\pi} f(\theta) e^{i m \theta}\, \dd \theta .
+	\widehat f(m) = \frac{1}{2\pi} \int_0^{2\pi} f(\theta) e^{-i m \theta}\, \dd \theta .
 \]
 
 \begin{definition}
@@ -59,18 +59,28 @@ Note that if $f\in \AC(T/W)$, the corresponding $g$ may not descend to
 $T/W$. 
 
 \begin{theorem}
-If $f\in \AC(T/W)$, then $\widehat f(m) = ? \widehat g(m)$. 
+If $f\in \AC(T/W)$ and $m\ne 0$, then 
+$\widehat f(m) = -\frac{i}{m} \widehat g(m)$. 
 \end{theorem}
 \begin{proof}
 We compute directly:
 \begin{align*}
 	\widehat f(m) 
-		&= \frac{1}{2\pi} \int_0^{2\pi} \left(f(0) + \int_0^\theta g(t)\, \dd t\right) e^{i m \theta}\, \dd \theta \\
-		&= \frac{f(0)}{2\pi} \int_0^{2\pi} e^{i m \theta}\, \dd\theta + \frac{1}{2\pi} \int_0^{2\pi} g(t)\int_t^{2\pi} e^{i m \theta} \,\dd\theta\dd t \\
-		&= f(0) \delta_{m=0} -\frac{i}{2m\pi} \int_0^{2\pi} g(t) (e^{2\pi i m} - e^{i m t})\, \dd t \\
-		&= \begin{cases} f(0) & m=0 \\ \frac{i}{m} \widehat g(m) & \text{else} \end{cases} .
+		&= \frac{1}{2\pi} \int_0^{2\pi} \left(f(0) + \int_0^\theta g(t)\, \dd t\right) e^{-i m \theta}\, \dd \theta \\
+		&= \frac{f(0)}{2\pi} \int_0^{2\pi} e^{-i m \theta}\, \dd\theta + \frac{1}{2\pi} \int_0^{2\pi} g(t)\int_t^{2\pi} e^{-i m \theta} \,\dd\theta\dd t \\
+		&= \frac{i}{2m\pi} \int_0^{2\pi} g(t) (e^{-2\pi i m} - e^{-i m t})\, \dd t \\
+		&= \frac{i e^{-2\pi i m}}{2\pi m}\int_0^{2\pi} g(t)\, \dd t - \frac{i}{2\pi m} g(t) e^{-i m t}\, \dd t \\
+		&= -\frac{i}{m} \widehat g(m) .
 \end{align*}
 \end{proof}
+
+Recall that for $k\geqslant 0$, we write $S_k f$ for the $k$-th partial Fourier 
+series for $f$, namely 
+\[
+	S_k f(x) = \sum_{|m|\leqslant k} \widehat f(m) e^{i m x} .
+\]
+It is known that if $f$ is absolutely continuous, then $S_k f\to f$ uniformly. 
+We give a quantitative bound on the rate of convergence. 
 
 \begin{theorem}
 Let $f\in \AC(T/W)$. Then 
@@ -79,16 +89,68 @@ Let $f\in \AC(T/W)$. Then
 \]
 \end{theorem}
 \begin{proof}
-Recall that $S_k f(x) = \sum_{|m|\leqslant k} \widehat f(m) e^{i m x}$. Note 
-that 
+Let $g$ be such that $f(x)=f(0)+\int_0^x g(t)\, \dd t$. We then compute
 \begin{align*}
 	|S_k f(x) - f(x)| 
 		&\leqslant \sum_{|m|>k} |\widehat f(m)| \\
 		&\ll \sum_{|m|>k} \frac{1}{m} |\widehat g(m)| \\
 		&\leqslant \sqrt{\sum_{|m|>k} m^{-2}} \sqrt{\sum_{|m|>k} |\widehat g(m)|^2} \\
-		&\ll k^{-1/2}\cdot \|f'\|_2.
+		&\ll k^{-1/2}\cdot \|f'\|_2 ,
 \end{align*}
+using Cauchy--Schwartz for the third inequality and the Plancherel theorem for 
+the fourth.
 \end{proof}
+
+\begin{theorem}
+Fix $x\in T$ with $\omega_0(x)$ finite, and let $x_n = n x\mod\pi\in T/W$. 
+Then if $f\in \AC(T/W)$ with $\int_0^\pi f(t)\, \dd t=0$, we have 
+\[
+	\left|\sum_{n\leqslant N} f(x_n)\right| \ll ?
+\]
+\end{theorem}
+\begin{proof}
+We begin by splitting the sum in the theorem into two parts. Let $k\geqslant 0$ 
+be arbitrary. Then 
+\[
+	\left|\sum_{n\leqslant N} f(x_n)\right| 
+		\leqslant \sum_{|m|\leqslant k} |\widehat f(m)| \left| \sum_{n\leqslant N} e^{i m x_n}\right| 
+		+ \sum_{n\leqslant N} |S_k f(x_n) - f(x_n)| .
+\]
+Recall that $|\widehat f(m)| \leqslant \frac{1}{|m|} |\widehat g(m)|$ and the 
+Fourier coefficients of $g$ are bounded. Moreover, we already know that 
+\[
+	\left|\sum_{n\leqslant N} e^{im x_n}\right| \ll_{\epsilon,x} |m|^{\omega_0(x)+\epsilon} ,
+\]
+which tells us that 
+\[
+	\sum_{|m|\leqslant k} |\widehat f(m)| \left| \sum_{n\leqslant N} e^{i m x_n}\right|
+		\ll_f \sum_{|m|\leqslant k} |m|^{-1+\omega_0(x)+\epsilon} 
+		\ll_f \frac{1}{\omega_0(x)+\epsilon} (k^{\omega_0(x)+\epsilon}-1)
+\]
+
+Combining everything with the previous bound on $\|S_k f-f\|_\infty$, we get 
+\[
+	\left|\sum_{n\leqslant N} f(x_n)\right| \ll_{f,x,\epsilon} \log(k) |m|^?
+\]
+\end{proof}
+
+\ldots we only get $\ll N^{\alpha(\omega_0(x)+\epsilon)} + N^{1-\alpha/2}$. Best that 
+can be done is 
+
+$\max(aw, 1-a/2)$
+
+$aw=1-a/2$
+
+$(w+1/2) a = 1$
+
+$a=1/(w+1/2)$
+
+So, for $w\in (1/2,1)$, the best power of $N$ we can get as a bound for the sums 
+is 
+\[
+	\frac{w}{w+1/2}
+\]
+As $w\to 1$, the power is $<2/3$. 
 
 
 
