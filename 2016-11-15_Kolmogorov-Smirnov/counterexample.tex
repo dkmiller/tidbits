@@ -105,4 +105,39 @@ and hence $L(\rho_l,s)$ satisfies the Riemann Hypothesis.
 
 
 
+\section{Towards a proof}
+
+Let $\bar\rho_l\colon G_\bQ \to \GL_2(\bF_l)$ be a Galois representation. For 
+each prime $p$, define 
+\[
+	\Theta_p(l) = \left\{\cos\left(\frac{a}{2\sqrt p}\right) : a\in \bZ, |a|\leqslant 2\sqrt p, a \equiv \tr \bar\rho_l(\fr_p)\pmod l\right\} .
+\]
+It is easy to check that 
+\[
+	\disc\left(\Theta_p(l),\frac 1 2 \sin(t)\, \dd t\right) \ll l p^{-1/2} .
+\]
+We are looking for a way to choose $\theta_p\in \Theta_p(l)$ such that 
+\begin{enumerate}
+\item
+$\disc(\{\theta_p\}_{p\leqslant x})$ decays like $1/\log x$
+
+\item
+$\left| \sum_{p\leqslant x} U_1(\theta_p)\right|$ grows like 
+$\sqrt x$. 
+\end{enumerate}
+To do this, suppose we have chosen $\{\theta_q\}_{q < p}$. In choosing 
+$\theta_p$, we want to simultaneously move the discrepancy towards 
+$1/\log p$, while making sure that the $U_1$-sum doesn't get too big. 
+
+(Fact: if $\{x_1,\dots,x_N\}$ and $\{y_1,\dots,y_N\}$ are two sequences, 
+then 
+\[
+	|\disc(\{x_1,\dots,x_N\}) - \disc(\{y_1,\dots,y_N\})| \leqslant 2\|x-y\|_0 .
+\]
+)
+
+
+
+
+
 \end{document}
