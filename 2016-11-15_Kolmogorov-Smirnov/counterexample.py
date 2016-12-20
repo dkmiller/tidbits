@@ -101,42 +101,46 @@ def display_sum(stuff):
         sum_data.append(partial_sum)
     plt.show(plt.scatter(primes, np.abs(sum_data)))
 
+
+# Sample algorithm for choosing a_p's to minimize |sum U_1(theta_p)|.
+# This algorithm yields |sum_{p<x} U_1(theta_p)| = O(1). 
 def test_choose_traces(x):
+    # Returns the angle corresponding to a = tr(fr_p).
     def theta(a, p):
         return np.arccos(a / (2*np.sqrt(p)))
 
-#    primes = primes_below(x)
-    # Ensure an even number of primes.
-#    if len(primes) % 2 != 0:
-#        primes = primes[:-1]
-    primes_even = primes_below(x)[::2]
-    primes_odd = primes_below(x)[1::2]
+    # Relevant set of primes; ensure there is an even number.
+    primes = primes_below(x)
+    if len(primes) % 2 != 0:
+        primes = primes[:-1]
 
-    # Drop primes if necessary so len(primes_odd) = len(primes_even).
-    if len(primes_odd) > len(primes_even):
-        primes_odd = primes_odd[:-1]
-    elif len(primes_even) > len(primes_odd):
-        primes_even = primes_even[:-1]
-    traces_odd = map(lambda p: max(traces(p)), primes_odd)
-    traces_even = []
-    for i in xrange(len(primes_odd)):
-        p = primes_odd[i]
-        a_p = traces_odd[i]
-        q = primes_even[i]
+    local_traces = []
+    local_thetas = []
+
+    # Loop through pairs p < q of successive primes.
+    for i in xrange(len(primes) / 2):
+        p = primes[2*i]
+        q = primes[2*i+1]
+
+        # Choose a_p and theta_p.
+        a_p = max(traces(p))
+        if 2*np.sqrt(p) - a_p > 0.5:
+            a_p = -a_p
+        local_traces.append(a_p)
+        theta_p = theta(a_p, p)
+        local_thetas.append(theta_p)
+
+        # Choose a_q and theta_q.
+
+        # Returns |theta_p - (pi - theta_q)|.
         def evaluate(a):
-            return np.abs(theta(a_p,p) - (np.pi - theta(a,q)))
+            return np.abs(theta_p - (np.pi - theta(a, q)))
         a_q = min(traces(q))
         for a in traces(q):
             if evaluate(a) < evaluate(a_q):
                 a_q = a
-        traces_even.append(a_q)
+        local_traces.append(a_q)
+        theta_q = theta(a_q, q)
+        local_thetas.append(theta_q)
 
-    thetas_odd = []
-    thetas_even = []
-    for i in xrange(len(primes_odd)):
-        thetas_odd.append(theta(traces_odd[i], primes_odd[i]))
-        thetas_even.append(theta(traces_even[i], primes_even[i]))
-    result = thetas_odd + thetas_even
-    result[::2] = thetas_odd
-    result[1::2] = thetas_even
-    return result
+    return local_thetas
