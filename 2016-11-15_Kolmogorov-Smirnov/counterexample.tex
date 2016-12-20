@@ -8,11 +8,15 @@
 \newcommand{\bQ}{\mathbf{Q}}
 \newcommand{\bZ}{\mathbf{Z}}
 \newcommand{\dd}{\mathrm{d}}
+\newcommand{\even}{\mathrm{even}}
 \newcommand{\fr}{\mathrm{fr}}
 \newcommand{\Leb}{\mathrm{Leb}}
+\newcommand{\odd}{\mathrm{odd}}
+\newcommand{\ST}{\mathrm{ST}}
 
 \newtheorem{corollary}{Corollary}
 \newtheorem{conjecture}{Conjecture}
+\newtheorem{theorem}{Theorem}
 
 \title{A counterexample relating exponential sums and discrepancy}
 \author{Daniel Miller}
@@ -72,7 +76,7 @@ identities always hold:
 Next, choose $\bar\rho_l \colon G_\bQ \twoheadrightarrow \GL_2(\bF_l)$ to 
 which we can apply Ramakrishna et.~al.'s machinery. Define 
 \[
-	\Theta_p(\bar\rho_l) = \left\{\cos\left(\frac{a}{2\sqrt p}\right) : a\in \bZ, |a|\leqslant 2\sqrt p, a \equiv \tr \bar\rho_l(\fr_p)\pmod l\right\} .
+	\Theta_p(\bar\rho_l) = \left\{\cos^{-1}\left(\frac{a}{2\sqrt p}\right) : a\in \bZ, |a|\leqslant 2\sqrt p, a \equiv \tr \bar\rho_l(\fr_p)\pmod l\right\} .
 \]
 \begin{conjecture}
 There exists a sequence of $\theta_p\in \Theta_p(\bar\rho_l)$ such that 
@@ -110,7 +114,7 @@ and hence $L(\rho_l,s)$ satisfies the Riemann Hypothesis.
 Let $\bar\rho_l\colon G_\bQ \to \GL_2(\bF_l)$ be a Galois representation. For 
 each prime $p$, define 
 \[
-	\Theta_p(l) = \left\{\cos\left(\frac{a}{2\sqrt p}\right) : a\in \bZ, |a|\leqslant 2\sqrt p, a \equiv \tr \bar\rho_l(\fr_p)\pmod l\right\} .
+	\Theta_p(l) = \left\{\cos^{-1}\left(\frac{a}{2\sqrt p}\right) : a\in \bZ, |a|\leqslant 2\sqrt p, a \equiv \tr \bar\rho_l(\fr_p)\pmod l\right\} .
 \]
 It is easy to check that 
 \[
@@ -132,9 +136,151 @@ $1/\log p$, while making sure that the $U_1$-sum doesn't get too big.
 (Fact: if $\{x_1,\dots,x_N\}$ and $\{y_1,\dots,y_N\}$ are two sequences, 
 then 
 \[
-	|\disc(\{x_1,\dots,x_N\}) - \disc(\{y_1,\dots,y_N\})| \leqslant 2\|x-y\|_0 .
+	|\disc(\{x_1,\dots,x_N\}) - \disc(\{y_1,\dots,y_N\})| \leqslant 2\|x-y\|_\infty .
 \]
 )
+
+It's actually quite simple. Note that:
+\[
+	U_1(\theta) = \frac{\sin(2\theta)}{\sin\theta} = -U_1(\pi-\theta) .
+\]
+The basic idea is: set $\theta_3 \approx \pi-\theta_2$, 
+$\theta_7 \approx \pi-\theta_5$, etc.~and we can choose $\theta_2$, 
+$\theta_5$ etc.~arbitrarily, meaning good discrepancy, while the sum should 
+approximately cancel out. First, since $U_1$ has bounded derivative, we know 
+that 
+\[
+	|U_1(\theta) - U_1(\varphi)| \ll |\theta-\varphi|
+\]
+So, if $p_1<p_2$ are sequential primes, we have 
+\[
+	|\theta_{p_2} - (\pi-\theta_{p_1})| \ll p_1^{-1/2} ,
+\]
+so 
+\begin{align*}
+	|U_1(\theta_{p_1}) + U_1(\theta_{p_2})| 
+		&\leqslant |U_1(\theta_{p_1}) - U_1(\pi - \theta_{p_1})| + |U_1(\pi-\theta_{p_1}) - U_1(\theta_{p_2})| \\
+		&\ll |\theta_{p_2} - (\pi-\theta_{p_1})| \\
+		&\ll p_1^{-1/2} .
+\end{align*}
+So, 
+\[
+	\left| \sum_{p\leqslant x} U_1(\theta_p) \right| \ll \sum_{p\leqslant x} p^{-1/2} \ll \int_1^x t^{-1/2} \, \dd t \ll \sqrt x .
+\]
+(Same argument works for all $U_\odd$ because they all satisfy 
+$U_\odd(\pi-\theta) = -U_\odd(\theta)$. In contrast, 
+$U_\even(\pi-\theta) = U_\even(\theta)$.)
+
+
+
+
+
+\section{A legit proof!}
+
+\begin{theorem}
+Fix a prime $l$. Suppose we have chosen, for all primes $p$, some arbitrary 
+residue class $\bar a_p\in \bF_l$, and set 
+\[
+	\Theta_p(l) = \left\{\cos^{-1}\left(\frac{a}{2\sqrt p}\right) : a\in \bZ, |a|\leqslant 2\sqrt p, a \equiv \bar a_p\pmod l\right\} .
+\]
+Then there exists a choice of $\theta_p\in \Theta_p(l)$ such that 
+\begin{enumerate}
+\item
+The sequence $\{\theta_p\}$ is equidistributed with respect to the Sato--Tate 
+measure $\frac{2}{\pi}\sin^2\theta\, \dd \theta$. 
+
+\item
+The discrepancy $\disc(\{\theta_p\}_{p\leqslant x}, \ST) \gg \frac{1}{\log x}$. 
+
+\item
+$\left| \sum_{p\leqslant x} U_\mathrm{odd}(\theta_p)\right| \ll \sqrt x$. 
+\end{enumerate}
+\end{theorem}
+\begin{proof}
+Enumerate the primes $p_1 < p_2 < \cdots$. We will choose 
+$\theta_{p_\odd}\in [0,\pi/2)$ so that the discrepancy of the sequence 
+$\{\theta_{p_\odd}\}$ behaves as required in that interval. We'll then set 
+$\theta_{p_{2i}}\approx \pi - \theta_{p_{2i-1}}$. 
+
+Everything comes down to: if $p < q$ are sequential primes and we 
+have already chosen $\theta_p$, we need to be able to choose $\theta_q$ so that 
+$|U_1(\theta_p)+U_1(\theta_q)| \ll p^{-1/2}$. Since 
+$\frac{\dd U_1}{\dd \theta} = -2\sin(\theta)$, we have (roughly)
+\[
+	|U_1(\theta)-U_1(\varphi)| \ll \max(\theta,\varphi) \cdot |\theta-\varphi| 
+\]
+for $\theta,\varphi\in [0,\pi/2)$. 
+
+Start with $t_p = \frac{a_p}{2\sqrt p}$ and $t_q = \frac{a_q}{2\sqrt q}$. We 
+can guarantee that $|t_p - (\pi-t_q)| \ll p^{-1/2}$. 
+
+Fact: 
+\[
+	| \cos^{-1}(1-x) - \cos^{-1}(1-(x+\sqrt x))| \ll x^{1/5} .
+\]
+So roughly, 
+\[
+	|\theta_p - \theta_q| \ll p^{-1/5} ,
+\]
+
+After taking $\cos^{-1}$, 
+all we can guarantee is that 
+\[
+	|\theta_p - \theta_q| \ll 
+\]
+
+
+--- --- --- --- --- --- --- --- --- --- --- --- 
+
+Let's think systematically. We're picking $t_1$ and $t_2$ close to 
+$1$, which is where $(\cos^{-1})'$ blows up. But there shouldn't be very many 
+of them close to $1$. Aka, 
+\begin{align*}
+	\left|\frac{\#\{p \leqslant x : \theta_p \in [0,t)\}}{\pi(x)} - \int_0^t \dd\ST\right| 
+		&\ll \frac{1}{\log x} \\ 
+	\frac{\#\{p \leqslant x : \theta_p \in [0,t)\}}{\pi(x)} 
+		&\ll t^2 + 	\frac{1}{\log x} .
+\end{align*}
+
+We want to know, given $x$, how small the smallest $\theta_p, p\leqslant x$ is. 
+Roughly, for what $t$ is 
+\[
+	\# \{p \leqslant x: \theta_p\in [0,t)\} < 1? 
+\]
+We already know that 
+\[
+	\# \{p \leqslant x : \theta_p\in [0,t)\} \ll \frac{x}{\log x} \left( t^2 + \frac{1}{\log x}\right) .
+\]
+This is frustrating, because it means, essentially, that our convergence to 
+the Sato--Tate measure is so slow (by design) that we can't \emph{ever} 
+guarantee that no $\theta_p$ lies in some small interval. But there's 
+something easier. For each $p\leqslant x$, we start by choosing 
+$a_p\in \bZ$. How close can $a_p$ be to $2\sqrt p$? Numerical experiments 
+\textbf{(prove this!)} show that for $t_p = \frac{a_p}{2\sqrt p}$, we have 
+\[
+	|1-t_p| \gg p^{-1/2} .
+\]
+This is key! That means $\theta_p$ won't be too small. In particular, we 
+can control how close $\theta_p$ and $\theta_q$ will be. 
+
+We already have chosen $\theta_p$. We want to choose $a_q$ so that 
+$\cos^{-1}(\frac{a_q}{2\sqrt q}) \approx \pi-\theta_p$, i.e.
+\[
+	\frac{a_q}{2\sqrt q} \approx \sin(\theta_p) .
+\]
+We can ensure 
+\[
+	\left| \frac{a_q}{2\sqrt q} - \cos(\pi - \theta_p)\right| \ll p^{-1/2} .
+\]
+Moreover, we know that $|\pm 1 - \frac{a_q}{2\sqrt q}| \gg q^{-1/2}$, and 
+likewise for $a_p$. Thus, 
+\[
+	|\theta_p - \theta_q| = \left|\cos^{-1}\left(\frac{a_p}{2\sqrt p}\right) - \pi +  \cos^{-1}\left(\frac{a_q}{2\sqrt q}\right)\right| \ll p^{-1/2} \cdot ?
+\]
+
+
+
+\end{proof}
 
 
 

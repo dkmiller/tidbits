@@ -100,3 +100,43 @@ def display_sum(stuff):
         partial_sum += U_1(stuff[p])
         sum_data.append(partial_sum)
     plt.show(plt.scatter(primes, np.abs(sum_data)))
+
+def test_choose_traces(x):
+    def theta(a, p):
+        return np.arccos(a / (2*np.sqrt(p)))
+
+#    primes = primes_below(x)
+    # Ensure an even number of primes.
+#    if len(primes) % 2 != 0:
+#        primes = primes[:-1]
+    primes_even = primes_below(x)[::2]
+    primes_odd = primes_below(x)[1::2]
+
+    # Drop primes if necessary so len(primes_odd) = len(primes_even).
+    if len(primes_odd) > len(primes_even):
+        primes_odd = primes_odd[:-1]
+    elif len(primes_even) > len(primes_odd):
+        primes_even = primes_even[:-1]
+    traces_odd = map(lambda p: max(traces(p)), primes_odd)
+    traces_even = []
+    for i in xrange(len(primes_odd)):
+        p = primes_odd[i]
+        a_p = traces_odd[i]
+        q = primes_even[i]
+        def evaluate(a):
+            return np.abs(theta(a_p,p) - (np.pi - theta(a,q)))
+        a_q = min(traces(q))
+        for a in traces(q):
+            if evaluate(a) < evaluate(a_q):
+                a_q = a
+        traces_even.append(a_q)
+
+    thetas_odd = []
+    thetas_even = []
+    for i in xrange(len(primes_odd)):
+        thetas_odd.append(theta(traces_odd[i], primes_odd[i]))
+        thetas_even.append(theta(traces_even[i], primes_even[i]))
+    result = thetas_odd + thetas_even
+    result[::2] = thetas_odd
+    result[1::2] = thetas_even
+    return result
