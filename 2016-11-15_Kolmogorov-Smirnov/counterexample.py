@@ -6,6 +6,10 @@ import scipy.stats
 
 matplotlib.style.use('ggplot')
 
+def plot_seq(ys):
+    xs = range(1, len(ys)+1)
+    plt.show(plt.scatter(xs, ys))
+
 def U_1(theta):
     return np.sin(2*theta) / np.sin(theta)
 
@@ -102,8 +106,19 @@ def display_sum(stuff):
     plt.show(plt.scatter(primes, np.abs(sum_data)))
 
 
+# Diffs from traces
+def test_diffs(x):
+    stuff = map(U_1, test_choose_traces(x))
+    diffs = []
+    for i in xrange(len(stuff)/2):
+        u = stuff[2*i]
+        v = stuff[2*i+1]
+        diffs.append(np.abs((u+v)*2*(i+1)))
+    return diffs
+
+
 # Sample algorithm for choosing a_p's to minimize |sum U_1(theta_p)|.
-# This algorithm yields |sum_{p<x} U_1(theta_p)| = O(1). 
+# This algorithm yields |sum_{p<x} U_1(theta_p)| = O(1).
 def test_choose_traces(x):
     # Returns the angle corresponding to a = tr(fr_p).
     def theta(a, p):
