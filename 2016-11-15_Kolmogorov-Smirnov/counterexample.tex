@@ -1,6 +1,7 @@
 \documentclass{article}
 
 \usepackage{amsmath,amssymb,amsthm,graphicx}
+\DeclareMathOperator{\Aut}{Aut}
 \DeclareMathOperator{\disc}{disc}
 \DeclareMathOperator{\GL}{GL}
 \DeclareMathOperator{\tr}{tr}
@@ -286,10 +287,22 @@ Numerical experiments suggest that we can enforce
 \[
 	|U_1(\theta_p)+U_1(\theta_q)| \ll \frac{\log p}{p} .
 \]
-
-
-
 \end{proof}
+
+Let $(X,\mu)$ be a topological measure space. Suppose $g$ is a non-trivial 
+automorphism of $X$, such that $g_\ast \mu = \mu$. Suppose $g^2=1$. If we 
+want to minimize 
+\[
+	\left| \sum_{p\leqslant x} f(x_p)\right| ,
+\]
+while letting the discrepancy of $\{x_p\}$ vary arbitrarily. Suppose we can 
+find a ``good'' subset $U\subset X$ such that $X = U \sqcup g U$. Choose 
+$x_{p_\odd}\in U$ to control the discrepancy, and then choose 
+$x_{p_\even} \approx g(x_{p_\odd})$. For any $f\in C^\infty(X)$ such that 
+$g^\ast f = - f$. Then 
+\[
+	\sum_{p\leqslant x} f(x_p) = \sum (f(x_{p_\even}) + f(x_{p_\odd})) \approx \sum 0 .
+\]
 
 
 
