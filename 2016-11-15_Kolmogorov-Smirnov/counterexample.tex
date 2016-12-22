@@ -7,6 +7,7 @@
 \DeclareMathOperator{\tr}{tr}
 \newcommand{\bF}{\mathbf{F}}
 \newcommand{\bQ}{\mathbf{Q}}
+\newcommand{\bR}{\mathbf{R}}
 \newcommand{\bZ}{\mathbf{Z}}
 \newcommand{\dd}{\mathrm{d}}
 \newcommand{\even}{\mathrm{even}}
@@ -302,6 +303,65 @@ $x_{p_\even} \approx g(x_{p_\odd})$. For any $f\in C^\infty(X)$ such that
 $g^\ast f = - f$. Then 
 \[
 	\sum_{p\leqslant x} f(x_p) = \sum (f(x_{p_\even}) + f(x_{p_\odd})) \approx \sum 0 .
+\]
+
+We know that near $\theta=0$, 
+\[
+	U_n(\theta) = n + C_n \theta^2 + O(\theta^3) .
+\]
+(I think this will hold for any $f$ with $\int f=0$ and
+$f(\pi-\theta)=f(\theta)$.)
+
+
+
+
+
+\section{Precise method}
+
+Let $\{p_1,p_2,\dots,\}$ be an enumeration of the rational primes. Given 
+$x\in \bR$, write $\sum_{p_\odd \leqslant x} a_p$ for the sum of all $a_p$ 
+for $p_i\leqslant x$ with $i$ odd, and similarly for 
+$\sum_{p_\even\leqslant x}$. Suppose we have chosen 
+$\theta_{p_\odd}\in [0,\pi/2)$ so that 
+$\disc(\{\theta_{p_\odd}\}_{p_\odd \leqslant x})$ decays as desired. Suppose 
+we choose $\theta_{p_\even} \approx \pi - \theta_{p_\odd}$. That is, for 
+$p < q$ successive primes with $p=p_i$, $i$ odd, we'll choose 
+$\theta_q \approx \pi - \theta_p$. 
+
+We know that $\theta_p = \cos^{-1}\left(\frac{a_p}{2\sqrt p}\right)$ for 
+some $a_p\in \bZ$ with $|a_p| \leqslant 2\sqrt p$. We want to choose 
+$\theta_q\approx \pi-\theta_p$, i.e.~
+\begin{align*}
+	\cos^{-1}\left(\frac{a_q}{2\sqrt q}\right) 
+		&\approx \pi - \cos^{-1}\left(\frac{a_p}{2\sqrt p}\right) \\
+	\frac{a_q}{2\sqrt q} 
+		&\approx -\frac{a_p}{2\sqrt p} .
+\end{align*}
+since $\cos(\pi - \cos^{-1}(x)) = - x$. We can guarantee that 
+\[
+	\left|\frac{a_q}{2\sqrt q} + \frac{a_p}{2\sqrt p}\right| \leqslant \frac{1}{\sqrt q} .
+\]
+
+Claim: if $x,y$ are ``further than $\epsilon$'' from $\pm 1$ and 
+$|x-y|<\epsilon$, then 
+$|\cos^{-1}(x) - \cos^{-1}(y)| \leqslant \sqrt \epsilon$. 
+(Have checked with Wolfram Alpha, prove later.)
+
+In conclusion, for each successive primes $p=p_\odd < q=p_\even$, if there 
+is $\theta_p\in \Theta_p(l)$ chosen already, we can also choose 
+$\theta_q\in \Theta_q(l)$ so that 
+\[
+	|\theta_q - (\pi - \theta_p)| \ll l p^{-1/4} .
+\]
+This is all that is needed, since we're looking at $f$ that is of the form 
+\[
+	f(\theta) = f(0) + C \theta^2 + O(\theta^3)
+\]
+for $\theta$ close to zero. The squaring ``pushes the difference'' back to 
+$p^{-1/2}$. That is, for $\theta,\varphi$ close to zero, but at least 
+$\epsilon$ away from zero, we have 
+\[
+	|f(\theta) - f(\varphi)| \ll |\theta-\varphi|^2 .
 \]
 
 
