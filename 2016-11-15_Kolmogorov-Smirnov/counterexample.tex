@@ -1,12 +1,20 @@
 \documentclass{article}
 
-\usepackage{amsmath,amssymb,amsthm,graphicx}
+\usepackage{
+	amsmath,
+	amssymb,
+	amsthm,
+	bookmark,
+	graphicx,
+	thmtools
+}
 \DeclareMathOperator{\Aut}{Aut}
 \DeclareMathOperator{\cdf}{cdf}
-\DeclareMathOperator{\disc}{disc}
+\DeclareMathOperator{\disc}{D}
 \DeclareMathOperator{\GL}{GL}
 \DeclareMathOperator{\tr}{tr}
 \newcommand{\bF}{\mathbf{F}}
+\newcommand{\bN}{\mathbf{N}}
 \newcommand{\bQ}{\mathbf{Q}}
 \newcommand{\bR}{\mathbf{R}}
 \newcommand{\bx}{{\boldsymbol x}}
@@ -19,10 +27,10 @@
 \newcommand{\odd}{\mathrm{odd}}
 \newcommand{\ST}{\mathrm{ST}}
 
-\newtheorem{corollary}{Corollary}
-\newtheorem{conjecture}{Conjecture}
-\newtheorem{lemma}{Lemma}
-\newtheorem{theorem}{Theorem}
+\newtheorem{corollary}[subsection]{Corollary}
+\newtheorem{conjecture}[subsection]{Conjecture}
+\newtheorem{lemma}[subsection]{Lemma}
+\newtheorem{theorem}[subsection]{Theorem}
 
 \title{A counterexample relating exponential sums and discrepancy}
 \author{Daniel Miller}
@@ -395,127 +403,71 @@ With complete generality, we have:
 \]
 This is all we need.
 
---- --- --- --- --- --- --- --- --- --- --- --- 
+
+
+\begin{lemma}\label{lem:compare-disc}
+Let $\bx$ and $\by$ be sequences in $\bR_{\geqslant 0}$. Suppose 
+$\nu = f\, \dd x$ for a continuous function $f$. Then 
+\[
+	|\disc^\star(\bx^N,\nu) - \disc^\star(\by^N,\nu)| \leqslant \epsilon\|f\|_\infty + \frac{\# \{n\leqslant N : |x_n - y_n| > \epsilon\}}{N} .
+\]
+\end{lemma}
+\begin{proof}
+It is actually sufficient to just prove that 
+\[
+	\disc^\star(\by^N,\nu) \leqslant \disc^\star(\bx^N,\nu) + \epsilon \|f\|_\infty + \frac{\# \{n\leqslant N : |x_n - y_n| > \epsilon\}}{N} .
+\]
+Start with an arbitrary interval $[0,t)$. Clearly 
+\[
+	\# \{n\leqslant N : y_n < t\} \leqslant \# \{ n\leqslant N : x_n < t + \epsilon\} + \# \{n\leqslant N : |x_n - y_n| > \epsilon\} ,
+\]
+and also 
+\[
+	\left|\frac{\#\{n\leqslant N : x_n < t+\epsilon\}}{N} - \mu[0,t+\epsilon)\right| \leqslant \disc^\star(\bx^N,\mu) .
+\]
+It follows that 
+\[
+	\frac{\#\{n\leqslant N : y_n < t\}}{N} - \mu[0,t) \leqslant \mu[t,t+\epsilon) + \disc^\star(\bx^N,\mu) + \frac{\#\{n\leqslant N : |x_n - y_n| > \epsilon\}}{N} .
+\]
+A similar argument with $[0,t-\epsilon)$ yields 
+\[
+	\frac{\#\{n\leqslant N : y_n < t\}}{N} - \mu[0,t) \geqslant -\mu[t-\epsilon,t) - \disc^\star(\bx^N,\mu) - \frac{\#\{n\leqslant N : |x_n - y_n| > \epsilon\}}{N} .
+\]
+Since the discrepancy is a supremum over $t$, we get 
+\[
+	\disc^\star(\by^N,\mu) \leqslant \disc^\star(\bx^N,\mu) + \|f\|_\infty \epsilon + \frac{\#\{n\leqslant N : |x_n - y_n| > \epsilon\}}{N}
+\]
+as desired. 
+\end{proof}
+
+This lemma has a powerful application. 
 
 \begin{theorem}
-Let $\bx$ and $\by$ be sequences in $\bR$ such that 
+Let $\bx$ and $\by$ be sequences in $\bR$ and $\mu = f\, \dd x$ be a measure 
+induced by a continuous function $f$. Suppose that 
 \begin{enumerate}
 \item
-$\disc(\bx^N,\nu) \to 0$. 
+$\bx$ is $\mu$-equidistributed. 
 \item
-$\|\bx_{\geqslant N} - \by_{\geqslant N}\|_\infty \to 0$. 
+$\|\bx_{>N} - \by_{>N}\|_\infty \to 0$. 
 \end{enumerate}
-Then $\disc(\by^N, \nu) \to 0$ as well. 
+Then $\by$ is also $\mu$-equidistributed. 
 \end{theorem}
 \begin{proof}
-Recall our notation. First, $\bx^N$ is the measure 
+Recall that $\bx_{>N} = (x_{N+1}, x_{N+2},\dots)$, and that $\|\cdot\|_\infty$ 
+is the supremum norm. Let $\varphi:\bN \to \bN$ be a function such that 
+$\varphi(n) \to \infty$, but also $\varphi(n) = o(n)$. For example, we could 
+have $\varphi(n) = \lfloor \log n\rfloor$. For any $N$, let 
+$\epsilon = \|\bx_{>\varphi(N)} - \by_{>\varphi(N)}\|_\infty$, and apply 
+\autoref{lem:compare-disc}. Trivially, we know that 
 \[
-	\int f\, \dd\bx^N = \frac{1}{N} \sum_{n\leqslant N} f(x_n) ,
+	\#\{n\leqslant N : |x_n - y_n| > \epsilon\} \leqslant \varphi(N) ,
 \]
-while $\bx_{\geqslant N} = (x_N, x_{N+1}, \dots)$. The discrepancy between 
-two measures $\mu$ and $\nu$ on $\bR$ is 
+so we can write 
 \[
-	\disc(\mu,\nu) = \sup_{x\in \bR} |\cdf_{\mu}(x) - \cdf_\nu(x)| .
+	\disc(\by^N,\mu) \leqslant \disc(\bx^N,\mu) + 2 \|\bx_{> \varphi(N)} - \by_{> \varphi(N)}\|_\infty \cdot \|f\|_\infty + \frac{\varphi(N)}{N} \to 0 .
 \]
-Finally, the norm in line two is the supremum norm 
-\[
-	\| x_{\geqslant N} - y_{\geqslant N} \|_\infty = \sup_{n\geqslant N} |x_n - y_n| .
-\]
-Note that the discrepancy satisfies the triangle inequality, namely 
-\[
-	\disc(\mu,\xi) \leqslant \disc(\mu,\nu) + \disc(\nu,\xi) .
-\]
-Moreover, for $M < N$, write $\bx^{M,N}$ for the measure 
-\[
-	\int f\, \dd\bx^{M,N} = \frac{1}{N - M} \sum_{M < n \leqslant N} f(x_n) .
-\]
-First, note that $\disc(\bx^N,\bx^{M,N}) \leqslant \frac M N$, because the 
-two finite sets in question differ by $M$ elements, so the cumulative 
-distribution functions can differ by at most $\frac M N$. Now note that:
-\[
-	\disc(\by^N, \nu) 
-		\leqslant \disc(\by^N, \by^{M,N}) + \disc(\by^{M,N}, \bx^{M,N}) + \disc(\bx^{M,N}, \bx^N) + \disc(\bx^N,\nu) .
-\]
-Let $M=o(N)$ but still have $M\to \infty$. Then the first and third terms 
-converge to zero. The fourth term converges to zero by hypothesis, so all 
-we need is to consider the second term. 
-
-[Proof is invalid in this generality! We only have: if $\nu$ is continuous 
-measure, then 
-\[
-	|\disc(\bx^N, \nu) - \disc(\by^N,\nu)| \ll_\nu \| \bx_{\leqslant N} - \by_{\leqslant N}\|_ \infty .
-\]]
-\end{proof}
-
-More generally, 
-\[
-	\disc(\mu_{S\sqcup T}, \mu_S) = \|\cdf_{\mu_{S\sqcup T}} - \cdf_{\mu_S}\|_\infty \leqslant \frac{\# T}{\# S} .
-\]
-Moreover,  
-\[
-	\disc(\by^N,\nu) \leqslant \disc(\by^N, \bx^N) + \disc(\bx^N, \nu) .
-\]
-So to prove $\disc(\by^N,\nu)\to 0$, it suffices in fact to prove that 
-$\disc(\bx^N,\by^N) \to 0$. Here, we have a chain of inequalities (where 
-we write $\bx^{M,N}$ for the measure corresponding to 
-$\{x_n\}_{M\leqslant N \leqslant M}$: 
-\[
-	\disc(\bx^N,\by^N) \leqslant \disc(\bx^N,\bx^{M,N}) + \disc(\bx^{M,N},\by^{M,N}) + \disc(\by^{M,N},\by^N) .
-\]
-Now, it is known that 
-\[
-	\disc(\bx^{M,N},\by^{M,N}) \ll M^{-1/4} ,
-\]
-Now, $\disc(\bx^N, \bx^{M,N}) \leqslant \frac{M}{N - M}$, so we can set 
-$M\approx \sqrt N$ to get 
-\[
-	\disc(\bx^N, \by^N) \ll \frac{\sqrt N}{N - \sqrt N} + N^{-1/4} \to 0 .
-\]
-
---- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
-\[
-	|\disc(\by^{M,N},\nu)  - \disc(\bx^{M,N},\nu)| \ll_\nu \|\bx_{\geqslant M} - \by_{\geqslant M}\|_\infty .
-\]
-Thus 
-\[
-	\disc(\by^{M,N},\nu) \ll_\nu \disc(\bx^{M,N},\nu) + \|\bx_{\geqslant M} - \by_{\geqslant M}\|_\infty
-\]
-
-\begin{lemma}
-Let $\bx$ be a sequence in $\bR$. For $M < N$, 
-\[
-	\disc(\bx^N, \bx^{M,N}) \leqslant \frac{2 M}{N} .
-\]
-\end{lemma}
-\begin{proof}
-We know that 
-\[
-	|\#\{n\leqslant N : x_n \leqslant t\} - \#\{M < n \leqslant N : x_n \leqslant t\}| \leqslant M .
-\]
-Thus for all $t\in \bR$, 
-\[
-	|\cdf_{\bx^N}(t) - \frac{N - M}{N} \cdf_{\bx^{M,N}}(t)|\leqslant \frac M N .
-\]
-Now just do a simple computation, with $|\cdot| = \|\cdot\|_\infty$:
-\begin{align*}
-	|\cdf_{\bx^N} - \cdf_{\bx^{M,N}}| 
-		&\leqslant \left|\cdf_{\bx^N} - \frac{N - M}{N} \cdf_{\bx^{M,N}}\right| + \left|\frac{N - M}{N} \cdf_{\bx^{M,N}} - \cdf_{\bx^{M,N}}\right| \\
-		&\leqslant \frac M N + \frac M N .
-\end{align*}
-\end{proof}
-
-\begin{lemma}
-Let $\bx$ and $\by$ be sequences in $\bR$. Suppose $\nu = f\, \dd x$ for a 
-continuous function $f$. Then 
-\[
-	|\disc(\bx^N,\nu) - \disc(\by^N,\nu)| \leqslant 2\epsilon\|f\|_\infty + \frac{\# \{n\leqslant N : |x_n - y_n| > \epsilon\}}{N} .
-\]
-\end{lemma}
-\begin{proof}
-It is actually sufficient to prove that 
-\[
-	\disc(\bx^N,\nu) \leqslant \disc(\by^N,\nu) + 2\epsilon \|f\|_\infty + \frac{\# \{n\leqslant N : |x_n - y_n| > \epsilon\}}{N} .
-\]
+Note that we do not control the rate of decay of $\disc(\by^N,\mu)$. 
 \end{proof}
 
 
