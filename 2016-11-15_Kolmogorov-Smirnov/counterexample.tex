@@ -9,6 +9,8 @@
 \newcommand{\bF}{\mathbf{F}}
 \newcommand{\bQ}{\mathbf{Q}}
 \newcommand{\bR}{\mathbf{R}}
+\newcommand{\bx}{{\boldsymbol x}}
+\newcommand{\by}{{\boldsymbol y}}
 \newcommand{\bZ}{\mathbf{Z}}
 \newcommand{\dd}{\mathrm{d}}
 \newcommand{\even}{\mathrm{even}}
@@ -19,6 +21,7 @@
 
 \newtheorem{corollary}{Corollary}
 \newtheorem{conjecture}{Conjecture}
+\newtheorem{lemma}{Lemma}
 \newtheorem{theorem}{Theorem}
 
 \title{A counterexample relating exponential sums and discrepancy}
@@ -391,6 +394,129 @@ With complete generality, we have:
 	\left|\disc(\{x_n\}_{n\leqslant N}) - \disc(\{x_n\}_{M\leqslant n\leqslant N})\right| \ll \frac{1}{M}
 \]
 This is all we need.
+
+--- --- --- --- --- --- --- --- --- --- --- --- 
+
+\begin{theorem}
+Let $\bx$ and $\by$ be sequences in $\bR$ such that 
+\begin{enumerate}
+\item
+$\disc(\bx^N,\nu) \to 0$. 
+\item
+$\|\bx_{\geqslant N} - \by_{\geqslant N}\|_\infty \to 0$. 
+\end{enumerate}
+Then $\disc(\by^N, \nu) \to 0$ as well. 
+\end{theorem}
+\begin{proof}
+Recall our notation. First, $\bx^N$ is the measure 
+\[
+	\int f\, \dd\bx^N = \frac{1}{N} \sum_{n\leqslant N} f(x_n) ,
+\]
+while $\bx_{\geqslant N} = (x_N, x_{N+1}, \dots)$. The discrepancy between 
+two measures $\mu$ and $\nu$ on $\bR$ is 
+\[
+	\disc(\mu,\nu) = \sup_{x\in \bR} |\cdf_{\mu}(x) - \cdf_\nu(x)| .
+\]
+Finally, the norm in line two is the supremum norm 
+\[
+	\| x_{\geqslant N} - y_{\geqslant N} \|_\infty = \sup_{n\geqslant N} |x_n - y_n| .
+\]
+Note that the discrepancy satisfies the triangle inequality, namely 
+\[
+	\disc(\mu,\xi) \leqslant \disc(\mu,\nu) + \disc(\nu,\xi) .
+\]
+Moreover, for $M < N$, write $\bx^{M,N}$ for the measure 
+\[
+	\int f\, \dd\bx^{M,N} = \frac{1}{N - M} \sum_{M < n \leqslant N} f(x_n) .
+\]
+First, note that $\disc(\bx^N,\bx^{M,N}) \leqslant \frac M N$, because the 
+two finite sets in question differ by $M$ elements, so the cumulative 
+distribution functions can differ by at most $\frac M N$. Now note that:
+\[
+	\disc(\by^N, \nu) 
+		\leqslant \disc(\by^N, \by^{M,N}) + \disc(\by^{M,N}, \bx^{M,N}) + \disc(\bx^{M,N}, \bx^N) + \disc(\bx^N,\nu) .
+\]
+Let $M=o(N)$ but still have $M\to \infty$. Then the first and third terms 
+converge to zero. The fourth term converges to zero by hypothesis, so all 
+we need is to consider the second term. 
+
+[Proof is invalid in this generality! We only have: if $\nu$ is continuous 
+measure, then 
+\[
+	|\disc(\bx^N, \nu) - \disc(\by^N,\nu)| \ll_\nu \| \bx_{\leqslant N} - \by_{\leqslant N}\|_ \infty .
+\]]
+\end{proof}
+
+More generally, 
+\[
+	\disc(\mu_{S\sqcup T}, \mu_S) = \|\cdf_{\mu_{S\sqcup T}} - \cdf_{\mu_S}\|_\infty \leqslant \frac{\# T}{\# S} .
+\]
+Moreover,  
+\[
+	\disc(\by^N,\nu) \leqslant \disc(\by^N, \bx^N) + \disc(\bx^N, \nu) .
+\]
+So to prove $\disc(\by^N,\nu)\to 0$, it suffices in fact to prove that 
+$\disc(\bx^N,\by^N) \to 0$. Here, we have a chain of inequalities (where 
+we write $\bx^{M,N}$ for the measure corresponding to 
+$\{x_n\}_{M\leqslant N \leqslant M}$: 
+\[
+	\disc(\bx^N,\by^N) \leqslant \disc(\bx^N,\bx^{M,N}) + \disc(\bx^{M,N},\by^{M,N}) + \disc(\by^{M,N},\by^N) .
+\]
+Now, it is known that 
+\[
+	\disc(\bx^{M,N},\by^{M,N}) \ll M^{-1/4} ,
+\]
+Now, $\disc(\bx^N, \bx^{M,N}) \leqslant \frac{M}{N - M}$, so we can set 
+$M\approx \sqrt N$ to get 
+\[
+	\disc(\bx^N, \by^N) \ll \frac{\sqrt N}{N - \sqrt N} + N^{-1/4} \to 0 .
+\]
+
+--- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
+\[
+	|\disc(\by^{M,N},\nu)  - \disc(\bx^{M,N},\nu)| \ll_\nu \|\bx_{\geqslant M} - \by_{\geqslant M}\|_\infty .
+\]
+Thus 
+\[
+	\disc(\by^{M,N},\nu) \ll_\nu \disc(\bx^{M,N},\nu) + \|\bx_{\geqslant M} - \by_{\geqslant M}\|_\infty
+\]
+
+\begin{lemma}
+Let $\bx$ be a sequence in $\bR$. For $M < N$, 
+\[
+	\disc(\bx^N, \bx^{M,N}) \leqslant \frac{2 M}{N} .
+\]
+\end{lemma}
+\begin{proof}
+We know that 
+\[
+	|\#\{n\leqslant N : x_n \leqslant t\} - \#\{M < n \leqslant N : x_n \leqslant t\}| \leqslant M .
+\]
+Thus for all $t\in \bR$, 
+\[
+	|\cdf_{\bx^N}(t) - \frac{N - M}{N} \cdf_{\bx^{M,N}}(t)|\leqslant \frac M N .
+\]
+Now just do a simple computation, with $|\cdot| = \|\cdot\|_\infty$:
+\begin{align*}
+	|\cdf_{\bx^N} - \cdf_{\bx^{M,N}}| 
+		&\leqslant \left|\cdf_{\bx^N} - \frac{N - M}{N} \cdf_{\bx^{M,N}}\right| + \left|\frac{N - M}{N} \cdf_{\bx^{M,N}} - \cdf_{\bx^{M,N}}\right| \\
+		&\leqslant \frac M N + \frac M N .
+\end{align*}
+\end{proof}
+
+\begin{lemma}
+Let $\bx$ and $\by$ be sequences in $\bR$. Suppose $\nu = f\, \dd x$ for a 
+continuous function $f$. Then 
+\[
+	|\disc(\bx^N,\nu) - \disc(\by^N,\nu)| \leqslant 2\epsilon\|f\|_\infty + \frac{\# \{n\leqslant N : |x_n - y_n| > \epsilon\}}{N} .
+\]
+\end{lemma}
+\begin{proof}
+It is actually sufficient to prove that 
+\[
+	\disc(\bx^N,\nu) \leqslant \disc(\by^N,\nu) + 2\epsilon \|f\|_\infty + \frac{\# \{n\leqslant N : |x_n - y_n| > \epsilon\}}{N} .
+\]
+\end{proof}
 
 
 
