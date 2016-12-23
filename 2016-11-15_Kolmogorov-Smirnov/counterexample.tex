@@ -442,7 +442,7 @@ as desired.
 
 This lemma has a powerful application. 
 
-\begin{theorem}
+\begin{theorem}\label{thm:two-discrepancies}
 Let $\bx$ and $\by$ be sequences in $\bR$ and $\mu = f\, \dd x$ be a measure 
 induced by a continuous function $f$. Suppose that 
 \begin{enumerate}
@@ -469,6 +469,63 @@ so we can write
 \]
 Note that we do not control the rate of decay of $\disc(\by^N,\mu)$. 
 \end{proof}
+
+
+
+
+
+\section{Summary of argument}
+
+Fix a prime $l$, and for each prime $p$, a choice of equivalence class 
+$\bar a_p \in \bF_l$. Define 
+\[
+	\Theta_p(l) = \left\{ \cos^{-1}\left( \frac{a}{2\sqrt p}\right) : a\in \bZ, |a|\leqslant 2\sqrt p, a\equiv \bar a_p \pmod l\right\} .
+\]
+Claim: there is a choice of $\theta_p\in \Theta_p(l)$ such that 
+\begin{enumerate}
+\item
+$\disc^\star(\{\theta_p\}_{p\leqslant X})$ is not $O(X^{-\epsilon})$ for any 
+$\epsilon>0$. 
+
+\item
+For any $f\in C^\infty(\bR/2\pi \bZ)^W$ with $f(\pi-\theta) = -f(\theta)$, we 
+have 
+\[
+	\left| \sum_{p\leqslant X} f(\theta_p)\right| \ll \sqrt X .
+\]
+\end{enumerate}
+
+How do we construct this sequence $\{\theta_p\}_p$? Enumerate the primes as 
+$\{p_n\}_{n\geqslant 1}$. Choose the sequence 
+$\{\theta_{p_{2 n-1}}\}_{n\geqslant 1}$ so that 
+\begin{enumerate}
+\item
+$\theta_{p_{2n-1}}\in [0,2\pi)$
+\item
+$\disc^\star\left(\{\theta_{p_{2n-1}}\}_{n\leqslant N}, 2\cdot \ST|_{[0,\pi/2)}\right) \to 0$, but slower 
+than any $N^{-\epsilon}$. \textbf{(Prove this is possible!)} 
+\end{enumerate}
+We've proved that we can choose $\theta_{p_{2n}}$ so that 
+$|\theta_{p_{2n}} - (\pi - \theta_{p_{2n-1}})| \ll l p^{-1/4}$, which 
+implies (via \autoref{thm:two-discrepancies}) that 
+\[
+	\disc^\star\left(\{\theta_{p_{2n}}\}_{n\leqslant N}, 2\cdot \ST|_{[\pi/2,\pi)}\right) \to 0 .
+\]
+\textbf{(We need to know that the discrepancy of $\pi/2-\bx$ is the same as 
+that of $\bx$.)} It follows that the sequence $\{\theta_p\}$ formed by 
+interleaving our ``even'' and ``odd'' indexed primes has discrepancy that 
+goes to zero \textbf{(We need to prove that if $\bx$ and $\by$ are sequences 
+equidistributed with respect to measures supported on $[0,\pi/2)$ and 
+$[\pi/2,\pi)$, then the ``interleaved'' sequence also has equidistribution 
+and discrepancy which decays no faster than the slower of the two.)}
+
+Note that our hypothesis on $\theta_{p_{2n}}\approx \pi - \theta_{p_{2n-1}}$, 
+we have, for $f$ as in the result,  
+\[
+	|f(\theta_{p_{2n-1}}) + f(\theta_{p_{2n}})| \ll_f l p^{-1/2} .
+\]
+\textbf{(Problem here: this bound only works near ``the edges.'' But also, 
+the $\theta$s are better away from the edges.)}
 
 
 
