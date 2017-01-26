@@ -1,5 +1,15 @@
 \documentclass{article}
 
+\usepackage{amsmath,amssymb,amsthm}
+\DeclareMathOperator{\sym}{sym}
+\newcommand{\bC}{\mathbf{C}}
+\newcommand{\bR}{\mathbf{R}}
+\newcommand{\btheta}{{\boldsymbol \theta}}
+\newcommand{\bx}{{\boldsymbol x}}
+\newcommand{\bZ}{\mathbf{Z}}
+
+\newtheorem{theorem}{Theorem}
+
 \title{A brief summary of thesis results}
 \author{Daniel Miller}
 
@@ -10,11 +20,63 @@
 
 
 
-d
+Some quick notation. If $X$ is some space and $f\colon X\to \bC$ a function, 
+and $\bx=(x_2,x_3,x_5,\dots)$ a sequence in $X$, write 
+\[
+	L_f(\bx,s) = \prod_p \frac{1}{1-f(x_p) p^{-s}} .
+\]
+
+\begin{theorem}
+If, for $\alpha\in [1/2,1]$, we have 
+\[
+	\left| \sum_{p\leqslant N} f(x_p)\right| \ll N^{\alpha+\epsilon} ,
+\]
+then $\log L_f(\bx,s)$ has analytic continuation to $\{\Re s>\alpha\}$. 
+Conversely, if $L_f(\bx,s)$ has analytic continuation to $\{\Re s>\alpha\}$ and 
+moreover, 
+\[
+	|\log L_f(\bx,\sigma+i t)| \ll |t|^{1-\epsilon},
+\]
+for all $\sigma>\alpha$, then 
+\[
+	\left|\sum_{p\leqslant N} f(x_p)\right| \ll \pi(N)^{\alpha+\epsilon} .
+\]
+\end{theorem}
+
+Roughly, this theorem says that analytic continuation of $\log L_f(\bx,s)$ to 
+$\{\Re s>\alpha\}$ is equivalent to the bound 
+$|\sum_{p\leqslant N} f(x_p)| \ll N^{\alpha+\epsilon}$. 
+
+\begin{theorem}
+Let $d\geqslant 1$. For any $\alpha\in [0,1/2]$, there exists a sequence 
+$\bx$ in $(\bR/\bZ)^d$ that is uniformly distributed, such that 
+\begin{enumerate}
+\item
+$D_N = \Omega(N^{-\alpha+\epsilon})$ (aka, big-$O$, but not big-$O$ of anything 
+smaller).
+\item
+For any $f\in C^\infty(\bR/\bZ)^d$ with $\int f=0$, the function 
+$\log L_f(\bx,s)$ has analytic continuation to $\{\Re s > 1/2\}$. 
+\end{enumerate}
+\end{theorem}
+
+This says there are $d$-dimensional sequences whose discrepancy decays 
+arbitrarily slowly, but whose $L$-functions are well behaved. 
+
+\begin{theorem}
+There exists a sequence $\btheta$ in $[0,\pi]$ such that for each $p$, 
+$2\sqrt p \cos(\theta_p)\in \bZ$ and satisfies the Hasse bound, and such that 
+\begin{enumerate}
+\item
+The discrepancy $D_N$ is not $\ll N^{-\epsilon}$ for any $\epsilon$. 
+\item
+The functions $L(\sym^k\btheta, s)$ satisfy the Riemann Hypothesis (for 
+$k$ odd). 
+\end{enumerate}
+\end{theorem}
 
 
 
 
 
 \end{document}
-
