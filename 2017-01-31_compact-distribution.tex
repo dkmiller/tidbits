@@ -93,4 +93,56 @@ the measure $\mu^{\ast n}$ is the $n$-th ``empirical measure'' $\mu_n$ above.
 
 
 
+\section{Simpler perspective}
+
+As before, let $G$ be a compact semisimple Lie group, and let 
+$\Gamma\subset G$ be a dense free subgroup on two generators 
+$\gamma_1,\gamma_2$. Note that 
+\[
+	\frac{1}{2^n} \sum_{\sigma\colon \{1,\dots,n\} \to \{1,2\}} f(\gamma_{\sigma(1)} \gamma_{\sigma(2)} \dots \gamma_{\sigma(n)}) = \left(\frac{L_{\gamma_1} + L_{\gamma_2}}{2}\right)^n f (1) .
+\]
+In particular, if $f = \tr\rho$ for some $\rho\in \widehat G$, we want to 
+bound (in $\|\cdot\|_\infty$) 
+\[
+	\sum_{n\leqslant N} \left( L_{\gamma_1} + L_{\gamma_2}\right)^n
+\]
+If $\rho\in \widehat G$, then fundamentally we want to bound: 
+\[
+	\left\| \sum_{n\leqslant N} (L_{\gamma_1} + L_{\gamma_2})^n \tr \rho\right\|_\infty .
+\]
+It will help if we first note that 
+\[
+	\sum_{n\leqslant N} (L_{\gamma_1} + L_{\gamma_2})^n = ((L_{\gamma_1} + L_{\gamma_2})^{N+1} - (L_{\gamma_1} + L_{\gamma_2})) (L_{\gamma_1} + L_{\gamma_2} - 1)^{-1} .
+\]
+So the operator norm of the sum is bounded above by 
+$\| L_{\gamma_1} + L_{\gamma_2} - 1\|^{-1}$. Note that if 
+$(L_{\gamma_1} + L_{\gamma_2} - 1) f = \lambda f$, then 
+$(L_{\gamma_1} + L_{\gamma_2})f = (\lambda + 1) f$. 
+
+
+
+
+
+\section{Towards a legitimate proof}
+
+As is very familiar by now, let $G$ be a compact semisimple group, 
+$\Gamma=\langle \gamma_1,\gamma_2\rangle\subset G$ a dense free subgroup on 
+two generators. We claim that for $f\in C^\infty(G^\natural)$, 
+\[
+	\sum_{n\leqslant N} \sum_{\sigma\colon \{1,\dots,n\} \to \{1,2\}} f(\gamma_{\sigma(1)} \dots \gamma_{\sigma(n)}) = \sum_{n\leqslant N} (L_{\gamma_1^{-1}} + L_{\gamma_2^{-1}})^n f (1) \ll_f 1 .
+\]
+First, it definitely holds that 
+\[
+	(L_{\gamma_1^{-1}} + L_{\gamma_2^{-1}} - 1) \sum_{n\leqslant N} (L_{\gamma_1^{-1}} + L_{\gamma_2^{-1}})^n = ((L_{\gamma_1^{-1}} + L_{\gamma_2^{-1}})^{N+1} - (L_{\gamma_1^{-1}} + L_{\gamma_2^{-1}}))
+\]
+Valid question: does $L_{\gamma_1^{-1}} + L_{\gamma_2^{-1}} - 1$ have any 
+zeros? 
+
+Suppose $f(\gamma_1^{-1} x) + f(\gamma_2^{-1} x) = f(x)$ for some smooth 
+function $f$. 
+
+
+
+
+
 \end{document}
