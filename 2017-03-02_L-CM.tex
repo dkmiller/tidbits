@@ -3,9 +3,16 @@
 \usepackage{amsmath,amssymb}
 \usepackage[a5paper]{geometry}
 \DeclareMathOperator{\End}{End}
+\DeclareMathOperator{\Gal}{Gal}
+\DeclareMathOperator{\GL}{GL}
+\DeclareMathOperator{\im}{im}
+\DeclareMathOperator{\Lie}{Lie}
 \DeclareMathOperator{\N}{N}
 \DeclareMathOperator{\res}{R}
+\DeclareMathOperator{\R}{R}
+\DeclareMathOperator{\SL}{SL}
 \DeclareMathOperator{\ST}{ST}
+\DeclareMathOperator{\X}{X}
 \newcommand{\bA}{\mathbf{A}}
 \newcommand{\bC}{\mathbf{C}}
 \newcommand{\bF}{\mathbf{F}}
@@ -13,6 +20,9 @@
 \newcommand{\bQ}{\mathbf{Q}}
 \newcommand{\bR}{\mathbf{R}}
 \newcommand{\bZ}{\mathbf{Z}}
+\newcommand{\fa}{\mathfrak{a}}
+\newcommand{\fp}{\mathfrak{p}}
+\newcommand{\ab}{\mathrm{ab}}
 \newcommand{\alg}{\mathrm{alg}}
 \newcommand{\an}{\mathrm{an}}
 \newcommand{\frob}{\mathrm{fr}}
@@ -63,6 +73,111 @@ conjecture for $A$ is true, then each $L(s,\prod \chi_\sigma^{m_\sigma})$
 satisfies the Riemann Hypothesis. My counterexample shows: the converse does 
 not hold! Even if all the $L(s,\prod \chi_\sigma^{m_\sigma})$ satisfy the 
 Riemann Hypothesis, it does not follow that Akiyama--Tanigawa holds. 
+
+
+
+
+
+\section{Tate's thesis}
+
+Consider $\bA = \bA_\bQ$. A \emph{Hecke character} is a continuous homomorphism 
+$\chi\colon \bA^\times/\bQ^\times \to \bC^\times$. First, note that the 
+obvious map $\bR^\times\times \widehat\bZ^\times \to \bA^\times/\bQ^\times$ is 
+an isomorphism. The character $\chi$ is \emph{algebraic of weight $w$} if 
+$\left. \chi\right|_{\bR^+} = (-)^{-m}$; so $\|\cdot\|$, the adele norm, is 
+algebraic of weight $-1$. Since $G_\bQ^\ab = \widehat\bZ^\times$, a ``Hecke 
+character'' is just a Dirichlet character + a quasicharacter of $\bR^\times$, 
+which is determined by its weight (algebraic or not), and sign. 
+
+Let $\chi$ be an algebraic Hecke character of weight $w$, $l$ a rational prime. 
+Then there is a corresponding Galois representation which we'll write 
+$\chi_l\colon \widehat\bZ^\times \to S^1$, given by 
+\[
+	\chi_l(x) = x_l^{-w} \chi_\mathrm{f}(x)
+\]
+
+
+
+
+
+\section{The whole story}
+
+Let $A_{/\bQ}$ be an absolutely simple abelian variety with CM type $(F,\Phi)$ 
+defined over $\bQ$, where $F = \End(A)_\bQ$ and 
+$\hom(F,\bC) = \Phi\sqcup \overline\Phi$. There is a Galois representation 
+$\rho_{A,l}\colon G_\bQ \to F_l^\times \subset \GL_{2g}(\bQ_l)$. We wish first 
+to compute the motivic Galois group $G_A$. This will contain the Sato--Tate 
+group $\ST(A)$, which is equal to the Mumford--Tate group of $A$. The main 
+thing we need to do is compute $\X^\ast(G_A)$, show that it is equal to 
+$\widehat{\ST(A)}$, and demonstrate a ``reciprocity law'' relating motivic and 
+Hecke $L$-functions between the two. 
+
+Let $L$ be the Galois closure of $F$; there is a norm map 
+$\N_{\Phi^{-1}}\colon L^\times \to L^\times$, which sends 
+$x\mapsto \prod_{\sigma\in \Phi} \sigma^{-1}(x)$, keeping in mind that 
+$\Phi\subset \Gal(L/\bQ)$. Claim: $\N_{\Phi^{-1}}\colon L^\times \to F^\times$; 
+call this map $\psi\colon \R_{L/\bQ} \Gm \to \R_{F/\bQ} \Gm$. On the level of 
+characters, we have 
+\[
+	\N_{\Phi^{-1}}^\ast\colon \X^\ast(\R_{L/\bQ} \Gm) \to \X^\ast(\R_{L/\bQ} \Gm) ,
+\]
+and $\ker(\N_{\Phi^{-1}}^\ast) = \X^\ast(G_A)$. Another definition is: 
+$\psi = \N_{\Phi_E} \circ \N_{F/E}$, where $E$ is the reflex field of 
+$(F,\Phi)$. 
+
+Let $G_A = \im(\psi)\subset \R_{F/\bQ} \Gm$. 
+
+
+
+
+
+\section{Correct picture}
+
+The key fact is: \emph{no} abelian variety has CM defined over $\bQ$. Let 
+$K$ be a number field (which we may take to contain $F$ and be Galois over 
+$\bQ$) and $A_{/K}$ an absolutely simple abelian variety with CM defined over 
+$K$, and $F = \End^\circ(A)$. Let $\fa = \Lie(A)$; this is a $K$-vector space 
+with $F$-action. The determinant gives us a natural map 
+$\det_\fa\colon \R_{K/\bQ} \Gm \to \R_{F/\bQ} \Gm$; Serre--Tate refer to this 
+as $\psi$. The motivic Galois group of $A$ is $G_A = \im(\det_\fa)$, and the 
+canonical subgroup is $G_A^1 = \im(\det_\fa)^{\N_{F/\bQ} = 1}\subset \SL(2g)$. 
+The Sato--Tate group of $A$ is the maximal compact subgroup of $G_A^1(\bC)$; 
+this is a compact torus whose representations coincide with the complex 
+representations of $G_A^1$. Now, 
+$\X^\ast(\R_{F/\bQ} \Gm) \twoheadrightarrow \X^\ast(G_A^1)$, so any 
+representation of $G_A^1$ is induced by one of $\R_{F/\bQ}\Gm$. Here, we're on 
+familiar ground. For $r\in \X^\ast(\R_{F/\bQ}\Gm)$, the function 
+$L(r_\ast \rho_{A,l},s)$ is writable in terms of Hecke characters. That is, 
+there is an explicit Hecke character $\omega_r$ such that 
+$L(r_\ast \rho_{A,l},s) = L(s,\omega_r)$, possibly up to twist. Let's do the 
+details! 
+
+First, for a prime $l$, write 
+\[
+	\rho_l = \rho_{A,l}\colon G_\bQ \to G_A(\bQ_l)\subset (\R_{F/\bQ} \Gm)(\bQ_l) = F_l^\times 
+\]
+for the associated $l$-adic Galois representation. For 
+$\sigma\colon F\hookrightarrow \bC$, there is a Hecke character $\chi_\sigma$ 
+such that 
+\[
+	\chi_\sigma(\fp) = \sigma(\rho_l(\frob_\fp)) ,
+\]
+from which it follows that $L^\alg(\sigma \circ \rho_l, s) = L(s,\chi_\sigma)$. 
+Now $L(A,s) = L^\alg(A,s+1/2)$, so we set 
+$\omega_\sigma = \chi_\sigma \|\cdot\|^{-1/2}$. Then 
+\[
+	L(A,s) = \prod_{\sigma\colon F\hookrightarrow \bC} L(s,\omega_\sigma) ,
+\]
+and for any $r = \sum a_\sigma \sigma \in \X^\ast(\R_{F/\bQ} \Gm)$, 
+$L(r_\ast \rho_l,s) = L(s,\omega_r)$, where we put 
+\[
+	\omega_r = \prod_{\sigma\colon F\hookrightarrow \bC} \omega_\sigma^{a_\sigma} .
+\]
+Since each $\omega_r$ is a Hecke character, it has analytic continuation past 
+$\Re = 1$, so the Sato--Tate conjecture holds for $A$. However, the 
+``Diophantine Approximation counterexample'' shows that even if each 
+$L(r_\ast \rho_l,s)$ satisfies the Riemann Hypothesis, it does not immediately 
+follow that the Akiyama--Tanigawa conjecture holds for $A$. 
 
 
 
