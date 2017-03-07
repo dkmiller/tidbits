@@ -3,25 +3,32 @@
 \usepackage{amsmath,amssymb,amsthm}
 % Operators
 	\DeclareMathOperator{\Ad}{Ad}
+	\DeclareMathOperator{\D}{D}
+	\DeclareMathOperator{\Gal}{Gal}
 	\DeclareMathOperator{\GL}{GL}
 	\DeclareMathOperator{\h}{H}
+	\DeclareMathOperator{\SU}{SU}
 	\DeclareMathOperator{\sym}{sym}
 	\DeclareMathOperator{\tr}{tr}
 % Symbols
 	\newcommand{\bF}{\mathbf{F}}
 	\newcommand{\bQ}{\mathbf{Q}}
 	\newcommand{\bR}{\mathbf{R}}
+	\newcommand{\bx}{{\boldsymbol x}}
+	\newcommand{\by}{{\boldsymbol y}}
 	\newcommand{\bZ}{\mathbf{Z}}
+	\newcommand{\dd}{\mathrm{d}}
 	\newcommand{\frob}{\mathrm{fr}}
 	\newcommand{\nr}{\mathrm{nr}}
 	\newcommand{\ram}{\mathrm{ram}}
+	\newcommand{\ST}{\mathrm{ST}}
 % Sha (cyrillic character)
 	\DeclareFontFamily{U}{wncy}{}
 	\DeclareFontShape{U}{wncy}{m}{n}{<->wncyr10}{}
 	\DeclareSymbolFont{mcy}{U}{wncy}{m}{n}
 	\DeclareMathSymbol{\Sha}{\mathord}{mcy}{"58} 
 % Environments
-\newtheorem{theorem}{Theorem}
+	\newtheorem{theorem}{Theorem}
 
 \title{Galois representations with specified Sato--Tate distributions}
 \author{Daniel Miller}
@@ -33,20 +40,25 @@
 
 
 
-\cite{klr}
-\cite{pande}
+\section{Introduction}
+
+% TODO: Introduction and motivation. 
+(Summary of \cite{pande})
 
 
 
-\section{Notation and necessary results}
 
-In this chapter we loosely summarize, and adapt as needed, the results of 
-\cite{khare-larsen-ramakrishna-2005,pande-2011}. Throughout, if $F$ is a field, 
-$M$ a $G_F$-module, we write $\h^i(F,M)$ in place of $\h^1(G_F,M)$. All Galois 
-representations will be to $\GL_2(\bZ/l^n)$ or $\GL_2(\bZ_l)$ for $l$ a (fixed) 
-rational prime, and all deformations will have fixed determinant, so we only 
-consider the cohomology of $\Ad^0\bar\rho$, the induced representation on 
-trace-zero matrices by conjugation. 
+
+\section{Notation and preliminary results}
+
+Now we loosely summarize the results of \cite{klr}, adapting them as needed for 
+our context. For a field $F$, write $G_F = \Gal(\overline F / F)$ for the 
+absolute Galois group of $F$. If $M$ is a $G_F$-module,  write 
+$\h^\bullet(F,M)$ in place of $\h^\bullet(G_F,M)$. All Galois representations 
+will be to $\GL_2(\bZ/l^n)$ or $\GL_2(\bZ_l)$ for $l$ a (fixed) rational prime, 
+and all deformations will have fixed determinant, so we only consider the 
+cohomology of $\Ad^0\bar\rho$, the induced representation on trace-zero 
+matrices by conjugation. 
 
 If $S$ is a set of rational primes, $\bQ_S$ denotes the largest extension of 
 $\bQ$ unramified outside $S$. So $\h^i(\bQ_S,-)$ is what is usually written as 
@@ -62,47 +74,27 @@ Cartier dual. By \cite[Th.~8.6.7]{nsw}, there is an
 isomorphism $\Sha^1_S(M^\ast) = \Sha_S^2(M)^\vee$. 
 
 
-A \emph{good residual representation} is an odd, absolutely irreducible, 
-weight-$2$ representation $\bar\rho\colon G_{\bQ_S} \to \GL_2(\bF_l)$, where 
-$l\geqslant 7$ is a rational prime. 
+A \emph{good (residual) representation} is an odd, absolutely irreducible, 
+weight-$2$ representation $\bar\rho\colon G_\bQ \to \GL_2(\bF_l)$, where 
+$l\geqslant 7$ is a rational prime. Roughly, good residual representations are 
+well-behaved enough that we can prove a lot about them directly, without 
+assume the modularity results of Khare--Wingenberger. 
 
-
-Roughly, ``good residual representations'' have enough properties that we can 
-prove quite a lot about their lifts. By results of Khare--Wintenberger, we know 
-that good residual representations have characteristic-zero lifts. Even better, 
-they admit $\bZ_l$-lifts. 
-
-\begin{theorem}\label{thm:always-can-lift}
+\begin{theorem}[{\cite[Th.~1]{ravi-FM}}]\label{thm:always-can-lift}
 Let $\bar\rho\colon G_{\bQ_S} \to \GL_2(\bF_l)$ be a good residual 
 representation. Then there exists a weight-$2$ lift of $\bar\rho$ to $\bZ_l$. 
 \end{theorem}
-\begin{proof}
-This is \cite[Th.~1]{ramakrishna-2002}, taking into account that the paper in 
-question allows for arbitrary fixed determinants. 
-\end{proof}
 
 
-Let $\bar\rho\colon G_{\bQ_S} \to \GL_2(\bF_l)$ be a good residual 
-representation. A prime $p\not\equiv \pm 1\pmod l$ is \emph{nice} if 
+Let $\bar\rho\colon G_\bQ\to \GL_2(\bF_l)$ be a good representation. An 
+unramified prime $p\not\equiv \pm 1\pmod l$ is \emph{nice} if 
 $\Ad^0\bar\rho\simeq \bF_l \oplus \bF_l(1)\oplus \bF_l(-1)$, i.e.~if the 
-eigenvalues of $\bar\rho(\frob_p)$ have ratio $p$. 
+eigenvalues of $\bar\rho(\frob_p)$ have ratio $p$. If $p$ is nice, then all 
+unramified torsion lifts of $\left.\bar\rho\right|_{G_{\bQ_p}}$ have lifts to 
+characteristic zero. 
 
-
-\begin{theorem}
-Let $\bar\rho$ be a good residual representation and $p$ a nice prime. Then 
-any deformation of $\left.\bar\rho\right|_{G_{\bQ_p}}$ is induced by 
-$G_{\bQ_p} \to \GL_2(\bZ_l[[a,b]] / \langle a b\rangle)$, sending 
-\[
-	\frob_p \mapsto \begin{pmatrix}p(1+a) \\ & (1+a)^{-1}\end{pmatrix} \qquad \tau_p \mapsto \begin{pmatrix} 1 & b \\ & 1 \end{pmatrix} ,
-\]
-where $\tau_p\in G_{\bQ_p}$ is a generator for tame inertia. 
-\end{theorem}
-\begin{proof}
-This is mentioned in KLR, find the real proof. 
-\end{proof}
-
-We close this section by introducing some new terminology and notation to 
-condense the lifting process used in \cite{klr}. 
+Now we introduce some new terminology and notation to condense the lifting 
+profess used in \cite{klr}. 
 
 Fix a good residual representation $\bar\rho$. We will consider weight-$2$ 
 deformations of $\bar\rho$ to $\bZ/l^n$ and $\bZ_l$. Call such a deformation a 
@@ -112,8 +104,8 @@ for $p$ in some set of primes. The necessary constraints are captured in the
 following definition. 
 
 
-Let $\bar\rho$ be a good residual representation, $h\colon \bR^+ \to \bR^+$ a 
-function decreasing to zero. An \emph{$h$-bounded lifting datum} is a tuple 
+Let $\bar\rho$ be a good representation, $h\colon \bR^+ \to \bR^+$. An 
+\emph{$h$-bounded lifting datum} is a tuple 
 $(\rho_n,R,U,\{\rho_p\}_{p\in R\cup U})$, where 
 \begin{enumerate}
 \item
@@ -154,18 +146,16 @@ $h$-bounded lift $(\rho_{n+1},R',U',\{\rho_p\})$ of
 $(\rho_n,R,U,\{\rho_p\})$. 
 \end{theorem}
 \begin{proof}
-Note that we do not bound the size of $R'\smallsetminus R$. It is possible that 
-this can be done, using unpublished results of Ramakrishna, but that is not 
-necessary for the results that follow. 
 
-By \cite[Lem.~8]{klr}, there exists a finite set 
-$N$ of what they call \emph{nice primes}, such that the map 
+
+By \cite[Lem.~8]{klr}, there exists a finite set $N$ of nice primes, such that 
+the map 
 \begin{equation}\label{eq:h1-isom}
 	\h^1(\bQ_{R\cup N},\Ad^0\bar\rho) \to \prod_{p\in R} \h^1(\bQ_p,\Ad^0\bar\rho) \times \prod_{p\in U'} \h_\nr^1(\bQ_p,\Ad^0\bar\rho) 
 \end{equation}
-is an isomorphism. In fact, $\# N = h^1(\bQ_{R\cup N},\Ad^0\bar\rho^\ast)$, and 
-the primes in $N$ are chosen, one at a time, from Chebotarev sets. This means we 
-can force them to be large enough to ensure that the bound 
+is an isomorphism. In fact, $\# N = \dim\h^1(\bQ_{R\cup N},\Ad^0\bar\rho^\ast)$, 
+and the primes in $N$ are chosen, one at a time, from Chebotarev sets. This means 
+we can force them to be large enough to ensure that the bound 
 $\pi_{R\cup N}(x) \leqslant h(x) \pi(x)$ continues to hold. 
 
 By our hypothesis, $\rho_n$ admits a lift to $\bZ/l^{n+1}$; call one such lift 
@@ -174,14 +164,14 @@ transitively on lifts of $\left.\rho_n\right|_{G_{\bQ_p}}$ to $\bZ/l^{n+1}$. In
 particular, there are cohomology classes $f_p\in \h^1(\bQ_p,\Ad^0\bar\rho)$ 
 such that $f_p\cdot \rho^\ast \equiv \rho_p\pmod{l^{n+1}}$ for all 
 $p\in R\cup U'$. Moreover, for all $p\in U'$, the class $f_p$ is unramified. 
-Since the map in \eqref{eq:h1-isom} is an isomorphism, there exists 
+Since the map \eqref{eq:h1-isom} is an isomorphism, there exists 
 $f\in \h^1(\bQ_{R\cup N},\Ad^0\bar\rho)$ such that 
 $\left.f\cdot \rho^\ast\right|_{G_{\bQ_p}}\equiv \rho_p\pmod{l^{n+1}}$ for all 
 $p\in R\cup U'$. 
 
 Clearly $\left. f\cdot \rho^\ast\right|_{G_{\bQ_p}}$ admits a lift to $\bZ_l$ 
 for all $p\in R\cup U'$, but it does not necessarily admit such a lift for 
-$p\in N$. By repeated applications of \cite[Prop.~3.10]{pande-2011}, there 
+$p\in N$. By repeated applications of \cite[Prop.~3.10]{pande}, there 
 exists a set $N'\supset N$, with $\# N'\leqslant 2\# N$, of nice primes and 
 $g\in \h^1(\bQ_{R\cup N'},\Ad^0\bar\rho)$ such that 
 $(g+f)\cdot \rho^\ast$ still agrees with $\rho_p$ for $p\in R\cup U'$, and 
@@ -203,30 +193,28 @@ $(\rho_n,R,U,\{\rho_p\})$.
 
 
 
-\section{Galois representations with specified Satake parameters}
+\section{Master theorem}
 
 Fix a good residual representation $\bar\rho$. We 
 consider weight-$2$ deformations of $\bar\rho$. The final deformation, 
 $\rho\colon G_\bQ \to \GL_2(\bZ_l)$, will be constructed as the inverse limit 
 of a compatible collection of lifts $\rho_n\colon G_\bQ \to \GL_2(\bZ/l^n)$. At 
-any given stage, we will be concerned with making sure that a) there exists a 
-lift to the next stage, and b) there is a lift with the necessary properties. 
-Fix a sequence $(x_1,x_2,\dots)$ in $[-1,1]$. The set of unramified primes 
-of $\rho$ is not determined at the beginning, but at each stage there will be 
-a large finite set $U$ of primes which we know will remain unramified. 
-Re-indexing $(x_i)$ by these unramified primes, we will construct $\rho$ so that 
+any given stage, we will be concerned with making sure that there exists a 
+lift to the next stage, that such a lift can be forced to have the necessary 
+properties. Fix a sequence $(x_1,x_2,\dots)$ in $[-1,1]$. The set of unramified 
+primes of $\rho$ is not determined at the beginning, but at each stage there 
+will be a large finite set $U$ of primes which we know will remain unramified. 
+Re-indexing $(x_n)$ by these unramified primes, we will construct $\rho$ so that 
 for all unramified primes $p$, $\tr\rho(\frob_p)\in \bZ$, satisfies the Hasse 
 bound, and has $\tr\rho(\frob_p) \approx x_p$. Moreover, we can ensure that the 
 set of ramified primes has density zero in a very strong sense (controlled by a 
 parameter function $h$) and that our trace of Frobenii are very close to 
-specified values (the ``closeness'' again controlled by a parameter function 
-$b$). 
-
-Given any deformation $\rho$, write $\pi_{\ram(\rho)}(x)$ for the function 
-which counts $\rho_n$-ramified primes $\leqslant x$. 
+specified values, the ``closeness'' again controlled by a parameter function.
+Write $\pi_{\ram(\rho)}$ for the function which counts $\rho_n$-ramified 
+primes. 
 
 \begin{theorem}\label{thm:master-Galois}
-Let $l$, $\bar\rho$, $(x_i)$ be as above. Fix functions 
+Let $l$, $\bar\rho$, $(x_n)$ be as above. Fix functions 
 $h\colon \bR^+\to \bR^+$ (resp.~$b\colon \bR^+ \to \bR_{\geqslant 1}$) which 
 decrease to zero (resp.~increase to infinity). Then there exists a weight-$2$ 
 deformation $\rho$ of $\bar\rho$, such that 
@@ -298,6 +286,149 @@ $(\rho_n,R_n,U_n,\{\rho_p\})$. This completes the inductive step.
 
 
 
+
+
+
+\section{Main construction}
+
+For $k\geqslant 1$, let 
+$U_k(\theta) = \frac{\sin((k+1)\theta)}{\sin\theta}$, the trace of the $k$-th 
+symmetric power under the identification of $[0,\pi]$ with conjugacy classes 
+in $\SU(2)$. Recall that $U_k(\cos^{-1} t)$ is a polynomial in $t$. 
+
+Let $\mu = f(t)\, \dd t$ be a probability measure on $[0,\pi]$. We assume 
+$f$ is bounded, that $f(t) \ll \sin(t)$, and that moreover 
+$f(\pi/2-\theta) = f(\theta)$. Call such $\mu$ \emph{nice}. 
+
+The key facts about Sato--Tate compatible measures are that $\cos_\ast\mu$ 
+satisfies the hypotheses of Theorem \ref{thm:discrepancy-arbitrary}, so 
+there are ``$N^{-\alpha}$-decaying van der Corput sequences'' for 
+$\cos_\ast\mu$, and also that since $\cos\colon [0,\pi] \to [-1,1]$ is an 
+order anti-isomorphism, we know that for any sequence $(x_n)$ on $[-1,1]$, there 
+is equality $\D(\{x_n\}^N,\cos_\ast\mu) = \D(\cos^{-1}(x_n)^N,\mu)$. 
+
+
+\begin{theorem}\label{thm:integral-a_p-alpha}
+Let $\mu$ be a Sato--Tate compatible measure, and fix $\alpha\in (0,1/2)$. 
+Then there exists a sequence of integers $a_p$ satisfying the Hasse bound, 
+such that if we set $\theta_p = \cos^{-1}\left(\frac{a_p}{2\sqrt p}\right)$, 
+then $\D^\star(\{\theta\}^N,\mu) = \Theta(\pi(N)^{-\alpha})$. 
+\end{theorem}
+\begin{proof}
+Apply Theorem \ref{thm:discrepancy-arbitrary} to find a sequence $(x_n)$ such 
+that $\D(\{x_n\}^N,\cos_\ast \mu) = \Theta(\pi(N)^{-\alpha})$. For each prime 
+$p$, there exists an integer $a_p$ such that $|a_p|\leqslant 2\sqrt p$ and 
+$\left| \frac{a_p}{2\sqrt p} - x_p\right| \leqslant p^{-1/2}$. Let 
+$y_p = \frac{a_p}{2\sqrt p}$. Now apply 
+Lemma \ref{lem:disc-of-two-seq} with $\epsilon = N^{-1/2}$. We obtain 
+\[
+	\left| \D(\{x\}^N,\cos_\ast \mu) - \D(\{y\}^N, \cos_\ast \mu)\right| \ll  N^{-1/2} + \frac{\pi(N^{1/2})}{\pi(N)} ,
+\]
+which tells us that $\D(\{y\}^N,\cos_\ast\mu) = \Theta(\pi(N)^{-\alpha})$. 
+Now let $\{\theta\} = \cos^{-1}(\{y\})$. Apply Lemma \ref{lem:pushforward-reverse} to 
+$\{\theta\} = \cos^{-1}(\{y\})$, and we see that 
+$\D(\{\theta\}^N,\mu) = \Theta(\pi(N)^{-\alpha})$. 
+\end{proof}
+
+We can improve this example by controlling the behavior of sums of the form 
+$\sum_{p\leqslant N} U_k(\theta_p)$ for odd $k$. Let $\sigma$ be 
+the involution of $[0,\pi]$ given by $\sigma(\theta) = \pi-\theta$. Note that 
+$\sigma_\ast \ST = \ST$. Moreover, note that for any odd $k$, 
+$U_k\circ\sigma = - U_k$, so $\int U_k\, \dd\ST = 0$. (Of course, 
+$\int U_k = 0$ for the reason that $U_k$ is the trace of a non-trivial unitary 
+representation, but we will directly exploit the ``oddness'' of $U_k$ in what 
+follows.)
+
+\begin{theorem}\label{thm:int-flip-seq}
+Let $\mu$ be a $\sigma$-invariant Sato--Tate compatible measure. Fix 
+$\alpha\in (0,1/2)$. Then there is a sequence of integers $a_p$, satisfying 
+the Hasse bound, such that for 
+$\theta_p =\cos^{-1}\left( \frac{a_p}{2\sqrt p}\right)$, we have
+\begin{enumerate}
+\item
+$\D(\{\theta\}^N,\mu) = \Theta(\pi(N)^{-\alpha})$. 
+
+\item
+For all odd $k$, 
+$\left| \sum_{k\leqslant N} U_k(\theta_p)\right| \ll \pi(N)^{1/2}$. 
+\end{enumerate}
+\end{theorem}
+\begin{proof}
+The basic ideas is as follows. Enumerate the primes 
+\[
+	p_1 = 2, q_1 = 3, p_2 = 5, q_2 = 7, p_3 = 11, q_3 = 13, \dots .
+\]
+Consider the measure $\left.\mu\right|_{[0,\pi/2)}$. An argument 
+nearly identical to the proof of Theorem \ref{thm:integral-a_p-alpha} shows 
+that we can choose $a_{p_i}$ satisfying the Hasse bound so that 
+\[
+	\D\left( \left\{\theta_{p_i}\right\}_{i\leqslant N},\left.\mu\right|_{[0,\pi/2)}\right) = \Theta(N^{-\alpha}) .
+\]
+We can also choose the $a_{q_i}\in [\pi/2,\pi]$ so that 
+\[
+	\left| \frac{a_{p_i}}{2\sqrt{p_i}} + \frac{a_{q_i}}{2\sqrt{q_i}}\right| \ll \frac{1}{\sqrt{p_i}} .
+\]
+If $\{x\}$ is the sequence of the $\frac{a_{p_i}}{2\sqrt{p_i}}$ and $\{y\}$ is 
+the similar sequence with the $q_i$-s, then Lemma \ref{lem:flip-discrepancy}, 
+Lemma \ref{lem:disc-of-two-seq}, and Theorem \ref{thm:wreath-seq} tell us 
+that $\D((\{x\}\wr\{y\})^N,\mu) = \Theta(N^{-\alpha})$. 
+
+Moreover, $U_k(\cos^{-1} t)$ is an odd polynomial in $t$, so if 
+$|x_i - (-y_i)| \ll p_i^{-1/2}$, then 
+$|U_k(\theta_{p_i}) + U_k(\theta_{q_i})| \ll p_i^{-1/2}$. We can then bound 
+\[
+	\left| \sum_{i\leqslant N} U_k(\theta_{p_i}) + U_k(\theta_{q_i})\right| \ll \sum_{p\leqslant N} p^{-1/2} \ll \pi(N)^{1/2} .
+\]
+\end{proof}
+
+
+
+
+Now we combine the results of the last section and Chapter 
+\ref{ch:construct-Galois} to obtain a ``beefed-up'' version of Theorem 
+\ref{thm:int-flip-seq}. 
+
+\begin{theorem}\label{thm:bad-Galois}
+Let $\mu$ be a Sato--Tate compatible $\sigma$-invariant measure on $[0,\pi]$. 
+Fix $\alpha\in (0,1/2)$ and a good residual representation 
+$\rho\colon G_\bQ \to \GL_2(\bF_l)$. Then there exists a weight-$2$ lift 
+$\rho\colon G_\bQ \to \GL_2(\bZ_l)$ of $\bar\rho$ such that 
+\begin{enumerate}
+\item
+$\pi_{\ram(\rho)}(x) \ll e^{-x}\pi(x)$. 
+
+\item
+For each unramified prime $p$, $a_p = \tr\rho(\frob_p)\in \bZ$ and satisfies 
+the Hasse bound. 
+
+\item
+If, for unramified $p$ we set 
+$\theta_p = \cos^{-1}\left(\frac{a_p}{2\sqrt p}\right)$, then 
+$\D(\{\theta\}^N,\mu) = \Theta(\pi(N)^{-\alpha})$. 
+
+\item
+For each odd $k$, the function $L(\sym^k \rho,s)$ satisfies the Riemann 
+Hypothesis. 
+\end{enumerate}
+\end{theorem}
+\begin{proof}
+Let $\{x\}$ be an $N^{-\alpha}$-decay van der Corput sequence for 
+$\cos_\ast \left.\mu\right|_{[0,\pi/2)}$. Let $\by = -\bx$. Then 
+$\D((\{x\}\wr\{y\})^N,\cos_\ast\mu) = \Theta(N^{-\alpha})$. Set $h(x) = e^{-x}$ 
+and $b(x) = \log(x)$. By Theorem \ref{thm:master-Galois}, there is a 
+$\rho\colon G_\bQ \to \GL_2(\bZ_l)$ lifting $\bar\rho$ such that parts 
+1 and 2 of the theorem hold. The discrepancy estimate comes from Lemma 
+\ref{lem:flip-discrepancy}, Lemma \ref{lem:disc-of-two-seq}, and Theorem 
+\ref{thm:wreath-seq} as above, while the Riemann Hypothesis for odd symmetric 
+powers follows from the proof of Theorem \ref{thm:int-flip-seq}. 
+\end{proof}
+
+
+
+
+
+
+
 \begin{thebibliography}{9}
 \bibitem{klr}
 C.~Khare, M.~Larsen and R.~Ramakrishna. Constructing semisimple $p$-adic Galois 
@@ -311,5 +442,10 @@ J.~Neukirch, A.~Schmidt and K.~Wingberg, \emph{Cohomology of number fields (2nd 
 A.~Pande. Deformations of Galois representations and the theorems of Sato--Tate 
 and Lang--Trotter, in \emph{Int.~J.~Number Theory} \textbf{7}(8) (2011), 
 2065--2079. 
+
+\bibitem{ravi-FM}
+R.~Ramakrishna. Deforming Galois representations and the conjectures of Serre 
+and Fontaine--Mazur, in \emph{Ann.~of Math (2)} \textbf{156}(1) (2002), 
+115--154. 
 \end{thebibliography}
 \end{document}
