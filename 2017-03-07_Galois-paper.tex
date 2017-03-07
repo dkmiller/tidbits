@@ -1,9 +1,27 @@
 \documentclass{article}
 
 \usepackage{amsmath,amssymb,amsthm}
-\DeclareMathOperator{\GL}{GL}
-\DeclareMathOperator{\sym}{sym}
-\DeclareMathOperator{\tr}{tr}
+% Operators
+	\DeclareMathOperator{\Ad}{Ad}
+	\DeclareMathOperator{\GL}{GL}
+	\DeclareMathOperator{\h}{H}
+	\DeclareMathOperator{\sym}{sym}
+	\DeclareMathOperator{\tr}{tr}
+% Symbols
+	\newcommand{\bF}{\mathbf{F}}
+	\newcommand{\bQ}{\mathbf{Q}}
+	\newcommand{\bR}{\mathbf{R}}
+	\newcommand{\bZ}{\mathbf{Z}}
+	\newcommand{\frob}{\mathrm{fr}}
+	\newcommand{\nr}{\mathrm{nr}}
+	\newcommand{\ram}{\mathrm{ram}}
+% Sha (cyrillic character)
+	\DeclareFontFamily{U}{wncy}{}
+	\DeclareFontShape{U}{wncy}{m}{n}{<->wncyr10}{}
+	\DeclareSymbolFont{mcy}{U}{wncy}{m}{n}
+	\DeclareMathSymbol{\Sha}{\mathord}{mcy}{"58} 
+% Environments
+\newtheorem{theorem}{Theorem}
 
 \title{Galois representations with specified Sato--Tate distributions}
 \author{Daniel Miller}
@@ -20,6 +38,264 @@
 
 
 
+\section{Notation and necessary results}
+
+In this chapter we loosely summarize, and adapt as needed, the results of 
+\cite{khare-larsen-ramakrishna-2005,pande-2011}. Throughout, if $F$ is a field, 
+$M$ a $G_F$-module, we write $\h^i(F,M)$ in place of $\h^1(G_F,M)$. All Galois 
+representations will be to $\GL_2(\bZ/l^n)$ or $\GL_2(\bZ_l)$ for $l$ a (fixed) 
+rational prime, and all deformations will have fixed determinant, so we only 
+consider the cohomology of $\Ad^0\bar\rho$, the induced representation on 
+trace-zero matrices by conjugation. 
+
+If $S$ is a set of rational primes, $\bQ_S$ denotes the largest extension of 
+$\bQ$ unramified outside $S$. So $\h^i(\bQ_S,-)$ is what is usually written as 
+$\h^1(G_{\bQ,S},-)$. If $M$ is a $G_\bQ$-module and $S$ a finite set of primes, 
+write 
+\[
+	\Sha^i_S(M) = \ker\left( \h^i(\bQ_S,M) \to \prod_{p\in S} \h^i(\bQ_p,M)\right) .
+\]
+If $l$ is a rational prime and $S$ a finite set of primes containing $l$, then 
+for any $\bF_l[G_{\bQ_S}]$-module $M$, write $M^\vee=\hom_{\bF_l}(M,\bF_l)$ 
+with the obvious $G_{\bQ_S}$-action, and write $M^\ast = M^\vee(1)$ for the 
+Cartier dual. By \cite[Th.~8.6.7]{nsw}, there is an 
+isomorphism $\Sha^1_S(M^\ast) = \Sha_S^2(M)^\vee$. 
+
+
+A \emph{good residual representation} is an odd, absolutely irreducible, 
+weight-$2$ representation $\bar\rho\colon G_{\bQ_S} \to \GL_2(\bF_l)$, where 
+$l\geqslant 7$ is a rational prime. 
+
+
+Roughly, ``good residual representations'' have enough properties that we can 
+prove quite a lot about their lifts. By results of Khare--Wintenberger, we know 
+that good residual representations have characteristic-zero lifts. Even better, 
+they admit $\bZ_l$-lifts. 
+
+\begin{theorem}\label{thm:always-can-lift}
+Let $\bar\rho\colon G_{\bQ_S} \to \GL_2(\bF_l)$ be a good residual 
+representation. Then there exists a weight-$2$ lift of $\bar\rho$ to $\bZ_l$. 
+\end{theorem}
+\begin{proof}
+This is \cite[Th.~1]{ramakrishna-2002}, taking into account that the paper in 
+question allows for arbitrary fixed determinants. 
+\end{proof}
+
+
+Let $\bar\rho\colon G_{\bQ_S} \to \GL_2(\bF_l)$ be a good residual 
+representation. A prime $p\not\equiv \pm 1\pmod l$ is \emph{nice} if 
+$\Ad^0\bar\rho\simeq \bF_l \oplus \bF_l(1)\oplus \bF_l(-1)$, i.e.~if the 
+eigenvalues of $\bar\rho(\frob_p)$ have ratio $p$. 
+
+
+\begin{theorem}
+Let $\bar\rho$ be a good residual representation and $p$ a nice prime. Then 
+any deformation of $\left.\bar\rho\right|_{G_{\bQ_p}}$ is induced by 
+$G_{\bQ_p} \to \GL_2(\bZ_l[[a,b]] / \langle a b\rangle)$, sending 
+\[
+	\frob_p \mapsto \begin{pmatrix}p(1+a) \\ & (1+a)^{-1}\end{pmatrix} \qquad \tau_p \mapsto \begin{pmatrix} 1 & b \\ & 1 \end{pmatrix} ,
+\]
+where $\tau_p\in G_{\bQ_p}$ is a generator for tame inertia. 
+\end{theorem}
+\begin{proof}
+This is mentioned in KLR, find the real proof. 
+\end{proof}
+
+We close this section by introducing some new terminology and notation to 
+condense the lifting process used in \cite{klr}. 
+
+Fix a good residual representation $\bar\rho$. We will consider weight-$2$ 
+deformations of $\bar\rho$ to $\bZ/l^n$ and $\bZ_l$. Call such a deformation a 
+``lift of $\bar\rho$ to $\bZ/l^n$ (resp.~$\bZ_l$).'' We will often restrict the 
+local behavior of such lifts, i.e.~the restrictions of a lift to $G_{\bQ_p}$ 
+for $p$ in some set of primes. The necessary constraints are captured in the 
+following definition. 
+
+
+Let $\bar\rho$ be a good residual representation, $h\colon \bR^+ \to \bR^+$ a 
+function decreasing to zero. An \emph{$h$-bounded lifting datum} is a tuple 
+$(\rho_n,R,U,\{\rho_p\}_{p\in R\cup U})$, where 
+\begin{enumerate}
+\item
+$\rho_n\colon G_{\bQ_R} \to \GL_2(\bZ/l^n)$ is a lift of $\bar\rho$.
+
+\item
+$R$ and $U$ are finite sets of primes, $R$ containing $l$ and all primes at 
+which $\rho_n$ ramifies. 
+
+\item
+$\pi_R(x)\leqslant h(x)\pi(x)$ for all $x$. 
+
+\item
+$\Sha_R^1(\Ad^0\bar\rho) = \Sha_R^2(\Ad^0\bar\rho) = 0$. 
+
+\item
+For all $p\in R\cup U$, 
+$\rho_p\equiv \left. \rho_n\right|_{G_{\bQ_p}}\pmod{l^n}$. 
+
+\item
+For all $p\in R$, $\rho_p$ is ramified. 
+
+\item
+$\rho_n$ admits a lift to $\bZ/l^{n+1}$. 
+\end{enumerate}
+
+If $(\rho_n,R,U,\{\rho_p\})$ is an $h$-bounded lifting datum, we call 
+another $h$-bounded lifting datum $(\rho_{n+1},R',U',\{\rho_p\})$ a \emph{lift 
+of $(\rho_n,R,U,\{\rho_p\})$} if $U\subset U'$, $R\subset R'$, and for all 
+$p\in R\cup U$, the two possible ``$\rho_p$'' agree. 
+
+\begin{theorem}\label{thm:lifting-datum}
+Let $\bar\rho$ be a good residual representation, $h\colon \bR^+ \to \bR^+$ 
+decreasing to zero. If $(\rho_n,R,U,\{\rho_p\})$ is an $h$-bounded lifting 
+datum, $U'\supset U$ is a finite set of primes disjoint from $R$, and 
+$\{\rho_p\}_{p\in U'}$ extends $\{\rho_p\}_{p\in U}$, then there exists an 
+$h$-bounded lift $(\rho_{n+1},R',U',\{\rho_p\})$ of 
+$(\rho_n,R,U,\{\rho_p\})$. 
+\end{theorem}
+\begin{proof}
+Note that we do not bound the size of $R'\smallsetminus R$. It is possible that 
+this can be done, using unpublished results of Ramakrishna, but that is not 
+necessary for the results that follow. 
+
+By \cite[Lem.~8]{klr}, there exists a finite set 
+$N$ of what they call \emph{nice primes}, such that the map 
+\begin{equation}\label{eq:h1-isom}
+	\h^1(\bQ_{R\cup N},\Ad^0\bar\rho) \to \prod_{p\in R} \h^1(\bQ_p,\Ad^0\bar\rho) \times \prod_{p\in U'} \h_\nr^1(\bQ_p,\Ad^0\bar\rho) 
+\end{equation}
+is an isomorphism. In fact, $\# N = h^1(\bQ_{R\cup N},\Ad^0\bar\rho^\ast)$, and 
+the primes in $N$ are chosen, one at a time, from Chebotarev sets. This means we 
+can force them to be large enough to ensure that the bound 
+$\pi_{R\cup N}(x) \leqslant h(x) \pi(x)$ continues to hold. 
+
+By our hypothesis, $\rho_n$ admits a lift to $\bZ/l^{n+1}$; call one such lift 
+$\rho^\ast$. For each $p\in R\cup U'$, $\h^1(\bQ_p,\Ad^0\bar\rho)$ acts simply 
+transitively on lifts of $\left.\rho_n\right|_{G_{\bQ_p}}$ to $\bZ/l^{n+1}$. In 
+particular, there are cohomology classes $f_p\in \h^1(\bQ_p,\Ad^0\bar\rho)$ 
+such that $f_p\cdot \rho^\ast \equiv \rho_p\pmod{l^{n+1}}$ for all 
+$p\in R\cup U'$. Moreover, for all $p\in U'$, the class $f_p$ is unramified. 
+Since the map in \eqref{eq:h1-isom} is an isomorphism, there exists 
+$f\in \h^1(\bQ_{R\cup N},\Ad^0\bar\rho)$ such that 
+$\left.f\cdot \rho^\ast\right|_{G_{\bQ_p}}\equiv \rho_p\pmod{l^{n+1}}$ for all 
+$p\in R\cup U'$. 
+
+Clearly $\left. f\cdot \rho^\ast\right|_{G_{\bQ_p}}$ admits a lift to $\bZ_l$ 
+for all $p\in R\cup U'$, but it does not necessarily admit such a lift for 
+$p\in N$. By repeated applications of \cite[Prop.~3.10]{pande-2011}, there 
+exists a set $N'\supset N$, with $\# N'\leqslant 2\# N$, of nice primes and 
+$g\in \h^1(\bQ_{R\cup N'},\Ad^0\bar\rho)$ such that 
+$(g+f)\cdot \rho^\ast$ still agrees with $\rho_p$ for $p\in R\cup U'$, and 
+$(g+f)\cdot \rho^\ast$ is nice for all $p\in N'$. As above, the primes in $N'$ 
+are chosen one at a time from Chebotarev sets, so we can continue to ensure the 
+bound $\pi_{R\cup N'}(x)\leqslant h(x) \pi(x)$. Let 
+$\rho_{n+1} = (g+f) \cdot \rho^\ast$. Let $R' = R\cup N'$. For each 
+$p\in R'\smallsetminus R$, choose a ramified lift $\rho_p$ of 
+$\left. \rho_{n+1}\right|_{G_{\bQ_p}}$ to $\bZ_l$. 
+
+Since $\left.\rho_{n+1}\right|_{G_{\bQ_p}}$ admits a lift to $\bZ/l^{n+2}$ (in 
+fact, it admits a lift to $\bZ_l$) for each $p$, and 
+$\Sha_{R'}^2(\Ad^0\bar\rho) = 0$, the deformation $\rho_{n+1}$ admits a lift to 
+$\bZ/l^{n+2}$. Thus $(\rho_{n+1},R',U',\{\rho_p\})$ is the desired lift of 
+$(\rho_n,R,U,\{\rho_p\})$. 
+\end{proof}
+
+
+
+
+
+\section{Galois representations with specified Satake parameters}
+
+Fix a good residual representation $\bar\rho$. We 
+consider weight-$2$ deformations of $\bar\rho$. The final deformation, 
+$\rho\colon G_\bQ \to \GL_2(\bZ_l)$, will be constructed as the inverse limit 
+of a compatible collection of lifts $\rho_n\colon G_\bQ \to \GL_2(\bZ/l^n)$. At 
+any given stage, we will be concerned with making sure that a) there exists a 
+lift to the next stage, and b) there is a lift with the necessary properties. 
+Fix a sequence $(x_1,x_2,\dots)$ in $[-1,1]$. The set of unramified primes 
+of $\rho$ is not determined at the beginning, but at each stage there will be 
+a large finite set $U$ of primes which we know will remain unramified. 
+Re-indexing $(x_i)$ by these unramified primes, we will construct $\rho$ so that 
+for all unramified primes $p$, $\tr\rho(\frob_p)\in \bZ$, satisfies the Hasse 
+bound, and has $\tr\rho(\frob_p) \approx x_p$. Moreover, we can ensure that the 
+set of ramified primes has density zero in a very strong sense (controlled by a 
+parameter function $h$) and that our trace of Frobenii are very close to 
+specified values (the ``closeness'' again controlled by a parameter function 
+$b$). 
+
+Given any deformation $\rho$, write $\pi_{\ram(\rho)}(x)$ for the function 
+which counts $\rho_n$-ramified primes $\leqslant x$. 
+
+\begin{theorem}\label{thm:master-Galois}
+Let $l$, $\bar\rho$, $(x_i)$ be as above. Fix functions 
+$h\colon \bR^+\to \bR^+$ (resp.~$b\colon \bR^+ \to \bR_{\geqslant 1}$) which 
+decrease to zero (resp.~increase to infinity). Then there exists a weight-$2$ 
+deformation $\rho$ of $\bar\rho$, such that 
+\begin{enumerate}
+\item
+$\pi_{\ram(\rho)}(x) \ll h(x) \pi(x)$. 
+
+\item
+For each unramified prime $p$, $a_p=\tr\rho(\frob_p)\in \bZ$ and satisfies the 
+Hasse bound. 
+
+\item
+For each unramified prime $p$, 
+$\left| \frac{a_p}{2\sqrt p} - x_p\right| \leqslant \frac{l b(p)}{2\sqrt p}$. 
+\end{enumerate}
+\end{theorem}
+\begin{proof}
+Begin with $\rho_1= \bar\rho$. By \cite[Lem.~6]{klr}, 
+there exists a finite set $R$, containing the set of primes at which $\bar\rho$ 
+ramifies, such that $\Sha_R^1(\Ad^0\bar\rho) = \Sha_R^2(\Ad^0\bar\rho) = 0$. 
+Let $R_2$ be the union of $R$ and all primes $p$ with 
+$\frac{l}{2\sqrt p} > 2$. For all $p\notin R_2$ and any $a\in \bF_l$, there 
+exists $a_p\in \bZ$ satisfying the Hasse bound with $a_p\equiv a\pmod l$. In 
+fact, given any $x_p\in [-1,1]$, there exists $a_p\in \bZ$ satisfying the Hasse 
+bound such that 
+$\left| \frac{a_p}{2\sqrt p} - x_p\right| \leqslant \frac{l}{2\sqrt p}$.
+Choose, for all primes $p\in R_2$, a ramified 
+lift $\rho_p$ of $\left. \rho_1\right|_{G_{\bQ_p}}$. Let $U_2$ be the set of 
+primes not in $R_2$ such that 
+$\frac{l^2}{2\sqrt p} > \min\left(2, \frac{l b(p)}{2\sqrt p}\right)$. 
+For each $p\in U_2$, there exists $a_p\in \bZ$, satisfying the 
+Hasse bound, such that 
+\[
+	\left| \frac{a_p}{2\sqrt p} - x_p\right| \leqslant \frac{l}{2\sqrt p} \leqslant \frac{l b(p)}{2\sqrt p} ,
+\]
+and moreover $a_p\equiv \tr\bar\rho(\frob_p)\pmod l$. For each $p\in U_2$, let 
+$\rho_p$ be an unramified lift of $\left.\bar\rho\right|_{G_{\bQ_p}}$ with 
+$a_p\equiv\tr\rho_p(\frob_p)\pmod l$. It may not be that 
+$\pi_{R_2}(x) \leqslant h(x) \pi(x)$ for all $x$, but there is a scalar 
+multiple $h^\ast$ of $h$ so that $\pi_{R_2}(x) \leqslant h^\ast(x) \pi(x)$ for 
+all $x$. 
+
+We have constructed our first $h^\ast$-bounded lifting datum 
+$(\rho_1,R_2,U_2,\{\rho_p\})$. We proceed to construct 
+$\rho = \varprojlim \rho_n$ inductively, by constructing a new $h^\ast$-bounded 
+lifting datum for each $n$. We ensure that $U_n$ contains all primes for which 
+$\frac{l^n}{2\sqrt p} > \min\left(2, \frac{l b(p)}{2\sqrt p}\right)$, so there 
+are always integral $a_p$ satisfying the Hasse bound which satisfy any 
+mod-$l^n$ constraint, and that can always choose these $a_p$ so as to preserve 
+statement 2 in the theorem. 
+
+The base case is already complete, so suppose we are given 
+$(\rho_n,R_n,U_n,\{\rho_p\})$. We may assume that $U_n$ contains all primes for 
+which $\frac{l^n}{2\sqrt p} > \min\left(2, \frac{l b(p)}{2\sqrt p}\right)$. Let 
+$U_{n+1}$ be the set of all primes not in $R_n$ such that 
+$\frac{l^{n+1}}{2\sqrt p} > \min\left(2, \frac{l b(p)}{2\sqrt p}\right)$. For 
+each $p\in U_{n+1}\smallsetminus U_n$, there is an integer $a_p$, satisfying 
+the Hasse bound, such that $a_p\equiv \rho_n(\frob_p)\pmod{l^n}$, and moreover 
+$\left|\frac{a_p}{2\sqrt p} - x_p\right| \leqslant \frac{l b(p)}{2\sqrt p}$. 
+For such $p$, let $\rho_p$ be an unramified lift of 
+$\left. \rho_n\right|_{G_{\bQ_p}}$ such that 
+$a_p\equiv\tr\rho_n(\frob_p)\pmod{l^n}$. By Theorem \ref{thm:lifting-datum}, 
+there exists an $h^\ast$-bounded lifting datum 
+$(\rho_{n+1},R_{n+1},U_{n+1},\{\rho_p\})$ extending and lifting 
+$(\rho_n,R_n,U_n,\{\rho_p\})$. This completes the inductive step.  
+\end{proof}
+
+
+
 
 
 \begin{thebibliography}{9}
@@ -27,6 +303,9 @@
 C.~Khare, M.~Larsen and R.~Ramakrishna. Constructing semisimple $p$-adic Galois 
 representations with prescribed properties, in \emph{Amer.~J.~Math.} 
 \textbf{127}(4) (2005), 709--734. 
+
+\bibitem{nsw}
+J.~Neukirch, A.~Schmidt and K.~Wingberg, \emph{Cohomology of number fields (2nd edition)}, (Springer--Verlag, 2008). 
 
 \bibitem{pande}
 A.~Pande. Deformations of Galois representations and the theorems of Sato--Tate 
