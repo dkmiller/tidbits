@@ -6,8 +6,10 @@
 \DeclareMathOperator{\D}{D}
 \DeclareMathOperator{\GL}{GL}
 \DeclareMathOperator{\ram}{ram}
+\DeclareMathOperator{\SU}{SU}
 \DeclareMathOperator{\sym}{sym}
 \DeclareMathOperator{\tr}{tr}
+\newcommand{\bC}{\mathbf{C}}
 \newcommand{\bF}{\mathbf{F}}
 \newcommand{\bQ}{\mathbf{Q}}
 \newcommand{\bR}{\mathbf{R}}
@@ -153,13 +155,36 @@ where $\rho_n\colon G_\bQ \to \GL_2(\bZ/l^n)$ is chosen so as to ensure the
 statement of the theorem. We have $\rho_1 = \bar\rho$, and further $\rho_n$ 
 are constructed inductively. Enumerate the unramified primes as 
 $\{p_{u_1},p_{u_2},\dots\}$. Then the goal is to force each 
-$a_{p_{u_i}} \sim 2\sqrt{p_{u_n}} \cos(\widetilde \theta_{p_{u_n}})$, where 
+$a_{p_{u_n}} \sim 2\sqrt{p_{u_n}} \cos(\widetilde \theta_{p_{u_n}})$, where 
 $\{\widetilde\theta_p\}$ is a sequence with desired rate of decay of 
-discrepancy. 
+discrepancy. At any given stage, we'll have along with $\rho_n$, a large finite 
+set $U$ of unramified primes, and choices of $a_p$ for each $p\in U$ such that 
+$a_p\equiv \tr\rho(\frob_p)\pmod{l^n}$. The set of ramified primes $R$ will be 
+very thin. Choose a new $U'\supset U$, large enough that we can enforce the 
+statements of the theorem. Then there exist choices of $a_p$ for 
+$p\in U'\smallsetminus U$ such that the statements about discrepancy continue 
+to hold. The results of Khare--Larsen--Ramakrishna show that there is 
+$R'\supset R$, sufficiently thin, along with a lift 
+$\rho_{n+1}\colon G_{\bQ,R'}\to \GL_2(\bZ/l^{n+1})$, such that 
+$a_p\equiv\tr\rho_p(\frob_p)\pmod{l^{n+1}}$ for all $p\in U'$. 
+
+We've seen (very roughly) how to enforce the desired $\mu$ and discrepancy, but 
+how can we get the Riemann Hypothesis for $L(\sym^k \rho,s)$, $k$ odd? Let 
+$U_k(\theta) = \frac{\sin((k+1)\theta)}{\sin\theta}$; this is the trace of the 
+$k$-th symmetric power of $\SU(2)\hookrightarrow \GL_2(\bC)$ in 
+``theta-space.'' The Riemann Hypothesis for $L(\sym^k \rho,s)$ follows from 
+bounds of the form 
+\[
+	\left| \sum_{p\leqslant x} U_k(\theta_p)\right| \ll x^{\frac 1 2+\epsilon} .
+\]
+Since $U_k\left(\frac \pi 2 - \theta\right) = - U_k(\theta)$ when $k$ is odd, 
+we force $\theta_q \approx \frac \pi 2 - \theta_p$ fr $p<q$ successive 
+unramified primes. We can get 
+$\left|\theta_q - \left( \frac \pi 2 - \theta_p\right)\right| \ll p^{-1/2}$; 
+since $U_k(\cos^{-1} t)$ is a polynomial in $t$ this gives the desired bound. 
 
 
 
 
 
 \end{document}
-
