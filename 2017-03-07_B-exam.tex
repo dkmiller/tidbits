@@ -1,0 +1,68 @@
+\documentclass{beamer}
+\usetheme{metropolis}
+
+\DeclareMathOperator{\cdf}{cdf}
+\DeclareMathOperator{\D}{D}
+\DeclareMathOperator{\N}{N}
+\DeclareMathOperator{\R}{R}
+\DeclareMathOperator{\ST}{ST}
+\DeclareMathOperator{\X}{X}
+\newcommand{\bC}{\mathbf{C}}
+\newcommand{\bF}{\mathbf{F}}
+\newcommand{\bZ}{\mathbf{Z}}
+\newcommand{\dd}{\mathrm{d}}
+\newcommand{\Gm}{\mathbf{G}_\mathrm{m}}
+
+\title{Title here}
+\author{Daniel Miller}
+\institute{Cornell University}
+\date{28 April 2017}
+
+
+
+
+
+\begin{document}
+
+\begin{frame}
+\titlepage
+\end{frame}
+
+\begin{frame}
+\frametitle{Outline}
+\tableofcontents
+\end{frame}
+
+
+
+
+
+\section{Motivation}
+
+\begin{frame}{Sato--Tate Conjecture}
+Equation of the form $E:y^2=x^3+ax+b$.
+\pause
+
+Simplify: assume $a,b\in \bZ$.
+\pause
+
+Non-singular: $4a^3+27b^2\ne 0$. 
+\pause
+
+Count points modulo $p$: 
+\[
+	\# E(\bF_p) = \#\{(x,y)\in (\bF_p)^2 : x^2=y^3+ax+b\} + 1 .
+\]
+\pause
+
+$+1=$ ``point at infinity.''
+\pause
+
+Geometric structure of $E(\bC)$
+\end{frame}
+
+
+
+
+
+\end{document}
