@@ -2,9 +2,21 @@
 
 \usepackage[a5paper,margin=1.5cm]{geometry}
 \usepackage{amsmath,amssymb}
+\DeclareMathOperator{\cdf}{cdf}
+\DeclareMathOperator{\D}{D}
 \DeclareMathOperator{\GL}{GL}
+\DeclareMathOperator{\ram}{ram}
+\DeclareMathOperator{\sym}{sym}
+\DeclareMathOperator{\tr}{tr}
+\newcommand{\bF}{\mathbf{F}}
 \newcommand{\bQ}{\mathbf{Q}}
+\newcommand{\bR}{\mathbf{R}}
 \newcommand{\bZ}{\mathbf{Z}}
+\newcommand{\CM}{\mathrm{CM}}
+\newcommand{\dd}{\mathrm{d}}
+\newcommand{\frob}{\mathrm{fr}}
+\newcommand{\nonCM}{\textnormal{non-CM}}
+\newcommand{\ST}{\mathrm{ST}}
 
 \title{Constructing Galois representations with specified Sato--Tate 
 distributions\thanks{Notes for a talk given in Cornell's Number Theory 
@@ -19,7 +31,128 @@ Seminar.}}
 
 
 
-Let $E_{/\bQ}$ be an elliptic curve. 
+\section{Introduction and motivation}
+
+Let $E_{/\bQ}$ be an elliptic curve, and fix a rational prime $l$. A well-known 
+construction of Tate yields a continuous homomorphism 
+$\rho_l\colon G_\bQ \to \GL_2(\bZ_l)$ such that at each prime $p\ne l$ for 
+which $E$ is unramified, $\rho_l$ is unramified at $p$ and moreover 
+\[
+	a_p = \tr\rho_l (\frob_p) = p + 1 - \# E(\bF_p) .
+\]
+It follows that $a_p\in \bZ$ satisfies the Hasse bound 
+$|a_p| \leqslant 2\sqrt p$. Let 
+$\theta_p = \cos^{-1}\left( \frac{a_p}{2\sqrt p}\right) \in [0,\pi]$, and let 
+\begin{align*}
+	\ST_\nonCM &= \frac{2}{\pi} \sin^2\theta\, \dd\theta \\
+	\ST_\CM &= \frac 1 2 \left( \delta_{\pi/2} + \dd t\right) .
+\end{align*}
+Then the Sato--Tate conjecture (now a theorem) states that the $\{\theta_p\}$ 
+are equidistributed with respect to $\ST_\ast$, where $\ast\in \{\nonCM,\CM\}$ 
+describes $E$. 
+
+The Sato--Tate measures here arise because of deep modularity results. Aftab 
+Pande's paper \emph{Deformations of Galois representations and the theorems of 
+Sato--Tate and Lang--Trotter} considers the question of whether there might be 
+a purely Galois-theoretic proof of these equidistribution results. He proves 
+that for any $\epsilon>0$, there exist Galois representations 
+$\rho\colon G_\bQ \to \GL_2(\bZ_l)$, ramified at an infinite (but density zero) 
+set of primes, for which all $\theta_p\in B_\epsilon(\pi/2)$ at each unramified 
+prime. Pande extensively uses the results and techniques from 
+Khare--Larsen--Ramakrishna's paper \emph{Constructing semisimple $p$-adic 
+Galois representations with prescribed properties}. It is natural to wonder: 
+can Pande's results be strengthened to yield equidistribution? Can the ``rate 
+of convergence'' of the $\theta_p$ to the given measure be specified? Can the 
+density of the set of ramified primes be controlled? We will see that all these 
+questions can be answered in the affirmative. 
+
+
+
+
+
+\section{Discrepancy}
+
+Let $\{\theta_p\}$ be a set of angles in $[0,\pi]$ indexed by a subset $U$ of 
+the rational primes. Given a cutoff $x$, let 
+$\mu_x = \frac{1}{\pi_U(x)}\sum_{p\leqslant x} \delta_{\theta_p}$ be the 
+empirical measure capturing the set $\{\theta_p\}_{p\leqslant x}$. If $\mu$ is 
+some other measure on $[0,\pi]$, the \emph{discrepancy} is 
+\[
+	D_x = \D(\mu_x,\mu) = \sup_{t\in [0,\pi]} \left| \frac{\#\{p\leqslant x : \theta_p \leqslant t\}}{\pi_U(x)} - \int_0^t \, \dd \mu_x\right| .
+\]
+In other words, $D_x = \|\cdf_{\mu_x} - \cdf_\mu\|_\infty$. Weak convergence 
+$\mu_x \to^\ast \mu$ is equivalent to $D_x \to 0$. Heuristics suggest (and 
+Akiyama--Tanigawa have conjectured) that for $E_{/\bQ}$ non-CM, we have 
+$\D(\mu_x,\ST_\nonCM) \ll x^{-\frac 1 2+\epsilon}$. Their conjecture implies 
+the Riemann Hypothesis for all $L(\sym^k E,s)$. 
+
+Given $\alpha\in (0,1/2)$ and any $\mu = f(t)\, \dd t$ for $f$ bounded, there 
+is a sequence of $\{\theta_p\}$ such that 
+$|\D(\mu_x,\mu) - \pi(x)^{-\alpha}| \ll x^{-1+\epsilon}$; in particular, 
+$D_x \sim \pi(x)^{-\alpha}$. We can even arrange that the $\theta_p$ come 
+from integral $a_p$ (which also satisfy the Hasse bound), though this weakens 
+the bound to $|D_x - \pi(x)^{-\alpha}| \ll x^{-\frac 1 2+\epsilon}$. Moreover, 
+if $\{b_p\}$ is any collection of integers satisfying the Hasse bound, and 
+$|b_p - a_p|$ is sufficiently close to $p^{-1/2}$, then 
+$\D(\nu_x,\mu) \sim \D(\mu_x,\mu)$, where $\nu_x$ is the empirical measure from 
+the $\cos^{-1}\left(\frac{b_p}{2\sqrt p}\right)$. 
+
+
+
+
+
+\section{Main result}
+
+The main theorem involves a number of pieces.
+\begin{enumerate}
+\item
+Fix a rational prime $l\geqslant 7$. 
+
+\item
+Fix an odd, absolutely irreducible, weight-$2$ representation 
+$\bar\rho\colon G_\bQ \to \GL_2(\bF_l)$. 
+
+\item
+Fix a function $h\colon \bR^+ \to \bR^+$ which decreases rapidly to zero (for 
+example, $h(x) = e^{-x}$ or $h(x) = e^{-e^x}$). 
+
+\item
+Fix a measure $\mu$ on $[0,\pi]$ of the form discussed above. 
+
+\item
+Fix $\alpha\in \left(0,\frac 1 2\right)$. 
+\end{enumerate}
+Then there exists $\rho\colon G_\bQ \to \GL_2(\bZ_l)$, also of weight $2$, 
+such that 
+\begin{enumerate}
+\item
+$\rho\equiv \bar\rho\pmod l$. 
+
+\item
+$\pi_{\ram(\rho)}(x) \ll h(x) \pi(x)$. 
+
+\item
+For each unramified prime $p$, $a_p = \tr \rho(\frob_p)\in \bZ$ and satisfies 
+the Hasse bound. 
+
+\item
+$\D(\mu_x,\mu) \sim \pi(x)^{-\alpha}$. 
+
+\item
+If $(\theta\mapsto \frac \pi 2 - \theta)_\ast \mu = \mu$, then for each odd 
+$k$, $L(\sym^k \rho,s)$ satisfies the Riemann Hypothesis. 
+\end{enumerate}
+
+
+
+
+
+\section{Some techniques in the proof}
+
+The representation $\rho$ is build as a limit $\rho = \varprojlim \rho_n$, 
+where $\rho_n\colon G_\bQ \to \GL_2(\bZ/l^n)$ is chosen so as to ensure the 
+statement of the theorem. We have $\rho_1 = \bar\rho$, and further $\rho_n$ 
+are constructed inductively. 
 
 
 
