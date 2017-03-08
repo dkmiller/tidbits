@@ -1,6 +1,12 @@
 \documentclass{article}
 
-\usepackage{amsmath,amssymb,amsthm}
+\usepackage{
+	amsmath,
+	amssymb,
+	amsthm,
+	hyperref
+}
+
 % Operators
 	\DeclareMathOperator{\Ad}{Ad}
 	\DeclareMathOperator{\D}{D}
@@ -10,6 +16,7 @@
 	\DeclareMathOperator{\SU}{SU}
 	\DeclareMathOperator{\sym}{sym}
 	\DeclareMathOperator{\tr}{tr}
+
 % Symbols
 	\newcommand{\bF}{\mathbf{F}}
 	\newcommand{\bQ}{\mathbf{Q}}
@@ -22,11 +29,13 @@
 	\newcommand{\nr}{\mathrm{nr}}
 	\newcommand{\ram}{\mathrm{ram}}
 	\newcommand{\ST}{\mathrm{ST}}
+
 % Sha (cyrillic character)
 	\DeclareFontFamily{U}{wncy}{}
 	\DeclareFontShape{U}{wncy}{m}{n}{<->wncyr10}{}
 	\DeclareSymbolFont{mcy}{U}{wncy}{m}{n}
 	\DeclareMathSymbol{\Sha}{\mathord}{mcy}{"58} 
+
 % Environments
 	\newtheorem{theorem}{Theorem}
 
@@ -43,7 +52,7 @@
 \section{Introduction}
 
 % TODO: Introduction and motivation. 
-(Summary of \cite{pande})
+(Summary of \cite{pande}, mention connection with \cite{at,mazur})
 
 
 
@@ -189,6 +198,34 @@ $\bZ/l^{n+2}$. Thus $(\rho_{n+1},R',U',\{\rho_p\})$ is the desired lift of
 $(\rho_n,R,U,\{\rho_p\})$. 
 \end{proof}
 
+Since we are interested in measuring the rate of convergence of empirical data 
+to a measure, let's recall one way of doing so. Given a sequence 
+$x=(x_1,x_2,\dots)$ and a probability measure $\mu$, the \emph{discrepancy} of 
+$x$ with respect to $\mu$ is 
+\[
+	\D_N(x,\mu) = \sup_I \left| \frac{\# \{n\leqslant N : x_n \in I\}}{N} - \mu(I)\right| ,
+\]
+where $I$ ranges over all closed intervals. If instead $x$ is indexed by the 
+prime numbers, $\D_N$ measures the difference between the empirical measure 
+$\frac{1}{\pi(N)} \sum_{p\leqslant N} \delta_{x_p}$ and $\mu$. Here are some 
+basic facts about discrepancy, taken from \cite{kn}. 
+\begin{enumerate}
+\item
+If the $x_n$ are contained in a fixed bounded interval, then the $x_n$ are 
+$\mu$-equidistributed if and only if $\D_N(x,\mu) \to 0$. 
+
+\item
+?
+\end{enumerate}
+
+In \cite{at}, Akiyama--Tanigawa conjecture that if $E_{/\bQ}$ is a non-CM 
+elliptic curve, then for $\theta = (\theta_2,\theta_3,\dots)$ the Satake 
+parameters of $E$ and $\ST = \frac{2}{\pi}\sin^2\theta\, \dd\theta$, one has 
+$\D_N(\theta,\ST) \ll N^{-\frac 1 2+\epsilon}$. They prove that their 
+conjecture implies the Riemann Hypothesis for $E$, and \cite{mazur} proves 
+that their conjecture in fact implies the Riemann Hypothesis for all 
+$L(\sym^k E,s)$.
+
 
 
 
@@ -300,6 +337,18 @@ Let $\mu = f(t)\, \dd t$ be a probability measure on $[0,\pi]$. We assume
 $f$ is bounded, that $f(t) \ll \sin(t)$, and that moreover 
 $f(\pi/2-\theta) = f(\theta)$. Call such $\mu$ \emph{nice}. 
 
+\begin{theorem}
+Let $\mu$ be a nice measure, and fix $\alpha\in \left(0,\frac 1 2\right)$. Then 
+there is a sequence $x = (x_1,x_2,\dots)$ in $[-1,1]$ such that 
+\begin{enumerate}
+\item
+$\left|\D_N(x,\cos_\ast\mu) - N^{-\alpha}\right| \ll N^{-1}$.
+
+\item
+$x_{2n+1} = \frac \pi 2 - x_{2n}$. 
+\end{enumerate}
+\end{theorem}
+
 The key facts about Sato--Tate compatible measures are that $\cos_\ast\mu$ 
 satisfies the hypotheses of Theorem \ref{thm:discrepancy-arbitrary}, so 
 there are ``$N^{-\alpha}$-decaying van der Corput sequences'' for 
@@ -389,10 +438,9 @@ Now we combine the results of the last section and Chapter
 \ref{thm:int-flip-seq}. 
 
 \begin{theorem}\label{thm:bad-Galois}
-Let $\mu$ be a Sato--Tate compatible $\sigma$-invariant measure on $[0,\pi]$. 
-Fix $\alpha\in (0,1/2)$ and a good residual representation 
-$\rho\colon G_\bQ \to \GL_2(\bF_l)$. Then there exists a weight-$2$ lift 
-$\rho\colon G_\bQ \to \GL_2(\bZ_l)$ of $\bar\rho$ such that 
+Let $\mu$ be a nice measure on $[0,\pi]$. Fix $\alpha\in (0,1/2)$ and a good 
+representation $\rho\colon G_\bQ \to \GL_2(\bF_l)$. Then there exists a 
+weight-$2$ lift $\rho\colon G_\bQ \to \GL_2(\bZ_l)$ of $\bar\rho$ such that 
 \begin{enumerate}
 \item
 $\pi_{\ram(\rho)}(x) \ll e^{-x}\pi(x)$. 
@@ -430,10 +478,23 @@ powers follows from the proof of Theorem \ref{thm:int-flip-seq}.
 
 
 \begin{thebibliography}{9}
+\bibitem{at}
+S.~Akiyama and Y.~Tanigawa. Calculation of values of $L$-functions associated 
+to elliptic curves, in \emph{Math.~Computation} \textbf{68}(227) (1999), 
+1201--1231. 
+
 \bibitem{klr}
 C.~Khare, M.~Larsen and R.~Ramakrishna. Constructing semisimple $p$-adic Galois 
 representations with prescribed properties, in \emph{Amer.~J.~Math.} 
 \textbf{127}(4) (2005), 709--734. 
+
+\bibitem{kn}
+L.~Kuipers and H.~Niederreiter, \emph{Uniform distribution of sequences}, 
+(Wiley-Interscience [John Wiley \& Sons], 1974).
+
+\bibitem{mazur}
+B.~Mazur. Finding meaning in error terms, in 
+\emph{Bull.~Amer.~Math.~Soc.~(N.~S.)} \textbf{45}(2) (2008), 185--228. 
 
 \bibitem{nsw}
 J.~Neukirch, A.~Schmidt and K.~Wingberg, \emph{Cohomology of number fields (2nd edition)}, (Springer--Verlag, 2008). 
