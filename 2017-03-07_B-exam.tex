@@ -1,4 +1,5 @@
-\documentclass{beamer}
+\documentclass[handout]{beamer}
+% Remove [handout] for pause to work.
 \usetheme{metropolis}
 
 \DeclareMathOperator{\cdf}{cdf}
@@ -6,17 +7,19 @@
 \DeclareMathOperator{\N}{N}
 \DeclareMathOperator{\R}{R}
 \DeclareMathOperator{\ST}{ST}
+\DeclareMathOperator{\SU}{SU}
 \DeclareMathOperator{\X}{X}
 \newcommand{\bC}{\mathbf{C}}
 \newcommand{\bF}{\mathbf{F}}
+\newcommand{\bQ}{\mathbf{Q}}
 \newcommand{\bZ}{\mathbf{Z}}
 \newcommand{\dd}{\mathrm{d}}
 \newcommand{\Gm}{\mathbf{G}_\mathrm{m}}
 
-\title{Title here}
+\title{Counterexamples related to the Sato--Tate conjecture}
 \author{Daniel Miller}
 \institute{Cornell University}
-\date{28 April 2017}
+\date{14 April 2017}
 
 
 
@@ -40,25 +43,57 @@
 \section{Motivation}
 
 \begin{frame}{Sato--Tate Conjecture}
-Equation of the form $E:y^2=x^3+ax+b$.
+$E_{/\bQ}$ non-CM elliptic curve, $\theta_p = \cos^{-1}\left( \frac{a_p}{2\sqrt p}\right)$. 
 \pause
 
-Simplify: assume $a,b\in \bZ$.
+Sato--Tate measure $\ST = \frac{2}{\pi} \sin^2 \theta\, \dd \theta$ (Haar 
+measure on $\SU(2)$). 
 \pause
 
-Non-singular: $4a^3+27b^2\ne 0$. 
+\begin{theorem}[Taylor et.~al.]
+The $\theta_p$ are equidistributed with respect to $\ST$. 
+\end{theorem}
 \pause
 
-Count points modulo $p$: 
+Serre generalized conjecture to arbitrary motives. 
+\pause
+
+Stick to elliptic curves and CM abelian varieties.
+\pause
+
+Quantify rate of convergence of 
+$\frac{1}{\pi(N)} \sum_{p\leqslant N} \delta_{\theta_p}$ to $\ST$. 
+\pause
+
+Use discrepancy (Kolmogorov--Smirnov statistic). 
+\end{frame}
+
+
+\begin{frame}{Akiyama--Tanigawa Conjecture}
+Let 
 \[
-	\# E(\bF_p) = \#\{(x,y)\in (\bF_p)^2 : x^2=y^3+ax+b\} + 1 .
+	D_N = \sup_{x\in [0,\pi]}\left| \frac{1}{\pi(N)} \sum_{p\leqslant N} 1_{[0,x)}(\theta_p) - \int_0^x \, \dd\ST\right| .
 \]
 \pause
 
-$+1=$ ``point at infinity.''
+Conjecture (A--T): $D_N \ll N^{-\frac 1 2 + \epsilon}$. 
 \pause
 
-Geometric structure of $E(\bC)$
+Akiyama--Tanigawa Conjecture makes sense for CM elliptic curve.
+
+\begin{theorem}[A--T]
+A--T implies RH($E$).
+\end{theorem}
+\end{frame}
+
+
+
+
+
+\begin{frame}
+\begin{center}
+\Huge Questions?
+\end{center}
 \end{frame}
 
 
