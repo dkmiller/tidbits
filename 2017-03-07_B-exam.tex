@@ -8,6 +8,7 @@
 \DeclareMathOperator{\R}{R}
 \DeclareMathOperator{\ST}{ST}
 \DeclareMathOperator{\SU}{SU}
+\DeclareMathOperator{\sym}{sym}
 \DeclareMathOperator{\X}{X}
 \newcommand{\bC}{\mathbf{C}}
 \newcommand{\bF}{\mathbf{F}}
@@ -16,10 +17,46 @@
 \newcommand{\dd}{\mathrm{d}}
 \newcommand{\Gm}{\mathbf{G}_\mathrm{m}}
 
+\newtheorem{conjecture}{Conjecture}
+
 \title{Counterexamples related to the Sato--Tate conjecture}
 \author{Daniel Miller}
 \institute{Cornell University}
 \date{14 April 2017}
+
+
+
+
+
+% Outline:
+% Motivation: 
+%  - What is the problem I'm trying to solve?
+%    2 problems: does RH => AT? is there a Galois proof of ST?
+%  - Why is this problem interesting or important?
+%    * AT=>RH: so far proofs of ST have proved things about L-functions. 
+%      How far can knowledge of L-functions take you?
+%    * Galois ST: does ST conjecture follow from Galois theory alone? 
+%  - Why is my solution interesting?
+%    * Two "No!" answers. 
+%    * Proving AT will take more than just L-functions.
+%    * ST fundamentally involves automorphy!
+% Work
+%  - What theorems have I proved? 
+%    * "Master Galois theorem"
+%    * "dioph approx counterexample"
+%  - What systems have I built? 
+%    * see above. 
+% Related work
+%  - Who else has attacked this problem or similar problems? 
+%    * Pande, KLR, Thorner, Mazur
+%  - In what ways is my solution better? 
+%    * Better than Pande: stronger results
+%    * convenient "packaging" of KLR
+%    * shows that Thorner doesn't generalize to CM
+%  - In what ways is it limited? 
+%    * only addresses CM varieties - may not work for SU(2)
+% So what?
+%  - need new directions to prove AT, even for CM case. 
 
 
 
@@ -46,7 +83,7 @@
 $E_{/\bQ}$ non-CM elliptic curve, $\theta_p = \cos^{-1}\left( \frac{a_p}{2\sqrt p}\right)$. 
 \pause
 
-Sato--Tate measure $\ST = \frac{2}{\pi} \sin^2 \theta\, \dd \theta$ (Haar 
+Sato--Tate measure: $\ST = \frac{2}{\pi} \sin^2 \theta\, \dd \theta$ (Haar 
 measure on $\SU(2)$). 
 \pause
 
@@ -55,7 +92,7 @@ The $\theta_p$ are equidistributed with respect to $\ST$.
 \end{theorem}
 \pause
 
-Serre generalized conjecture to arbitrary motives. 
+Generalized by Serre: conjecture for arbitrary motives. 
 \pause
 
 Stick to elliptic curves and CM abelian varieties.
@@ -70,20 +107,49 @@ Use discrepancy (Kolmogorov--Smirnov statistic).
 
 
 \begin{frame}{Akiyama--Tanigawa Conjecture}
-Let 
 \[
 	D_N = \sup_{x\in [0,\pi]}\left| \frac{1}{\pi(N)} \sum_{p\leqslant N} 1_{[0,x)}(\theta_p) - \int_0^x \, \dd\ST\right| .
 \]
 \pause
 
-Conjecture (A--T): $D_N \ll N^{-\frac 1 2 + \epsilon}$. 
+\begin{conjecture}[Akiyama--Tanigawa]
+$D_N \ll N^{-\frac 1 2 + \epsilon}$. 
+\end{conjecture}
 \pause
 
-Akiyama--Tanigawa Conjecture makes sense for CM elliptic curve.
+There is a variant of this conjecture for CM elliptic curve.
+\pause
 
-\begin{theorem}[A--T]
-A--T implies RH($E$).
+\begin{theorem}[Akiyama--Tanigawa]
+Akiyama--Tanigawa conjecture $\Rightarrow$ Riemann Hypothesis for $E$.
 \end{theorem}
+\pause
+
+\begin{theorem}[Mazur]
+Akiyama--Tanigawa conjecture $\Rightarrow$ Riemann Hypothesis for $\sym^k E$
+\end{theorem}
+\end{frame}
+
+
+\begin{frame}{Questions}
+1. Does Riemann Hypothesis for all $\sym^k E$ imply Akiyama--Tanigawa conjecture? 
+\pause
+
+2. Does functoriality imply the Akiyama--Tanigawa conjecture? \pause 
+For CM elliptic curves?
+\pause
+
+3. Is the Sato--Tate conjecture a Galois-theoretic result?
+\pause
+
+4. Does every Galois representation have equidistribution coming from a 
+Sato--Tate group?
+\pause
+
+1. Yes! (sort of)
+\pause
+
+2--4. No!
 \end{frame}
 
 
