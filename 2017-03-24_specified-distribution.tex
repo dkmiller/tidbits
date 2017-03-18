@@ -80,7 +80,7 @@ $\mu_x = \frac{1}{\pi_U(x)}\sum_{p\leqslant x} \delta_{\theta_p}$ be the
 empirical measure capturing the set $\{\theta_p\}_{p\leqslant x}$. If $\mu$ is 
 some other measure on $[0,\pi]$, the \emph{discrepancy} is 
 \[
-	D_x = \D(\mu_x,\mu) = \sup_{t\in [0,\pi]} \left| \frac{\#\{p\leqslant x : \theta_p \leqslant t\}}{\pi_U(x)} - \int_0^t \, \dd \mu_x\right| .
+	D_x = \D(\mu_x,\mu) = \sup_{t\in [0,\pi]} \left| \frac{\#\{p\leqslant x : \theta_p \leqslant t\}}{\pi_U(x)} - \int_0^t \, \dd \mu\right| .
 \]
 In other words, $D_x = \|\cdf_{\mu_x} - \cdf_\mu\|_\infty$. Weak convergence 
 $\mu_x \to^\ast \mu$ is equivalent to $D_x \to 0$. Heuristics suggest (and 
@@ -140,7 +140,7 @@ the Hasse bound.
 $\D(\mu_x,\mu) \sim \pi(x)^{-\alpha}$. 
 
 \item
-If $(\theta\mapsto \frac \pi 2 - \theta)_\ast \mu = \mu$, then for each odd 
+If $(\theta\mapsto \pi - \theta)_\ast \mu = \mu$, then for each odd 
 $k$, $L(\sym^k \rho,s)$ satisfies the Riemann Hypothesis. 
 \end{enumerate}
 
@@ -177,10 +177,10 @@ bounds of the form
 \[
 	\left| \sum_{p\leqslant x} U_k(\theta_p)\right| \ll x^{\frac 1 2+\epsilon} .
 \]
-Since $U_k\left(\frac \pi 2 - \theta\right) = - U_k(\theta)$ when $k$ is odd, 
-we force $\theta_q \approx \frac \pi 2 - \theta_p$ fr $p<q$ successive 
+Since $U_k(\pi - \theta) = - U_k(\theta)$ when $k$ is odd, 
+we force $\theta_q \approx \pi - \theta_p$ fr $p<q$ successive 
 unramified primes. We can get 
-$\left|\theta_q - \left( \frac \pi 2 - \theta_p\right)\right| \ll p^{-1/2}$; 
+$\left|\theta_q - (\pi - \theta_p)\right| \ll p^{-1/2}$; 
 since $U_k(\cos^{-1} t)$ is a polynomial in $t$ this gives the desired bound. 
 
 
