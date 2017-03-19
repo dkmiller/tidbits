@@ -4,21 +4,28 @@
 \usepackage{amsmath,amssymb}
 \DeclareMathOperator{\cdf}{cdf}
 \DeclareMathOperator{\D}{D}
+\DeclareMathOperator{\End}{End}
 \DeclareMathOperator{\GL}{GL}
-\DeclareMathOperator{\ram}{ram}
+\DeclareMathOperator{\im}{im}
+\DeclareMathOperator{\Lie}{Lie}
+\DeclareMathOperator{\N}{N}
+\DeclareMathOperator{\R}{R}
+\DeclareMathOperator{\ST}{ST}
 \DeclareMathOperator{\SU}{SU}
 \DeclareMathOperator{\sym}{sym}
 \DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\X}{X}
 \newcommand{\bC}{\mathbf{C}}
 \newcommand{\bF}{\mathbf{F}}
 \newcommand{\bQ}{\mathbf{Q}}
 \newcommand{\bR}{\mathbf{R}}
 \newcommand{\bZ}{\mathbf{Z}}
-\newcommand{\CM}{\mathrm{CM}}
 \newcommand{\dd}{\mathrm{d}}
+\newcommand{\fa}{\mathfrak{a}}
+\newcommand{\fp}{\mathfrak{p}}
 \newcommand{\frob}{\mathrm{fr}}
-\newcommand{\nonCM}{\textnormal{non-CM}}
-\newcommand{\ST}{\mathrm{ST}}
+\newcommand{\Gm}{\mathbf{G}_\mathrm{m}}
 
 \title{Counterexamples related to the Sato--Tate conjecture for CM abelian 
 varieties\thanks{Notes for a talk given in Cornell's Number Theory 
@@ -35,8 +42,68 @@ Seminar.}}
 
 \section{Introduction and motivation}
 
-
 %Abstract: The Akiyama-Tanigawa conjecture sets a bound on the rate of convergence of the Stake parameters of an elliptic curve to the Sato-Tate measure. Their conjecture implies the Riemann Hypothesis for all L-functions associated with the elliptic curve. I construct a range of examples, using Diophantine approximation, which show that GRH does not imply the Akiyama-Tanigawa conjecture for CM abelian varieties.
+
+Let $K/\bQ$ be a finite Galois extension, $A_{/K}$ a $g$-dimensional abelian 
+variety. Assume that $A$ has CM defined over $K$; then there is a CM field $F$ 
+together with an isomorphism $F\simeq \End_K(A)_\bQ$. Let $\fa =\Lie(A)$. Then 
+the determinant of the action of $K$ on $\fa$ (viewed as an $F$-vector space) 
+gives a map $\det_\fa\colon \R_{K/\bQ}\Gm \to \R_{F/\bQ}\Gm$. Put 
+$G_A = \im(\det_\fa)$ and $G_A^1 = \im(\det_\fa)^{\N_{F/\bQ} = 1}$. The group 
+$G_A$ is the motivic Galois group of $A$, and $\ST(A)$, the Sato--Tate group of 
+$A$, is a maximal compact subgroup of $G_A^1(\bC)$. It is obvious that the 
+$l$-adic Galois representation associated with $A$, 
+$\rho_l\colon G_\bQ \to \GL_{2g}(\bQ_l)$, has image in 
+$(\R_{F/\bQ}\Gm)(\bQ_l)$; it actually is a map 
+$\rho_l\colon G_\bQ \to G_A(\bQ_l)$. 
+
+Unitary representations of $\ST(A)$ are just characters, and basic 
+representation theory tells us that all such representations are induced by an 
+(algebraic) character of $G_A$ defined over $\overline\bQ$. For 
+$r\in \X^\ast(G_A)$, there is an $L$-function $L(r_\ast \rho_l,s)$ coming from 
+the composite Galois representation 
+$r\circ \rho_l\colon G_\bQ \to G_A(\bQ_l) \to \overline{\bQ_l}^\times$. The 
+Sato--Tate conjecture for $A$ says that all $L(r_\ast \rho_l,s)$ have 
+non-vanishing analytic continuation past $\Re = 1$, and the Generalized Riemann 
+hypothesis for $A$ says that all $L(r_\ast \rho_l,s)$ satisfy the Riemann 
+hypothesis. 
+
+Choose an isomorphism $(\bR/\bZ)^d \simeq \ST(A)$, and put 
+\[
+	\D_x(A) = \sup_{t\in [0,1]^d} \left| \frac{1}{\pi_K(x)} \sum_{\N(\fp) \leqslant x} 1_{[0,t)}(\theta_\fp) - \int 1_{[0,t)} \right| .
+\]
+Akiyama and Tanigawa conjectured that for non-CM elliptic curves, 
+$\D_x(E) \ll x^{-\frac 1 2+\epsilon}$. We call the ``Akiyama--Tanigawa 
+conjecture'' for $A$ the discrepancy decays like 
+$\D_x(A) \ll x^{-\frac 1 2+\epsilon}$. Via the Koksma--Hlawka inequality, the 
+Akiyama--Tanigawa conjecture implies that for all bounded-variation functions 
+$f$ on $\ST(A)$, the estimate 
+\[
+	\left| \sum_{\N(\fp) \leqslant x} f(\theta_\fp)\right| \ll \Var(f)x^{\frac 1 2+\epsilon} .
+\]
+For $r\in \X^\ast(G_A)$, this estimate implies the Riemann hypothesis for the 
+$L$-function $L(r_\ast \rho_l,s)$. 
+
+Analogy with Artin $L$-functions (go into detail here!) seems to suggest that 
+if all $L(r_\ast \rho_l,s)$ satisfy the Riemann Hypothesis, then the 
+Akiyama--Tanigawa conjecture for $A$ holds. We'll show: this converse is false, 
+in a limited sense. 
+
+
+
+
+
+\section{Diophantine approximation}
+
+d
+
+
+
+
+
+\section{Fake Satake parameters}
+
+d
 
 
 
