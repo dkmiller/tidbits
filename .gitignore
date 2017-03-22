@@ -10,4 +10,5 @@
 *.brf
 *-blx.bib
 *.run.xml
+*.Rhistory
 *.pyc
