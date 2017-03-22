@@ -5,7 +5,9 @@
 \DeclareMathOperator{\cdf}{cdf}
 \DeclareMathOperator{\D}{D}
 \DeclareMathOperator{\End}{End}
+\DeclareMathOperator{\Gal}{Gal}
 \DeclareMathOperator{\GL}{GL}
+\DeclareMathOperator{\GSp}{GSp}
 \DeclareMathOperator{\im}{im}
 \DeclareMathOperator{\Lie}{Lie}
 \DeclareMathOperator{\N}{N}
@@ -16,6 +18,7 @@
 \DeclareMathOperator{\tr}{tr}
 \DeclareMathOperator{\Var}{Var}
 \DeclareMathOperator{\X}{X}
+\newcommand{\bA}{\mathbf{A}}
 \newcommand{\bC}{\mathbf{C}}
 \newcommand{\bF}{\mathbf{F}}
 \newcommand{\bQ}{\mathbf{Q}}
@@ -42,20 +45,75 @@ Seminar.}}
 
 \section{Introduction and motivation}
 
-%Abstract: The Akiyama-Tanigawa conjecture sets a bound on the rate of convergence of the Stake parameters of an elliptic curve to the Sato-Tate measure. Their conjecture implies the Riemann Hypothesis for all L-functions associated with the elliptic curve. I construct a range of examples, using Diophantine approximation, which show that GRH does not imply the Akiyama-Tanigawa conjecture for CM abelian varieties.
-
 Let $K/\bQ$ be a finite Galois extension, $A_{/K}$ a $g$-dimensional abelian 
-variety. Assume that $A$ has CM defined over $K$; then there is a CM field $F$ 
-together with an isomorphism $F\simeq \End_K(A)_\bQ$. Let $\fa =\Lie(A)$. Then 
-the determinant of the action of $K$ on $\fa$ (viewed as an $F$-vector space) 
-gives a map $\det_\fa\colon \R_{K/\bQ}\Gm \to \R_{F/\bQ}\Gm$. Put 
-$G_A = \im(\det_\fa)$ and $G_A^1 = \im(\det_\fa)^{\N_{F/\bQ} = 1}$. The group 
-$G_A$ is the motivic Galois group of $A$, and $\ST(A)$, the Sato--Tate group of 
-$A$, is a maximal compact subgroup of $G_A^1(\bC)$. It is obvious that the 
-$l$-adic Galois representation associated with $A$, 
-$\rho_l\colon G_\bQ \to \GL_{2g}(\bQ_l)$, has image in 
-$(\R_{F/\bQ}\Gm)(\bQ_l)$; it actually is a map 
-$\rho_l\colon G_\bQ \to G_A(\bQ_l)$. 
+variety. Fix a rational prime $l$; then the $l$-adic Tate module of $A$ gives 
+a representation 
+$\rho_l\colon G_\bQ = \Gal(\overline\bQ/\bQ) \to \GL_{2g}(\bQ_l)$. The image 
+actually lies in the subgroup $\GSp_{2g}(\bQ_l)$ preserving the Weil pairing, 
+but we won't worry about that. If we write $F = \End_K(A)_\bQ$, then since 
+$\rho_l$  commutes with $F$, the representation actually takes values in 
+$\GL_{2g/[F:\bQ]}(F\otimes \bQ_l)$. We are interested in the extreme case, when 
+$[F:\bQ] = 2g$. When this occurs, we say that $A$ has complex multiplication 
+defined over $K$. Write $\R_{F/\bQ} \Gm$ for the algebraic group whose functor 
+of points is, for any $\bQ$-algebra $R$, given by $(R\otimes \bQ_l)^\times$. 
+The representation $\rho_l$ is a map
+$\rho_l\colon G_\bQ \to (\R_{F/\bQ} \Gm)(\bQ_l)$. The \emph{motivic Galois 
+group} of $A$ is a $\bQ$-subgroup $G_A\subset \R_{F/\bQ} \Gm$ such that for 
+all $l$, $\overline{\im(\rho_l)}^\mathrm{Zar} = G_A(\bQ_l)$. It has a canonical 
+subgroup $G_A^1 = G_A^{\N_{F/\bQ} = 1}$, which we will not motivate here. There 
+is a direct description of $G_A$. Let 
+$\det_\fa \colon \R_{K/\bQ} \to \R_{F/\bQ}$ be induced by the determinant of 
+the $K$-action on $\fa = \Lie(A)$, viewed as an $F$-vector space. Then 
+$G_A = \im(\det_\fa)$. The \emph{Sato--Tate group} of $A$ is the maximal 
+compact subgroup of the torus $G_A^1(\bC)$. So $\ST(A) = (\bR/\bZ)^d$ for some 
+$1\leqslant d\leqslant g$. If $A$ has good reduction at $\fp\nmid l$, then 
+$\rho_l(\frob_\fp)$ actually lives in $F^\times$ and is independent of $l$. 
+Write $\pi_\fp\in F^\times$ for this quantity; it is a $\fp$-Weil number of 
+weight $1$, i.e. $|\sigma(\pi_\fp)| = \N(\fp)^{1/2}$ for all 
+$\sigma\colon F\hookrightarrow \bC$. Even better, Shimura--Taniyama--Weil have 
+constructed a continuous homomorphism 
+$\varepsilon\colon \bA_K^\times \to F^\times$ which agrees with $\det_\fa$ on 
+$K^\times\subset \bA_K^\times$, and for almost all $\fp$, sends a uniformizer 
+$\varpi_\fp$ for $\fp$ to the element $\pi_\fp$. 
+
+For any $\sigma\colon F\hookrightarrow \bC$, let 
+$\chi_\sigma\colon \bA_K^\times / K^\times \to \bC^\times$ be the 
+quasicharacter $\chi_\sigma(x) = \sigma(\varepsilon(x)\psi(x_\infty)^{-1})$. 
+Here, $\varepsilon(x) \psi(x_\infty)^{-1} \in (F\otimes\bR)^\times$, and we 
+write $\sigma$ for the map $(F\otimes \bR)^\times \to \bC^\times$ induced by 
+$\sigma$. If we write also $\sigma$ for the corresponding character of 
+$\R_{F/\bQ} \Gm$, then there is equality 
+\[
+	L(\sigma_\ast \rho_l, s) = L(s,\chi_\sigma) .
+\]
+Given any $r = \sum m_\sigma \sigma \in \X^\ast(\R_{F/\bQ} \Gm)$, put 
+
+
+, and 
+$\theta_\fp = \frac{\rho_l(\frob_\fp)}{\N(\fp)^{1/2}}$ lies in $\ST(A)$. The 
+\emph{Sato--Tate conjecture} for $A$ tells us that the $\theta_\fp$ are 
+equidistributed in $\ST(A)$, i.e.~for all $f\in C(\ST(A))$, we have 
+\[
+	\int f(x)\, \dd x = \lim_{x\to \infty} \frac{1}{\pi_K(x)} \sum_{\N(\fp)\leqslant x} f(\theta_\fp)
+\]
+Serre outlined a way to prove the Sato--Tate conjecture. Note first that any 
+character of $\ST(A)$ is induced by an algebraic character of $G_A$. Given 
+$r\in \X^\ast(G_A)$, we associate $L(r_\ast \rho_l,s)$ with the composite 
+Galois representation $r\circ \rho_l\colon G_\bQ \to \overline{\bQ_l}^\times$. 
+To prove the Sato--Tate conjecture for $A$, it suffices to show that for all 
+$f$, the function $L(r_\ast \rho_l,s)$ admits non-vanishing meromorphic 
+continuation past $\Re = 1$, with at most a simple pole at $s = 1$. We will see 
+later how this is done. For our purposes, note that it also suffices to show 
+that for all $r\in \X^\ast(G_A)$ which induce a nontrivial character of 
+$\ST(A)$, a bound of the form 
+\[
+	\left| \sum_{\N(\fp)\leqslant x} r(\theta_\fp)\right| = o\left(\pi_K(x)\right) .
+\]
+If we can replace $o(\pi_K(x))$ with $x^{-\frac 1 2+\epsilon}$, we will have 
+established the Riemann hypothesis for $L(r_\ast \rho_l,s)$. 
+
+
+
 
 Unitary representations of $\ST(A)$ are just characters, and basic 
 representation theory tells us that all such representations are induced by an 
