@@ -23,10 +23,14 @@
 \newcommand{\bF}{\mathbf{F}}
 \newcommand{\bQ}{\mathbf{Q}}
 \newcommand{\bR}{\mathbf{R}}
+\newcommand{\bx}{{\boldsymbol x}}
 \newcommand{\bZ}{\mathbf{Z}}
 \newcommand{\dd}{\mathrm{d}}
 \newcommand{\fa}{\mathfrak{a}}
 \newcommand{\fp}{\mathfrak{p}}
+\newcommand{\vm}{\vec{m}}
+\newcommand{\vx}{\vec{x}}
+\newcommand{\vy}{\vec{y}}
 \newcommand{\frob}{\mathrm{fr}}
 \newcommand{\Gm}{\mathbf{G}_\mathrm{m}}
 
@@ -160,7 +164,43 @@ sequence to the uniform measure is governed by the irrationality measure of
 $x$. The irrationality measure $\mu(x)$ is the supremum of the set of 
 $w\geqslant 1$ such that there are infinitely many $p/q$ with 
 $\left| \mu - \frac p q\right| \leqslant q^{-w}$. Let's generalize this to 
-higher-dimensional space. 
+higher-dimensional space. If $\vx\in \bR^d$, let $\omega_0(\vx)$ 
+(resp.~$\omega_{d-1}(\vx)$) be the supremum of the set of $w$ such that there 
+exist infinitely many $(n,\vm)\in \bZ\times \bZ^d$ such that 
+\begin{align*}
+	|n \vx - \vm|_\infty 
+		&\leqslant |(n,\vm)|_\infty^{-w} \qquad \text{(resp.} \\
+	|n + \langle \vm,\vx\rangle|
+		&\leqslant |(n,\vm)|_\infty^{-w} \text{).}
+\end{align*}
+There are quantities $\omega_i(\vx)$, $i=0,\dots,d-1$, defined in terms of 
+approximation of $\vx$ in terms of rational linear projective varieties of 
+dimension $i$, but we do not need them.
+
+A theorem of Jarn\'ik says that if $w\geqslant 1/d$, then there exists 
+$\vx\in \bR^d$ such that $\omega_0(\vx) = w$ and 
+$\omega_{d-1}(\vx) = d w + d - 1$. It is clear that if $d = 1$, then 
+$\omega_0(x)+1$ is the traditional irrationality measure of $x$. The key 
+fact we need is that 
+\begin{align*}
+	\frac{1}{d(n \vx,\bZ^d)} 
+		&\ll |n|^{\omega_0(\vx) + \epsilon} \\
+	\frac{1}{d(\langle \vm,\vx\rangle,\bZ)} 
+		&\ll |\vm|_\infty^{\omega_{d-1}(\vx)+\epsilon} .
+\end{align*}
+Moreover, if we let $\vx=(\vx\mod \bZ^d,2 \vx\mod \bZ^d,\dots)$ in 
+$(\bR/\bZ)^d$, then 
+\begin{align*}
+	\D_N(\bx) 
+		&\ll N^{-\frac{1}{\omega_{d-1}(\vx)} + \epsilon} \\
+	\D_N(\bx) 
+		&= \Omega\left(N^{-\frac{d}{\omega_0(\vx)} - \epsilon}\right) .
+\end{align*}
+In particular, this means that if $\omega_0(\vx) = w$ and 
+$\omega_{d-1}(\vx) = d w + d - 1$, then 
+$\D_N(\bx) \ll N^{-\frac{1}{d w + d - 1} + \epsilon}$ and 
+$\D_N(\bx) = \Omega(N^{-\frac{d}{w} - \epsilon})$. By letting $w$ get very 
+large, we can ensure that $\D_N(\bx)$ decays very slowly. 
 
 
 
@@ -168,7 +208,33 @@ higher-dimensional space.
 
 \section{Fake Satake parameters}
 
-d
+Given a sequence $(z_p)$ of complex numbers, the corresponding Dirichlet series 
+is 
+\[
+	L(s) = \prod (1 - z_p p^{-s})^{-1} ,
+\]
+with terms omitted when $z_p$ is undefined. The Riemann Hypothesis for $L(s)$ 
+follows from a bound of the form 
+$|\sum_{p\leqslant x} z_p| \ll x^{\frac 1 2+\epsilon}$. Now suppose 
+$z_p = f(x_p)$, for $f\in C^\infty((\bR/\bZ)^d)$, and 
+$x_{p_n} = n \vx\mod \bZ^d$. Then we need to bound sums of the form 
+$\sum_{n\leqslant N} f(n \vx)$ for $f$ smooth. Suppose 
+$f(\vy) = e^{2\pi i \langle \vm,\vy\rangle}$. Then 
+\[
+	\left| \sum_{n\leqslant N} f(n \vx) \right| 
+	= \left| \frac{\left(e^{2\pi i \langle \vm,\vx\rangle}\right)^{N+1} - e^{2\pi i \langle \vm,\vx\rangle}}{e^{2\pi i \langle \vm,\vx\rangle} - 1}\right|
+	\leqslant \frac{2}{\left| e^{2\pi i \langle \vm,\vx\rangle} - 1 \right|} .
+\]
+It's easy to check that 
+\[
+	\frac{1}{\left| e^{2\pi i \langle \vm,\vx\rangle} - 1 \right|} 
+		\leqslant \frac{1}{d(\langle \vm,\vx\rangle,\bZ)} ,
+\]
+so we get the bound 
+$\left|\sum_{n\leqslant N} f(n \vx)\right| \ll |\vm|_\infty^{\omega_{d-1}(\vx)+\epsilon}$. 
+
+This tells us that the $L$-function $\prod (1 - f(x_p) p^{-s})^{-1}$ satisfies 
+the Riemann Hypothesis, but the $x_p$ have very slowly decaying discrepancy. 
 
 
 
