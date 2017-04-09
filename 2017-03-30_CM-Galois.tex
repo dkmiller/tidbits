@@ -1,0 +1,183 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage[a5paper,margin = 1.5cm]{geometry}
+\DeclareMathOperator{\End}{End}
+\DeclareMathOperator{\Gal}{Gal}
+\DeclareMathOperator{\N}{N}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\R}{R}
+\DeclareMathOperator{\ST}{ST}
+\DeclareMathOperator{\supp}{supp}
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\X}{X}
+\newcommand{\bA}{\mathbf{A}}
+\newcommand{\bC}{\mathbf{C}}
+\newcommand{\bQ}{\mathbf{Q}}
+\newcommand{\bR}{\mathbf{R}}
+\newcommand{\bZ}{\mathbf{Z}}
+\newcommand{\dd}{\mathrm{d}}
+\newcommand{\fp}{\mathfrak{p}}
+\newcommand{\frob}{\mathrm{fr}}
+\newcommand{\Gm}{\mathbf{G}_\mathrm{m}}
+
+\title{Galois representations for CM counterexample}
+\author{Daniel Miller}
+
+\begin{document}
+\maketitle
+
+
+
+
+
+Let $K/\bQ$ be a finite Galois extension, $\{\theta_\fp\}$ a sequence in 
+$(\bR/\bZ)^d$ indexed by primes of $K$, such that 
+$\left|\sum_{\N(\fp)\leqslant x} r(\theta_\fp)\right| = O(1)$ for all 
+nontrivial $r\in \X^\ast((\bR/\bZ)^d)$. Suppose $\{\vartheta_\fp\}$ is a 
+sequence with $|\vartheta_\fp - \theta_\fp|_\infty \ll \N(\fp)^{-\frac 1 2}$. 
+We wish to establish a bound 
+$\left|\sum_{\N(\fp)\leqslant x} r(\vartheta_\fp)\right| \ll x^{\frac 1 2+\epsilon}$. 
+
+Now, Taylor's theorem (the multivariate version) tells us that for any 
+$f\in C^\infty((\bR/\bZ)^d)$, we have near $(a_1,\dots,a_d)$:
+\[
+	f(x_1,\dots,x_d) = f(a_1,\dots,a_d) + \sum_{i=1}^d \frac{\dd f}{\dd x_i}(a_1,\dots,a_d) (x_i - a_i) + O(|x-a|_\infty^2) .
+\]
+In particular, I think we can say that $|f(x) - f(y)| \ll |x - y|$, the implied 
+constant depending on the max of the 
+$\left| \frac{\dd f}{\dd x_i}\right|_\infty$. In particular, we can compute:
+\begin{align*}
+	\left| \sum_{\N(\fp) \leqslant x} r(\vartheta_\fp)\right|
+		&\leqslant \left| \sum_{\N(\fp)\leqslant x} r(\vartheta_\fp)\right| + \sum_{\N(\fp)\leqslant x} \left| r(\theta_\fp) - r(\vartheta_\fp)\right| \\
+		&\ll 1 + \sum_{\N(\fp)\leqslant x} |\theta_\fp - \vartheta_\fp|_\infty \\
+		&\ll \int_1^x \frac{\dd t}{\sqrt t} = \sqrt{x} .
+\end{align*}
+
+Hopefully we can say something similar about discrepancy. Now suppose we have a 
+``fake sequence'' $\{\vartheta_\fp\}$. We want to construct a Galois 
+representation $\rho\colon G_K \to \left(\bZ_l^\times\right)^d$, possibly 
+infinitely ramified, such that $\rho(\frob_\fp)\in \bQ^\times$ ??
+
+$\rho(\frob_\fp) / \N(\fp)^{\frac 1 2}$
+
+$(F\otimes \bQ_l)^\times \simeq (\bQ_l^\times)^d$
+
+Let's consider the case when $F$ is a quadratic CM field, and 
+\[
+	\ST \subset (\R_{F/\bQ}\Gm)^{\N_{F/\bQ} = 1}(\bC) .
+\]
+Note that $\R_{F/\bQ}\Gm(\bC) = (F\otimes \bC)^\times = (\bC^\times)^2$, and 
+$\N_{F/\bQ}(z_1,z_2) = z_1 \overline{z_2}$. So $\ST$ is a maximal compact 
+subgroup of $\{(z_1,\overline{z_1}^{-1})\}$ consisting of those 
+$|z_1| = 1$. We want a Galois representation 
+$\rho\colon G_K \to (F\otimes \bQ_l)^\times$ such that 
+$\rho(\frob_\fp)\in F$ is $1$-Weil. (Maybe? Maybe 0-Weil).
+
+We can assume that $K$ is a CM field. Then $\bA_K^\times / K^\times$ should 
+be a bit easier to understand. We can choose a prime $l$ at which $F$ splits, 
+so that $F\otimes \bQ_l = (\bQ_l)^2$. 
+
+First of all, $\bA_K = \bC \times \prod' K_\fp$, so 
+$\bA_K^\times = \bC^\times \times \prod' K_\fp^\times$. We are interested in 
+maps $\bA_K^\times / K^\times K_\infty^\times \to F_l^\times$. 
+
+$\rho\colon G_K \to F_l^\times$, each $\rho(\frob_\fp)\in F$ is $\fp$-Weil of 
+weight $1$. The renormalization $\rho(\frob_\fp) \N(\fp)^{-1/2}$, which lies 
+in a compact torus in $(\R_{F/\bQ}\Gm)^{\N_{F/\bQ} = 1}(\bC)$, needs to be 
+close to $\vartheta_\fp$
+
+Fix a finite prime $\fp$ of $K$. In the elliptic curve case, 
+$(\R_{F/\bQ}\Gm)^{\N_{F/\bQ} = 1}(\bC) = \bC^\times$, with embedding 
+$F^\times\hookrightarrow \bC^\times$. (There are two embeddings, but the 
+subfield is the same.) 
+
+We are trying to solve the equation $\N_{F/\bQ}(x) = \N(\fp)^{1/2}$. 
+
+Make things very explicit. Let $F = \bQ(\sqrt{-d})$, which is a 
+well-defined subfield of $\bC$. Fix $\fp$ a finite prime of $F$; then there 
+is a set $T_\fp = \{x\in F : \N_{F/\bQ}(x) = \N(\fp)\}$. 
+
+In $\bQ(i)$, we have $\fp = (1 + 4 i)$, with $\N(\fp) = 5$. What elements have 
+$|x| = \sqrt 5$, i.e. $\N(x) = \N(\fp)$? In that case, $x$ and $1+4 i$ will 
+differ by a unit. In other words, there are only finitely many such $x$, and 
+$\# T_\fp$ is bounded. 
+
+In general, in the quadratic CM case, $|x| = \N(x)^{1/2}$, so we are looking 
+at $T_\fp = \{x\in F : \N_{F/\bQ} = \N(\fp)\}$. If $\N(x) = \N(\fp)$, then the 
+ideal $\fp\mid x$, which means that in fact $\fp = \langle x\rangle$. If $\fp$ 
+is principal, than generators differ by units, and $O_F^\times$ is finite. 
+
+
+
+
+
+\section{Possible concrete case}
+
+Let's address abelian $2$-folds with CM. Let $A_{/K}$ be an abelian $2$-fold; 
+then $\End_K(A)_\bQ$ has rank $4$ over $\bQ$. If $A$ has CM, then 
+$F = \End_K(A)_\bQ$ has $[F:\bQ] = 4$. The field $F$ is totally imaginary, so 
+$\rk O_F^\times = 1$. The motivic Galois group $G_A^1$ should be a 
+two-dimensional torus. In particular, we want to ``cut out'' a two-dimensional 
+subgroup of $(\R_{F/\bQ} \Gm)^{\N_{F/\bQ} = 1}$, which is three-dimensional. 
+Let $F^+$ be the totally real subfield of $F$. Then 
+$(\R_{F/\bQ} \Gm)^{\N_{F/F^+} = 1}$ is such a group. 
+
+Fix a prime $\fp$ of $K$. We are looking for prospective ``Frobenius at $\fp$'' 
+in $F^\times$, such that for all $\sigma\colon F\hookrightarrow\bC$, 
+$|\sigma(x)| = \N(\fp)^{1/2}$. 
+
+Fundamentally, this is the problem. Let $F$ be a CM field with 
+$[F:\bQ] = 2 g$. Then $\rk O_F^\times = g - 1$. 
+
+
+Let $\ell\colon F_\infty = \bC^g \to \bR^g$ be the map 
+$\ell(z_1,\dots,z_g) = (\log |z_1|,\dots,\log |z_g|)$. Then 
+$\ell(O_F^\times)$ is a discrete lattice in $(\bR^g)^{\tr = 0}$. 
+
+
+
+
+
+\section{Product formula}
+
+Suppose $\sum x_p p^{-s}$ converges conditionally when $\Re s > 1/2$. We wish 
+to prove that for $x_n = \prod x_p^{v_p(n)}$, the series $\sum a_n n^{-s}$ also 
+converges conditionally when $\Re s>1/2$. Write $\supp(n)\leqslant x$ if all 
+primes dividing $n$ are $\leqslant x$. We know that the product 
+$\prod (1 - x_p p^{-s})^{-1}$ converges conditionally. So, note that 
+\[
+	\prod_{p\leqslant x} \frac{1}{1 - x_p p^{-s}} = \sum_{\supp(n)\leqslant x} x_n n^{-s} = \sum_{p\leqslant x} x_p p^{-s} + \sum_{\substack{S\subset \{p\leqslant x\} \\ \# S > 1}} \sum_?
+\]
+
+\[
+	\prod_{p\leqslant x} (1 - x_p p^{-s})^{-1} = \prod_{p\leqslant x} \sum_{r\geqslant 0} x_p^r p^{-r s} = \sum_{n\geqslant 1 : supp(n) \subset \{p\leqslant x\}} x_n n^{-s} .
+\]
+Question: if $\{p\leqslant x\} = \{p_1,p_2,\dots,p_n\}$, then 
+\begin{align*}
+	\sum_{a,b\geqslant 1} x_{p_1}^a x_{p_2}^b p_1^{-a s} p_2^{-b s} 
+		&= \left(\sum_{a\geqslant 1} (x_{p_1} p_1^{-s})^a\right)\left(\sum_{b\geqslant 1} (x_{p_2} p_2^{-s})^b\right) \\
+		&= \frac{x_{p_1} p_1^{-s}}{1 - x_{p_1} p_1^{-s}} \frac{x_{p_2} p_2^{-s}}{1 - x_{p_2} p_2^{-s}} \\
+		&\leqslant x_{p_1} x_{p_2} p_1^{-s} p_2^{-s}
+\end{align*}
+
+Thus, 
+\begin{align*}
+	\sum_{\supp(n)\leqslant x} x_n n^{-s} 
+		&= \sum_{p\leqslant x} x_p p^{-s} + O\left(\sum_{S\subset \{p\leqslant x\}} p_S^{-\Re s}\right)
+\end{align*}
+
+
+The question is: does $\sum_{n\leqslant x} x_n n^{-s}$ converge? We already 
+know that $\sum_{\supp(n)\leqslant x} x_n n^{-s}$ converges. 
+\[
+	\sum_{n\leqslant x} x_n n^{-s} = \sum_{\supp(n) \leqslant x} x_n n^{-s} - \sum_{\supp(n) \leqslant x, n > x} x_n n^{-s}
+\]
+Can we show that $\sum_{\supp(n) \leqslant x, n>x} x_n n^{-s}$ converges / 
+approaches zero in some way?
+
+
+
+
+
+\end{document}
