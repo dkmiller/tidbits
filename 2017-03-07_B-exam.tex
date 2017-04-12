@@ -4,25 +4,30 @@
 
 \DeclareMathOperator{\cdf}{cdf}
 \DeclareMathOperator{\D}{D}
+\DeclareMathOperator{\GL}{GL}
 \DeclareMathOperator{\N}{N}
 \DeclareMathOperator{\R}{R}
+\DeclareMathOperator{\ram}{ram}
+\DeclareMathOperator{\sgn}{sgn}
 \DeclareMathOperator{\ST}{ST}
 \DeclareMathOperator{\SU}{SU}
 \DeclareMathOperator{\sym}{sym}
+\DeclareMathOperator{\tr}{tr}
 \DeclareMathOperator{\X}{X}
 \newcommand{\bC}{\mathbf{C}}
 \newcommand{\bF}{\mathbf{F}}
 \newcommand{\bQ}{\mathbf{Q}}
+\newcommand{\bR}{\mathbf{R}}
 \newcommand{\bZ}{\mathbf{Z}}
 \newcommand{\dd}{\mathrm{d}}
-\newcommand{\Gm}{\mathbf{G}_\mathrm{m}}
+\newcommand{\frob}{\mathrm{fr}}
 
 \newtheorem{conjecture}{Conjecture}
 
 \title{Counterexamples related to the Sato--Tate conjecture}
 \author{Daniel Miller}
 \institute{Cornell University}
-\date{14 April 2017}
+\date{21 April 2017}
 
 
 
@@ -80,22 +85,20 @@
 \section{Motivation}
 
 \begin{frame}{Sato--Tate Conjecture}
-$E_{/\bQ}$ non-CM elliptic curve, $\theta_p = \cos^{-1}\left( \frac{a_p}{2\sqrt p}\right)$. 
+$E_{/\bQ}$ non-CM elliptic curve, $a_p = \tr\rho_l(\frob_p)\in \bZ$, 
+$|a_p|\leqslant 2\sqrt p$. 
+\pause
+
+Satake parameter: $\theta_p = \cos^{-1}\left( \frac{a_p}{2\sqrt p}\right)$. 
 \pause
 
 Sato--Tate measure: $\ST = \frac{2}{\pi} \sin^2 \theta\, \dd \theta$ (Haar 
-measure on $\SU(2)$). 
+measure on $\SU(2)^\natural$). 
 \pause
 
 \begin{theorem}[Taylor et.~al.]
-The $\theta_p$ are equidistributed with respect to $\ST$. 
+$\{\theta_p\}$ is equidistributed with respect to $\ST$. 
 \end{theorem}
-\pause
-
-Generalized by Serre: conjecture for arbitrary motives. 
-\pause
-
-Stick to elliptic curves and CM abelian varieties.
 \pause
 
 Quantify rate of convergence of 
@@ -131,25 +134,235 @@ Akiyama--Tanigawa conjecture $\Rightarrow$ Riemann Hypothesis for $\sym^k E$
 \end{frame}
 
 
+\begin{frame}{Context}
+Pande: is the Sato--Tate conjecture a Galois-theoretic result?
+\pause
+
+\begin{theorem}[Pande]
+Let $\epsilon>0$. Then there exists an infinitely ramified representation 
+$\rho\colon G_\bQ \to \GL_2(\bZ_l)$ such that $\theta_p\in B_\epsilon(\pi/2)$ 
+for a density one set of primes. 
+\end{theorem}
+\pause
+
+\begin{theorem}[Khare--Rajan]
+Any $\rho\colon G_\bQ \to \GL_2(\bZ_l)$ is ramified at a density zero set of 
+primes. 
+\end{theorem}
+\pause
+
+\textbf{Question (Serre):} can you \emph{a priori} control the ratio 
+$\frac{\pi_{\ram(\rho)}(x)}{\pi(x)}$?
+\pause
+
+\textbf{Answer (Khare--Larsen--Ramakrishna):} no!
+\end{frame}
+
+
 \begin{frame}{Questions}
-1. Does Riemann Hypothesis for all $\sym^k E$ imply Akiyama--Tanigawa conjecture? 
+\textbf{Q1.} Can Pande's results be strengthened to yield equidistribution? 
 \pause
 
-2. Does functoriality imply the Akiyama--Tanigawa conjecture? \pause 
-For CM elliptic curves?
+\textbf{Q2.} If so, can the measure be specified?
 \pause
 
-3. Is the Sato--Tate conjecture a Galois-theoretic result?
+\textbf{Q3.} Can the rate of convergence of empirical measures to the true measure 
+be specified?
+
+\textbf{Q4.} Can the ratio $\frac{\pi_{\ram(\rho)}(x)}{\pi(x)}$ be controlled?
 \pause
 
-4. Does every Galois representation have equidistribution coming from a 
-Sato--Tate group?
+\textbf{Q5.} Can anything be said about the $L$-functions associated with $\rho$?
 \pause
 
-1. Yes! (sort of)
+\textbf{Answer:} Yes! to Q1--Q5. 
+\end{frame}
+
+
+
+
+
+\section{Discrepancy and Dirichlet series}
+
+
+\begin{frame}{Discrepancy}
+\begin{definition}
+Let $\{\theta_p\}$ be a sequence in $[0,\pi]$, $\mu$ a measure on $[0,\pi]$. 
+The \emph{discrepancy} is 
+\[
+	\D_N(\{\theta_p\},\mu) =  \sup_{x\in [0,\pi]}\left| \frac{1}{\pi(N)} \sum_{p\leqslant N} 1_{[0,x)}(\theta_p) - \int_0^x \, \dd\mu\right| .
+\]
+\end{definition}
 \pause
 
-2--4. No!
+$\{\theta_p\}$ are $\mu$-equidistributed if and only if $D_N \to 0$. 
+\pause
+
+\textbf{Fact:}
+$\frac{\log N}{N} \ll D_N$. The \emph{van der Corput sequence} achieves this. 
+\end{frame}
+
+
+\begin{frame}{Dirichlet series}
+\begin{definition}
+For $k\geqslant 1$, 
+\[
+	L(\sym^k \rho,s) = \prod_p \det\left( 1 - \sym^k \begin{pmatrix} e^{i \theta_p} & 0\\ 0 & e^{-i \theta_p}\end{pmatrix} p^{-s}\right)^{-1}
+\]
+\end{definition}
+\pause
+
+\begin{definition}
+For $f\colon [0,\pi] \to \bC$ of bounded variation with $\mu(f) = 0$,  
+\[
+	L_f(s) = \prod_p \left( 1 - f(\theta_p) p^{-s}\right)^{-1}
+\]
+\end{definition}
+\pause
+
+\textbf{Example:} $L_{\sgn}(s) = \prod_p \left(1 - \sgn(a_p) p^{-s}\right)^{-1}$. 
+\end{frame}
+
+\begin{frame}{Dirichlet series---results}
+\begin{theorem}
+If $\left| \sum_{p\leqslant N} f(\theta_p)\right| \ll N^{\alpha+\epsilon}$, 
+then $L_f(s)$ admits a nonvanishing analytic continuation to $\Re > \alpha$. 
+\end{theorem}
+\pause
+
+\begin{corollary}
+If $D_N \ll N^{-\alpha+\epsilon}$, then $L_f(s)$ admits a nonvanishing 
+analytic continuation to $\Re > \alpha$. 
+\end{corollary}
+\pause
+
+\begin{definition}
+$U_k(\theta) = \frac{\sin((k+1)\theta)}{\sin\theta} = \tr\sym^k \left(\begin{smallmatrix} e^{i \theta_p} & 0\\ 0 & e^{-i \theta_p}\end{smallmatrix}\right)$.
+\end{definition}
+\pause
+
+\begin{theorem}
+If $\left| \sum_{p\leqslant N} U_k(\theta_p)\right| \ll N^{\alpha+\epsilon}$, 
+then $L(\sym^k\rho, s)$ admits a nonvanishing analytic continuation to 
+$\Re > \alpha$. 
+\end{theorem}
+\end{frame}
+
+
+
+
+
+\section{Main theorem}
+
+
+\begin{frame}{Ingredients}
+1. Fix a rational prime $l\geqslant 7$. 
+\pause
+
+2. Fix an odd, absolutely, weight 2 representation 
+$\bar\rho\colon G_\bQ \to \GL_2(\bF_l)$.
+\pause
+\textcolor{red}{$\rho$ will be a lift of $\bar\rho$.}
+\pause
+
+3. Fix a function $h\colon \bR^+ \to \bR_{\geqslant 1}$ which increases slowly 
+to infinity. 
+\pause
+\textcolor{red}{We will have $\pi_{\ram(\rho)}(x) \ll h(x)$.}
+\pause
+
+4. Fix an absolutely continuous measure $\mu$ on $[0,\pi]$, with bounded 
+probability density function.
+\pause
+\textcolor{red}{The angles $\{\theta_p\}$ will be $\mu$-equidistributed.}
+\pause
+
+5. Fix $\alpha\in \left(0,\frac 1 2\right)$. 
+\pause
+\textcolor{red}{The discrepancy $D_N$ will decay like $\pi(N)^{-\alpha}$.}
+\end{frame}
+
+
+\begin{frame}{Theorem}
+Let $l$, $\bar\rho$, $h$, $\mu$, and $\alpha$ be as above. Then there exists 
+$\rho\colon G_\bQ \to \GL_2(\bZ_l)$ such that 
+\begin{enumerate}
+\item
+$\rho \equiv \bar\rho\pmod{l}$. 
+\pause
+
+\item
+$\pi_{\ram(\rho)}(x) \ll h(x)$. (Yes to Q4.)
+\pause
+
+\item
+For each unramified $p$, $a_p = \tr \rho(\frob_p)\in \bZ$ and satisfies the 
+Hasse bound.
+\pause
+
+\item
+$\D_N(\{\theta_p\},\mu) = \Theta(\pi(x)^{-\alpha})$. (Yes to Q1--Q3.)
+\pause
+
+\item
+If $(\theta\mapsto \pi-\theta)_\ast \mu = \mu$, then for each odd $k$, 
+$L(\sym^k \rho,s)$ satisfies the Riemann hypothesis. (Yes to Q5.)
+\end{enumerate}
+\end{frame}
+
+
+
+
+
+
+\section{Idea of the proof}
+
+
+\begin{frame}{Prescribing discrepancy decay}
+\begin{theorem}
+If $\alpha\in \left(0,\frac 1 2\right)$, there exists a sequence 
+$(x_2,x_3,x_5,\dots)$ in $[-1,1]$ such that 
+$| D_N - \pi(N)^{-\alpha}| \ll \pi(N)^{-1}$. 
+\end{theorem}
+\pause
+
+\textbf{Fact:} 
+Discrepancy is invariant under pushforward by $\cos$ and $\cos^{-1}$. 
+\pause
+
+\textbf{Idea}:
+Construct $\rho$ so that $\frac{a_p}{2\sqrt p}\approx x_p$. 
+\pause
+
+\textbf{Fact:} 
+If $(x_p^{(1)})$ is a sequence with $|x_p - x_p^{(1)}| \ll p^{-1/2+\epsilon}$, 
+then $\D_N^{(1)} = \Theta(\pi(N)^{-\alpha})$. 
+\end{frame}
+
+
+\begin{frame}{Lifting Galois representations}
+What is a deformation?
+
+Weight?
+
+What does it take to lift from $\bZ/l^n$ to $\bZ/l^{n+1}$?
+\end{frame}
+
+
+\begin{frame}{Lifting Galois representations---first stage}
+Lift from $\bZ/l$ to $\bZ/l^2$. 
+\end{frame}
+
+
+\begin{frame}{Lifting Galois representations---inductive step}
+Lift from $\bZ/l^n$ to $\bZ/l^{n+1}$. 
+\end{frame}
+
+
+\begin{frame}{Consequences}
+If $f\in C([0,\pi])$, $f\circ \cos^{-1}\colon [-1,1]\to \bC$ is Lipschitz, and 
+$f(\pi-\theta) = - f(\theta)$, then $L_f(\rho,s)$ has a nonvanishing analytic 
+continuation to $\Re > \frac 1 2$ (Riemann hypothesis). 
 \end{frame}
 
 
