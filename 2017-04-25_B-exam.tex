@@ -2,9 +2,11 @@
 % Remove [handout] for pause to work.
 \usetheme{metropolis}
 
+\DeclareMathOperator{\Ad}{Ad}
 \DeclareMathOperator{\cdf}{cdf}
 \DeclareMathOperator{\D}{D}
 \DeclareMathOperator{\GL}{GL}
+\DeclareMathOperator{\h}{H}
 \DeclareMathOperator{\N}{N}
 \DeclareMathOperator{\R}{R}
 \DeclareMathOperator{\ram}{ram}
@@ -62,6 +64,12 @@
 %    * only addresses CM varieties - may not work for SU(2)
 % So what?
 %  - need new directions to prove AT, even for CM case. 
+%  
+
+% Sasha feedback:
+% Go slower
+% Include some computations / pretty pictures
+% Give more background & perspective. How do my results fit in the big picture?
 
 
 
@@ -82,7 +90,7 @@
 
 
 
-\section{Motivation}
+\section{Motivation and background}
 
 \begin{frame}{Sato--Tate Conjecture}
 $E_{/\bQ}$ non-CM elliptic curve, $a_p = \tr\rho_l(\frob_p)\in \bZ$, 
@@ -111,7 +119,7 @@ Use discrepancy (Kolmogorov--Smirnov statistic).
 
 \begin{frame}{Akiyama--Tanigawa Conjecture}
 \[
-	D_N = \sup_{x\in [0,\pi]}\left| \frac{1}{\pi(N)} \sum_{p\leqslant N} 1_{[0,x)}(\theta_p) - \int_0^x \, \dd\ST\right| .
+	D_N = \sup_{x\in [0,\pi]}\left| \frac{1}{\pi(N)} \sum_{p\leqslant N} 1_{[0,x)}(\theta_p) - \int 1_{[0,x)}(\theta) \, \dd\ST(\theta)\right| .
 \]
 \pause
 
@@ -124,18 +132,18 @@ There is a variant of this conjecture for CM elliptic curve.
 \pause
 
 \begin{theorem}[Akiyama--Tanigawa]
-Akiyama--Tanigawa conjecture $\Rightarrow$ Riemann Hypothesis for $E$.
+Akiyama--Tanigawa conjecture $\Rightarrow$ Riemann hypothesis for $E$.
 \end{theorem}
 \pause
 
 \begin{theorem}[Mazur]
-Akiyama--Tanigawa conjecture $\Rightarrow$ Riemann Hypothesis for $\sym^k E$
+Akiyama--Tanigawa conjecture $\Rightarrow$ Riemann hypothesis for $\sym^k E$
 \end{theorem}
 \end{frame}
 
 
 \begin{frame}{Context}
-Pande: is the Sato--Tate conjecture a Galois-theoretic result?
+A.~Pande: is the Sato--Tate conjecture a Galois-theoretic result?
 \pause
 
 \begin{theorem}[Pande]
@@ -169,7 +177,7 @@ $\frac{\pi_{\ram(\rho)}(x)}{\pi(x)}$?
 \textbf{Q3.} Can the rate of convergence of empirical measures to the true measure 
 be specified?
 
-\textbf{Q4.} Can the ratio $\frac{\pi_{\ram(\rho)}(x)}{\pi(x)}$ be controlled?
+\textbf{Q4.} Can the growth of $\pi_{\ram(\rho)}(x)$ be controlled?
 \pause
 
 \textbf{Q5.} Can anything be said about the $L$-functions associated with $\rho$?
@@ -195,11 +203,14 @@ The \emph{discrepancy} is
 \end{definition}
 \pause
 
+\textbf{Fact:}
 $\{\theta_p\}$ are $\mu$-equidistributed if and only if $D_N \to 0$. 
 \pause
 
 \textbf{Fact:}
 $\frac{\log N}{N} \ll D_N$. The \emph{van der Corput sequence} achieves this. 
+% and there's a "trick" to get the same rate of decay of discrepancy for any 
+% absolutely continuous measure.
 \end{frame}
 
 
@@ -207,7 +218,7 @@ $\frac{\log N}{N} \ll D_N$. The \emph{van der Corput sequence} achieves this.
 \begin{definition}
 For $k\geqslant 1$, 
 \[
-	L(\sym^k \rho,s) = \prod_p \det\left( 1 - \sym^k \begin{pmatrix} e^{i \theta_p} & 0\\ 0 & e^{-i \theta_p}\end{pmatrix} p^{-s}\right)^{-1}
+	L(\sym^k \rho,s) = \prod_p \det\left( 1 - \sym^k \left(\begin{smallmatrix} e^{i \theta_p} & 0\\ 0 & e^{-i \theta_p}\end{smallmatrix}\right) p^{-s}\right)^{-1}
 \]
 \end{definition}
 \pause
@@ -220,10 +231,11 @@ For $f\colon [0,\pi] \to \bC$ of bounded variation with $\mu(f) = 0$,
 \end{definition}
 \pause
 
-\textbf{Example:} $L_{\sgn}(s) = \prod_p \left(1 - \sgn(a_p) p^{-s}\right)^{-1}$. 
+\textbf{Example (Ramakrishna):}
+$L_{\sgn}(s) = \prod_p \left(1 - \sgn(a_p) p^{-s}\right)^{-1}$. 
 \end{frame}
 
-\begin{frame}{Dirichlet series---results}
+\begin{frame}{Dirichlet series---basic facts}
 \begin{theorem}
 If $\left| \sum_{p\leqslant N} f(\theta_p)\right| \ll N^{\alpha+\epsilon}$, 
 then $L_f(s)$ admits a nonvanishing analytic continuation to $\Re > \alpha$. 
@@ -262,24 +274,24 @@ $\Re > \alpha$.
 2. Fix an odd, absolutely, weight 2 representation 
 $\bar\rho\colon G_\bQ \to \GL_2(\bF_l)$.
 \pause
-\textcolor{red}{$\rho$ will be a lift of $\bar\rho$.}
+\textcolor{blue}{$\rho$ will be a lift of $\bar\rho$.}
 \pause
 
 3. Fix a function $h\colon \bR^+ \to \bR_{\geqslant 1}$ which increases slowly 
 to infinity. 
 \pause
-\textcolor{red}{We will have $\pi_{\ram(\rho)}(x) \ll h(x)$.}
+\textcolor{blue}{We will have $\pi_{\ram(\rho)}(x) \ll h(x)$.}
 \pause
 
 4. Fix an absolutely continuous measure $\mu$ on $[0,\pi]$, with bounded 
 probability density function.
 \pause
-\textcolor{red}{The angles $\{\theta_p\}$ will be $\mu$-equidistributed.}
+\textcolor{blue}{The angles $\{\theta_p\}$ will be $\mu$-equidistributed.}
 \pause
 
-5. Fix $\alpha\in \left(0,\frac 1 2\right)$. 
+5. Fix $\alpha\in \left(0,\frac 1 3\right)$. 
 \pause
-\textcolor{red}{The discrepancy $D_N$ will decay like $\pi(N)^{-\alpha}$.}
+\textcolor{blue}{The discrepancy $D_N$ will decay like $\pi(N)^{-\alpha}$.}
 \end{frame}
 
 
@@ -292,7 +304,9 @@ $\rho \equiv \bar\rho\pmod{l}$.
 \pause
 
 \item
-$\pi_{\ram(\rho)}(x) \ll h(x)$. (Yes to Q4.)
+$\pi_{\ram(\rho)}(x) \ll h(x)$. 
+\pause
+\textcolor{blue}{(Yes to Q4.)}
 \pause
 
 \item
@@ -301,12 +315,16 @@ Hasse bound.
 \pause
 
 \item
-$\D_N(\{\theta_p\},\mu) = \Theta(\pi(x)^{-\alpha})$. (Yes to Q1--Q3.)
+$\D_N(\{\theta_p\},\mu) = \Theta(\pi(x)^{-\alpha})$. 
+\pause
+\textcolor{blue}{(Yes to Q1--Q3.)}
 \pause
 
 \item
 If $(\theta\mapsto \pi-\theta)_\ast \mu = \mu$, then for each odd $k$, 
-$L(\sym^k \rho,s)$ satisfies the Riemann hypothesis. (Yes to Q5.)
+$L(\sym^k \rho,s)$ satisfies the Riemann hypothesis. 
+\pause
+\textcolor{blue}{(Yes to Q5.)}
 \end{enumerate}
 \end{frame}
 
@@ -320,10 +338,14 @@ $L(\sym^k \rho,s)$ satisfies the Riemann hypothesis. (Yes to Q5.)
 
 \begin{frame}{Prescribing discrepancy decay}
 \begin{theorem}
-If $\alpha\in \left(0,\frac 1 2\right)$, there exists a sequence 
+If $\alpha\in \left(0,\frac 1 3\right)$, there exists a sequence 
 $(x_2,x_3,x_5,\dots)$ in $[-1,1]$ such that 
 $| D_N - \pi(N)^{-\alpha}| \ll \pi(N)^{-1}$. 
 \end{theorem}
+\pause
+
+(Can have $x_p = \frac{a_p}{2\sqrt p}$ for $a_p\in \bZ$ satisfying the 
+Hasse bound.) 
 \pause
 
 \textbf{Fact:} 
@@ -341,16 +363,79 @@ then $\D_N^{(1)} = \Theta(\pi(N)^{-\alpha})$.
 
 
 \begin{frame}{Lifting Galois representations}
-What is a deformation?
+Construct $\rho$ as $\varprojlim \rho_n$, where 
+$\rho_n\colon G_\bQ \to \GL_2(\bZ/l^n)$.
+\pause
 
-Weight?
+For all $n$, require $\det\rho_n \equiv \kappa\pmod{l^n}$
+\pause
+($l$-adic cyclotomic character)
+\pause
 
-What does it take to lift from $\bZ/l^n$ to $\bZ/l^{n+1}$?
+Passage from $\rho_n$ to $\rho_{n+1}$ is governed by 
+$\h^i(G_{\bQ,R},\Ad^0\bar\rho)$, $i = 1,2$
+\pause
+
+\textbf{Theorem (K--L--R).}
+Fix a finite set $U$ of primes. Then there exists a finite set $N$ of primes 
+such that 
+\[
+	\h^1(G_{\bQ,R\cup N},\Ad^0\bar\rho) \xrightarrow{\sim}\prod_{p\in R} \h^1(G_{\bQ_p}, \Ad^0\bar\rho) \times \prod_{p\in U} \h_\mathrm{nr}^1(G_{\bQ_p},\Ad^0\bar\rho)
+\]
+\pause
+
+\textbf{Corollary:}
+Given $\rho_n\colon G_{\bQ,R_n} \to \GL_2(\bZ/l^n)$, can choose 
+$\tr\rho_{n+1}(\frob_p)$ for all $p$ in a finite set.
+\pause
+\textcolor{blue}{(Finitely many more ramified primes.)}
+\end{frame}
+
+
+\begin{frame}{Controlling ramified primes}
+Given $\rho_n\colon G_{\bQ,R_n} \to \GL_2(\bZ/l^n)$ and choices of 
+$\tr \rho_{n+1}(\frob_p)\pmod{l^{n+1}}$, need to add finite set $N$ to 
+$R_n$. 
+\pause
+
+Each $p\in N$ is chosen from a positive-density set of primes.
+\pause
+
+So $p$ can be arbitrarily large!
+\pause
+
+If $\pi_R(x) \leqslant h(x)\,(\forall x)$, can force this for 
+$\pi_{R\cup N}(x)$. 
+\pause
+
+$\pi_{\ram(\bar\rho)}(x)\leqslant h(x)$ may not hold---scale $h$ to make this 
+true!
+\pause
+
+\textbf{Fact:} constant in $\pi_{\ram(\rho)}(x) \ll h(x)$ only depends on 
+\textcolor{blue}{$\bar\rho$}. 
 \end{frame}
 
 
 \begin{frame}{Lifting Galois representations---first stage}
 Lift from $\bZ/l$ to $\bZ/l^2$. 
+\pause
+
+Fix a \textcolor{blue}{large} finite set $U_1$ of primes. 
+\pause
+
+For $p\in U_1$, can choose $a_p\in \bZ$ subject only to 
+$|a_p|\leqslant 2\sqrt p$ and $a_p\equiv \tr\rho_1(\frob_p)\pmod{l}$. 
+\pause
+
+We can ensure 
+$\left| \frac{a_p}{2\sqrt p} - x_p\right| \leqslant \frac{l}{2\sqrt p}$.
+\pause
+
+For $N\leqslant \max U_1$, $\D_N(\{\theta_p\},\mu) = \Theta(\pi(N)^{-\alpha})$. 
+\pause
+
+Make $U_1$ so large that for $p>\max U_1$, $l^2 < \log p$. 
 \end{frame}
 
 
