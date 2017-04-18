@@ -9,6 +9,7 @@
 \DeclareMathOperator{\h}{H}
 \DeclareMathOperator{\N}{N}
 \DeclareMathOperator{\R}{R}
+\DeclareMathOperator{\rk}{rk}
 \DeclareMathOperator{\ram}{ram}
 \DeclareMathOperator{\sgn}{sgn}
 \DeclareMathOperator{\ST}{ST}
@@ -93,8 +94,13 @@
 \section{Motivation and background}
 
 \begin{frame}{Sato--Tate Conjecture}
-$E_{/\bQ}$ non-CM elliptic curve, $a_p = \tr\rho_l(\frob_p)\in \bZ$, 
-$|a_p|\leqslant 2\sqrt p$. 
+$E_{/\bQ}$ non-CM elliptic curve, $l$ prime, $\rho_l\colon G_\bQ \to \GL_2(\bZ_l)$. 
+\pause
+
+\textbf{Fact:}
+$a_p = \tr\rho_l(\frob_p) = p+1 - \# E(\bF_p)$, $|a_p|\leqslant 2\sqrt p$. 
+\pause
+(Hasse)
 \pause
 
 Satake parameter: $\theta_p = \cos^{-1}\left( \frac{a_p}{2\sqrt p}\right)$. 
@@ -104,6 +110,8 @@ Sato--Tate measure: $\ST = \frac{2}{\pi} \sin^2 \theta\, \dd \theta$ (Haar
 measure on $\SU(2)^\natural$). 
 \pause
 
+% Sato--Tate conjecture. See "Algebraic cycles and poles of zeta functions"
+% 1965 for first statement in print.
 \begin{theorem}[Taylor et.~al.]
 $\{\theta_p\}$ is equidistributed with respect to $\ST$. 
 \end{theorem}
@@ -139,6 +147,41 @@ Akiyama--Tanigawa conjecture $\Rightarrow$ Riemann hypothesis for $E$.
 \begin{theorem}[Mazur]
 Akiyama--Tanigawa conjecture $\Rightarrow$ Riemann hypothesis for $\sym^k E$
 \end{theorem}
+\end{frame}
+
+
+\begin{frame}{Related results}
+% Alina Bucar & Kiran Kedlaya. 
+% "an application of the effective Sato--Tate conjecture"
+\textbf{Theorem (Bucar--Kedlaya).}
+Assume analytic continuation of $\L(\sym^k E,s)$, GRH, and functional equation 
+for all $k\geqslant 1$. Then $\D_N \ll N^{-\frac 1 4+\epsilon}$. 
+\pause
+
+% Jesse Thorner.
+% "the explicit Sato--Tate conjecture and densities pertaining to 
+% Lehmer-type questions"
+\textbf{Theorem (Thorner).}
+Same result (with explicit constants) for a modular form of arbitrary weight	. 
+\pause
+
+% Harald Niederreiter.
+% "the distribution of values of Kloosterman sums"
+\textbf{Theorem (Niederreiter).}
+Let $E_{/F}$, where $F$ is a function field. Then 
+$\D_N \ll N^{-\frac 1 4+\epsilon}$. 
+\pause
+
+% Zev Rosengarten
+% "an Erdos--Turan inequality for compact simply-connected semisimple Lie groups"
+\textbf{Theorem (Rosengarten).}
+For $G = \ST(M)$ over a function field, 
+$\D_N \ll N^{-\alpha_G+\epsilon}$, where $\alpha\to 0$ as $\rk G\to \infty$. 
+\pause
+
+\textbf{Common ingredient.}
+Erd\"os--Tur\'an--Koksma inequality: from a bound on
+$\left|\sum_{p\leqslant N} \tr \rho(x_p)\right|$ to a bound on $\D_N$.
 \end{frame}
 
 
@@ -306,7 +349,13 @@ $\rho \equiv \bar\rho\pmod{l}$.
 \item
 $\pi_{\ram(\rho)}(x) \ll h(x)$. 
 \pause
-\textcolor{blue}{(Yes to Q4.)}
+\textcolor{blue}{(Yes to Q4. 
+\pause
+$\log x$, 
+\pause
+$\log^{10^{10}}x$, 
+\pause
+$A^{-1}(x)$)}
 \pause
 
 \item
@@ -441,6 +490,33 @@ Make $U_1$ so large that for $p>\max U_1$, $l^2 < \log p$.
 
 \begin{frame}{Lifting Galois representations---inductive step}
 Lift from $\bZ/l^n$ to $\bZ/l^{n+1}$. 
+\end{frame}
+
+
+\begin{frame}{Riemann hypothesis}
+How can we make $L(\sym^k \rho,s)$, $k$ odd, satisfy the Riemann hypothesis?
+\pause
+
+$\left|\sum_{p\leqslant N} U_k(\theta_p)\right| \ll N^{\frac 1 2+\epsilon}$ implies 
+RH for $L(\sym^k \rho,s)$. 
+\pause
+
+When $k$ is odd, $U_k(\pi-\theta) = -U_k(\theta)$. 
+\pause
+
+Enumerate the primes $p_1 = 2, q_1 = 3, p_2 = 5, q_2 = 7,\dots$
+\pause
+
+If $\theta_{q_i} \approx \pi - \theta_{p_i}$, then 
+$U_k(\theta_{q_i}) \approx - U_k(\theta_{p_i})$ 
+\pause
+\textcolor{blue}{(within $p_i^{-1/2}$)}. 
+\pause
+
+$\left|\sum_{p\leqslant N} U_k(\theta_p)\right| = \left| \sum_{p_i,q_i\leqslant N} \left(U_k(\theta_{p_i}) + U_k(\theta_{q_i})\right)\right| \ll \sum_{n\leqslant N} n^{-1/2}$
+\pause
+
+\textcolor{blue}{$\ll N^{\frac 1 2}$}. 
 \end{frame}
 
 
