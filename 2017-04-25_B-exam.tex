@@ -98,7 +98,9 @@ $E_{/\bQ}$ non-CM elliptic curve, $l$ prime, $\rho_l\colon G_\bQ \to \GL_2(\bZ_l
 \pause
 
 \textbf{Fact:}
-$a_p = \tr\rho_l(\frob_p) = p+1 - \# E(\bF_p)$, $|a_p|\leqslant 2\sqrt p$. 
+$a_p = \tr\rho_l(\frob_p) = p+1 - \# E(\bF_p)$, 
+\pause
+$|a_p|\leqslant 2\sqrt p$. 
 \pause
 (Hasse)
 \pause
@@ -106,12 +108,14 @@ $a_p = \tr\rho_l(\frob_p) = p+1 - \# E(\bF_p)$, $|a_p|\leqslant 2\sqrt p$.
 Satake parameter: $\theta_p = \cos^{-1}\left( \frac{a_p}{2\sqrt p}\right)$. 
 \pause
 
-Sato--Tate measure: $\ST = \frac{2}{\pi} \sin^2 \theta\, \dd \theta$ (Haar 
-measure on $\SU(2)^\natural$). 
+Sato--Tate measure: $\ST = \frac{2}{\pi} \sin^2 \theta\, \dd \theta$ 
+\pause
+(Haar measure on $\SU(2)^\natural$). 
 \pause
 
 % Sato--Tate conjecture. See "Algebraic cycles and poles of zeta functions"
 % 1965 for first statement in print.
+% Proved by Barnet--Lamb, Geraghty, Harris, Shepherd--Barron, Taylor
 \begin{theorem}[Taylor et.~al.]
 $\{\theta_p\}$ is equidistributed with respect to $\ST$. 
 \end{theorem}
@@ -490,6 +494,28 @@ Make $U_1$ so large that for $p>\max U_1$, $l^2 < \log p$.
 
 \begin{frame}{Lifting Galois representations---inductive step}
 Lift from $\bZ/l^n$ to $\bZ/l^{n+1}$. 
+\pause
+
+Have already chosen $a_p$ for $p\in U_n$. 
+\pause
+\textcolor{blue}{(1--5 hold)}
+\pause
+
+Fix a \textcolor{blue}{really huge} $U_{n+1}\supset U_n$.
+\pause
+
+For $p\in U_{n+1}\smallsetminus U_n$, can choose $a_p\in \bZ$ subject only to 
+$|a_p| \leqslant 2\sqrt p$ and $a_p \equiv \tr\rho_n(\frob_p)\pmod{l^n}$. 
+\pause
+
+We can ensure 
+$\left| \frac{a_p}{2\sqrt p} - x_p\right| \leqslant \frac{l^n}{2\sqrt p}$.
+\pause
+\textcolor{blue}{($l^n \ll \log p$)}.
+\pause
+
+For $N\leqslant \max U_{n+1}$, $\D_N(\{\theta_p\},\mu) = \Theta(\pi(N)^{-\alpha})$. 
+\pause
 \end{frame}
 
 
@@ -524,6 +550,14 @@ $\left|\sum_{p\leqslant N} U_k(\theta_p)\right| = \left| \sum_{p_i,q_i\leqslant 
 If $f\in C([0,\pi])$, $f\circ \cos^{-1}\colon [-1,1]\to \bC$ is Lipschitz, and 
 $f(\pi-\theta) = - f(\theta)$, then $L_f(\rho,s)$ has a nonvanishing analytic 
 continuation to $\Re > \frac 1 2$ (Riemann hypothesis). 
+\pause
+
+For $\mu$ any ``bump measure,'' there exits $\rho$ with $\{\theta_p\}$ 
+$\mu$-equidistributed. 
+\pause
+
+Can get equidistribution with respect to $\mu$ with non-continuous probability 
+distribution functions.
 \end{frame}
 
 
