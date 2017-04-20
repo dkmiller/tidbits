@@ -1,4 +1,4 @@
-\documentclass[handout]{beamer}
+\documentclass{beamer}
 % Remove [handout] for pause to work.
 \usetheme{metropolis}
 
@@ -140,7 +140,7 @@ $D_N \ll N^{-\frac 1 2 + \epsilon}$.
 \end{conjecture}
 \pause
 
-There is a variant of this conjecture for CM elliptic curve.
+There is a variant of this conjecture for CM elliptic curves.
 \pause
 
 \begin{theorem}[Akiyama--Tanigawa]
@@ -158,7 +158,7 @@ Akiyama--Tanigawa conjecture $\Rightarrow$ Riemann hypothesis for $\sym^k E$
 % Alina Bucar & Kiran Kedlaya. 
 % "an application of the effective Sato--Tate conjecture"
 \textbf{Theorem (Bucar--Kedlaya).}
-Assume analytic continuation of $\L(\sym^k E,s)$, GRH, and functional equation 
+Assume analytic continuation of $L(\sym^k E,s)$, GRH, and functional equation 
 for all $k\geqslant 1$. Then $\D_N \ll N^{-\frac 1 4+\epsilon}$. 
 \pause
 
@@ -318,7 +318,7 @@ $\Re > \alpha$.
 1. Fix a rational prime $l\geqslant 7$. 
 \pause
 
-2. Fix an odd, absolutely, weight 2 representation 
+2. Fix an odd, absolutely irreducible, weight 2 representation 
 $\bar\rho\colon G_\bQ \to \GL_2(\bF_l)$.
 \pause
 \textcolor{blue}{$\rho$ will be a lift of $\bar\rho$.}
@@ -330,8 +330,8 @@ to infinity.
 \textcolor{blue}{We will have $\pi_{\ram(\rho)}(x) \ll h(x)$.}
 \pause
 
-4. Fix an absolutely continuous measure $\mu$ on $[0,\pi]$, with bounded 
-probability density function.
+4. Fix an absolutely continuous probability measure $\mu$ on $[0,\pi]$, with 
+bounded probability density function.
 \pause
 \textcolor{blue}{The angles $\{\theta_p\}$ will be $\mu$-equidistributed.}
 \pause
@@ -417,7 +417,7 @@ then $\D_N^{(1)} = \Theta(\pi(N)^{-\alpha})$.
 
 \begin{frame}{Lifting Galois representations}
 Construct $\rho$ as $\varprojlim \rho_n$, where 
-$\rho_n\colon G_\bQ \to \GL_2(\bZ/l^n)$.
+$\rho_n\colon G_{\bQ,R_n} \to \GL_2(\bZ/l^n)$.
 \pause
 
 For all $n$, require $\det\rho_n \equiv \kappa\pmod{l^n}$
@@ -426,7 +426,7 @@ For all $n$, require $\det\rho_n \equiv \kappa\pmod{l^n}$
 \pause
 
 Passage from $\rho_n$ to $\rho_{n+1}$ is governed by 
-$\h^i(G_{\bQ,R},\Ad^0\bar\rho)$, $i = 1,2$
+$\h^i(G_{\bQ,R_n},\Ad^0\bar\rho)$, $i = 1,2$
 \pause
 
 \textbf{Theorem (K--L--R).}
