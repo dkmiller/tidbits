@@ -180,7 +180,8 @@ $\D_N \ll N^{-\frac 1 4+\epsilon}$.
 % "an Erdos--Turan inequality for compact simply-connected semisimple Lie groups"
 \textbf{Theorem (Rosengarten).}
 For $G = \ST(M)$ over a function field, 
-$\D_N \ll N^{-\alpha_G+\epsilon}$, where $\alpha\to 0$ as $\rk G\to \infty$. 
+$\mathrm{GRH}(M)\Rightarrow\D_N \ll N^{-\alpha_G+\epsilon}$, where $\alpha\to 0$ 
+as $\rk G\to \infty$. 
 \pause
 
 \textbf{Common ingredient.}
@@ -223,6 +224,7 @@ $\frac{\pi_{\ram(\rho)}(x)}{\pi(x)}$?
 
 \textbf{Q3.} Can the rate of convergence of empirical measures to the true measure 
 be specified?
+\pause
 
 \textbf{Q4.} Can the growth of $\pi_{\ram(\rho)}(x)$ be controlled?
 \pause
@@ -283,7 +285,7 @@ $L_{\sgn}(s) = \prod_p \left(1 - \sgn(a_p) p^{-s}\right)^{-1}$.
 \end{frame}
 
 \begin{frame}{Dirichlet series---basic facts}
-\begin{theorem}
+\begin{theorem}[M.]
 If $\left| \sum_{p\leqslant N} f(\theta_p)\right| \ll N^{\alpha+\epsilon}$, 
 then $L_f(s)$ admits a nonvanishing analytic continuation to $\Re > \alpha$. 
 \end{theorem}
@@ -342,9 +344,10 @@ bounded probability density function.
 \end{frame}
 
 
-\begin{frame}{Theorem}
+\begin{frame}{Theorem (M.)}
 Let $l$, $\bar\rho$, $h$, $\mu$, and $\alpha$ be as above. Then there exists 
 $\rho\colon G_\bQ \to \GL_2(\bZ_l)$ such that 
+\pause
 \begin{enumerate}
 \item
 $\rho \equiv \bar\rho\pmod{l}$. 
@@ -368,7 +371,7 @@ Hasse bound.
 \pause
 
 \item
-$\D_N(\{\theta_p\},\mu) = \Theta(\pi(x)^{-\alpha})$. 
+$\D_N(\{\theta_p\},\mu) = \Theta(\pi(N)^{-\alpha})$. 
 \pause
 \textcolor{blue}{(Yes to Q1--Q3.)}
 \pause
