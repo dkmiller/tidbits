@@ -82,6 +82,8 @@
 \titlepage
 \end{frame}
 
+
+
 \begin{frame}
 \frametitle{Outline}
 \tableofcontents
@@ -102,7 +104,7 @@ $a_p = \tr\rho_l(\frob_p) = p+1 - \# E(\bF_p)$,
 \pause
 $|a_p|\leqslant 2\sqrt p$. 
 \pause
-(Hasse)
+(Hasse) % proved in 1930s
 \pause
 
 Satake parameter: $\theta_p = \cos^{-1}\left( \frac{a_p}{2\sqrt p}\right)$. 
@@ -110,6 +112,7 @@ Satake parameter: $\theta_p = \cos^{-1}\left( \frac{a_p}{2\sqrt p}\right)$.
 
 Sato--Tate measure: $\ST = \frac{2}{\pi} \sin^2 \theta\, \dd \theta$ 
 \pause
+% "natural" = space of conjugacy classes (Serre's notation)
 (Haar measure on $\SU(2)^\natural$). 
 \pause
 
@@ -129,6 +132,7 @@ Use discrepancy (Kolmogorov--Smirnov statistic).
 \end{frame}
 
 
+
 \begin{frame}{Akiyama--Tanigawa Conjecture}
 \[
 	D_N = \sup_{x\in [0,\pi]}\left| \frac{1}{\pi(N)} \sum_{p\leqslant N} 1_{[0,x)}(\theta_p) - \int 1_{[0,x)}(\theta) \, \dd\ST(\theta)\right| .
@@ -142,6 +146,10 @@ $D_N \ll N^{-\frac 1 2 + \epsilon}$.
 
 There is a variant of this conjecture for CM elliptic curves.
 \pause
+Also for CM abelian varieties, 
+\pause
+even motives.
+\pause
 
 \begin{theorem}[Akiyama--Tanigawa]
 Akiyama--Tanigawa conjecture $\Rightarrow$ Riemann hypothesis for $E$.
@@ -154,6 +162,7 @@ Akiyama--Tanigawa conjecture $\Rightarrow$ Riemann hypothesis for $\sym^k E$
 \end{frame}
 
 
+
 \begin{frame}{Related results}
 % Alina Bucar & Kiran Kedlaya. 
 % "an application of the effective Sato--Tate conjecture"
@@ -162,10 +171,10 @@ Assume analytic continuation of $L(\sym^k E,s)$, GRH, and functional equation
 for all $k\geqslant 1$. Then $\D_N \ll N^{-\frac 1 4+\epsilon}$. 
 \pause
 
-% Jesse Thorner.
+% Jeremy Rouse and Jesse Thorner.
 % "the explicit Sato--Tate conjecture and densities pertaining to 
 % Lehmer-type questions"
-\textbf{Theorem (Thorner).}
+\textbf{Theorem (Rouse--Thorner).}
 Same result (with explicit constants) for a modular form of arbitrary weight	. 
 \pause
 
@@ -179,7 +188,7 @@ $\D_N \ll N^{-\frac 1 4+\epsilon}$.
 % Zev Rosengarten
 % "an Erdos--Turan inequality for compact simply-connected semisimple Lie groups"
 \textbf{Theorem (Rosengarten).}
-For $G = \ST(M)$ over a function field, 
+For $G = \ST(M)$ semisimple over a function field, 
 $\mathrm{GRH}(M)\Rightarrow\D_N \ll N^{-\alpha_G+\epsilon}$, where $\alpha\to 0$ 
 as $\rk G\to \infty$. 
 \pause
@@ -190,8 +199,10 @@ $\left|\sum_{p\leqslant N} \tr \rho(x_p)\right|$ to a bound on $\D_N$.
 \end{frame}
 
 
+
 \begin{frame}{Context}
-A.~Pande: is the Sato--Tate conjecture a Galois-theoretic result?
+\textbf{Question.} 
+Is the Sato--Tate conjecture a Galois-theoretic result?
 \pause
 
 \begin{theorem}[Pande]
@@ -207,12 +218,13 @@ primes.
 \end{theorem}
 \pause
 
-\textbf{Question (Serre):} can you \emph{a priori} control the ratio 
-$\frac{\pi_{\ram(\rho)}(x)}{\pi(x)}$?
+\textbf{Question (Serre).} Can you control the growth of 
+$\pi_{\ram(\rho)}(x)$?
 \pause
 
-\textbf{Answer (Khare--Larsen--Ramakrishna):} no!
+\textbf{Answer (Khare--Larsen--Ramakrishna).} No!
 \end{frame}
+
 
 
 \begin{frame}{Questions}
@@ -232,7 +244,7 @@ be specified?
 \textbf{Q5.} Can anything be said about the $L$-functions associated with $\rho$?
 \pause
 
-\textbf{Answer:} Yes! to Q1--Q5. 
+\textbf{Answer.} Yes! to Q1--Q5. 
 \end{frame}
 
 
@@ -241,26 +253,26 @@ be specified?
 
 \section{Discrepancy and Dirichlet series}
 
-
 \begin{frame}{Discrepancy}
 \begin{definition}
 Let $\{\theta_p\}$ be a sequence in $[0,\pi]$, $\mu$ a measure on $[0,\pi]$. 
 The \emph{discrepancy} is 
 \[
-	\D_N(\{\theta_p\},\mu) =  \sup_{x\in [0,\pi]}\left| \frac{1}{\pi(N)} \sum_{p\leqslant N} 1_{[0,x)}(\theta_p) - \int_0^x \, \dd\mu\right| .
+	\D_N(\{\theta_p\},\mu) =  \sup_{x\in [0,\pi]}\left| \frac{1}{\pi(N)} \sum_{p\leqslant N} 1_{[0,x)}(\theta_p) - \int 1_{[0,x)}(\theta) \, \dd\mu(\theta)\right| .
 \]
 \end{definition}
 \pause
 
-\textbf{Fact:}
+\textbf{Fact.}
 $\{\theta_p\}$ are $\mu$-equidistributed if and only if $D_N \to 0$. 
 \pause
 
-\textbf{Fact:}
+\textbf{Fact.}
 $\frac{\log N}{N} \ll D_N$. The \emph{van der Corput sequence} achieves this. 
 % and there's a "trick" to get the same rate of decay of discrepancy for any 
 % absolutely continuous measure.
 \end{frame}
+
 
 
 \begin{frame}{Dirichlet series}
@@ -280,9 +292,11 @@ For $f\colon [0,\pi] \to \bC$ of bounded variation with $\mu(f) = 0$,
 \end{definition}
 \pause
 
-\textbf{Example (Ramakrishna):}
+\textbf{Example (Ramakrishna).}
 $L_{\sgn}(s) = \prod_p \left(1 - \sgn(a_p) p^{-s}\right)^{-1}$. 
 \end{frame}
+
+
 
 \begin{frame}{Dirichlet series---basic facts}
 \begin{theorem}[M.]
@@ -292,7 +306,7 @@ then $L_f(s)$ admits a nonvanishing analytic continuation to $\Re > \alpha$.
 \pause
 
 \begin{corollary}
-If $D_N \ll N^{-\alpha+\epsilon}$, then $L_f(s)$ admits a nonvanishing 
+If $D_N \ll N^{\alpha-1+\epsilon}$, then $L_f(s)$ admits a nonvanishing 
 analytic continuation to $\Re > \alpha$. 
 \end{corollary}
 \pause
@@ -315,7 +329,6 @@ $\Re > \alpha$.
 
 \section{Main theorem}
 
-
 \begin{frame}{Ingredients}
 1. Fix a rational prime $l\geqslant 5$. 
 \pause
@@ -333,18 +346,35 @@ to infinity.
 \pause
 
 4. Fix an absolutely continuous probability measure $\mu$ on $[0,\pi]$, with 
-bounded probability density function.
+probability density function $f(\theta)\ll \sin\theta$.
 \pause
 \textcolor{blue}{The angles $\{\theta_p\}$ will be $\mu$-equidistributed.}
 \pause
 
 5. Fix $\alpha\in \left(0,\frac 1 3\right)$. 
 \pause
-\textcolor{blue}{The discrepancy $D_N$ will decay like $\pi(N)^{-\alpha}$.}
+\textcolor{blue}{The discrepancy will decay like $\pi(N)^{-\alpha}$.}
 \end{frame}
 
 
-\begin{frame}{Theorem (M.)}
+
+\begin{frame}{Questions}
+\textbf{Q1.} Can Pande's results be strengthened to yield equidistribution? 
+
+\textbf{Q2.} If so, can the measure be specified?
+
+\textbf{Q3.} Can the rate of convergence of empirical measures to the true measure 
+be specified?
+
+\textbf{Q4.} Can the growth of $\pi_{\ram(\rho)}(x)$ be controlled?
+
+\textbf{Q5.} Can anything be said about the $L$-functions associated with $\rho$?
+\end{frame}
+
+
+
+\begin{frame}{Main theorem}
+\begin{theorem}[M.]
 Let $l$, $\bar\rho$, $h$, $\mu$, and $\alpha$ be as above. Then there exists 
 $\rho\colon G_\bQ \to \GL_2(\bZ_l)$ such that 
 \pause
@@ -382,6 +412,7 @@ $L(\sym^k \rho,s)$ satisfies the Riemann hypothesis.
 \pause
 \textcolor{blue}{(Yes to Q5.)}
 \end{enumerate}
+\end{theorem}
 \end{frame}
 
 
@@ -390,6 +421,35 @@ $L(\sym^k \rho,s)$ satisfies the Riemann hypothesis.
 
 
 \section{Idea of the proof}
+
+\begin{frame}{Overview}
+1. Prove the theorem for $a_p$ not coming from a Galois representation. 
+
+2. Construct $\rho$ with $\tr\rho(\frob_p)$ close to the choices from 1. 
+
+3. Control the growth $\pi_{\ram}(x)$. 
+
+4. Inductive process.
+
+5. Riemann hypothesis for $L(\sym^k\rho,s)$, $k$ odd.
+\end{frame}
+
+
+
+\begin{frame}{Overview}
+\textcolor{blue}{
+1. Prove the theorem for $a_p$ not coming from a Galois representation.}
+
+\color{gray}
+2. Construct $\rho$ with $\tr\rho(\frob_p)$ close to the choices from 1. 
+
+3. Control the growth $\pi_{\ram}(x)$. 
+
+4. Inductive process.
+
+5. Riemann hypothesis for $L(\sym^k\rho,s)$, $k$ odd.
+\end{frame}
+
 
 
 \begin{frame}{Prescribing discrepancy decay}
@@ -413,9 +473,26 @@ Construct $\rho$ so that $\frac{a_p}{2\sqrt p}\approx x_p$.
 \pause
 
 \textbf{Fact:} 
-If $(x_p^{(1)})$ is a sequence with $|x_p - x_p^{(1)}| \ll p^{-1/2+\epsilon}$, 
+If $(x_p^{(1)})$ is a sequence with $|x_p - x_p^{(1)}| \ll p^{-\frac 1 2+\epsilon}$, 
 then $\D_N^{(1)} = \Theta(\pi(N)^{-\alpha})$. 
 \end{frame}
+
+
+
+\begin{frame}{Overview}
+\color{gray}
+1. Prove the theorem for $a_p$ not coming from a Galois representation.
+
+\textcolor{blue}{
+2. Construct $\rho$ with $\tr\rho(\frob_p)$ close to the choices from 1.}
+
+3. Control the growth $\pi_{\ram}(x)$. 
+
+4. Inductive process.
+
+5. Riemann hypothesis for $L(\sym^k\rho,s)$, $k$ odd.
+\end{frame}
+
 
 
 \begin{frame}{Lifting Galois representations}
@@ -429,23 +506,40 @@ For all $n$, require $\det\rho_n \equiv \kappa\pmod{l^n}$
 \pause
 
 Passage from $\rho_n$ to $\rho_{n+1}$ is governed by 
-$\h^i(G_{\bQ,R_n},\Ad^0\bar\rho)$, $i = 1,2$
+$\h^i(G_{\bQ,R_n},\Ad^0\bar\rho)$, $i = 1,2$.
 \pause
 
-\textbf{Theorem (K--L--R).}
+\begin{theorem}[Khare--Larsen--Ramakrishna]
 Fix a finite set $U$ of primes. Then there exists a finite set $N$ of primes 
 such that 
 \[
-	\h^1(G_{\bQ,R\cup N},\Ad^0\bar\rho) \xrightarrow{\sim}\prod_{p\in R} \h^1(G_{\bQ_p}, \Ad^0\bar\rho) \times \prod_{p\in U} \h_\mathrm{nr}^1(G_{\bQ_p},\Ad^0\bar\rho)
+	\h^1(G_{\bQ,R_n\cup N},\Ad^0\bar\rho) \xrightarrow{\sim}\prod_{p\in R_n} \h^1(G_{\bQ_p}, \Ad^0\bar\rho) \times \prod_{p\in U} \h_\mathrm{nr}^1(G_{\bQ_p},\Ad^0\bar\rho)
 \]
-\pause
+\end{theorem}
 
-\textbf{Corollary:}
+\textbf{Corollary.}
 Given $\rho_n\colon G_{\bQ,R_n} \to \GL_2(\bZ/l^n)$, can choose 
 $\tr\rho_{n+1}(\frob_p)$ for all $p$ in a finite set.
 \pause
 \textcolor{blue}{(Finitely many more ramified primes.)}
 \end{frame}
+
+
+
+\begin{frame}{Overview}
+\color{gray}
+1. Prove the theorem for $a_p$ not coming from a Galois representation.
+
+2. Construct $\rho$ with $\tr\rho(\frob_p)$ close to the choices from 1.
+
+\textcolor{blue}{
+3. Control the growth $\pi_{\ram}(x)$.}
+
+4. Inductive process.
+
+5. Riemann hypothesis for $L(\sym^k\rho,s)$, $k$ odd.
+\end{frame}
+
 
 
 \begin{frame}{Controlling ramified primes}
@@ -473,6 +567,23 @@ true!
 \end{frame}
 
 
+
+\begin{frame}{Overview}
+\color{gray}
+1. Prove the theorem for $a_p$ not coming from a Galois representation.
+
+2. Construct $\rho$ with $\tr\rho(\frob_p)$ close to the choices from 1.
+
+3. Control the growth $\pi_{\ram}(x)$. 
+
+\textcolor{blue}{
+4. Inductive process.}
+
+5. Riemann hypothesis for $L(\sym^k\rho,s)$, $k$ odd.
+\end{frame}
+
+
+
 \begin{frame}{Lifting Galois representations---first stage}
 Lift from $\bZ/l$ to $\bZ/l^2$. 
 \pause
@@ -493,6 +604,34 @@ For $N\leqslant \max U_1$, $\D_N(\{\theta_p\},\mu) = \Theta(\pi(N)^{-\alpha})$.
 
 Make $U_1$ so large that for $p>\max U_1$, $l^2 < \log p$. 
 \end{frame}
+
+
+
+\begin{frame}{Main theorem}
+\begin{theorem}[M.]
+Let $l$, $\bar\rho$, $h$, $\mu$, and $\alpha$ be as above. Then there exists 
+$\rho\colon G_\bQ \to \GL_2(\bZ_l)$ such that 
+\begin{enumerate}
+\item
+$\rho \equiv \bar\rho\pmod{l}$. 
+
+\item
+$\pi_{\ram(\rho)}(x) \ll h(x)$. 
+
+\item
+For each unramified $p$, $a_p = \tr \rho(\frob_p)\in \bZ$ and satisfies the 
+Hasse bound.
+
+\item
+$\D_N(\{\theta_p\},\mu) = \Theta(\pi(N)^{-\alpha})$. 
+
+\item
+If $(\theta\mapsto \pi-\theta)_\ast \mu = \mu$, then for each odd $k$, 
+$L(\sym^k \rho,s)$ satisfies the Riemann hypothesis. 
+\end{enumerate}
+\end{theorem}
+\end{frame}
+
 
 
 \begin{frame}{Lifting Galois representations---inductive step}
@@ -518,8 +657,24 @@ $\left| \frac{a_p}{2\sqrt p} - x_p\right| \leqslant \frac{l^n}{2\sqrt p}$.
 \pause
 
 For $N\leqslant \max U_{n+1}$, $\D_N(\{\theta_p\},\mu) = \Theta(\pi(N)^{-\alpha})$. 
-\pause
 \end{frame}
+
+
+
+\begin{frame}{Overview}
+\color{gray}
+1. Prove the theorem for $a_p$ not coming from a Galois representation.
+
+2. Construct $\rho$ with $\tr\rho(\frob_p)$ close to the choices from 1.
+
+3. Control the growth $\pi_{\ram}(x)$. 
+
+4. Inductive process.
+
+\textcolor{blue}{
+5. Riemann hypothesis for $L(\sym^k\rho,s)$, $k$ odd.}
+\end{frame}
+
 
 
 \begin{frame}{Riemann hypothesis}
@@ -536,17 +691,19 @@ When $k$ is odd, $U_k(\pi-\theta) = -U_k(\theta)$.
 Enumerate the primes $p_1 = 2, q_1 = 3, p_2 = 5, q_2 = 7,\dots$
 \pause
 
-If $\theta_{q_i} \approx \pi - \theta_{p_i}$, then 
-$U_k(\theta_{q_i}) \approx - U_k(\theta_{p_i})$ 
+If $\theta_{q} \approx \pi - \theta_{p}$, then 
+$U_k(\theta_q) \approx - U_k(\theta_p)$ 
 \pause
-\textcolor{blue}{(within $p_i^{-1/2}$)}. 
+\textcolor{blue}{(within $p^{-\frac 1 2}$)}. 
 \pause
-
-$\left|\sum_{p\leqslant N} U_k(\theta_p)\right| = \left| \sum_{p_i,q_i\leqslant N} \left(U_k(\theta_{p_i}) + U_k(\theta_{q_i})\right)\right| \ll \sum_{n\leqslant N} n^{-1/2}$
-\pause
-
-\textcolor{blue}{$\ll N^{\frac 1 2}$}. 
+\begin{align*}
+	\action<+->{\left|\sum_{p\leqslant N} U_k(\theta_p)\right|}
+		\action<+->{&= \left| \sum_{p_i,q_i\leqslant N} \left(U_k(\theta_{p_i}) + U_k(\theta_{q_i})\right)\right| \\}
+		\action<+->{&\ll \sum_{n\leqslant N} n^{-\frac 1 2} \\}
+		\action<+->{&\ll {\color{blue}N^{\frac 1 2}}.}
+\end{align*} 
 \end{frame}
+
 
 
 \begin{frame}{Consequences}
@@ -564,6 +721,40 @@ distribution functions.
 \end{frame}
 
 
+
+\begin{frame}{Conclusion \& further questions}
+\textbf{Conclusions.}
+\pause
+\begin{enumerate}
+\item
+The Akiyama--Tanigawa conjecture is stronger that in seems.
+\pause
+
+\item
+(Nearly) arbitrary ``Sato--Tate distributions'' are possible.
+\pause
+
+\item
+Pathological Galois representations can satisfy the Riemann hypothesis.
+\end{enumerate}
+\pause
+
+\textbf{Questions.}
+\pause
+\begin{enumerate}
+\item
+Can we construct representations with $\D_N \ll N^{-\alpha+\epsilon}$, 
+$\alpha > \frac 1 2$?
+\pause
+
+\item
+Is there a counterexample to GRH $\Rightarrow$ A--T for elliptic curves?
+\pause
+
+\item
+Can we prove anything about $\D_N$ for CM elliptic curves?
+\end{enumerate}
+\end{frame}
 
 
 
