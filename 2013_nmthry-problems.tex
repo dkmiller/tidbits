@@ -1,0 +1,249 @@
+\documentclass{article}
+
+\title{Problems in algebraic number theory}
+\author{Daniel Miller}
+
+\usepackage{amsmath,amssymb,amsthm,fullpage}
+\newtheorem{problem}{Problem}
+\DeclareMathOperator{\gal}{Gal}
+\newcommand{\dF}{\mathbb{F}}
+\newcommand{\dQ}{\mathbb{Q}}
+\newcommand{\dZ}{\mathbb{Z}}
+\newcommand{\fa}{\mathfrak{a}}
+\newcommand{\fb}{\mathfrak{b}}
+\newcommand{\fp}{\mathfrak{p}}
+\newcommand{\fq}{\mathfrak{q}}
+
+\begin{document}
+\maketitle
+
+
+
+
+
+
+
+
+
+
+\section{Class field theory}
+
+
+
+
+
+\begin{problem}[Ravi]
+What is the smallest $n$ such that the degree $n$ unramified extension of 
+$\dQ_p$ has an abelian totally ramified extension of degree $q$, where $p$ and 
+$q$ are distinct primes?
+\end{problem}
+I claim that the degree $n$ unramified extension of $\dQ_p$ has an abelian 
+totally ramified extension of degree $q$ if and only if $p^n=1$ in $\dF_q$. 
+\begin{proof}
+Let $k_n$ be the degree $n$ unramified extension of $\dQ_p$. Recall 
+\cite[V.1.4]{Neu} that local class field theory yields an 
+order-reversing bijection between abelian extensions of $k_n$ of degree $q$ 
+and open subgroups of $k_n^\times$ of finite $q$. By \cite[II.5.7]{Neu}, one 
+sees that 
+\[
+  k_n^\times \simeq \dZ \times \dZ/(p^n-1) \times \dZ_p^n
+\]
+We are interested in open $U\subset k_n^\times$ of index $q$, i.e. continuous 
+surjections $k_n^\times \twoheadrightarrow \dZ/q$. If we have such an open 
+subgroup, clearly one has $\dZ_p^n\subset U$. By \cite[V.1.7]{Neu}, if $L/k_n$ 
+is the extension induced by $U$, one has $L/k$ ramified if and only if 
+$\dZ/(p^n-1)\times \dZ_p^n\not\subset U$. In particular, $\dZ/(p^n-1)\to\dZ/q$ 
+must be nonzero. This can occur if and only if $q\mid p^n-1$, i.e. $p$ has 
+order $n$ in $\dF_q^\times$.
+\end{proof}
+
+
+
+
+
+
+\begin{problem}[Ravi]
+How many $C_{13}$ extensions are there of $\dQ(i)$ ramified only at (primes 
+above) $13$? What about $C_{13}\times C_{13}$ extensions?
+\end{problem}
+
+
+
+
+
+\begin{problem}[Ravi]
+Can a $C_2$ extension of $\dQ$ ramified at only one prime have even class 
+number?
+\end{problem}
+
+
+
+
+
+
+
+
+
+
+\section{General nonsense}
+
+
+
+
+
+\begin{problem}[Myself]
+Let $A$ be a noetherian domain such that $\fa\fb=(\fa\cap\fb)(\fa+\fb)$ for 
+all ideals $\fa,\fb\subset A$. Does it follow that $A$ is dedekind? 
+\end{problem}
+The answer is yes, and in some generality. I claim that if $A$ is a domain for 
+which $\fa\fb=(\fa+\fb)(\fa\cap\fb)$ for all ideals $\fa,\fb$, then $A$ is a 
+pr\"ufer ring. 
+\begin{proof}
+(\textbf{NOTE:} This proof is essentially taken from an answer on 
+math.stackexchange, which should be referenced.)
+
+Recall (cf. \cite[VII \S 2 ex.12]{Bou}) that a domain $A$ is a \emph{pr\"ufer 
+ring} if for all prime ideals $\fp\subset A$, $A_\fp$ is a valuation ring. It 
+is known that $A$ is pr\"ufer if and only if each finitely generated ideal 
+is invertible. Note that principal ideals are trivially invertible. So, it 
+suffices to prove that if $\fa,\fb$ are invertible and 
+$\fa\fb=(\fa+\fb)(\fa\cap\fb)$, then $\fa+\fb$ is invertible. But one has 
+\[
+  (\fa+\fb)(\fa\cap\fb)\fa^{-1}\fb^{-1} = \fa\fb\fa^{-1}\fb^{-1} = 1
+\]
+so $\fa+\fb$ is invertible. If $\fa\subset A$ is an arbitrary finitely 
+generated ideal, just do induction on the number of generators of $\fa$ to 
+obtain the result. 
+\end{proof}
+
+
+
+
+
+\begin{problem}[Myself]
+Let $f\in\dZ[X]$ be an irreducible monic polynomial that has a root in $\dQ_p$ 
+for all $p\leqslant \infty$. Does it follow that $f$ has a root in $\dQ$?
+\end{problem}
+The answer is yes, and in some generality. Let $K=\dQ(x)$, where $x$ is some 
+root of $f$. If $K$ is unramified at $p$, then $f$ has a root modulo $p$ if and 
+only if there is a prime $\fp\mid p$ in $K$ with $f_{\fp/p} = 1$. We will 
+prove that the set of such $p$ has (Dirichlet) density $<1$. 
+\begin{proof}
+First, we recall the definition of density for sets of primes. Let $k$ 
+be a number field and $S$ a set of  primes in $k$. The (Dirichlet) 
+\emph{density} of $S$ is the limit 
+\[
+  d(S) = \lim_{s\to 0^+} \frac{\sum_{\fp\in S} N(p)^{-s}}{\sum_\fp N(\fp)^{-s}} \text{.}
+\]
+Now $K/k$ be an arbitrary extension of number fields, and $L/k$ the Galois 
+closure of $K$. Let $P(K/k)$ be the set of primes $\fp$ of $k$ for which there 
+is $\fq\mid \fp$ with $f_{\fq/\fp}=1$. I claim that $P(K/k)$ has density at 
+most $1-\frac 1 n$, where $n=[L:k]$. 
+
+For $\sigma\in G=\gal(L/k)$, let $P_{L/k}(\sigma)$ be the set of primes $\fp$ 
+in $k$ with some $\fq\mid \fp$ with $\sigma = \left(\frac{L/k}{\fq}\right)$. 
+Lemma 13.5 of \cite{Neu} implies 
+\[
+  d P(K/k) = \sum_{[\sigma]\cap H\ne\varnothing}d P_{L/k}(\sigma)
+\]
+where $H=\gal(L/K)$ and $[\sigma]$ is the conjugacy class of $\sigma$ in 
+$G$. The \v Cebotarev density theorem \cite[VII.13.4]{Neu} says that 
+$d P_{L/k}(\sigma) = \# [\sigma] / n$. As a result, we have 
+\[
+  d P(K/k) = \frac 1 n \sum_{[\sigma]\cap H\ne\varnothing} \# [\sigma] 
+   \leqslant \frac 1 n \left|\bigcup_{g\in G} g H g^{-1}\right|
+   \leqslant \frac 1 n (\# G-1)
+\]
+the last inequality coming from the elementary fact that a finite group is not 
+the union of conjugates of any proper subgroup. 
+\end{proof}
+
+
+
+
+
+\begin{problem}[Myself]
+Let $A$ be an abelian variety over an algebraically closed field $k$. Is there 
+an upper / lower bound on the genus of curves that can embed into $A$?
+\end{problem}
+The answer is about as good as can be hoped for. If $C\subset A$ is a curve, 
+then the genus $g$ of $C$ can be bounded as: 
+$d_\text{min}\leqslant g\leqslant d$, where $d_\text{min}$ is the smallest 
+dimension of a nonzero sub-abelian variety of $A$, and $d=\dim A$.
+\begin{proof}
+We only need a couple facts about abelian varieties and jacobians. The first 
+is Poincare's reducibility theorem \cite[19.1]{Mum}. If $B\subset A$ are 
+abelian varieties, then there is an abelian variety $B'\subset A$ such that 
+$B\times B'\to A$ is an isogeny (so in particular $A=B+B'$ and $B\cap B'$ is 
+finite). Recall that if $C$ is a curve, the jacobian $J$ of $C$ is an abelian 
+variety of dimension $g=g(C)$, which comes with a canonical embedding 
+$C\hookrightarrow J$, such that any map $C\to A$ to an abelian variety that 
+sends $0$ to $0$ factors uniquely through $J$. (Here, $0\in C$ is the element 
+that maps to $0\in J$.) 
+
+Suppose $C\hookrightarrow A$. We get a map $J\to A$, the kernel of which is 
+abelian subvariety of $J$, hence it has a complement $K'$. Consider the 
+composite 
+\[
+  C \hookrightarrow J \twoheadrightarrow K' \hookrightarrow J \to A
+\]
+\end{proof}
+
+
+
+
+
+\begin{problem}[Myself]
+Let $S$ be a connected variety over an algebraically closed field $k$. If 
+$X\to S$ is a one-to-one etale cover, is $X$ an isomorphism?
+\end{problem}
+The answer is yes, and in greater generality.
+\begin{proof}
+Let $S$ be a scheme for which Grothendieck's galois theory works. Let 
+$s\to S$ be a geometric point. If $f:X\to S$ is an etale cover, then we get 
+an action of $\pi_1(S,s)$ on the fiber $F_s(X)=|X\times_S s|$. Under our 
+hypotheses, this is a single point, so the action of $\pi_1(S)$ is trivial. 
+But $X\to S$ is determined by $F_s(X)$, so $X\simeq S$. 
+\end{proof}
+
+
+
+
+
+
+
+
+
+
+\section{Elementary number theory}
+
+
+
+
+
+\begin{problem}[Myself]
+Show that for all primes $p$ and integers $n$, $v_p(n!)\leqslant n$.
+\end{problem}
+\begin{proof}
+A simple computation suffices:
+\[
+  v_p(n!) = \sum_{r\geqslant 1} \left\lfloor \frac{n}{p^r}\right\rfloor \leqslant \sum_{r\geqslant 1} \frac{n}{p^r} = \frac{n}{p-1} \leqslant n \text{.}
+\]
+\end{proof}
+
+
+
+
+
+\begin{thebibliography}{9}
+  \bibitem{Bou} Bourbaki, N. \emph{Commutative Algebra: Chapters 1-7}, Springer, 1989. 
+  \bibitem{Mum} Mumford, D. \emph{Abelian Varieties}, Tata Inst. Fund. Research, 1974. 
+  \bibitem{Neu} Neukirch, J. \emph{Algebraic Number Theory}, Springer, 1999.
+\end{thebibliography}
+
+
+
+
+
+
+\end{document}

@@ -1,0 +1,364 @@
+\documentclass{article}
+
+\title{Foundations of deformation theory}
+\author{Daniel Miller}
+
+\usepackage{amsmath,amssymb,amsthm,fullpage}
+\usepackage[hidelinks]{hyperref}
+\usepackage[all]{xy}
+
+\DeclareMathOperator{\spf}{Spf}
+\DeclareMathOperator{\spec}{Spec}
+
+% categories:
+  \newcommand{\art}{\mathsf{Ar}}
+  \newcommand{\cat}{\mathsf{C}}
+  \newcommand{\fgrp}{\mathsf{fGrp}}
+  \newcommand{\grp}{\mathsf{Grp}}
+  \newcommand{\lring}{\mathsf{lRing}}
+  \newcommand{\ring}{\mathsf{Ring}}
+  \newcommand{\set}{\mathsf{Set}}
+
+% special symbols
+  \newcommand{\cO}{\mathcal{O}}
+  \newcommand{\fa}{\mathfrak{a}}
+  \newcommand{\fb}{\mathfrak{b}}
+  \newcommand{\fm}{\mathfrak{m}}
+  \newcommand{\iso}{\xrightarrow\sim}
+  \newcommand{\pro}{\widehat}
+  \newcommand{\alg}{\text{-}\mathsf{alg}}
+
+% theorems, definitions, ...
+  \newtheorem{theorem}{Theorem}
+  \newtheorem{definition}[theorem]{Definition}
+  \numberwithin{theorem}{section}
+
+\begin{document}
+\maketitle
+
+
+
+
+
+
+
+
+
+
+\section{Generalities}
+
+If $\cat$ is an arbitrary categorys, we will often  identify objects in $\cat$ 
+with their functor of points. In other words, we write 
+\[
+  X(S) = h_X(S) = \hom(S,X)
+\]
+for $X,S\in\cat$. 
+
+\begin{theorem}
+If $\cat$ is a category with finite limits, $G$ is a group object in $\cat$, 
+and $\Gamma$ is a finite group, then the functor 
+$X\mapsto \hom_\grp(\Gamma,G X)$ is representable. 
+\end{theorem}
+\begin{proof}
+We will define the representing object as an equalizer. Consider the products 
+$\prod_\Gamma G$ and $\prod_{\Gamma\times \Gamma} G$; these come with 
+projection maps $\pi_\sigma:\prod_\Gamma G\to G$ and 
+$\pi_{\sigma,\tau}:\prod_{\Gamma\times\Gamma} G\to G$ for 
+$\sigma,\tau\in\Gamma$. We will write $m:G\times G\to G$ for the 
+multiplication morphism. Define 
+$f:\prod_\Gamma G\to \prod_{\Gamma\times\Gamma} G$ by 
+$f_{\sigma,\tau} = \pi_{\sigma\tau}$. Similarly, define 
+$g:\prod_\Gamma G\to\prod_{\Gamma\times\Gamma} G$ by 
+$g_{\sigma,\tau} = m\circ (\pi_\sigma\times\pi_\tau)$. Note that in terms of 
+functors of points, $h_{\prod_I G}(X)=\hom_\set(I, G X)$ for any finite set 
+$I$. As maps $\hom_\set(\Gamma,G X)\to \hom_\set(\Gamma\times\Gamma,G X)$, $f$ 
+and $g$ send $s:\Gamma\to G X$ to $(\sigma,\tau)\mapsto s(\sigma\tau)$ 
+and $(\sigma,\tau)\mapsto s(\sigma)s(\tau)$. One easily sees that our desired 
+representing object is the equalizer of the diagram 
+\[\xymatrix{
+  \prod_\Gamma G \ar@<2pt>[r]^-{f} \ar@<-2pt>[r]_-{g}
+    & \prod_{\Gamma\times\Gamma} G\text{.}
+}\]
+\end{proof}
+
+If $G$ and $\Gamma$ are as in the theorem, we will write $G^\Gamma$ for the 
+object representing $X\mapsto \hom_\grp(\Gamma, G X)$. 
+
+\begin{definition}
+A category $\cat$ is \emph{cofiltered} if for any finite category $I$ and any 
+diagram $F:I\to \cat$, there is an object $c\in\cat$ that admits a natural 
+transformation $\alpha:\Delta_c\to F$.
+\end{definition}
+
+Here, as is common, $\Delta_c$ denotes the constant functor $I\to \cat$ given 
+by $i\mapsto c$, with all morphisms going to $1_c$. Now let $\cat$ be an 
+arbitrary category. We will write $\pro\cat$ for the \emph{pro-category} of 
+$\cat$. An object in $\cat$ is a functor $I\to\cat$ for some small cofiltered 
+category $I$. We will formally write $\varprojlim_{i\in I} c_i$ for such an 
+object. If $\varprojlim_{j\in J} d_j$ is another object in $\pro\cat$, then we 
+define 
+\[
+  \hom_{\pro\cat}\left(\varprojlim c_i, \varprojlim d_j\right) = \varprojlim_j \varinjlim_i \hom_\cat(c_i,d_j)
+\]
+Our main example of a pro-category is $\pro\fgrp$, the category of profinite 
+groups (here $\fgrp$ is the category of finite groups). It is well-known that 
+$\pro\fgrp$ is equivalent to the category of compact hausdorff totally 
+disconnected groups with continuous homomorphisms. 
+
+Let $\cat,\cat'$ be categories with finite limits. One says a functor 
+$F:\cat\to\cat'$ is \emph{left exact} if $F$ commutes with all finite limits. 
+Note that a functor $F:\cat\to\set$ commuting with finite limits extends 
+uniquely to a functor $F:\pro\cat\to\set$ via 
+$F(\varprojlim c_i) = \varprojlim F(c_i)$. One says that $F:\cat\to\set$ is 
+\emph{pro-representable} if $F:\pro\cat\to\set$ is representable.
+
+\begin{theorem}[prop 3.1 of \cite{Gr1}]
+Let $\cat$ be a category with finite limits. A functor $F:\cat\to\set$ is 
+pro-representable if and only if $F$ is left-exact.
+\end{theorem}
+In fact, Grothendieck proves that if $F$ is pro-representable, then 
+$F=\varprojlim h_{X_i}$, where the $X_i$ are indexed by a filtered poset $I$, 
+and such that the maps $X_i\to X_j$ for $i\leqslant j$ are epimorphisms. 
+
+
+
+
+
+
+
+
+
+
+\section{Categories of commutative rings}
+
+Unless explicitly said otherwise, all rings will be commutative and unital. We 
+write $\ring$ for the category of (commutative, unital) rings. Let $\lring$ be 
+the category of local rings and local ring homomorphisms. 
+
+Let $\cO$ be a complete local ring with maximal ideal $\fm$ and residue field 
+$\kappa$. We let $\art=\art_\cO$ be the category of local
+$\cO$-algebras $A$ that are artinian as $\cO$-modules and such that the 
+structure map $\cO\to A$ induces an isomorphism $\kappa\iso A/\fm_A$. By 
+definition, the morphisms in $\art$ are homomorphisms of local $\cO$-algebras. 
+Let $\pro\art$ be the pro-category of $\art$. By definition, an object in 
+$\pro\art$ is a formal cofiltered inverse limit $\varprojlim A_\alpha$ where 
+the $A_\alpha$ are in $\art$. Just as with profinite groups, we can identify 
+the formal inverse limit $\varprojlim A_\alpha$ with its actual inverse limit 
+in the category of rings. As with all pro-categories, $\pro\art$ admits 
+cofiltered limits, and the inc. lusion functor $\art\hookrightarrow \pro\art$ 
+preserves finite limits. 
+
+
+
+
+
+\section{The deformation functor}
+
+Let $\cO$ be a complete local ring, and let $G$ be a group scheme over $\cO$. 
+We are interested in topologizing the groups $G(A)$ for pro-artinian 
+$\cO$-algebras $A$. In fact, we simply note that $G$ preserves limits, and 
+write $A=\varprojlim A_i$, where each $A_i$ is in $\art$. We give 
+$G(A)=\varprojlim G(A_i)$ the inverse limit topology, where each $G(A_i)$ is 
+discrete. One can readily verify (\textbf{check this}) that if $G$ is an 
+affine algebraic group, this recovers the standard way of topologizing $G(A)$. 
+
+Let $\Gamma$ be a profinite group, and suppose we have a continuous 
+homomorphism $\eta:\Gamma\to G(\kappa)$. We are interested in lifts of 
+$\eta$ to homomorphisms $\rho:\Gamma\to G(A)$ for $A\in\pro\art$. 
+
+
+
+
+
+\section{Notes}
+
+The notation $\mathbb{V}(\mathcal{F})$ just means 
+$Spec(S^\bullet(\mathcal{F}))$ for a quasi-coherent sheaf 
+$\mathcal{F}$, where $S^\bullet$ denotes ``take symmetric algebra.'' 
+
+Let $C$ be pro-artinian $\cO$-algebras, $\pro C$ its pro-category. Let 
+$C_{/\kappa}$ be artinian $\cO$-algebras with $\cO$-algebra maps 
+$A\to \kappa$, and similarly for $\pro{C_{/\kappa}}$. There is an obvious 
+inclusion $C_{/\kappa}\to C$. Finally, let $lC$ be artinian local 
+$\cO$-algebras with residue field $\kappa$. Note that $lC$ is a full (!) 
+subcategory of $C_{/\kappa}$. The functor 
+$lC\to C_{/\kappa}$ has an adjoint, namely 
+$(A\to \kappa)\mapsto A_{\ker(A\to\kappa)}$. In other words, 
+\[
+  \hom_{C_{/\kappa}}(A,B) = \hom_{lC}(A_\fm,B)
+\]
+for $A\in C_{/\kappa}$ and $B\in lC$. I am hoping that this extends to an 
+adjunction between $\pro{C_{/\kappa}}$ and $\pro{lC}$. It might be worth 
+reading SGA 3 or \cite{Gr1} to find out what kinds of limits and colimits 
+$C$ and the other categories have. 
+
+
+
+
+
+
+
+
+\newpage
+\textbf{Abstract deformation theory for Galois representations}
+
+
+
+
+
+
+\section{The relevant categories}
+
+Recall that a (commutative) ring $A$ is \emph{pseudocompact} if $A$ has a 
+basis $\{\fa_\alpha\}$ of neighborhoods of $0$ such that each $\fa_\alpha$ is 
+an ideal of finite colength -- that is $A/\fa_\alpha$ has finite length as an 
+$A$-module. A good source for pseudocompact rings is the first couple sections 
+of \cite[VII$_\text{B}$]{SGA3}. The category $\mathsf{PC}(A)$ of pseudocompact 
+$A$-algebras is just the pro-category of the category $\mathsf{Art}(A)$ of 
+finite length $A$-algebras, and one defines a pseudocompact $A$-module in the 
+obvious way. That is, a pseudocompact $A$-module is an filtered projective 
+limit of topological $A$-modules of finite length. 
+
+Let $A\alg$ be the category of $A$-algebras. The inclusion 
+$\mathsf{PC}(A)\hookrightarrow A\alg$ has a left adjoint, the ``completion 
+functor'' which assigns to an $A$-algebra $B$ the projective limit 
+$\hat B=\varprojlim B/\fb$, where $\fb$ ranges over all ideals $\fb\subset B$ 
+with $B/\fb$ of finite length over $A$. 
+
+Now let $\cO$ be a pseudocompact local ring, and $\kappa$ the residue field. 
+The category $\mathsf{PC}(\cO)_\kappa$ consists of pseudocompact 
+$\cO$-algebras $A$ together with a $\cO$-algebra map $A\to \kappa$. Since 
+\[\xymatrix{
+  \cO \ar[r] \ar[dr] & A \ar[d] \\
+  & \kappa 
+}\]
+commutes, $A\to\kappa$ is surjective, so it picks out a maximal ideal 
+$\fm$ of $A$. From \cite[VII$_\text{B}$ 0.1.1]{SGA3}, we know that $A$ is a 
+direct product of local pseudocompact $\cO$-algebras, and thus $\fm$ picks 
+out one of those local rings with residue field $\kappa$. 
+
+The category $\mathsf{LPC}(\cO)_\kappa$ is the subcategory of 
+$\mathsf{PC}(\cO)_\kappa$ consisting of \emph{local} pseudocompact 
+$\cO$-algebras. The inclusion 
+$\mathsf{LPC}(\cO)_\kappa\to\mathsf{PC}(\cO)_\kappa$ has a left adjoint. To 
+$A\to\kappa$ in $\mathsf{PC}(\cO)_\kappa$, one assigns $A_\fm\to\kappa$, where 
+$\fm=\ker(A\to\kappa)$. 
+
+Now we reverse arrows. Let $S=\spec(\cO)$ and consider $\mathsf{Aff}_S$, the 
+category of affine schemes over $S$. The category $\mathsf{Vaf}_S$ is the 
+opposite category to $\mathsf{PC}(A)$. We call objects of $\mathsf{Vaf}_S$ 
+\emph{formal schemes over $S$}. For a pseudocompact $\cO$-algebra $A$, we 
+denote by $\spf(A)$ the corresponding formal $S$-scheme. The projection 
+$\cO\twoheadrightarrow\kappa$ corresponds to $s:\spf(\kappa)\to\spf(\cO)$, and 
+we write $\mathsf{Vaf}_S^s$ for the category of ``$s$-pointed formal schemes 
+over $S$,'' that is commutative diagrams 
+\[\xymatrix{
+  s \ar[r] \ar[dr] & X \ar[d] \\
+  & S
+}\]
+
+Finally, $\mathsf{cVaf}_S^s$ denotes the subcategory of $\mathsf{Vaf}_S^s$ 
+consisting of connected formal schemes, i.e. $\spf$ of local rings. To 
+summarize, we have categories and functors 
+\[
+  \mathsf{cVaf}_S^s \leftrightarrow \mathsf{Vaf}_S^s \to \mathsf{Vaf}_S\leftrightarrow \mathsf{Aff}_S
+\]
+where $\leftrightarrow$ means the inclusion has a right adjoint. 
+
+
+
+
+
+\section{Hom-functors}
+
+Let $\mathsf{C}$ be an arbitrary category enriched over topological spaces 
+that admits finite products and arbitrary filtered inductive limits. If $G$ is 
+a group object in $\mathsf{C}$ and $\Gamma$ is a profinite group, then one can 
+prove (cf. my earlier notes) that the functor 
+$X\mapsto \hom_{\mathsf{topGrp}}(\Gamma,G(X))$ is represented by an object we 
+will denote by $G^\Gamma$. Note that $G^\Gamma$ can be constructed directly. 
+
+
+
+
+
+\section{Deformation functors}
+
+Suppose we start with a group object $G$ in $\mathsf{Aff}_S$, i.e. 
+$G=\operatorname{GL}(n)$. One can check that completion 
+$\mathsf{Aff}_S\to \mathsf{Vaf}_S$ commutes with finite products, so 
+$\hat G$ is a group object in $\mathsf{Vaf}_S$. Thus, from here on out, 
+we will begin with a group object $G$ in $\mathsf{Vaf}_S$. 
+
+Given a group object $G$ in $\mathsf{Vaf}_S$ and a profinite group $\Gamma$, 
+by the previous section there is $G^\Gamma$ in $\mathsf{Vaf}_S$ such that 
+$G^\Gamma(X)=\hom_{\mathsf{tpGp}}(\Gamma,G(X))$. Let 
+$s:\spf(\kappa)\to\spf(\cO)$, and suppose we have picked an $s$-valued point 
+of $G^\Gamma$, i.e. $\bar\rho\in G^\Gamma(s)=\hom(\Gamma,G(\kappa))$. Write 
+$D_{\bar\rho}^\Box = (\bar\rho:s\to G^\Gamma)^\wedge$, i.e. 
+$D_{\bar\rho}^\Box$ is the connected component of $\bar\rho$ in $G^\Gamma$. I 
+claim that $D_{\bar\rho}^\Box$ is what one would expect from the notation, 
+i.e. $D_{\bar\rho}^\Box(A)$ is the set of continuous representations 
+$\rho:\Gamma\to G(A)$ lifting $\bar\rho$. But this is easy, for by definition, 
+for $X\in\mathsf{cVaf}_S^s$:
+\[
+  D_{\bar\rho}^\Box(s\to X)=\hom(s\to X,(\bar\rho:s\to G^\Gamma)^\wedge) = \hom_{s,S}(X,G^\Gamma)
+\]
+The following diagram commutes:
+\[\xymatrix{
+  \hom(X,G^\Gamma) \ar[r]^-\sim \ar[d]
+    & \hom(\Gamma,G(X)) \ar[d] \\
+  \hom(s,G^\Gamma) \ar[r]^-\sim  
+    &\hom(\Gamma,G(s))
+}\]
+Thus, if $f:X\to G^\Gamma$ corresponds with $\eta:\Gamma\to G(X)$, then its 
+reduction $\bar\eta:\Gamma\to G(s)$ is equal to $f\circ s$, so 
+$\bar\eta=\bar\rho$ iff $f\circ s=\bar\rho$, which occurs iff $f$ respects the 
+basepoint $\bar\rho$. The result follows. 
+
+Now let $\bar e:s\to S\to G$ be the special point of the identity section. 
+Denote by $\hat G$ the completion $(\bar e\to G)^\wedge$. One checks that 
+$\hat G(A)=\{g\in G(A):\bar g=1\}$, and so it makes sense to set 
+$D_{\bar\rho} = D_{\bar\rho}^\Box/\hat G$, where $\hat G$ acts on 
+$D_{\bar\rho}^\Box$ by conjugation (induced from the natural action of $G$ on 
+$\Gamma^G$ by conjugation). 
+
+So, we have $\hat G\times D_{\bar\rho}\rightrightarrows D_{\bar\rho}$, and if 
+the coequalizer exists, $D_{\bar\rho}$ is representable. The question now is 
+under what generality we can mod out by group actions. B\"ockle cites 
+theorem 1.4 of \cite[VII$_\text{B}$]{SGA3} to prove that under certain 
+circumstances, $D_{\bar\rho}^\Box/\hat G$ exists. Essentially, all he needs 
+is for $\hat G\times D_{\bar\rho}^\Box\to D_{\bar\rho}^\Box$ to be an 
+equivalence relation, with the projection ``topologically flat'' (I should 
+find out what that means). 
+
+The first thing is that one can replace $\hat G$ with $\hat G/\hat Z$ in the 
+quotient, e.g. $\operatorname{GL}(n)$ with $\operatorname{PGL}(n)$. I think 
+that $\widehat{G/Z}=\hat G/\hat Z$, so we can restrict to the case when 
+$G$ and $Z$ are varieties (because we should be able to go all the way 
+back to $\mathsf{Aff}_S$). If $G/Z$ is smooth, things should work. 
+
+Perhaps if everything is affine, quotients always exist (?) In terms of 
+rings, we have 
+$\cO_{\hat G}\rightrightarrows R_{\bar\rho}^\Box\hat\otimes \cO_{\hat G}$, and 
+the equalizer (in commutative rings) certainly exists. So perhaps deformation 
+functors are \emph{always} representable in a big enough category. The 
+question is whether $D_{\bar\rho}$ is at all nice. 
+
+
+
+
+
+\begin{thebibliography}{9}
+  \bibitem{SGA3} M. Demazure, P. Gabriel and A. Grothendieck, \emph{Seminaire de Geometrie Algebrique 3}
+
+  \bibitem{Gr1} Grothendieck, A. \emph{Technique de descente et th\'eor\`emes 
+    d'existence en g\'eom\'etrie alg\'ebrique II}, S\'eminaire Bourbaki 
+    exp. 195, 1958. 
+\end{thebibliography}
+
+
+
+
+
+\end{document}

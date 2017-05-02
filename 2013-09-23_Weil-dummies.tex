@@ -1,0 +1,674 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb,fullpage,mathrsfs,stmaryrd}
+\usepackage[all]{xy}
+\DeclareMathOperator{\der}{Der}
+\DeclareMathOperator{\h}{H}
+\DeclareMathOperator{\tr}{tr}
+\newcommand{\dG}{\mathbb{G}}
+\newcommand{\dQ}{\mathbb{Q}}
+\newcommand{\dZ}{\mathbb{Z}}
+\newcommand{\fg}{\mathfrak{g}}
+\newcommand{\fm}{\mathfrak{m}}
+\newcommand{\sO}{\mathscr{O}}
+
+\newcommand{\vark}{\mathsf{Var}_\kappa}
+\newcommand{\varko}{\mathsf{Var}_\kappa^\circlearrowleft}
+
+\title{The Weil conjectures for dummies}
+\author{Daniel Miller}
+\date{September 23, 2013}
+
+\begin{document}
+\maketitle
+
+
+%
+%
+%
+%First, some general nonsense. If $k$ is a field, $V$ a finite-dimensional 
+%$\mathbb{Z}$-graded vector space over $k$, and $f:V\to V$ is a graded 
+%homomorphism, write 
+%\begin{align*}
+%  \tr(f) &= \sum (-1)^i \tr(f,V^i) \\
+%  \det(f) &= \prod \det(f,V^i)^{(-1)^i}
+%\end{align*}
+%In particular, the \emph{graded characteristic function} of $f$ is 
+%\[
+%  \det(1-t f) = \prod \det(1-t f,V^i)^{(-1)^i} \in k(t)
+%\]
+%The main thing to note is that $\tr$ and $\det$ are additive on short exact 
+%sequences. 
+%
+%Let $\mathsf{V}$ be the category of smooth projective varieties over 
+%$\mathbb{F}_p$. For $X$ in $\mathsf{V}$, let $|X|$ be the set of closed points 
+%of $X$, and for $x\in |X|$, let $\deg(x)=[\kappa(x):\mathbb{F}_p]$. Define the 
+%\emph{zeta function} of $X$ by 
+%\[
+%  Z(X,t) = \prod_{x\in |X|} \frac{1}{1-t^{\deg(x)}}
+%\]
+%For the moment, we consider $Z(X,t)$ only as a formal power series over 
+%$\mathbb{Q}$. We wish to prove the \emph{baby Weil conjectures}, namely that 
+%\begin{enumerate}
+%  \item $Z(X,t) = \prod_{i=0}^{\dim X} P_i(X,t)^{(-1)^{i+1}}$, where each 
+%    $P_i(X,t)\in \mathbb{Z}[t]$. 
+%  \item \textbf{FUNCTIONAL EQUATION}
+%\end{enumerate}
+%
+%For any $X$ in $\mathsf{V}$, we write $F$ for the corresponding Frobenius 
+%morphism. For $k$ some field of characteristic zero, let $\mathsf{gA}_k$ be 
+%the category of graded-commutative $k$-algebras. A \emph{baby Weil cohomology 
+%theory} is a contravariant functor $\h:\mathsf{V}\to\mathsf{gA}_k$ satisfying 
+%the following properties: 
+%\begin{enumerate}
+%  \item For $i>\dim X$, $\h^i(X)=0$.
+%  \item For all $X$ in $\mathsf{V}$, $\# X(\mathbb{F}_{p^n}) = \tr(F^n,\h(X))$. 
+%  \item If $d=\dim X$, then $h^{2d}(X):=\dim_k\h^{2d}(X)=1$, and the product 
+%    $\h^{2 d-i}(X)\otimes \h^i(X)\to \h^{2 d}(X)$ is a non-degenerate pairing 
+%    for each $i<2 d$. 
+%\end{enumerate}
+%Property 2 is called the \emph{Lefschetz trace formula} and property 3 is
+%called \emph{Poincar\'e duality}. We will prove that the baby Weil conjectures 
+%follow from the existence of a baby Weil cohomology theory. Since such 
+%cohomology theories exist (e.g. $\ell$-adic cohomology, crystalline 
+%cohomology) this proves the baby Weil conjectures. To do this, we must first 
+%develop some elementary properties of $Z(X,t)$. 
+%
+%Define, for $f\in t \mathbb{Q}\llbracket t\rrbracket$, define 
+%\[
+%  \log(1-f) = -\sum_{n>0} \frac{f^n}{n}
+%\]
+%One readily verifies that a) the sum converges and b) it converts infinite 
+%products into infinite sums (when the products converge), i.e. 
+%\[
+%  \log\left(\prod_i (1-f_i) \right) = \sum_i \log(1-f_i)
+%\]
+%We will use this to prove that 
+%\[
+%  Z(X,t) = \exp\left(\sum_{n>0} \# X(\mathbb{F}_{p^n}) \frac{t^n}{n}\right)
+%\]
+%Clearly both power series have constant term $1$. One can show relatively 
+%easily that on such power series, the map $f\mapsto t\frac{d}{dt}\log f$ is 
+%injective. So, it suffices to show that both series are sent to the same 
+%thing. One can compute
+%\begin{align*}
+%  t\frac{d}{dt}\log Z(X,t) 
+%    &= t\frac{d}{dt} \sum_{x\in |X|} \log\left(\frac{1}{1-t^{\deg(x)}}\right) \\
+%    &= - t \sum_{x\in |X|} \frac{d}{dt} \log(1-t^{\deg(x)}) \\
+%    &= - t \sum_{x\in |X|} \frac{-\deg(x) t^{\deg(x)-1}}{1-t^{\deg(x)}} \\
+%    &= \sum_{x\in |X|} \frac{\deg(x) t^{\deg(x)}}{1-t^{\deg(x)}} \\
+%    &= \sum_{x\in |X|} \sum_{n>0} \deg(x) t^{n\cdot \deg(x)} \\
+%    &= \sum_{n>0} \left(\sum_{d\mid n} \#\{x:\deg(x)=d\}\right) t^n\\
+%    &= \sum_{n>0} \# X(\mathbb{F}_{p^n}) t^n \\
+%    &= t\frac{d}{dt} \sum_{n>0} \# X(\mathbb{F}_{p^n})\frac{t^n}{n}
+%\end{align*}
+%which is easily seen to be 
+%$\exp\left(\sum \# X(\mathbb{F}_{p^n}) t^n/n\right)$. 
+%
+%
+%
+%
+%
+%\section{Generalizations}
+%
+%Let $\kappa$ be a field, and $\mathsf{V}_\kappa$ the category of smooth 
+%projective varieties over $\kappa$. Let $k$ be a field of characteristic zero 
+%and $\h:\mathsf{V}_\kappa\to\mathsf{gA}_k$ a Weil cohomology theory. Suppose 
+%$X\in \mathsf{V}_\kappa$ and $f:X\to X$ is a morphism. We can define the 
+%zeta function of $X$ relative to $f$ as:
+%\[
+%  Z(X,f,t) = \exp\left(\sum_{n\geqslant 1} \# X^{f^n} \frac{t^n}{n} \right) =^? \prod_{x\in |X|} \frac{1}{1-t^{\deg_f(x)}}
+%\]
+%where $\deg_f(x)=\# f^{\mathbb{N}} x$. The goal would be for 
+%\[
+%  Z(X,f,t) = \frac{1}{\det\left(1-f^* t,\h(X)\right)}
+%\]
+%whenever the graph of $f$ intersects $\Delta_X$ transversally. 
+%
+%First, some stuff hopefully related to formal groups. Let 
+%$\fm=t\dZ\llbracket t\rrbracket$ and $U=1-\fm$. We consider $\fm$ as an 
+%additive topological group and $U$ as a multiplicative topological group. 
+%There is a canonical isomorphism $D:\fm\to D$ given by 
+%\[
+%  D f = t\frac{d}{dt} \log f
+%\]
+%with inverse $I:U\to \fm$ given by 
+%\[
+%  I f = \exp\left(\int f\, \frac{dt}{t} \right)
+%\]
+%While these constructions are (for now) somewhat unmotivated, note that 
+%\[
+%  Z(X,f,t) = I\left(\sum_{n\geqslant 1} \# X^{f^n} t^n\right)
+%\]
+%Since the natural thing to do would be to let 
+%\[
+%  D f = t \frac{d}{dt}\log\left(\frac{1}{1-f}\right)
+%\]
+%we would get a new ``zeta function,'' namely $\frac{1}{1-Z}$. It may be that 
+%this new function leads to nicer formulas. For example, one would hope that 
+%$Z(X,f,t)$ can be computed in terms of \emph{actual} characteristic 
+%polynomials, not just stuff that looks like characteristic polynomials, i.e. 
+%\[
+%  Z(X,f,t) = \det\left(t\cdot 1 - f^*, \h(X)\right) = \chi\left(f^*, \h X\right)
+%\]
+%So, let  
+%\[
+%  \Lambda(X,f,t) = \frac{1}{1-Z}
+%\]
+%Unfortunately, for this to work we would need 
+%\[
+%  D \Lambda = \sum \# X^{f^n} t^n
+%\]
+%which comes down to 
+%\[
+%  t\frac{d}{dt}\log\left(\frac{1}{1-\det(t\cdot 1-f^*)}\right) = \sum_{n\geqslant 1} \tr({f^*}^n) t^n
+%\]
+%but this does not appear to be true. 
+%
+%
+%
+%
+%
+%\section{``Fancy'' interpretation of the Weil conjectures}
+%
+%Let $\mathsf{V}_\kappa$ be the category of nice varieties over $\kappa$. Let 
+%$A:\mathsf{V}_\kappa^\circ\to \mathsf{gA}_\dZ$ be the functor that sends $X$ 
+%to the ring of cycles on $X$. We can consider the ``category of elements over 
+%$A$,'' denoted $\int_{\mathsf{V}_\kappa} A$, whose objects are pairs 
+%$(X,c)$ with $X\in \mathsf{V}_\kappa$ and $c\in A(X)$. For such a pair 
+%$(X,c)$, we can define the ``fake zeta function'' as 
+%\[
+%  Z(X,c) = \sum_{n\geqslant 1} (c^n\cdot \Delta) t^n  \in A(X)\llbracket t\rrbracket
+%\]
+%Perhaps we should take $I(Z)$ instead, and then hopefully we will get 
+%something that is actually a ``rational function,'' i.e. an element of 
+%$A(X)(t)$, possibly tensored with $\mathbb{Q}$. 
+%
+%Alternatively, if we look at $K(\mathsf{V}_\kappa)$, we should try to find 
+%points in its spectrum, i.e. prime ideals
+%
+%The only problem is that $c^n\cdot \Delta$ is probably the wrong thing. If 
+%$f:X\to X$, then I don't think that $(\Gamma_f)^n = \Gamma_{f^n}$. Suppose 
+%there is a natural transformation of ring-valued functors
+%$c:A\to \h$. Suppose further that there is a natural map 
+%$\operatorname{tr}:\h^{2\dim X}(X)\to k$ such that the following diagram 
+%commutes:
+%\[\xymatrix{
+%  A^{\dim X} \ar[r]^-\sim \ar[d]^-{\deg}
+%    & \h^{2\dim X}(X) \ar[d]^-{\operatorname{tr}} \\
+%  \dZ \ar[r] 
+%    & k
+%}\]
+%
+%Then, for $f:X\to X$, there is the formula (though it doesn't follow so 
+%easily) 
+%\[
+%  \deg(\Gamma_f \cdot \Delta) = \tr(f^*, \h(X))
+%\]
+%
+%
+%
+%
+%
+%\section{Zeta functions and $\lambda$-rings}
+%
+%Let $\kappa$ be a finite field, and $\mathsf{V}_\kappa$ the category of smooth 
+%geometrically integral varieties over $\kappa$. The \emph{Grothendieck ring of 
+%varieties} over $\kappa$, written $K(\mathsf{V}_\kappa)$, is the free abelian 
+%group generated by $\mathsf{V}_\kappa$, subject to the relations 
+%\[
+%  [X] = [U] + [Z]
+%\]
+%whenever $Z\subset X$ is closed and $U=X\setminus Z$. It is a theorem that 
+%$K(\mathsf{V}_\kappa)$ is generated by projective varieties. 
+%The group $K(\mathsf{V}_\kappa)$ has the natural structure of a commutative 
+%ring, where $[X]\cdot [Y]=[X\times Y]$. At first, ``take zeta function'' is a 
+%map $Z:\mathsf{V}_\kappa \to 1+t\dZ\llbracket t\rrbracket$. However, notice 
+%that if $X=Y\cup U$ where $Y$ is closed and $U=X\setminus Y$, then 
+%\begin{align*}
+%  Z(X) 
+%    &= \exp\left( \sum_{n\geqslant 1} \# X^{F^n} \frac{t^n}{t} \right) \\
+%    &= \exp\left(\sum_{n\geqslant 1} \left(\# Y^{F^n} + \#U^{F^n}\right) \frac{t^n}{t}\right) \\
+%    &= \exp\left(\sum_{n\geqslant 1} \# Y^{F^n} \frac{t^n}{n}\right) \exp\left(\sum_{n\geqslant 1} \# U^{F^n} \frac{t^n}{n} \right) \\
+%    &= Z(T,t) Z(U,t)
+%\end{align*}
+%where $F$ is the Frobenius of $\kappa$. In other words, $Z$ descends to a 
+%homomorphism $Z:K(\mathsf{V}_\kappa)\to 1+t\dZ\llbracket t\rrbracket$. 
+%
+%Now we introduce the notion of a $\lambda$-ring, or at least enough of such a 
+%notion to continue. Donald Yau's book on lambda-rings defines, for any 
+%commutative ring $A$, a ring $\Lambda(A)$ whose underlying additive group is 
+%$1+tA\llbracket t\rrbracket$, and where multiplication is defined in such a 
+%way that the maps $z_n : \Lambda(A) \to A$ defined by 
+%\[
+%   z_{-t} f = - t\frac{d}{dt}\log f = \frac{-t f'}{f}
+%\]
+%that is, $z_n(f)$ is the coefficient of $(-t)^n$ in $z_{-t}(f)$. I claim that 
+%$Z:K(\mathsf{V}_\kappa) \to \Lambda(\dZ)$ is a ring homomorphism. 
+%Unfortunately, 
+%\[
+%  z_{-t} Z(x,t) = -t\frac{d}{dt}\log\left(\exp\left(\sum_{n\geqslant 1} \#X^{F^n} \frac{t^n}{n}\right) \right) = \sum_{n\geqslant 1} (-1)^{n+1} \# X^{F^n} (-t)^n
+%\]
+%so $z_n Z(X,t) = (-1)^{n+1} \# X^{F^n}$. This is not multiplicative (there is 
+%a sign error). If we redefine:
+%\[
+%  Z(X,t) = \exp\left(-\int\sum_{n\geqslant 1} \# X^{F^n} (-t)^n\, \frac{dt}{t} \right)
+%\]
+%then one easily checks that $z_n Z(X,t) = \# X^{F^n}$, hence 
+%$Z:K(\mathsf{V}_\kappa)\to \Lambda(\dZ)$ is a ring homomorphism. The question 
+%is: does the new $Z$ satisfy something like the Weil conjectures? Or should we 
+%just redefine multiplication on $\Lambda(\dZ)$ to make the signs come out 
+%right? I'm pretty sure that if we define $Z$ so that $z_n Z=\#X^{F^n}$, then 
+%\[
+%  Z(X,t) = -\frac{\det\left(F^* t, \h(X)\right)}{\det\left(1+F^* t,\h(X)\right)}
+%\]
+%Perhaps this gives a better functional equation. 
+%
+%The paper \emph{Rationality criteria for motivic zeta-functions} by Michael 
+%Larson and Valery Lunts, notes that $K(\mathsf{V}_\kappa)$ has the structure 
+%of a $\lambda$-ring, where 
+%\[
+%  \lambda^k [X] = [\operatorname{Sym}^k(X)]
+%\]
+%In this context, one often defines the \emph{motivic zeta-function} by 
+%$\zeta(X,t) = \lambda_t[X]\in \Lambda\left( K(\mathsf{V}_\kappa)\right)$. 
+%
+%
+%
+%
+%
+%\section{Formal groups and invariant differentials}
+%
+%Let $G$ be a $d$-dimensional formal group over $\dZ$, for example the 
+%multiplicative group $\hat\dG_m$, where $x+_{\hat\dG_m} y = x+y+x y$. Write 
+%$m:G\times G\to G$ for the group law. It induces a map 
+%$m^*:\sO_G\to \sO_{G\times G}$, where here we write 
+%$\sO_G=\dZ\llbracket t_1,\dots,t_d\rrbracket$ for the coordinate ring of $G$. 
+%The $\sO_G$-module of derivations $\der(\sO_G)$ consists of elements of 
+%the form 
+%\[
+%  \sum_{i=1}^d f_i(t_1,\dots,t_d) \frac{d}{dt_i}
+%\]
+%while its $\sO_G$-dual $\Omega_G^1$ consists of elements of the form 
+%\[
+%  \sum_{i=1}^d f_i(t_1,\dots,t_d) d t_i
+%\]
+%The group $G$ acts on $\der(\sO_G)$ and $\Omega_G^1$ via $m^*$, we have 
+%\begin{align*}
+%  m^* &: \Omega_G^1 \to \Omega_{G\times G}^1 \\
+%  m^* &: \der(\sO_G) \to \der(\sO_G,\sO_{G\times G})
+%\end{align*}
+%Call a differential form $\omega\in \Omega_G^1$ \emph{invariant} if 
+%$m^*\omega = \pi_1^* \omega + \pi_2^*\omega$, where $\pi_i:G\times G\to G$ are 
+%the projection maps. It is possible to talk about invariant differential 
+%operators, but I have yet to find a good functorial way to do this. Anyways, 
+%you can prove that if $\fg$ is the set of invariant differential operators and 
+%$\fg^\vee$ is the set of invariant differentials, then the pairing 
+%\[
+%  \der(\sO_G)\otimes \Omega_G^1 \to \sO_G
+%\]
+%given by $d\otimes \omega \mapsto d(\omega)$, where we identify 
+%$\der(\sO_G)$ with $\hom(\Omega_G^1,\sO_G)$, induces a nondegenerate pairing 
+%\[
+%  \fg\otimes \fg^\vee \to \dZ
+%\]
+%At least, that is the hope. It may be that I need to tensor with $\dQ$ first. 
+%
+%
+%
+%
+%
+%\section{Weil conjectures revisited}
+%
+%Let $\kappa$ be a field of arbitrary characteristic, and let 
+%$\mathsf{Var}_\kappa$ denote the category of quasiprojective varieties over 
+%$\kappa$. The category $\mathsf{Var}_\kappa^\circlearrowleft$ has as objects 
+%pairs $(V,f)$ where $V$ is a quasiprojective $\kappa$-variety and 
+%$f:V\to V$ is such that $\# V^{f^n}$ is a well-defined integer for all $n$. 
+%let $K\left(\mathsf{Var}_\kappa^\circlearrowleft\right)$ be the abelian group 
+%generated by isomorphism classes of objects of 
+%$\mathsf{Var}_\kappa^\circlearrowleft$, modulo the relation 
+%\[
+%  [X,f] = [V,f|_V] + [U,f|_U]
+%\]
+%whenever $V\subset X$ is closed and $f$ respects the decomposition 
+%$X=V\sqcup U$. The group $K\left(\mathsf{Var}_\kappa^\circlearrowleft\right)$ 
+%is actually a commutative ring under the operation 
+%\[
+%  [X,f]\times [Y,g] = [X\times Y,f\times g]
+%\]
+%Let $\Lambda = \Lambda(\dZ) = 1+t\dZ\llbracket t\rrbracket$ as an additive 
+%group, with multiplication such that (\ldots \textbf{finish this}). 
+%
+%We are going to define a ring homomorphism 
+%$\zeta:K\left(\mathsf{Var}_\kappa^\circlearrowleft\right)\to \Lambda(\dZ)$. 
+%For $[X,f]$, we define the \emph{zeta function of $X$ relative to $f$} to be 
+%\[
+%  \zeta(X,f,t) = \exp\left(\int \sum_{n\geqslant 1} \# X^{f^n} t^n \, \frac{dt}{t} \right)
+%               = \prod_{x\in |X|} \frac{1}{1-t^{-?}}
+%\]
+%Since, for $X=V\sqcup U$ a canonical decomposition, we have 
+%$\#X^{f^n} =\# V^{f^n}+\# U^{f^n}$ and 
+%$\# (X\times Y)^{f^n} = \# X^{f^n}\cdot \# Y^{f^n}$, the map $\zeta$ is a 
+%well-defined ring homomorphism. The \emph{baby Weil conjectures} state that 
+%\begin{enumerate}
+%  \item the map $\zeta$ factors through $\dZ(t)\subset \Lambda(\dZ)$
+%  \item we have
+%    \[
+%      Z\left(X,f,\frac{1}{\deg(f)\cdot t}\right) = 
+%    \]
+%\end{enumerate}
+%
+%One proves the baby Weil conjectures by using a \emph{baby Weil cohomology 
+%theory}, which is a contravariant functor 
+%$\h:\mathsf{Var}_\kappa^\circlearrowleft\to \mathsf{grAlg}_k$, where $k$ is 
+%a field of characteristic zero, such that 
+%\begin{enumerate}
+%  \item $\h^i(X) = 0$ for $i>2 d$ and $\h^{2 d}(X)=k$, where $d=\dim X$. 
+%  \item for all $(X,f)$ in $\mathsf{Var}_\kappa^\circlearrowleft$, w have 
+%    $\# X^f = \tr\left(f^*,\h(X)\right)$. 
+%  \item the pairing $\h^i(X)\times \h^{2 d-i}(X)\to \h^{2 d}(X)$ is 
+%    nondegenerate 
+%  \item The map $f^*:\h^{2 d}(X)\to \h^{2 d}(X)$ is multiplication by $\deg(f)$ 
+%\end{enumerate}
+%
+%One can prove that if $\kappa$ is a finite field or $\mathbb{C}$, then a baby 
+%Weil cohomology theory for $\kappa$ exists. Assuming one's existence, let's 
+%prove the baby Weil conjectures. Essentially, it will all come down to proving 
+%that 
+%\[
+%  \zeta(X,f,t) = \frac{1}{\det\left(1-f^* t,\h(X)\right)}
+%\]
+%This is proved given the following lemma. Let $\theta$ be a graded 
+%endomorphism of a graded vector space. Then 
+%\[
+%  \sum_{n\geqslant 1} \tr(\theta^n) t^n = t\frac{d}{dt}\log \frac{1}{\det(1-\theta t)}
+%\]
+%The given formula for $\zeta$, along with some basic facts about rationality 
+%of power series, proves the rationality of $\zeta(X,f,t)$. The functional 
+%equation comes from Poincar\'e duality and basic facts about linear algebra. 
+%
+
+
+
+
+
+%\section{Talk outline}
+
+Let's begin with some motivation. Let $p$ be a prime, $q=p^r$ a power of $p$, 
+and $\mathbb{F}_q$ be the finite field with $q$ elements. For a variety 
+$X$ over $\mathbb{F}_q$, we define the \emph{zeta function} of $X$ as 
+\[
+  Z(X,t) = \prod_{x\in |X|} \frac{1}{1-t^{\deg(x)}}
+\]
+Here $|X|$ is the set of closed points of $X$, and 
+$\deg(x)=[\kappa(x):\mathbb{F}_q]$. The function $Z(X,q^{-s})$ is quite 
+similar to the Riemann-zeta function (or, more generally, Dedekind zeta 
+functions) defined by 
+\[
+  \zeta(k,s) = \sum_{\mathfrak{a}\subset \mathfrak{o}_k} \operatorname{N}(\mathfrak{a})^{-s} = \prod_{\mathfrak{p}\subset \mathfrak{o}_k} \frac{1}{1-\operatorname{N}(p)^{-s}}
+\]
+We are thinking of $Z(X,t)$ only as a formal power series, and our definition 
+makes it clear that $Z$ is in fact integral. However, our definition is not 
+computationally useful. A better definition is 
+\[
+  Z(X,t) = \exp\left(\int \sum_{n\geqslant 1} \# X\left(\mathbb{F}_{q^n}\right) t^n\, \frac{dt}{t}\right)\text{.}
+\]
+It is not at all obvious that these definitions agree. To see that they 
+do, consider the map 
+\[
+  D = t\frac{d}{dt}\log : 1+\dZ\llbracket t\rrbracket \to t\dZ\llbracket t\rrbracket
+\]
+To see that $D f\in t\dZ\llbracket t\rrbracket$, note that 
+$Df=\frac{tf'}{f}$, and $1/f\in 1+t\dZ\llbracket t\rrbracket$. One easily 
+verifies that $D$ is a continuous injection of topological groups with 
+left inverse $f\mapsto \exp\left(\int f\, \frac{dt}{t}\right)$. To show that our definitions 
+of $Z(X,t)$ agree, we will show that their images under $D$ are equal. This is a 
+straightforward computation:
+\begin{align*}
+  t\frac{d}{dt} \log \left(\prod_{x\in |X|} \frac{1}{1-t^{-\deg(x)}}\right) 
+    &= \sum_{x\in |X|} \frac{\deg(x) t^{-\deg(x)}}{1-t^{-\deg(x)}} \\
+    &= \sum_{x\in |X|} \deg(x) \sum_{n\geqslant 1} t^{n\cdot \deg(x)} \\
+    &= \sum_{n\geqslant 1} \left(\sum_{d\mid n} d\cdot \#\{x\in |X|:\deg(x)=d\}\right) t^n \\
+    &= \sum_{n\geqslant 1} \# X\left(\mathbb{F}_{q^n}\right) t^n
+\end{align*}
+The final equality comes from the fact that $|X|$ is the set of closed points 
+of $X$ \emph{as a scheme}, so an element of $|X|$ is a 
+$\operatorname{Gal}(\overline{\mathbb{F}}_q/\mathbb{F}_q)$-orbit of 
+$X(\overline{\mathbb{F}}_q)$
+Weil conjectured that $Z(X,t)$ is a rational function of $t$ satisfying a 
+specified functional equation. 
+
+In some easy cases, $Z(X,t)$ is computable. For example: 
+\begin{align*}
+  Z(\mathbb{A}^d,t) &= \frac{1}{1-q^d t} \\
+  Z(\mathbb{P}^n,t) &= \frac{1}{(1-t)(1-q t)\cdots (1-q^d t)}
+\end{align*}
+To see this, we note that 
+\begin{align*}
+  Z(\mathbb{A}^d,t) &= \exp\left(\int\sum_{n\geqslant 1} (q^d t)^n \, \frac{dt}{t}\right) \\
+    &= \exp\left(\sum_{n\geqslant 1} \frac{q^{d n} t^n}{n}\right) \\
+    &= \exp\left(-\log(1-q^d t)\right) \\
+    &= \frac{1}{1-q^d t}
+\end{align*}
+To prove our formula for $Z(\mathbb{P}^n,t)$, one uses the decomposition 
+$\mathbb{P}^n=\mathbb{A}^n\sqcup \mathbb{P}^{n-1}$ along with induction and 
+the fact (obvious from our second definition of $Z$) that 
+\[
+  Z(X,t) = Z(V,t) Z(U,t)
+\]
+whenever $V\subset X$ is a subvariety and $U=X\setminus V$. This fact lets us 
+reinterpret $Z(X,t)$. Let $\mathbf K_{\mathbb F_p} = K(\mathsf{Var}_{\mathbb{F}_p})$ be the group 
+generated by isomorphism classes of smooth projective varieties over 
+$\mathbb{F}_p$, subject to the relation $[X]=[V]+[U]$ whenever 
+$X=V\sqcup U$ is a decomposition as above. We see that 
+\[
+  Z:\mathbf K_{\mathbb{F}_q}\to 1+t\dZ\llbracket t\rrbracket
+\]
+is a group homomorphism. If we define $[X]\cdot[Y]=[X\times Y]$, then it is 
+possible to give $\Lambda(\dZ)=1+t\dZ\llbracket t\rrbracket$ the structure of 
+a commutative ring in such a way that 
+$Z:\mathbf K_{\mathbb{F}_p}\to \Lambda(\dZ)$ is a ring homomorphism. It 
+is obviously not surjective (quick: one ring is countable and the other is 
+not). 
+
+One can show that 
+$\# X(\mathbb{F}_{p^n}) = \# \operatorname{Sym}^n(X)(\mathbb{F}_p)$. This lets 
+us reinterpret zeta functions once again. For $\kappa$ any field, we can 
+consider the ring $\mathbf K_\kappa = K(\vark)$ defined exactly as before. For 
+any variety $X$, let 
+\[
+  Z(X) = \exp\left(\int \sum_{n\geqslant 1} [\operatorname{Sym}^n(X)] t^n\, \frac{dt}{t}\right)
+\]
+In this context $Z:\mathbf K_\kappa\to \Lambda(\mathbf K_\kappa)$ is, I think, just the 
+homomorphism $\lambda:A\to \Lambda(A)$ that exists for any $\lambda$-ring, 
+where we have set $\lambda^k [X] = [\operatorname{Sym}^n(X)]$. 
+
+Let $\vark$ be the category of smooth projective varieties over 
+$\kappa$, and let $\varko$ be the category of objects of $\vark$ with a 
+specified endomorphism. 
+
+For a ring $k$, let $\mathsf{grAlg}_k$ be the category of graded (not 
+necessarily commutative) $k$-algebras. We are going to construct a 
+contravariant functor 
+\[
+  A = A^\bullet : \vark \to \mathsf{grAlg}_\dZ
+\]
+For a smooth projective variety $X$, let $Z^r(X)$ be the free abelian group 
+generated by irreducible subvarieties of $X$ of codimension $r$. Note that 
+$Z^\bullet = \bigoplus_r Z^r$ is a (covariant) functor. For a subvariety 
+$V\subset X$ and a map $f:X\to Y$, define 
+\[
+  f_* V = \begin{cases}
+            \deg\left(V\to f(V)\right)\cdot \overline{f(V)} & \text{if $\dim f(V)=\dim V$} \\
+            0                                               & \text{otherwise}
+          \end{cases}
+\]
+
+Given any irreducible subvariety $V\subset V$, consider the normalization 
+$\widetilde V$ of $V$ together with its canonical map $m_V:\widetilde V\to V$. 
+Let $w(V)\subset Z(X)$ be the subgroup generated by all elements of the form 
+$m_{V *}(D)$, where $D$ is a Weil divisor on $\widetilde V$ that is rationally 
+equivalent to zero. We define 
+\[
+  A(X) = A^\bullet(X) = Z(X) / \langle w(V) : V\subset X\rangle
+\]
+For example, if $X$ is a smooth curve, then 
+$A(X) = \dZ\oplus \operatorname{Pic}(X)$. If $X=\mathbb{P}^n$, then 
+$A(X) = \dZ[\varepsilon]/(\varepsilon^{n+1})$, where $\varepsilon$ is the class 
+of any hyperplane. There is a canonical group homomorphism 
+$\deg:A^{2\dim (X)}(X)\to \dZ$ that sends $\sum n_x\cdot [x]$ to $\sum n_x$. 
+
+It is possible to (functorially) give $A(X)$ the structure of a commutative 
+ring in such a way that 
+\begin{enumerate}
+  \item $A$ with $f_*$ is a group-valued functor
+  \item if $f:X\to Y$ is proper, then $f_*(x\cdot f^*(y)) = f_*(x)\cdot y$
+  \item $x\cdot y = \Delta^*(x\times y)$ if $x,y$ are cycles on $X$
+  \item if $Y,Z\subset X$ intersect properly, then 
+    $Y\cdot Z=\sum i(Z,Y;W_i)\cdot W_i$, where $W_i$ runs over the irreducible 
+    components of $Y\cap Z$ and the $i(Y,Z;W_i)$ only depend on a neighborhood 
+    of the generic point of $W_i$
+  \item if $Y$ and $Z$ intersect properly and transversely, then 
+    $Y\cdot Z=Y\cap Z$.
+\end{enumerate}
+One can prove that these requirements determine a unique ring structure on 
+$A(X)$. There is actually a formula for the intersection multiplicities 
+$i(Z,Y;W_i)$. One has 
+\[
+  i(Z,Y; W) = \sum (-1)^i \operatorname{Length}_{\mathscr O_{X,z}} \operatorname{Tor}_{\mathscr{O}_{X,z}}^i\left(\mathscr O_{X,z}/I,\mathscr O_{X,z}/J\right)\text{,}
+\]
+where $z$ is the generic point of $W$, $I$ is the ideal defining $Z$, and $J$ is 
+the ideal defining $Y$. For $c\in A^{2\dim X}(X)$, one puts $(c)=\deg(c)$. 
+
+Let $X$ be a proper variety over $\kappa$ with an endomorphism $f$. We define 
+the \emph{zeta function of $X$ relative to $f$} to be 
+\[
+  Z(X,f,t) = \exp\left(\int \sum_{n\geqslant 1} \left(\Gamma_{f^n}\cdot\Delta_X\right) t^n \, \frac{dt}{t}\right)
+\]
+
+The \emph{baby Weil conjectures} state that for $X$ a smooth projective 
+variety over $\mathbb{F}_q$, one has 
+\begin{enumerate}
+  \item $Z(X,t) \in \mathbb{Q}(t)$
+  \item $Z(X,1/q^d t) = \pm q^{d \chi/2} t^\chi Z(X,t)$, where 
+    $\chi=(\Delta^2)$ is the \emph{Euler characteristic} of $X$
+\end{enumerate}
+We will prove the baby Weil conjectures by assuming the existence of a 
+\emph{baby Weil cohomology theory}. Since such cohomology theories exist, 
+this is actually a proof. We define a baby Weil cohomology theory to be a 
+contravariant functor $\h:\vark\to \mathsf{grAlg}_k$, where $k$ is a field 
+of characteristic zero, such that 
+\begin{enumerate}
+  \item $\h(X)$ is finite-dimensional and $\h^i(X)=0$ for $i>2 d$
+  \item there is a natural transformation 
+    $\operatorname{cl} :A^\bullet\to \h^{2\bullet}$
+  \item there is a $k$-linear trace map $\tr:\h^{2 d}(X)\to k$ that is compatible 
+    with the degree map. 
+  \item if $f:X\to X$, then $\deg(\Gamma_f\cdot \Delta)=\tr(f^*,\h(X))$
+  \item the pairing $\h^i(X)\otimes \h^{2d-i}(X)\to \h^{2 d}(X)\xrightarrow{\tr} k$ 
+    is nondegenerate
+\end{enumerate}
+Axiom 4 is often called the \emph{Lefschetz fixed-point theorem}, and axiom 5 
+is called \emph{Poincar\'e duality}. Note that this is not the standard way of 
+defining a Weil cohomology theory (these axioms are a bit weaker than usual). 
+
+There are plenty examples of baby Weil cohomology theories. If 
+$\kappa\subset \mathbb C$, then $\h^i(X) = \h_\text{dR}^i(X(\mathbb C),\mathbb C)$ 
+and $\h^i(X)=\h_\text{sing}^i(X(\mathbb C),\mathbb Q)$ work. On the other hand, 
+if $\kappa=\mathbb F_p$, we can set $\h^i(X)=\h_\text{\'et}^i(X,\mathbb Q_\ell)$ 
+for $\ell\ne p$, or $\h^i(X)=\h_\text{crys}^i(X/\mathbb Q_p)$. A more computationally 
+tractable theory is rigid cohomology, which also takes values in $\mathbb Q_p$-vector 
+spaces. One can show that there are no Weil cohomology theories on 
+$\mathsf{Var}_{\mathbb F_p}$ with values in $\mathbb Q$-vector spaces. For, there exist 
+elliptic curves with endomorphism ring a four-dimensional division algebra over 
+$\mathbb Q$. This would have to act on $\h^1(E)$, which is two-dimensional, a 
+contradiction. 
+
+
+We need to define $\tr(f^*,\h(X))$. Let $k$ be a field, and let 
+$\mathsf{grVect}_k$ be the category of finite-dimensional $\dZ$-graded 
+$k$-vector spaces. Let $\mathsf{grVect}_k^\circlearrowleft$ be the category of 
+``graded vector spaces with endomorphisms.'' We define 
+$\tr,\det:\mathsf{grVect}_k^\circlearrowleft\to k$ by 
+\begin{align*}
+  \tr(f,V) &= \sum (-1)^i \tr(f^i,V^i) \\
+  \det(f,V) &= \prod \det(f^i,V^i)^{(-1)^i}
+\end{align*}
+A key fact is that $\tr$ and $\det$ factor through 
+$K(\mathsf{grVect}_k^\circlearrowleft)$. An even more crucial fact is that 
+we have an equality of formal power series:
+\[
+  t\frac{d}{dt}\log \frac{1}{\det(1-f t,V)} = \sum_{n\geqslant 1} \tr(f^n,V^n) t^n
+\]
+This is proved by noting that we can assume $k$ is algebraically closed. Since 
+$K(\mathsf{grVect}_k^\circlearrowleft)$ is generated by one-dimensional spaces 
+in that case, it suffices to show that for $f:k\to k$ being multiplication by 
+$\lambda$, the identity holds. But this is trivial. 
+
+It now follows trivially from axiom 4 of a baby Weil cohomology theory that 
+\[
+  Z(X,f,t) = \frac{1}{\det\left(1-f^* t,\h(X)\right)}
+\]
+We need to show that each $P_i(X,t) = \det(1-f^* t,\h^i(X))$ is actually in 
+$\dZ[t]$. For that, we need a little bit about Hankel determinants. 
+
+Let $f\in k\llbracket t\rrbracket$; we are interested in a criterion for $f$ 
+to be rational. Suppose we have $f = g/h$ with $g,\in k[t]$. Then 
+$h f = g$, and writing $h=\sum h_i t^i$, we get that 
+\[
+  \sum_{n\geqslant 0} \left(\sum_{i=0}^{\deg(h)} h_i f_{n-i} \right) t^n = g
+\]
+In other words, the sums $\sum h_i f_{n-i}$ are zero for $n\gg 0$. We have 
+essentially proved that for a power series $f$ to be rational, it is necessary 
+and sufficient for there to exist a sequence $(h_0,\dots,h_d)$ such that for 
+$n$ sufficiently large, we have $\sum_{i=0}^d h_i f_{n-i} = 0$. But this 
+condition holds for a field if and only it holds for some subfield. In other 
+words, $Z(X,f,t)\in \mathbb{Q}\llbracket t\rrbracket\cap k(t)$ implies 
+$Z(X,f,t) \in \mathbb{Q}(t)$. 
+
+All that remains it to prove the functional equation. Our hypothesis on the 
+trace map implies that for $x\in X$, we have 
+$\tr(\operatorname{cl}) = \deg(x) = 1$, so $\operatorname{cl}(x)\ne 0$. Since 
+$\h^{2 d}(X)$ is one-dimensional, it is generated by $\operatorname{cl}(x)$ 
+for any $x\in X$. Now, if $f:X\to X$ is finite, then there is some $x\in X$ 
+such that $f^{-1}(x)$ has size $\deg(f)$. One then computes 
+\[
+  \tr(f^*\operatorname{cl}(x)) = \tr(\operatorname{cl}(f^* x)) = \deg(f^* x) = \deg(f)
+\]
+It follows that $f^*:\h^{2 d}(X)\to \h^{2 d}(X)$ is multiplication by 
+$\deg(f)$. We now use a lemma from linear algebra:
+
+\paragraph{Lemma}
+Let $U,V$ be vector spaces of dimension $r$ with endomorphisms $f,g$. If there 
+is a perfect pairing $\langle \cdot,\rangle$ between $U$ and $V$ so that 
+$\langle f u,g v\rangle = \lambda\langle u,v\rangle$ for all $u,v$, then 
+\[
+  \det(1 - f t,U) = \frac{(-\lambda t)^r}{\det(g,V)} \det\left(1-\frac{g}{t\lambda},V\right)
+\]
+and
+\[
+  \det(f,U)\det(g,V) = \lambda^r
+\]
+One proves the lemma by assuming the field is algebraically closed, and 
+conjugating $f$ so that it is upper triangular. 
+
+We now compute
+\begin{align*}
+  \det(1-f^* t,\h(X)) 
+    &= \prod_{i=0}^{2 d} \det(1-f^* t,\h^i(X))^{(-1)^i} \\
+    &= \prod_{i=0}^{2 d} \left(\frac{(-\deg(f) t)^{h^i(X)}}{\det(f^*,\h^i(X))}\right)^{(-1)^i} \det\left(1-\frac{f^*}{t\deg(f)},\h^{2 d-i}(X)\right)^{(-1)^{2 d-i}} \\
+    &= (-\deg(f) t)^{\sum (-1)^i h^i(X)} \det\left(1-\frac{f^*}{\deg(f)t},\h(X)\right) \prod_{i=0}^{d}\left(\det(f^*,\h^i)\det(f^*,\h^{2 d-i})\right)^{(-1)^i} \\
+    &= (-\deg(f) t)^{\tr(1,\h(X))} \det\left(1-\frac{f^*}{\deg(f)t},\h(X)\right) \prod_{i=0}^{d-1} (\deg f)^{-(-1)^i h^i(X)} \cdot (\deg f)^{-(-1)^d h^d(X)/2}
+\end{align*}
+By the Lefschetz fixed point theorem, $\tr(1,\h(X)) = (\Delta^2) = \chi$, so
+this reduces to 
+\[
+  Z\left(X,f,\frac{1}{t\cdot \deg f}\right) = \pm t^\chi (\deg f)^{\chi/2} Z(X,f,t)
+\]
+
+
+
+
+
+\end{document}

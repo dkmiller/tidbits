@@ -1,0 +1,124 @@
+\documentclass{article}
+
+\title{Compatible families of Galois representations}
+\author{Daniel Miller}
+
+\usepackage{amsmath,amssymb,fullpage}
+\DeclareMathOperator{\gl}{GL}
+\newcommand{\dA}{\mathbb{A}}
+\newcommand{\dB}{\mathbb{B}}
+\newcommand{\fo}{\mathfrak{o}}
+\newcommand{\frob}{\varphi}
+\newcommand{\scomp}{\mathsf{C}}
+
+\begin{document}
+\maketitle
+
+
+
+
+
+Let $K/k$ be an extension of global fields. We say that a continuous 
+homomorphism $\rho:G_K\to \gl(k_v)$ is \emph{rational at $w$} if $\rho(I_w)=1$ 
+and the polynomial 
+\[
+  \Phi_{\rho,w} = \det(T\cdot 1-\rho(\frob_w)) \in k_v[T]
+\]
+is actually in $K[T]$. 
+
+Now let $\{\rho_v:G_K\to \gl_n(k_v)\}$ be a collection of continuous 
+homomorphisms, where $v$ ranges over the places of $k$. We say that 
+$\{\rho_v\}$ is a \emph{(strictly) compatible system} if there is a finite set 
+$S$ of places of $k$ such that 
+\begin{enumerate}
+  \item if $v\notin S$, then $\rho_v$ is rational at $w$ for all $w\nmid v$
+  \item if $u,v\notin S$, then for all $w\nmid u,v$, we have 
+    $\Phi_{\rho_u,w} = \Phi_{\rho_v,w}$
+\end{enumerate}
+We will write $\rho=\rho_\bullet=\{\rho_v\}$ for such a family. We let 
+$\scomp$ be the set of all strictly compatible systems. Note that if 
+$\rho=\{\rho_v\}\in\scomp$, there is a well-defined positive integer 
+$d=\dim\rho$ defined by $d=\dim\rho_v$ for every $v$. 
+
+We would like $\scomp$ to be a neutral Tannakian category, as this would 
+allow us to define a group ``$\pi_1(\scomp)$'' which would classify strictly 
+compatible families of representations. 
+
+The problem is: \emph{what is the correct notion of a morphism 
+$f:\alpha\to\beta$ for $\alpha,\beta\in\scomp$?} Surely it involves a 
+collection $\{f_v:\alpha_v\to \beta_v\}$ of $G_K$-linear maps. But we would 
+also want some kind of ``compatibility condition.'' If we allow the $f_v$ to 
+be arbitrary, then $\scomp$ does not have quotients (just let $f_v=0$ for half 
+of the $v$, and $f_v=1$ for the other half). We will attempt to imitate 
+Deligne's construction of mixed motives in \cite[1.4]{De}. Let $\dA^f=\dA_k^f$ 
+be the ring of finite adeles over $k$. Recall that elements of $\dA^f$ are 
+collections $(a_v)\in \prod k_v$ with $a_v\in\fo_v$ for all but finitely many 
+$v$. Instead of a family $\{\rho_v:G_K\to \gl_n(k_v)\}$ we will look at a 
+single (continuous) representation $\rho:G_K\to \gl_n(\dA^f)$. Of course, this 
+means we have to say what the topology on $\dA^f$ is. Essentially, note that 
+(as a set) $\dA^f = \varinjlim \dA^f(S)$, where $S$ ranges over all finite 
+sets of places of $k$ and 
+$\dA^f(S)=\prod_{v\in S} k_v \times \prod_{v\notin S} \fo_v$. We simply 
+require that each $\dA^f(S)$ be an open subring of $\dA^f$. We now need to 
+decide what it means for $\rho:G_K\to\gl_n(\dA^f)$ to be ``unramified'' or 
+``compatible.'' 
+
+First, we introduce a new ring $\dB$. As a set, $\dB$ consists of all 
+sequences $(a_v)\in \dA_k^f$ such that there is some finite set $S$ of places 
+of $k$, and $a\in K$ such that $a_v=a$ for all $v\notin S$. We assume $K/k$ is 
+Galois -- that makes the field ``$K\cap k_v$'' well-defined. We give 
+$\dB\subset \dA^f$ the subspace topology. It is a corollary of the strong 
+approximation theorem \cite[III.1, ex.1]{Neu} that $\dB$ is dense in $\dA^f$. 
+I would like to say that a ``compatible family of representations'' is a 
+continuous representation $\rho:G_K\to \gl_n(\dA^f)$ with the characteristic 
+polynomial of $\rho(\frob_w)$ an element of $\dB[T]$ for all but finitely 
+many $w$. This, however, includes no information about ramification. So, we 
+will keep that information separate, i.e. 
+
+A \emph{strictly compatible family} is a continuous representation 
+$\rho:G_K\to \gl_n(\dA_k^f)$ such that there exists a finite set $S$ with 
+\begin{enumerate}
+  \item for $v\notin S$, $\rho_v$ is unramified at $w$ for all $w\nmid v$ 
+  \item for $u,v\notin S$ and $w\nmid u,v$, $\Phi_{\rho_u,w}=\Phi_{\rho_v,w}$. 
+\end{enumerate}
+We may have to stipulate that if $v\in S$ and $u$ has the same residue 
+characteristic as $v$, then $u\in S$. 
+
+The ring $\dB$ may still be useful -- this time for defining morphisms 
+in $\scomp$. A preliminary definition is follows: a morphism $f:\rho\to\eta$ 
+is a $G_k$-linear map such that if $n=\dim \rho$, $m=\dim\eta$, we have 
+\[
+  f\in M_{m\times n}(\dB)
+\]
+It is easy to check that if $\rho,\eta\in \scomp$, then 
+$\rho\oplus\eta\in \scomp$. Naively, we will define $\rho^*$ in the usual way 
+-- the only question is whether the characteristic polynomials of Frobenii 
+behave well. Suppose $A$ is an invertible matrix. Then the characteristic 
+polynomial of $A$ is $\prod (T-\lambda)$ where $\lambda$ runs over the 
+eigenvalues of $A$ (with multiplicity). If $Ax=\lambda x$, then 
+$A^{-1} x = \lambda^{-1} x$, so the characteristic polynomial of 
+$A^{-1}$ is $\prod (X-\lambda^{-1})$. Essentially by the fundamental theorem 
+of symmetric polynomials, this will be expressible in terms of the 
+coefficients of the characteristic polynomial of $A$. Thus if 
+$\Phi_{\rho_v,w}$ is $K$-rational, so will be $\Phi_{\rho_v^*,w}$. Moreover, 
+$\Phi_{\rho_v^*,w}$ only depends on the coefficients of $\Phi_{\rho_v,w}$, so 
+$\rho^*\in \scomp$ whenever $\rho\in\scomp$. Finally, similar considerations 
+using symmetric polynomials show that if $\rho,\eta\in \scomp$, so is 
+$\rho\otimes\eta$. We can define $\hom(\rho,\eta)=\rho^*\otimes\eta$, but I 
+think that this forces us to not have quotients in $\scomp$.
+
+
+
+
+
+\begin{thebibliography}{9}
+  \bibitem{De} Deligne, P. \emph{Le groupe fondamental de la droite 
+    projective moins trois points}. 
+  \bibitem{Neu} Neukirch, J. \emph{Algebraic number theory}. 
+\end{thebibliography}
+
+
+
+
+
+\end{document}
