@@ -1,0 +1,118 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage[a5paper,margin=1cm]{geometry}
+\newcommand{\bR}{\mathbf{R}}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+
+\title{Mathematical thoughts on statistics}
+\author{Daniel Miller}
+
+\begin{document}
+\maketitle
+
+
+
+
+
+\section{General definitions}
+
+Let $\bR$ be the set of real numbers, $R=R(\bR)$ the space of Radon measures on 
+$\bR$. Then $R$ has a ``positive subspace'' $R^+$ consisting of all 
+non-negative Radon measures, and if we put $R^-=-R^+$, then $R=R^++R^-$. Any 
+$\nu\in R$ has a unique decomposition $\nu = \nu^++\nu^-$. There is a natural 
+norm on the vector space $R$ given by $|\nu| = \nu^+(1) - \nu^-(1)$. 
+
+Let $P=R^{+,|\cdot|=1}$ be the space of probability measure on $\bR$. We can 
+also interpret $P$ as the positive subset of $R^{\cdot(1)=1}$, so its tangent 
+space is $R^{\cdot(1)=0}$, the space of Radon measures $\nu$ with 
+$\nu(1) = 0$. 
+
+
+
+
+
+\section{Statistics and test statistics}
+
+\begin{definition}
+A \emph{statistic} is a function $T\colon P\to \bR$. 
+\end{definition}
+
+In practice, we are never actually given the true probability distribution 
+underlying data, so the best we can do is estimate it. 
+
+\begin{definition}
+An \emph{estimate} is a family $T_\bullet = (T_n)_{n\geqslant 1}$, where 
+$T_n\colon \bR^n \to \bR$. 
+\end{definition}
+
+Given $n$ points $x_1,\dots,x_n$ drawn from $\nu\in P$, we estimate 
+$T(\nu)$ by $T_n(x_1,\dots,x_n)$. The distribution of the $T_n(x_1,\dots,x_n)$ 
+is ${T_n}_\ast \nu^{\times n}$. We also call $T_n(x_1,\dots,x_n)$ the 
+\emph{test statistic}. 
+
+\begin{definition}
+The estimate $T_\bullet$ is \emph{consistent} if ${T_n}_\ast\nu^{\times n}$ 
+converges to $\delta_{T(\nu)}$ in probability for any $\nu$. 
+\end{definition}
+
+Write $t$ for the identity function $\bR\to \bR$. Our first example of a 
+statistic is the \emph{mean}, $E\colon P\to \bR$, given by 
+$E(\nu) = \nu(t)$. Another example is the \emph{variance}, given by 
+$V(\nu) = \nu((t-E(\nu))^2) = \nu(t^2) - \nu(t)^2$. 
+
+\begin{definition}
+The estimate $T_\bullet$ is \emph{unbiased} if 
+$E({T_n}_\ast\nu^{\times n}) = T(\nu)$ for all $\nu\in P$ and for all 
+$n\geqslant 1$. 
+\end{definition}
+
+Ideally, there will be some kind of theoretical ``best unbiased estimate.''
+
+We will also generally assume our estimates are \emph{permutation invariant}, 
+that is $T_n(x_1,\dots,x_n) = T_n(x_{\sigma(1)},\dots,x_{\sigma(n)})$ for all 
+permutations $\sigma$. 
+
+Try $\nu = \delta_x$; then 
+${T_n}_\ast \delta_x^{\times n} = \delta_{T_n(x,\dots,x)}$. Unbiasedness tells 
+us that at the very least, $T_n(x,\dots,x) = T(\delta_x)$. This is our first 
+example of the ``plug-in estimate.'' 
+
+Now try $\nu = \frac 1 2 (\delta_{x_1} + \delta_{x_2})$. Then 
+\[
+	{T_n}_\ast \nu^{\times n} 
+		= 2^{-n} \sum_{\sigma:[n]\to [2]} \delta_{T_n(x_{\sigma(1)},\dots,x_{\sigma(n)})} ,
+\]
+which has expected value (mean) 
+\begin{align*}
+	2^{-n} \sum_{\sigma:[n]\to [2]}T_n(x_{\sigma(1)},\dots,x_{\sigma(n)}) 
+		&= 2^{-n}\sum_{k=0}^n \binom n k T_n(\overbrace{x_1,\dots,x_1}^k,\overbrace{x_2,\dots,x_2}^{n-k})
+\end{align*}
+which we want to equal $\frac 1 2 (x_1 + x_2)$. 
+
+What can we say: one should have $T_1(x) = T(\delta_x)$. 
+
+
+
+
+
+\section{Linear statistics}
+
+A statistic $T$ is \emph{linear} if it extends to a linear map 
+$T\colon R\to \bR$. Equivalently, whenever $a_1,\dots,a_n\geqslant 0$ and 
+$\sum a_i = 1$ and $\nu_i\in P$, then $T(\sum a_i \nu_i) = \sum a_i T(\nu_i)$. 
+
+Any reasonable linear statistic will be of the form $T(\nu) = \nu(f)$ for some 
+$f$ a function on $\bR$. 
+
+Let's see if there is a ``best unbiased estimate'' for linear statistics of 
+this form. 
+
+
+
+
+
+\end{document}
+
