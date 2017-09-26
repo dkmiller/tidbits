@@ -1,0 +1,43 @@
+---
+title: "Income analysis"
+output: html_notebook
+---
+```{r imports, include=FALSE, message=FALSE}
+library(ggvis)
+library(tidyverse)
+```
+
+Let's import the data:
+```{r importdata, warning=FALSE, message=FALSE}
+transactions <- read_csv('/Users/dm635/Downloads/transactions.csv') %>% 
+  rowwise() %>%
+  mutate(Date = as.Date(`Posting Date`, format='%m/%d/%Y'))
+```
+
+
+Here's a plot of money.
+```{r plotstuff}
+transactions %>%
+  ggvis(~Date, ~Balance) %>%
+  layer_points() %>%
+  scale_datetime('x', nice='month')
+```
+
+```{r definetables}
+after.merge <- transactions %>% filter(Date > as.Date('2017-01-20')) 
+before.msft <- transactions %>% filter(Date < as.Date('2017-06-12'))
+after.msft <- transactions %>% filter(Date > as.Date('2017-07-12'))
+```
+
+```{r aftermerge}
+lm(Balance ~ Date, data = after.merge) %>% summary
+```
+
+```{r beforemsft}
+lm(Balance ~ Date, data = before.msft) %>% summary
+```
+
+```{r aftermsft}
+lm(Balance ~ Date, data = after.msft) %>% summary
+```
+
