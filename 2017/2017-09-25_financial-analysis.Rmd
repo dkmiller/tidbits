@@ -1,43 +1,43 @@
 ---
 title: "Income analysis"
-output: html_notebook
+output:
+  html_document: default
+  html_notebook: default
 ---
 ```{r imports, include=FALSE, message=FALSE}
 library(ggvis)
+library(lubridate)
 library(tidyverse)
 ```
 
-Let's import the data:
+Let's import the data (downloaded from Chase bank):
 ```{r importdata, warning=FALSE, message=FALSE}
-transactions <- read_csv('/Users/dm635/Downloads/transactions.csv') %>% 
-  rowwise() %>%
-  mutate(Date = as.Date(`Posting Date`, format='%m/%d/%Y'))
+transactions <- read_csv('/Users/dm635/Downloads/Chase3168_Activity_20180101.csv') %>%
+  mutate(Date = as.POSIXct(`Posting Date`, format='%m/%d/%Y'))
 ```
 
-
-Here's a plot of money.
+What's the obvious first thing to track? Plot money over time.
 ```{r plotstuff}
 transactions %>%
   ggvis(~Date, ~Balance) %>%
-  layer_points() %>%
-  scale_datetime('x', nice='month')
+  layer_points
 ```
 
+Now we'll split the data into three categories: just after we merged our accounts, and then two subcategories: before Microsoft, and after Microsoft.
 ```{r definetables}
 after.merge <- transactions %>% filter(Date > as.Date('2017-01-20')) 
-before.msft <- transactions %>% filter(Date < as.Date('2017-06-12'))
-after.msft <- transactions %>% filter(Date > as.Date('2017-07-12'))
+before.msft <- after.merge %>% filter(Date < as.Date('2017-06-12'))
+after.msft <- after.merge %>% filter(Date > as.Date('2017-07-12'))
 ```
 
-```{r aftermerge}
-lm(Balance ~ Date, data = after.merge) %>% summary
-```
 
-```{r beforemsft}
-lm(Balance ~ Date, data = before.msft) %>% summary
+Let's try potting savings per month.
+```{r roundmonth}
+transactions %>% 
+  mutate(Month = floor_date(Date, unit = 'months')) %>%
+  group_by(Month) %>%
+  summarize(Savings = sum(Amount)) %>%
+  ggvis(~Month, ~Savings) %>%
+  layer_points
 ```
-
-```{r aftermsft}
-lm(Balance ~ Date, data = after.msft) %>% summary
-```
-
+There's a lot of noise, but hopefully we'll be saving (after tithing) $3k / month.
