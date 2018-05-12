@@ -1,14 +1,10 @@
 library(tidyverse)
-
+library(stats)
 
 discrepancy<- function(xs) {
   #' Computes the discrepancy of a sequence (values assumed to be in the range
   #' [0,1]).
-  n = length(xs)
-  xs.sorted = sort(xs)
-  ys = c(1:n)/n
-  ys_minus = ys - 1/n
-  max(abs(xs.sorted - ys), abs(xs.sorted - ys_minus))
+  ks.test(xs, 'punif')$statistic
 }
 
 # Table with chapter numbers and their lengths in verses.
@@ -33,9 +29,12 @@ pain.sayings.indices <- pain.sayings %>%
 # Normalize those indices to lie in the interval [0,1].
 pain.sayings.normalized <- pain.sayings.indices$verse.index / 915
 
+# The Kolmogorov-Smirnov statistic is 0.24669, which translates to
+# p-value = 0.002512.
+ks.test(pain.sayings.normalized, 'punif')
 
-# This is 0.2466852, which is quite large.
-pain.sayings.discrepancy <- discrepancy(pain.sayings.normalized)
+
+## -------- Everything below is (strictly speaking) unnecessary ---------------
 
 
 # Create a large number of "example sequences of pain sayings", all
@@ -45,7 +44,7 @@ num.examples <- 100000
 examples <- matrix(runif(num.verses * num.examples), num.examples) %>%
   as_tibble
 
-# Compute the discrepancy of all those examples
+# Compute the discrepancy of all those examples.
 discrepancy.examples <- apply(examples, 1, discrepancy)
 
 # Plot a histogram to see the distribution of discrepancies.
