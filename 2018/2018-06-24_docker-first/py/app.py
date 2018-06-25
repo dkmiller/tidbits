@@ -1,10 +1,11 @@
 '''
-Simple Flask application. From:
-https://docs.docker.com/get-started/part2/#apppy
+Simple Python application with a "non-standard" set of imports.
 '''
 
 import jinja2
 import os
+import redis
+import sys
 
 t = jinja2.Template('- {{hi}} -')
 
@@ -17,3 +18,6 @@ envvar = os.getenv('NAME')
 
 print('Environment variable:')
 print(envvar)
+
+print('Command line arguments:')
+print(', '.join(sys.argv))

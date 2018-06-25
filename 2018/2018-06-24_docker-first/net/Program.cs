@@ -6,5 +6,5 @@
 class Program
 {
     /// <summary>Entry point.</summary>
-    static void Main(string[] args) => WriteLine($"Hello from C# {string.Join(",", args)}!");
+    static void Main(string[] args) => WriteLine($"Hello from C#: {string.Join(",", args)}!");
 }

@@ -9,16 +9,11 @@ for a list of useful Docker images, e.g. ones that solve
 **_Goal:_** find a way (using Docker) to run .NET Core (or a specific
 .NET Framework version), Python, and Gradle all in parallel.
 
+See [this question](https://stackoverflow.com/a/24958548/) for an
+explanation of `ADD` vs. `COPY` in Docker.
+
 ## Build and run
 
-Follow the script below:
-
-```powershell
-# Build
-docker build --tag friendlyhello .
-
-# Run
-docker run friendlyhello
-```
-
-Finally, `docker container ls` to verify that the container has stopped.
+The script [Run.ps1](./Run.ps1) builds and runs Docker images using
+both Python and .NET. It's a lightweight proxy for a Makefile which
+could call such code.
