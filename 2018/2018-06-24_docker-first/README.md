@@ -6,6 +6,9 @@ Playing around with using Docker on Windows, following their
 for a list of useful Docker images, e.g. ones that solve
 [this issue](See https://github.com/docker/for-win/issues/1658).
 
+**_Goal:_** find a way (using Docker) to run .NET Core (or a specific
+.NET Framework version), Python, and Gradle all in parallel.
+
 ## Build and run
 
 Follow the script below:
