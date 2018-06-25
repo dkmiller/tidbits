@@ -1,0 +1,21 @@
+/*
+Follow:
+https://gmigdos.wordpress.com/2015/04/26/gradle-easily-download-all-jar-dependencies-for-a-project/
+in using Gradle to download a random JAR file.
+*/
+
+apply plugin: 'application'
+
+mainClassName = 'dummy'
+
+distZip {
+    archiveName 'foo.zip'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile 'org.springframework:spring-web:5.0.2.RELEASE'
+}
