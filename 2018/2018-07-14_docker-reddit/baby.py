@@ -11,7 +11,10 @@ def main(args):
     subreddit = reddit.subreddit('learnpython')
 
     for submission in subreddit.hot(limit=5):
-        print(submission)
+        print("Title: ", submission.title)
+        print("Text: ", submission.selftext)
+        print("Score: ", submission.score)
+        print("---------------------------------\n")
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Run the baby Reddit bot.')
