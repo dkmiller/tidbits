@@ -12,3 +12,13 @@
 *.run.xml
 *.Rhistory
 *.pyc
+
+# .NET artifacts
+bin
+obj
+
+# Visual Studio Code
+.vscode
+
+# Visual Studio
+.vs
