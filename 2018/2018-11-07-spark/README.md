@@ -19,6 +19,8 @@ docker-compose up
 docker exec -it docker-spark_master_1 /bin/bash
 ```
 
+You can visit the Spark UI at http://localhost:8080, and see the jobs http://localhost:4040/jobs/.
+
 From the Spark window:
 
 ```bash
