@@ -1,17 +1,14 @@
 <#
-TODO: documentation.
+Prepare and start a container running a local Spark cluster with only one
+master and worker. The logs for that cluster will be in a new PowerShell
+window.
 #>
 
-$Current = $PWD
+Start-Process -WorkingDirectory $PSScriptRoot powershell {
+    # Ovewrite the Git submodule's Docker compose file with a fixed one.
+    Copy-Item docker-compose.yml docker-spark
 
-try {
-    Copy-Item $PSScriptRoot/docker-compose.yml docker-spark
-    Set-Location $PSScriptRoot/docker-spark
+    # Start the Spark instance.
+    Set-Location docker-spark
     docker-compose up
-} catch {
-    Write-Host 'Something went wrong!'
-} finally {
-    Set-Location $Current
 }
-
-

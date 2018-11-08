@@ -1,21 +1,20 @@
 # Spark
 
-First steps with Apache Spark, following:
+First steps with Apache Spark on a local machine, following
+_[Learning Apache Spark 2](https://www.safaribooksonline.com/library/view/learning-apache-spark/9781785885136/)_,
+by Muhammad Asif Abbasi.
 
-- https://github.com/gettyimages/docker-spark
-- _[Learning Apache Spark 2](http://a.co/d/5X8Bb7b)_, by Muhammad Asif Abbasi.
-
-You need the current version of Docker for Windows (&ge; `18.06.1-ce`) installed
-and running.
+You need the current version of [Docker for Windows](https://docs.docker.com/docker-for-windows/install/)
+(&ge; `18.06.1-ce`) installed and running.
 
 ## Running
 
 Try running:
 
 ```powershell
-docker-compose up
+.\Run.ps1
 
-# In a separate terminal window:
+# After seeing goodness in the logs of the new window:
 docker exec -it docker-spark_master_1 /bin/bash
 ```
 
@@ -24,17 +23,17 @@ You can visit the Spark UI at http://localhost:8080, and see the jobs http://loc
 From the Spark window:
 
 ```bash
+# Start a Spark REPL.
 ./bin/spark-shell
+
+# Run an example Spark program starting from a pre-existing fat JAR.
+./bin/spark-submit \
+  --class org.apache.spark.examples.SparkPi \
+  --master local[2] \
+  examples/jars/spark-examples_2.11-2.3.1.jar 10
 ```
 
 ## Troubleshooting
-
-If you encounter:
-
-> ERROR: client version 1.21 is too old. Minimum supported API version is 1.24, please upgrade your client to a newer version
-
-then use the local copy of `docker-compose.yml` following:
-[client version 1.22 is too old. Minimum supported API version is 1.25](https://github.com/docker/compose/issues/5103)
 
 If `Run.ps1` is hanging, follow [this article](https://docs.docker.com/engine/reference/commandline/system_prune/)
 and run

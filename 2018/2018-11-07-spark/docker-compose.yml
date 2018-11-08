@@ -1,5 +1,7 @@
 # Fixed version of:
 # https://github.com/gettyimages/docker-spark/blob/master/docker-compose.yml
+# Fix followed:
+# https://github.com/docker/compose/issues/5103
 version: "2.2"
 services:
   master:
