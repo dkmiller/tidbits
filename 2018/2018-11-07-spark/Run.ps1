@@ -10,5 +10,6 @@ Start-Process -WorkingDirectory $PSScriptRoot powershell {
 
     # Start the Spark instance.
     Set-Location docker-spark
+    docker system prune --force
     docker-compose up
 }
