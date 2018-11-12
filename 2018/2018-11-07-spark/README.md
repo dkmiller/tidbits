@@ -41,3 +41,9 @@ and run
 ```powershell
 docker system prune --force
 ```
+
+If `docker-spark` isn't syncing, follow [this answer](https://stackoverflow.com/a/1032653) and run:
+
+```powershell
+git submodule update --recursive
+```
