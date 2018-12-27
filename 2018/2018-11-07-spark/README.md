@@ -44,3 +44,15 @@ If `docker-spark` isn't syncing, follow [this answer](https://stackoverflow.com/
 ```powershell
 git submodule update --recursive
 ```
+
+## Notes
+
+Use [`@switch` annotation](https://stackoverflow.com/q/23985248) when possible.
+
+Multiple cases on one line via `|`.
+
+Generally, `match` statements are awesome!
+
+Try/catch blocks use `match` expressions.
+
+You can create your own control structures, but may want to annotate with `@tailrec`.
