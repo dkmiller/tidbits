@@ -7,7 +7,8 @@ _[Scala Cookbook](https://www.safaribooksonline.com/library/view/scala-cookbook/
 by Alvin Alexander.
 
 You need the current version of [Docker for Windows](https://docs.docker.com/docker-for-windows/install/)
-(&ge; `18.06.1-ce`) installed and running.
+(&ge; `18.06.1-ce`, installable [via Chocolatey](https://chocolatey.org/packages/docker-desktop))
+installed and running.
 
 ## Running
 
@@ -47,6 +48,10 @@ git submodule update --recursive
 
 ## Notes
 
+Use `:quit` to exit the Scala shell.
+
+### Control Structures
+
 Use [`@switch` annotation](https://stackoverflow.com/q/23985248) when possible.
 
 Multiple cases on one line via `|`.
@@ -56,3 +61,34 @@ Generally, `match` statements are awesome!
 Try/catch blocks use `match` expressions.
 
 You can create your own control structures, but may want to annotate with `@tailrec`.
+
+### Classes
+
+The body of a class is _actually_ the default constructor.
+
+You can call the generated `_$eq` methods directly.
+
+Case class == record types?
+
+Add constructors to case classes via `apply()` methods. More generally, it looks
+like `apply` lets you overload the constructor :open_mouth:.
+
+For private primary constructor, put `private` _after_ class name.
+
+[Companion Objects](https://stackoverflow.com/q/609744) seem like a substitute for
+static-style stuff.
+
+Scala supports C\#-style named and default parameters.
+
+Use `propertyName_` to override the setter.
+
+Making a member `private` keeps it from having getters / setters.
+
+[Object-private members](https://alvinalexander.com/scala/how-to-control-scala-method-scope-object-private-package)
+(`private[this]`) are "really" private. In C\# and Scala both, private
+members can be accessed by other instances of the same class.
+
+Making a `val` member `lazy` means it doesn't get a value assigned until the
+value is needed.
+
+Scala does generics via `[ ]`, unlike `< >` for C\#.
