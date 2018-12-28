@@ -165,3 +165,31 @@ You can rename imports (nice!) and even class members (:dizzy_face:).
 You can hide specific imports via `import a.{b => _, _}`.
 
 Nothing special needed for static imports (_a la_ C\#'s `using static`).
+
+### Traits
+
+High-level: they're like interfaces in C\# and Java.
+
+A trait member without type declarations is assumed to be of type `Unit`,
+with no parameters.
+
+Traits (unlike C\# or Java) can have concrete members.
+
+Traits can inherit _anything_ (classes or other traits).
+
+Traits can place restrictions on subtypes via `this: T =>`.
+
+### Functional Programming
+
+In Scala, _everything_ is an expression which yields a value.
+
+Anonymous functions via `=>` just like C\#.
+
+Specify function types by `() => T`, instead of `Function<T>` in C\#.
+
+Generic methods the obvious way via `def exec[T](f:(T) => Unit, t: T) : Unit = f(t)`.
+
+You can curry via the magical `_`.
+
+Scala has ["partial functions"](https://www.scala-lang.org/api/current/scala/PartialFunction.html)
+as a commonly used thing.
