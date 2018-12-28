@@ -193,3 +193,30 @@ You can curry via the magical `_`.
 
 Scala has ["partial functions"](https://www.scala-lang.org/api/current/scala/PartialFunction.html)
 as a commonly used thing.
+
+### Collections
+
+There are _lots_ of different collection traits (similar to C\#), but there doesn't
+appear to be a "best" (unlike C\#, where `IEnumerable<T>` reigns).
+
+Traversable is even more "general" than iterable. Deeper into the inheritance tree, there
+is a dizzying array of all the standard stuff (maps, sets, lists, ...).
+
+Scala has a _lot_ of methods for dealing with collections (more than C\# with LINQ).
+
+Scala's `fold` and `reduce` seem similar to LINQ's aggregation.
+
+Arithmetic operators (`:+`, `+=`, `++=`, ...) work for collections.
+
+Beautiful syntax for creating dictionaries: `Map("a" -> 1, "b" -> 2)`, and doing arithmetic on maps.
+
+It's important to understand the perforamnce of specific operations relative to
+a specific collection type.
+
+The `Vector` class is a good general-purpose immutable data structure, while `ArrayBuffer`
+is a good "go-to" for mutable data structures.
+
+The difference between "for / yield" and "map / flatMap"
+[seems to involve monads](https://stackoverflow.com/a/14602182).
+
+Make strings out of collections using `mkString` (better than C\#'s `string.Join`).
