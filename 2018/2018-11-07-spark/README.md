@@ -31,6 +31,12 @@ From the Spark window:
   examples/jars/spark-examples_2.11-2.3.1.jar 10
 ```
 
+Alternatively, to run a simple Scala script locally, enter
+
+```powershell
+.\Run.ps1 -File .\Hello.scala arg0 arg1 arg2
+```
+
 ## Troubleshooting
 
 If `Run.ps1` is hanging, follow [this article](https://docs.docker.com/engine/reference/commandline/system_prune/)
@@ -92,3 +98,38 @@ Making a `val` member `lazy` means it doesn't get a value assigned until the
 value is needed.
 
 Scala does generics via `[ ]`, unlike `< >` for C\#.
+
+Class inheritance via `extends`.
+
+Auxilary constructors _can't_ call a superclass constructor.
+
+Scala _does_ support abstract classes _a la_ C\#, but they're discouraged in favor
+of traits.
+
+### Methods
+
+Access modifiers are similar to C\#, except `private[packageName]` is used
+instead of `internal`.
+
+Tuple types behave just as in C\#, except you _can't_ have named tuple members.
+
+Declare methods without parentheses just as in C\# when declaring properties.
+
+Varargs (like C\# `params`) are declared via `*`.
+
+Annotate that your method will throw an exception via `@throws`.
+
+Scala supports [fluent interfaces](https://www.martinfowler.com/bliki/FluentInterface.html).
+
+Casting is done via `asInstanceOf[T]`, a bit more verbose than C\# or Java.
+
+Reflection via `classOf[T]`.
+
+"What am I" (_a la_ C\#'s `GetType()`) via `getClass`.
+
+### Objects
+
+Scala source code, e.g. [App.scala](https://github.com/scala/scala/blob/v2.12.8/src/library/scala/App.scala)
+is easily browsable.
+
+Singleton pattern via `object`.
