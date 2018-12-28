@@ -12,7 +12,7 @@ installed and running.
 
 ## Running
 
-Simply run [Run.ps1](./Run.ps1). It will initialize a single-instance Spark cluster
+Simply run [Spark.ps1](./Spark.ps1). It will initialize a single-instance Spark cluster
 in a minimized PowerShell window and enter that instance's bash prompt as soon as
 it is ready.
 
@@ -34,18 +34,12 @@ From the Spark window:
 Alternatively, to run a simple Scala script locally, enter
 
 ```powershell
-.\Run.ps1 -File .\Hello.scala arg0 arg1 arg2
-```
-
-To get local class files, run
-
-```powershell
-docker run -v "$($PWD):/src" bigtruedata/scala scalac /src/Hello.scala -d /src
+.\scala.ps1 Hello.scala arg0 arg1 arg2
 ```
 
 ## Troubleshooting
 
-If `Run.ps1` is hanging, follow [this article](https://docs.docker.com/engine/reference/commandline/system_prune/)
+If `Spark.ps1` is hanging, follow [this article](https://docs.docker.com/engine/reference/commandline/system_prune/)
 and run
 
 ```powershell

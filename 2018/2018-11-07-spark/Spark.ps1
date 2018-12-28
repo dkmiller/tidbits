@@ -4,19 +4,6 @@ master and worker. The logs for that cluster will be in a new PowerShell
 window.
 #>
 
-param(
-    $File
-)
-
-if ($File) {
-    # Linux-friendly path, following: https://stackoverflow.com/a/10974709 .
-    $File = (Get-Item '.\Hello.Scala' | Resolve-Path -Relative).Replace('\', '/')
-
-    # Pass arguments on following https://stackoverflow.com/a/22247408 , https://stackoverflow.com/a/782876 .
-    docker run -v "$($PWD):/src" bigtruedata/scala scala /src/$File $args
-    exit
-}
-
 Start-Process -WorkingDirectory $PSScriptRoot -WindowStyle Minimized powershell {
     # Ovewrite the Git submodule's Docker compose file with a fixed one.
     Copy-Item docker-compose.yml docker-spark
@@ -34,4 +21,4 @@ do {
 } until ((Test-NetConnection localhost -Port 8080).TcpTestSucceeded)
 
 # Enter the master's shell.
-docker exec -it docker-spark_master_1 /bin/bash
+docker exec --interactive --tty docker-spark_master_1 /bin/bash
