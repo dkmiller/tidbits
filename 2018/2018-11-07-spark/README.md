@@ -37,6 +37,12 @@ Alternatively, to run a simple Scala script locally, enter
 .\Run.ps1 -File .\Hello.scala arg0 arg1 arg2
 ```
 
+To get local class files, run
+
+```powershell
+docker run -v "$($PWD):/src" bigtruedata/scala scalac /src/Hello.scala -d /src
+```
+
 ## Troubleshooting
 
 If `Run.ps1` is hanging, follow [this article](https://docs.docker.com/engine/reference/commandline/system_prune/)
@@ -133,3 +139,22 @@ Scala source code, e.g. [App.scala](https://github.com/scala/scala/blob/v2.12.8/
 is easily browsable.
 
 Singleton pattern via `object`.
+
+Package objects seem like a magic way of putting package-specific "magic"
+in one place.
+
+### Packages
+
+They're working on [Scala 3](https://www.scala-lang.org/blog/2018/04/19/scala-3.html)
+(currently known as [dotty](http://dotty.epfl.ch/)).
+
+You can use `package` like C\#'s `namespace`, or at the top of a file without extra
+indentation (but only if there's at most one class in the file).
+
+Imports in three ways, `import a.b.c`, `import a.{b, d}`, and `import a._`.
+
+You can rename imports (nice!) and even class members (:dizzy_face:).
+
+You can hide specific imports via `import a.{b => _, _}`.
+
+Nothing special needed for static imports (_a la_ C\#'s `using static`).
