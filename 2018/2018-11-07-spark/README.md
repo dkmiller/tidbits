@@ -220,3 +220,14 @@ The difference between "for / yield" and "map / flatMap"
 [seems to involve monads](https://stackoverflow.com/a/14602182).
 
 Make strings out of collections using `mkString` (better than C\#'s `string.Join`).
+
+### Simple Build Tool (SBT)
+
+The [Decompilers online](http://www.javadecompilers.com/) site may be useful for
+examining the contents of artifacts.
+
+Run `.\sbt.ps1 run` from the root of this repo to build and run the baby Scala
+code under `src`. Run unit tests with `.\sbt.ps1 test` instead of `run`.
+
+[ScalaTest](http://www.scalatest.org/) seems like a reasonably standard unit
+testing framework.

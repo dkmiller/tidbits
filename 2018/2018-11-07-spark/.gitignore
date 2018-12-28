@@ -1,2 +1,6 @@
 # Java / Scala class files.
 *.class
+
+# Simple Build Tool (SBT) artifacts
+project
+target
