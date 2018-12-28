@@ -58,6 +58,13 @@ If `docker-spark` isn't syncing, follow [this answer](https://stackoverflow.com/
 git submodule update --recursive
 ```
 
+If you get an error:
+
+> image operating system "linux" cannot be used on this platform.
+
+then follow the instructions [here](https://github.com/docker/kitematic/issues/2696)
+to switch Docker to use Linux containers.
+
 ## Notes
 
 Use `:quit` to exit the Scala shell.
