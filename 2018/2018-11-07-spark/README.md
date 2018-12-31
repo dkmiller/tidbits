@@ -221,4 +221,56 @@ You can also install SBT [via Chocolatey](https://chocolatey.org/packages/sbt).
 [ScalaTest](http://www.scalatest.org/) seems like a reasonably standard unit
 testing framework.
 
-Main commands: `compile`, `package`, and `run`.
+Main commands: `compile`, `doc`, `package`, `run`, and `sbtVersion`.
+
+Following [this StackOverflow answer](https://stackoverflow.com/a/43103983),
+you can use `sbt 'test:testOnly *ClassName'` to only run tests in a specific
+class.
+
+Follow the [Scaladoc style guide](https://docs.scala-lang.org/style/scaladoc.html)
+in writing docstrings.
+
+You can list GitHub repositories as SBT project dependencies.
+
+To create a single "fat JAR" (useful for deploying jobs to Spark clusters)
+use the [assembly](https://github.com/sbt/sbt-assembly) plugin.
+
+You can put general Scala logic in a `Build.scala` file (:warning: **this is now
+deprecated**).
+
+### Types
+
+General point: Scala has a _very_ powerful type system.
+
+Use `T[A+]`, `T[A-]` to constrain [type variance](https://stackoverflow.com/q/9619121).
+
+Use `<:`, `:>` for type constraints.
+
+In Scala, type parameters are typically called `A`, `B`, etc.
+
+Structural typing (`A <: { def f() : Unit } `) is a proxy for duck typing.
+:warning: _This uses reflection, so avoid when performance matters._
+
+Immutable collections should take coveriant type parameters.
+
+Implicit conversions are a way of telling the compiler "the obvious way
+to make a `B` from an `A`."
+
+Type classes seem like black magic.
+
+Browse the Scala source code, e.g.
+[Try.scala](https://github.com/scala/scala/blob/v2.9.3/src/library/scala/util/Try.scala),
+to learn more about the type system.
+
+### Idiomatic Scala
+
+80\%/20\% rule: 80\% of your Scala code should be _pure_ (no side-effects)
+and the other 20\% can connect your pure code with the outside world.
+
+Prefer immutable objects whenever possible.
+
+Use expressions (with no side effects) vs. statements (with hidden side effects).
+
+Use match expressions, they're super powerful and flexible!
+
+Don't _ever_ use `null` (use `Option` or `Try` instead).

@@ -11,5 +11,6 @@ libraryDependencies ++= Seq(
     "org.scalatest" %% "scalatest" % "3.0.0" % Test
 )
 
-// set the main class for 'sbt run'
+// set the main class for 'sbt run' and 'sbt package'.
 mainClass in (Compile, run) := Some("HelloDaniel.Main")
+mainClass in (Compile, packageBin) := Some("HelloDaniel.Main")

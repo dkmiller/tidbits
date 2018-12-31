@@ -1,6 +1,10 @@
 # Java / Scala class files.
 *.class
 
+
 # Simple Build Tool (SBT) artifacts
-project
+project/*
 target
+
+# Keep any SBT extensions (e.g. assembly).
+!project/*.sbt
