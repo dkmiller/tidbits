@@ -223,5 +223,9 @@ examining the contents of artifacts.
 Run `.\sbt.ps1 run` from the root of this repo to build and run the baby Scala
 code under `src`. Run unit tests with `.\sbt.ps1 test` instead of `run`.
 
+You can also install SBT [via Chocolatey](https://chocolatey.org/packages/sbt).
+
 [ScalaTest](http://www.scalatest.org/) seems like a reasonably standard unit
 testing framework.
+
+Main commands: `compile`, `package`, and `run`.
