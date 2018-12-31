@@ -12,9 +12,9 @@ installed and running.
 
 ## Running
 
-Simply run [Spark.ps1](./Spark.ps1). It will initialize a single-instance Spark cluster
-in a minimized PowerShell window and enter that instance's bash prompt as soon as
-it is ready.
+Simply run [spark.ps1](./spark.ps1). It will initialize a
+single-instance Spark cluster in a minimized PowerShell window and enter
+that instance's bash prompt as soon as it is ready.
 
 You can visit the Spark UI at http://localhost:8080, and see the jobs http://localhost:4040/jobs/.
 
@@ -38,13 +38,6 @@ Alternatively, to run a simple Scala script locally, enter
 ```
 
 ## Troubleshooting
-
-If `Spark.ps1` is hanging, follow [this article](https://docs.docker.com/engine/reference/commandline/system_prune/)
-and run
-
-```powershell
-docker system prune --force
-```
 
 If `docker-spark` isn't syncing, follow [this answer](https://stackoverflow.com/a/1032653) and run:
 

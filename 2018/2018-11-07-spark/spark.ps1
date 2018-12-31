@@ -5,16 +5,15 @@ window.
 #>
 
 Start-Process -WorkingDirectory $PSScriptRoot -WindowStyle Minimized powershell {
-    # Ovewrite the Git submodule's Docker compose file with a fixed one.
-    Copy-Item docker-compose.yml docker-spark
-
     # Start the Spark instance.
     Set-Location docker-spark
+
+    # Follow: https://docs.docker.com/engine/reference/commandline/system_prune
     docker system prune --force
     docker-compose up
 }
 
-# Follow: https://stackoverflow.com/a/22430636 .
+# Follow: https://stackoverflow.com/a/22430636
 do {
     Write-Host 'Waiting for Spark cluster to initialize...'
     Start-Sleep 5
