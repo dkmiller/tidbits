@@ -16,6 +16,8 @@ if ($Summarize) {
         # TODO: figure out a way to also parse CSV.
         ConvertFrom-Json |
         Select-Object -Expand Download |
+        # Convert bit -> megabit ( https://en.wikipedia.org/wiki/Megabit ).
+        ForEach-Object { $_ / 1048576.0 } |
         Measure-Object -Average -Maximum -Minimum -StandardDeviation
     # https://stackoverflow.com/a/2022469
     exit
