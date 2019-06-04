@@ -25,7 +25,7 @@ if ($Summarize) {
 pip install speedtest-cli
 
 do {
-    Write-Host 'Speed test...'
+    Write-Host "[$(Get-Date)] Speed test..."
     speedtest-cli --json --secure | Add-Content $Output
     Start-Sleep -Seconds $SleepSeconds
 } while ($true)
