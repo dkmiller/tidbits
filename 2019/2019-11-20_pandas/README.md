@@ -37,8 +37,10 @@ The equivalent of R's `mutate` operator is the pandas `assign`
 extension method, namely 
 
 ```python
-df.assign(newCol1 = lambda r: r.colA + r.colB,
-    newCol2 = lambda r: abs(r.newCol1))
+df.assign(
+    newCol1 = lambda r: r.colA + r.colB,
+    newCol2 = lambda r: abs(r.newCol1)
+    )
 ```
 
 There are _many_ ways of selecting row(s), namely by a column, label,
@@ -52,3 +54,9 @@ and numpy operations work naturally.
 
 You can load a dataframe from pretty much _anything_, via the comprehensive
 `read|write_*` methods. Parquet, Excel, etc.&mdash; it's all good!
+
+### Containers
+
+It seems like a good choice is the
+[`amancevice/pandas:alpine`](https://github.com/amancevice/docker-pandas)
+container.
