@@ -12,7 +12,8 @@ library(tidyverse)
 
 Let's import the data (downloaded from Chase bank):
 ```{r importdata, warning=FALSE, message=FALSE}
-transactions <- read_csv('/Users/dm635/Downloads/Chase3168_Activity_20180101.csv') %>%
+transactions <- Sys.glob('/Users/dm635/Downloads/Chase[0-9]*_Activity_[0-9]*.CSV') %>%
+  read_csv %>%
   mutate(Date = as.POSIXct(`Posting Date`, format='%m/%d/%Y'))
 ```
 
@@ -40,4 +41,18 @@ transactions %>%
   ggvis(~Month, ~Savings) %>%
   layer_points
 ```
-There's a lot of noise, but hopefully we'll be saving (after tithing) $3k / month.
+There's a lot of noise, but hopefully we'll be saving (after tithing) a healthy amount / month.
+
+Let's try plotting income:
+
+```{r income}
+transactions %>%
+  filter(Amount > 0) %>%
+  mutate(Month = floor_date(Date, unit = 'months')) %>%
+  group_by(Month) %>%
+  summarize(Savings = sum(Amount)) %>%
+  ggvis(~Month, ~Savings) %>%
+  layer_points
+```
+
+Also healthy!
