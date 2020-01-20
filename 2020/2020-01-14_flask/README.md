@@ -7,7 +7,7 @@ Run a small ML model in Azure via Flask, in a Docker container.
 Run by calling `.\Run.ps1`. Test by calling
 
 ```powershell
-Invoke-WebRequest -Uri http://127.0.0.1:5000/predict -Method Post
+Invoke-WebRequest -Uri http://localhost:5000/predict -Method Post
 ```
 
 Test by calling `pytest`.
@@ -20,3 +20,6 @@ Test by calling `pytest`.
 - [Changing standard (Python) test discovery](http://doc.pytest.org/en/latest/example/pythoncollection.html)
 - [How to fix "Attempted relative import in non-package" even with `__init__.py`](https://stackoverflow.com/q/11536764)
 - [`@pytest.mark.parametrize`: parametrizing test functions](https://docs.pytest.org/en/latest/parametrize.html)
+- [Docker + Flask | A Simple Tutorial](https://medium.com/@doedotdev/docker-flask-a-simple-tutorial-bbcb2f4110b5)
+- [Best practices for writing Dockerfiles](https://docs.docker.com/develop/develop-images/dockerfile_best-practices/)
+- [Dockerize a Flask App](https://dev.to/riverfount/dockerize-a-flask-app-17ag)
