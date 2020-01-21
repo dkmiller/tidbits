@@ -7,18 +7,17 @@ from urllib import request
 sys.path.append( path.dirname( path.dirname( path.abspath(__file__) ) ) )
 
 from src.ml import get_prediction, transform_image
+from test.common import get_bytes
 
-def get_bytes(url):
-    response = request.urlopen(url)
-    return response.read()
-
-@pytest.mark.parametrize('postfix,class_id', [('/773/200/200', '980')])
-def test_get_prediction(postfix, class_id):
+@pytest.mark.parametrize('postfix,prediction', [
+    ('773/200/200', ['n09472597', 'volcano']),
+    ('774/200/200', ['n09332890', 'lakeside'])
+    ])
+def test_get_prediction(postfix, prediction):
     url = f'https://picsum.photos/id/{postfix}.jpg'
     data = get_bytes(url)
     ŷ = get_prediction(data)
-    ŷ = str(ŷ.item())
-    assert ŷ == class_id
+    assert ŷ == prediction
 
 @pytest.mark.parametrize('postfix', ['300', '800', '/100/300'])
 def test_transform_image_on_small_image(postfix):
