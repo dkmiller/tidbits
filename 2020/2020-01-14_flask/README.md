@@ -28,6 +28,9 @@ Test by calling `pytest`.
 - [Download Files with Python](https://stackabuse.com/download-files-with-python/)
 - [Getting started quickly with Flask logging](https://www.scalyr.com/blog/getting-started-quickly-with-flask-logging/)
 - [How to use `Invoke-RestMethod` to upload jpg](https://stackoverflow.com/q/42395638)
-- https://docs.pytest.org/en/latest/xunit_setup.html
-- https://stackoverflow.com/a/7224186
-- https://stackoverflow.com/q/4084322
+- [classic xunit-style setup](https://docs.pytest.org/en/latest/xunit_setup.html)
+- [How to start a background process in Python?](https://stackoverflow.com/a/7224186)
+- [Killing a process created with Python's `subprocess.Popen()`](https://stackoverflow.com/q/4084322)
+- [PEP 263 -- Defining Python Source Code Encodings](https://www.python.org/dev/peps/pep-0263/)
+- [Stop all docker containers at once on Windows](https://stackoverflow.com/a/48813850)
+- [Building Minimal Docker Containers for Python Applications](https://blog.realkinetic.com/building-minimal-docker-containers-for-python-applications-37d0272c52f3)

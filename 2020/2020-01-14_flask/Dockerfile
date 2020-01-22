@@ -1,4 +1,5 @@
-FROM continuumio/miniconda
+# Strangely, this does not seem to work with python:3.8-alpine.
+FROM continuumio/miniconda3
 
 RUN mkdir -p /app
 WORKDIR  /app
