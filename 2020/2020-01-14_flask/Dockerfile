@@ -4,6 +4,13 @@ FROM continuumio/miniconda3
 RUN mkdir -p /app
 WORKDIR  /app
 
+# Latest versions of PyTorch (especially torchvision) are hosted on the pytorch
+# channel.
+RUN conda config --append channels pytorch
+
+# PyTest is hosted in this channel.
+RUN conda config --append channels conda-forge
+
 # Speed up re-building the Docker image by initially copying over ONLY the
 # dependencies (requirements) file.
 COPY requirements.txt /app/

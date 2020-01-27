@@ -34,3 +34,8 @@ Test by calling `pytest`.
 - [PEP 263 -- Defining Python Source Code Encodings](https://www.python.org/dev/peps/pep-0263/)
 - [Stop all docker containers at once on Windows](https://stackoverflow.com/a/48813850)
 - [Building Minimal Docker Containers for Python Applications](https://blog.realkinetic.com/building-minimal-docker-containers-for-python-applications-37d0272c52f3)
+- [New Pillow version (7.0.0) breaks torchvision (ImportError: cannot import name 'PILLOW_VERSION' from 'PIL')](https://github.com/pytorch/vision/issues/1712)
+- [luiscape/install_packages.sh](https://gist.github.com/luiscape/19d2d73a8c7b59411a2fb73a697f5ed4#gistcomment-2879010)
+- [Logging within `py.test` tests](https://stackoverflow.com/q/4673373)
+- [Docker SDK for Python](https://docker-py.readthedocs.io/en/stable/)
+- [Anaconda Terminal error `pywin32_bootstrap`](https://stackoverflow.com/a/59194389)
