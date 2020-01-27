@@ -39,3 +39,6 @@ Test by calling `pytest`.
 - [Logging within `py.test` tests](https://stackoverflow.com/q/4673373)
 - [Docker SDK for Python](https://docker-py.readthedocs.io/en/stable/)
 - [Anaconda Terminal error `pywin32_bootstrap`](https://stackoverflow.com/a/59194389)
+- [How to stop a PowerShell script on the first error?](https://stackoverflow.com/q/9948517)
+- [Deploy resources with Resource Manager templates and Azure CLI](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/deploy-cli)
+- [Create resource groups and resources at the subscription level](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/deploy-to-subscription)

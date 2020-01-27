@@ -7,6 +7,8 @@ param(
     [switch]$NoClean
 )
 
+$ErrorActionPreference = 'Stop'
+
 if (!$NoClean) {
     .\Clean.ps1
 }
