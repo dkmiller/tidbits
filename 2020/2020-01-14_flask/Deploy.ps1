@@ -13,7 +13,8 @@ param(
     $Location = 'westus2',
     $RgName = 'dockerflasktutorial',
     $AcrName = 'flaskacr01',
-    $AcrSku = 'Basic'
+    $AcrSku = 'Basic',
+    $Version = '0.0.0'
 )
 
 $ErrorActionPreference = 'Stop'
@@ -28,3 +29,9 @@ az deployment create `
     --location $Location `
     --template-file arm/template.json `
     --parameters rgName=$RgName rgLocation=$Location acrName=$AcrName acrSku=$AcrSku
+
+az acr login --name $AcrName
+
+$Image = "$($AcrName).azurecr.io/danmill/flask:$Version"
+docker tag danmill/flask $Image
+docker push $Image

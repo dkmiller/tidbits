@@ -42,3 +42,5 @@ Test by calling `pytest`.
 - [How to stop a PowerShell script on the first error?](https://stackoverflow.com/q/9948517)
 - [Deploy resources with Resource Manager templates and Azure CLI](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/deploy-cli)
 - [Create resource groups and resources at the subscription level](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/deploy-to-subscription)
+- [azure-quickstart-templates](https://github.com/Azure/azure-quickstart-templates/blob/master/101-container-registry/azuredeploy.json)
+- [Push your first image to a private Docker container registry using the Docker CLI]( https://docs.microsoft.com/en-us/azure/container-registry/container-registry-get-started-docker-cli)
