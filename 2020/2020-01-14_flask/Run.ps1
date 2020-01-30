@@ -4,11 +4,11 @@ or using Docker.
 #>
 
 param (
-    [switch]$SkipBuild,
+    [switch]$NoBuild,
     [switch]$Local
 )
 
-if (!($SkipBuild -or $Local)) {
+if (!($NoBuild -or $Local)) {
     .\Build.ps1
 }
 

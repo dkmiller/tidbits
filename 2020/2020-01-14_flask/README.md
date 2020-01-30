@@ -7,11 +7,27 @@ Run a small ML model in Azure via Flask, in a Docker container.
 Run by calling `.\Run.ps1`. Test by calling
 
 ```powershell
-# TODO: why can't you test /predict this way?
+# Sadly, you can't use iwr to test the /predict endpoint, because
+# it doesn't encode things the same way as Python does.
 Invoke-WebRequest -Uri http://localhost:5000/
+
+# After deploy:
+Invoke-WebRequest -Uri https://danmill-inference.azurewebsites.net/
 ```
 
 Test by calling `pytest`.
+
+After deploying, navigate to:
+- http://danmill-inference.azurewebsites.net/
+- https://danmill-inference.scm.azurewebsites.net/api/logs/docker
+
+## Troubleshooting
+
+If the running web app has issues you can restart it via
+
+```powershell
+az webapp restart --name danmill-inference --resource-group dockerflasktutorial
+```
 
 ## Links
 
@@ -46,3 +62,7 @@ Test by calling `pytest`.
 - [Push your first image to a private Docker container registry using the Docker CLI](https://docs.microsoft.com/en-us/azure/container-registry/container-registry-get-started-docker-cli)
 - [Tutorial: Build a custom image and run in App Service from a private registry](https://docs.microsoft.com/en-us/azure/app-service/containers/tutorial-custom-docker-image)
 - [Production-ready Docker packaging](https://pythonspeed.com/docker/)
+- [Azure Resource Manager template functions](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/template-functions)
+- https://stackoverflow.com/a/4907053
+- https://stackoverflow.com/a/58370117
+- https://blogsprajeesh.blogspot.com/2015/02/powershell-get-set-and-remove.html
