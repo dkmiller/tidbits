@@ -1,25 +1,19 @@
-# Strangely, this does not seem to work with python:3.8-alpine.
-FROM continuumio/miniconda3
-
-RUN mkdir -p /app
-WORKDIR  /app
-
-# Latest versions of PyTorch (especially torchvision) are hosted on the pytorch
-# channel.
-RUN conda config --append channels pytorch
-
-# PyTest is hosted in this channel.
-RUN conda config --append channels conda-forge
+# Avoid the alpine images; they have obscure bugs due to non-standard gcc
+# installation.
+FROM python:3.8-slim-buster
 
 # Speed up re-building the Docker image by initially copying over ONLY the
 # dependencies (requirements) file.
-COPY requirements.txt /app/
-RUN conda install -y --file requirements.txt
+COPY requirements.txt /tmp/
+RUN pip install -r /tmp/requirements.txt
+
+RUN useradd --create-home app
+WORKDIR /home/app
+USER app
+
+COPY . .
 
 ENV FLASK_ENV development
 ENV FLASK_APP src/app.py
-
-COPY . /app
-
 EXPOSE 5000
 ENTRYPOINT ["flask", "run", "--host=0.0.0.0"]
