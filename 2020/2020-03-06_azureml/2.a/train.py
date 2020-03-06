@@ -48,7 +48,12 @@ def preprocess_split(df, validation_size, seed):
 def evaluate_model(model, valid, run):
     predictions = model.predict(valid.data)
     fpr, tpr, _ = metrics.roc_curve(valid.label, predictions)
-    run.log('auc', metrics.auc(fpr, tpr))
+    tags = {
+        'auc': metrics.auc(fpr, tpr)
+    }
+    for k, v in tags.items():
+        run.log(k, v)
+    return tags
 
 
 def train_model(train, valid, args, run):
@@ -77,7 +82,7 @@ def train_model(train, valid, args, run):
     return model
 
 
-def save_model(model, output_dir, run):
+def save_model(model, output_dir, run, tags):
     '''
     Sadly, can't use ONNX because this issue ( https://pypi.org/project/skl2onnx/ )
     is only fixed in a later version of skl2onnx, but the AzureML SDK pins an
@@ -92,15 +97,15 @@ def save_model(model, output_dir, run):
     print(f'Saving serialized model to {path}.')
     joblib.dump(value=model, filename=path)
     run.upload_file(fname, path)
-    run.register_model(model_name='safe_driver_prediction', model_path=fname)
+    run.register_model(model_name='safe_driver_prediction', model_path=fname, tags=tags)
 
 
 def main(args, run):
     data_df = load_input(args.input_dir)
     train, valid = preprocess_split(data_df, args.validation_size, args.random_seed)
     m = train_model(train, valid, args, run)
-    evaluate_model(m, valid, run)
-    save_model(m, args.output_dir, run)
+    tags = evaluate_model(m, valid, run)
+    save_model(m, args.output_dir, run, tags)
 
 
 if __name__ == '__main__':
