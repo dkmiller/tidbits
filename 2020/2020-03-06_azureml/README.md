@@ -6,6 +6,20 @@ You should have
 [PowerShell 7.0](https://devblogs.microsoft.com/powershell/announcing-powershell-7-0/)
 installed.
 
+Run locally
+
+```ps
+.\Bootstrap.ps1
+
+python ./2.a/train.py --input_dir ./dsdevops-oh-files --output_dir .
+```
+
+Run globally
+
+```ps
+python ./2.a/experiment.py
+```
+
 ## Links
 
 - [Create Azure Machine Learning datasets](https://docs.microsoft.com/en-us/azure/machine-learning/how-to-create-register-datasets)

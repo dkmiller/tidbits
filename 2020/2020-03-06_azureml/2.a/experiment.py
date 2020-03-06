@@ -33,8 +33,7 @@ def main(args, ws):
     compute = ws.compute_targets[args.compute]
     datastore = ws.get_default_datastore()
     name = 'porto_seguro_safe_driver_prediction_train'
-    dataset = ws.datasets[name].to_csv_files().as_named_input(
-        name).as_download(f'/tmp/{name}')
+    dataset = ws.datasets[name].to_csv_files().as_named_input(name).as_download(f'/tmp/{name}')
 
     step, _ = estimator(dataset, datastore, compute)
     pipeline = Pipeline(workspace=ws, steps=[step])

@@ -3,22 +3,32 @@ import glob
 import joblib
 import lightgbm
 import numpy as np
+import os
 import pandas as pd
 from azureml.core.run import Run
-from os.path import join
+from os import listdir
+from os.path import isfile, join
 from sklearn.model_selection import train_test_split
 from sklearn import metrics
 
 
 def load_input(path):
     '''
-    Follow https://pymotw.com/2/glob/ to use Glob for finding Csv file.
+    Follow https://stackoverflow.com/a/3207973 to list all files in a directory.
     '''
-    print(f'Searching {args.input_dir} for CSV files.')
-    file = glob.glob(join(args.input_dir, '*.csv'), recursive=True)[0]
-    print(f'Loading data from "{file}".')
+    print(f'Searching {args.input_dir} for files.')
 
-    df = pd.read_csv(file)
+    files = [f for f in listdir(args.input_dir) if isfile(join(args.input_dir, f))]
+
+    df = None
+    for f in files:
+        path = join(args.input_dir, f)
+        print(f'Loading {path}')
+        if df is None:
+            df = pd.read_csv(path)
+        else:
+            df = df.append(pd.read_csv(path))
+
     print(f'Data shape: {df.shape}')
 
     return df
@@ -27,12 +37,10 @@ def load_input(path):
 def preprocess_split(df, validation_size, seed):
     features = df.drop(['target', 'id'], axis=1)
     labels = np.array(df['target'])
-    features_train, features_valid, labels_train, labels_valid = train_test_split(
-        features, labels, test_size=validation_size, random_state=seed)
+    features_train, features_valid, labels_train, labels_valid = train_test_split(features, labels, test_size=validation_size, random_state=seed)
 
     train_data = lightgbm.Dataset(features_train, label=labels_train)
-    valid_data = lightgbm.Dataset(
-        features_valid, label=labels_valid, free_raw_data=False)
+    valid_data = lightgbm.Dataset(features_valid, label=labels_valid, free_raw_data=False)
 
     return (train_data, valid_data)
 
@@ -69,24 +77,30 @@ def train_model(train, valid, args, run):
     return model
 
 
-def save_model(model, output_dir):
+def save_model(model, output_dir, run):
     '''
     Sadly, can't use ONNX because this issue ( https://pypi.org/project/skl2onnx/ )
     is only fixed in a later version of skl2onnx, but the AzureML SDK pins an
     old version of that package.
     '''
-    fname = join(output_dir, 'safe_driver_prediction.pkl')
-    print(f'Saving serialized model to {fname}.')
-    joblib.dump(value=model, filename=fname)
+    fname = 'safe_driver_prediction.pkl'
+
+    if not os.path.exists(output_dir):
+        os.makedirs(output_dir)
+
+    path = join(output_dir, fname)
+    print(f'Saving serialized model to {path}.')
+    joblib.dump(value=model, filename=path)
+    run.upload_file(fname, path)
+    run.register_model(model_name='safe_driver_prediction', model_path=fname)
 
 
 def main(args, run):
     data_df = load_input(args.input_dir)
-    train, valid = preprocess_split(
-        data_df, args.validation_size, args.random_seed)
+    train, valid = preprocess_split(data_df, args.validation_size, args.random_seed)
     m = train_model(train, valid, args, run)
     evaluate_model(m, valid, run)
-    save_model(m, args.output_dir)
+    save_model(m, args.output_dir, run)
 
 
 if __name__ == '__main__':
