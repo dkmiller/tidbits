@@ -20,8 +20,8 @@ def main(args, ws):
         assert ctx.state == ctx.EXECUTING
 
         predictions = service.run(input_data = input_json)
-        predicted_classes = json.loads(predictions)
-        print(predicted_classes)
+        print('\n---------- PREDICTION ----------\n')
+        print(predictions)
 
 
 if __name__ == '__main__':

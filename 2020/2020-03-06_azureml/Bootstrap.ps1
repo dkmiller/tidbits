@@ -1,5 +1,5 @@
 <#
-
+Run this once after cloning the main repo.
 #>
 
 param (

@@ -1,6 +1,6 @@
 import argparse
 import os
-from azureml.core import Experiment, Workspace, Webservice
+from azureml.core import Workspace, Webservice
 from azureml.core.model import InferenceConfig, Model
 from azureml.core.webservice import AciWebservice
 from azureml.exceptions import WebserviceException
