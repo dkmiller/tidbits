@@ -20,6 +20,12 @@ Run globally
 python ./2.a/experiment.py
 ```
 
+### Deploy
+
+```ps
+python ./3.a/deploy.py
+```
+
 ## Links
 
 - [Create Azure Machine Learning datasets](https://docs.microsoft.com/en-us/azure/machine-learning/how-to-create-register-datasets)
@@ -27,3 +33,4 @@ python ./2.a/experiment.py
 - [Monitor Azure ML experiment runs and metrics](https://docs.microsoft.com/en-us/azure/machine-learning/how-to-track-experiments)
 - [Convert a pipeline with a LightGbm model](http://onnx.ai/sklearn-onnx/auto_examples/plot_pipeline_lightgbm.html)
 - [How to use `glob()` to find files recursively?](https://stackoverflow.com/a/2186565)
+- https://towardsdatascience.com/a-guide-to-conda-environments-bc6180fc533
