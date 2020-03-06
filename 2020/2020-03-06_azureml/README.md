@@ -25,5 +25,5 @@ python ./2.a/experiment.py
 - [Create Azure Machine Learning datasets](https://docs.microsoft.com/en-us/azure/machine-learning/how-to-create-register-datasets)
 - [How to use EstimatorStep in AML Pipeline](https://aka.ms/pl-estimator)
 - [Monitor Azure ML experiment runs and metrics](https://docs.microsoft.com/en-us/azure/machine-learning/how-to-track-experiments)
-- http://onnx.ai/sklearn-onnx/auto_examples/plot_pipeline_lightgbm.html
-- https://stackoverflow.com/a/2186565
+- [Convert a pipeline with a LightGbm model](http://onnx.ai/sklearn-onnx/auto_examples/plot_pipeline_lightgbm.html)
+- [How to use `glob()` to find files recursively?](https://stackoverflow.com/a/2186565)
