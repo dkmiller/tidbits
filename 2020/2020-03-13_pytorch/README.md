@@ -23,3 +23,6 @@ Run `pytest` in this directory.
 - [Ensuring py.test includes the application directory in sys.path](https://stackoverflow.com/a/20972950)
 - [Python testing in Visual Studio Code](https://code.visualstudio.com/docs/python/testing)
 - [How to properly assert that an exception gets raised in pytest?](https://stackoverflow.com/a/29855337)
+- [How does the "view" method work in PyTorch?](https://stackoverflow.com/a/48650355)
+- [How to do product of matrices in PyTorch](https://stackoverflow.com/a/44525687)
+- [Convert PyTorch tensor to python list](https://stackoverflow.com/a/53903817)
