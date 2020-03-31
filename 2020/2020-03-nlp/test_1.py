@@ -13,3 +13,7 @@ def test_distinct_words(corpus, expected):
         map(lambda s: f'{START_TOKEN} {s} {END_TOKEN}'.split(' '), corpus))
     result = distinct_words(corpus)
     assert (expected, len(expected)) == result
+
+
+def test_compute_co_occurrence_matrix():
+    pass
