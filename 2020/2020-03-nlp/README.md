@@ -4,6 +4,16 @@ Based on the class
 [CS224n: Natural Language Processing with Deep Learning](http://web.stanford.edu/class/cs224n/),
 taught at Stanford.
 
+```powershell
+conda env create --file nlp-conda.yml
+
+# activate conda environment
+conda activate nlp
+
+# cleanup
+conda remove --name nlp --all
+```
+
 ## Links
 
 - [Accessing Text Corpora and Lexical Resources](https://www.nltk.org/book/ch02.html)

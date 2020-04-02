@@ -1,6 +1,6 @@
 import pandas as pd
 import pytest
-from solutions_1 import compute_co_occurrence_matrix, distinct_words, END_TOKEN, START_TOKEN
+from solutions_1 import *
 from typing import Dict, List
 
 
@@ -24,7 +24,7 @@ def test_distinct_words(corpus, expected):
     assert (expected, len(expected)) == result
 
 
-@pytest.mark.parametrize('window_size, corpus,expected_matrix', [
+@pytest.mark.parametrize('window_size,corpus,expected', [
     (1,
      "All that glitters isn't gold\nAll's well that ends well",
      [[0, 0, 0, 0, 0, 0, 1, 0, 0, 1, ],
@@ -38,13 +38,25 @@ def test_distinct_words(corpus, expected):
       [0, 0, 1, 0, 1, 1, 0, 0, 0, 1, ],
       [1, 0, 0, 1, 1, 0, 0, 0, 1, 0, ]])
 ])
-def test_compute_co_occurrence_matrix(window_size, corpus, expected_matrix,):
+def test_compute_co_occurrence_matrix(window_size, corpus, expected,):
     corpus = prepare_corpus(corpus)
-    words, num = distinct_words(corpus)
+    _, num = distinct_words(corpus)
 
     m, word_to_index = compute_co_occurrence_matrix(corpus, window_size)
-    expected = pd.DataFrame(expected_matrix)
 
     assert num == len(word_to_index)
-    assert expected.shape == m.shape
-    assert expected.values.tolist() == m.values.tolist()
+    assert np.array(expected).shape == m.shape
+    assert expected == m.tolist()
+
+
+@pytest.mark.parametrize('corpus,k', [
+    ("All that glitters isn't gold\nAll's well that ends well", 2)
+])
+def test_reduce_to_k_dim(corpus, k):
+    corpus = prepare_corpus(corpus)
+    _, num = distinct_words(corpus)
+
+    m, _ = compute_co_occurrence_matrix(corpus, 1)
+    m_reduced = reduce_to_k_dim(m, k)
+
+    assert (num, k) == m_reduced.shape

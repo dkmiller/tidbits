@@ -1,0 +1,13 @@
+name: nlp
+channels:
+  - pytorch
+  - defaults
+dependencies:
+  - python=3.7
+  - pip
+  - nltk>=3.4.5
+  - pandas>=1.0.3
+  - pylint>=2.4.4
+  - pytest>=5.4.1
+  - pytorch>=1.4.0
+  - scikit-learn>=0.22.1

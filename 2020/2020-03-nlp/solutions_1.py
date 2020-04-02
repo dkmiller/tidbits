@@ -5,7 +5,9 @@ manipulating word vectors. Based on:
 http://web.stanford.edu/class/cs224n/assignments/a1_preview/exploring_word_vectors.html
 '''
 
+import numpy as np
 import pandas as pd
+from sklearn.decomposition import TruncatedSVD
 from typing import Dict, Iterable, List
 
 
@@ -28,13 +30,13 @@ def distinct_words(corpus: List[List[str]]) -> (List[str], int):
     return unique_words, num_words
 
 
-def compute_co_occurrence_matrix(corpus: Iterable[List[str]], window_size: int = 4) -> (pd.DataFrame, Dict[str, int]):
+def compute_co_occurrence_matrix(corpus: Iterable[List[str]], window_size: int = 4) -> (np.ndarray, Dict[str, int]):
     '''
     1.2. Compute the co-occurrence matrix for the given corpus and window size.
     Run time is `O(size of corpus x window_size)`.
     '''
     words, num_words = distinct_words(corpus)
-    m = pd.DataFrame(index = words, columns=words).fillna(0)
+    m = pd.DataFrame(index=words, columns=words).fillna(0)
     word_to_index = {words[i]: i for i in range(num_words)}
 
     for fragment in corpus:
@@ -50,7 +52,12 @@ def compute_co_occurrence_matrix(corpus: Iterable[List[str]], window_size: int =
         for (w1, w2) in s:
             m[w1][w2] += 1
 
-    m.reset_index(drop=True, inplace=True)
-    m.rename(columns=word_to_index, inplace=True)
+    return m.to_numpy(), word_to_index
 
-    return m, word_to_index
+
+def reduce_to_k_dim(m: np.ndarray, k:int=2) -> np.ndarray:
+    '''
+    1.3. Produce k-dimensional embeddings using `m`.
+    '''
+    svd = TruncatedSVD(n_components=k, n_iter=10, random_state=42)
+    return svd.fit_transform(m)
