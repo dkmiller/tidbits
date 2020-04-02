@@ -1,5 +1,12 @@
-import torch
-from typing import Dict, List
+'''
+Exploring word vectors. A set of utility methods centered around creating and
+manipulating word vectors. Based on:
+
+http://web.stanford.edu/class/cs224n/assignments/a1_preview/exploring_word_vectors.html
+'''
+
+import pandas as pd
+from typing import Dict, Iterable, List
 
 
 START_TOKEN = '<START>'
@@ -21,12 +28,29 @@ def distinct_words(corpus: List[List[str]]) -> (List[str], int):
     return unique_words, num_words
 
 
-def compute_co_occurrence_matrix(corpus: List[List[str]], window_size: int = 4) -> (torch.Tensor, Dict[str, int]):
+def compute_co_occurrence_matrix(corpus: Iterable[List[str]], window_size: int = 4) -> (pd.DataFrame, Dict[str, int]):
     '''
     1.2. Compute the co-occurrence matrix for the given corpus and window size.
+    Run time is `O(size of corpus x window_size)`.
     '''
     words, num_words = distinct_words(corpus)
-    M = None
-    word2Ind = {}
+    m = pd.DataFrame(index = words, columns=words).fillna(0)
+    word_to_index = {words[i]: i for i in range(num_words)}
 
-    return M, word2Ind
+    for fragment in corpus:
+        s = set()
+        fragment_size = len(fragment)
+        for window in range(1, window_size + 1):
+            for i in range(0, fragment_size - window):
+                w1 = fragment[i]
+                w2 = fragment[i + window]
+                if w1 != w2:
+                    s.add((w1, w2))
+                    s.add((w2, w1))
+        for (w1, w2) in s:
+            m[w1][w2] += 1
+
+    m.reset_index(drop=True, inplace=True)
+    m.rename(columns=word_to_index, inplace=True)
+
+    return m, word_to_index

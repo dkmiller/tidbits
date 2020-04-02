@@ -1,7 +1,12 @@
-http://web.stanford.edu/class/cs224n/
+# Natural language processing
 
-https://www.nltk.org/book/ch02.html
+Based on the class
+[CS224n: Natural Language Processing with Deep Learning](http://web.stanford.edu/class/cs224n/),
+taught at Stanford.
 
-http://web.stanford.edu/class/cs224n/assignments/a1_preview/exploring_word_vectors.html
+## Links
 
-https://mypy.readthedocs.io/en/stable/cheat_sheet_py3.html
+- [Accessing Text Corpora and Lexical Resources](https://www.nltk.org/book/ch02.html)
+- [Type hints cheat sheet (Python 3)](https://mypy.readthedocs.io/en/stable/cheat_sheet_py3.html)
+- [[feature request] [pytorch] Truncated SVD](https://github.com/pytorch/pytorch/issues/8049)
+- [Pandas DataFrame column to list [duplicate]](https://stackoverflow.com/a/23749057)
