@@ -5,6 +5,7 @@ manipulating word vectors. Based on:
 http://web.stanford.edu/class/cs224n/assignments/a1_preview/exploring_word_vectors.html
 '''
 
+import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 from sklearn.decomposition import TruncatedSVD
@@ -55,9 +56,29 @@ def compute_co_occurrence_matrix(corpus: Iterable[List[str]], window_size: int =
     return m.to_numpy(), word_to_index
 
 
-def reduce_to_k_dim(m: np.ndarray, k:int=2) -> np.ndarray:
+def reduce_to_k_dim(m: np.ndarray, k: int = 2) -> np.ndarray:
     '''
     1.3. Produce k-dimensional embeddings using `m`.
     '''
     svd = TruncatedSVD(n_components=k, n_iter=10, random_state=42)
     return svd.fit_transform(m)
+
+
+def plot_embeddings(m_reduced: np.ndarray, word_to_index: Dict[str, int], words: Iterable[str]) -> None:
+    '''
+    1.4. Plots a scatterplot of the embeddings of the words specified in the
+    list `words`.
+    '''
+    assert len(word_to_index) == m_reduced.shape[0]
+    assert 2 == m_reduced.shape[1]
+    plt.scatter(m_reduced[:, 0], m_reduced[:, 1], s=10)
+    plt.show(block=False)
+    plt.pause(1)
+    plt.close()
+
+
+def plot_co_occurrence(corpus: Iterable[List[str]], words: Iterable[str]):
+    '''
+    1.5. ?
+    '''
+    pass
