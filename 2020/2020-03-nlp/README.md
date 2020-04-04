@@ -4,15 +4,25 @@ Based on the class
 [CS224n: Natural Language Processing with Deep Learning](http://web.stanford.edu/class/cs224n/),
 taught at Stanford.
 
-```powershell
-conda env create --file nlp-conda.yml
+## Setup
 
-# activate conda environment
+This code uses [Conda](https://docs.conda.io/en/latest/) for dependency
+management. If you already have Conda installed, run the following code to
+install the necessary dependencies and activate your environment.
+
+```powershell
+# Create environment.
+conda env create --file environment.yml
+
+# Activate environment.
 conda activate nlp
 
-# cleanup
-conda remove --name nlp --all
+# Run unit tests.
+pytest
 ```
+
+Optionally, after running all the code you may call
+`conda remove --name nlp --all` to remove the environment.
 
 ## Links
 
@@ -25,3 +35,5 @@ conda remove --name nlp --all
 - [The Lifecycle of a Plot](https://matplotlib.org/3.1.1/tutorials/introductory/lifecycle.html)
 - [Easily add Anaconda Prompt to Windows Terminal to make life better](https://dev.to/azure/easily-add-anaconda-prompt-in-windows-terminal-to-make-life-better-3p6j)
 - [view and then close the figure automatically in matplotlib?](https://stackoverflow.com/a/40395799)
+- [downloader &mdash; Downloader API for gensim](https://radimrehurek.com/gensim/downloader.html)
+- [Skip and xfail: dealing with tests that cannot succeed](http://doc.pytest.org/en/latest/skipping.html)

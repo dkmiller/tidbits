@@ -79,6 +79,22 @@ def plot_embeddings(m_reduced: np.ndarray, word_to_index: Dict[str, int], words:
 
 def plot_co_occurrence(corpus: Iterable[List[str]], words: Iterable[str]):
     '''
-    1.5. ?
+    1.5. Plot the 2-dimensional embeddings of `words` using the co-occurence
+    matrix of `corpus`.
+    '''
+    m, word_to_index = compute_co_occurrence_matrix(corpus)
+    m_reduced = reduce_to_k_dim(m, k=2)
+
+    # Rescale (normalize) the rows to make them each of unit-length.
+    m_lengths = np.linalg.norm(m_reduced, axis=1)
+
+    # broadcasting
+    m̂ = m_reduced / m_lengths[:, np.newaxis]
+    plot_embeddings(m̂, word_to_index, words)
+
+
+def plot_glove_embeddings(glove_vectors, words: Iterable[str], word_count):
+    '''
+    2.1. Plot 2-dimensional GloVe embeddings for `words`.
     '''
     pass

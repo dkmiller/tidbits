@@ -1,3 +1,5 @@
+
+import gensim.downloader as api
 import nltk
 import pandas as pd
 import pytest
@@ -82,17 +84,19 @@ def read_corpus(reuters_category: str):
     return [[START_TOKEN] + [w.lower() for w in list(nltk.corpus.reuters.words(f))] + [END_TOKEN] for f in files]
 
 
+@pytest.mark.skip(reason='This test takes 2+ minutes to run.')
 @pytest.mark.parametrize('corpus_category,words', [
     ('crude', ['barrels', 'bpd', 'ecuador', 'energy', 'industry',
                'kuwait', 'oil', 'output', 'petroleum', 'venezuela'])
 ])
 def test_plot_co_occurrence(corpus_category, words):
     corpus = read_corpus(corpus_category)
-    m, word_to_index = compute_co_occurrence_matrix(corpus)
-    m_reduced = reduce_to_k_dim(m, k=2)
+    plot_co_occurrence(corpus, words)
 
-    # Rescale (normalize) the rows to make them each of unit-length.
-    m_lengths = np.linalg.norm(m_reduced, axis=1)
-    # broadcasting
-    m̂ = m_reduced / m_lengths[:, np.newaxis]
-    plot_embeddings(m̂, word_to_index, words)
+
+@pytest.mark.parametrize('glove_dataset,corpus_size,words', [
+    ('glove-wiki-gigaword-200', 10000, ['barrels', 'bpd', 'ecuador', 'energy', 'industry',
+                                        'kuwait', 'oil', 'output', 'petroleum', 'venezuela'])
+])
+def test_plot_glove_embeddings(glove_dataset, corpus_size, words):
+    glove_vectors = api.load(glove_dataset)
