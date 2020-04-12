@@ -1,5 +1,5 @@
 { name = "my-project"
-, dependencies = [ "console", "effect", "psci-support" ]
+, dependencies = [ "console", "effect", "math", "psci-support" ]
 , packages = ./packages.dhall
 , sources = [ "src/**/*.purs", "test/**/*.purs" ]
 }
