@@ -9,8 +9,7 @@ Try to learn PureScript.
 choco install -y --force nodejs
 
 # Run in regular (new) prompt so environment is refreshed.
-npm install -g purescript
-npm install -g spago
+npm install -g pulp purescript spago
 ```
 
 ## Links
