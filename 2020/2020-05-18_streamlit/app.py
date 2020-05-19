@@ -1,19 +1,37 @@
 import streamlit as st
 from googletrans import Translator
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
+from typing import Tuple
 
 
-def sentiment_analyzer_scores(sentence, analyser, translator):
-   trans = translator.translate(sentence).text
-   score = analyser.polarity_scores(trans)
+def sentiment_score(sentence: str, analyser, translator) -> float:
+   '''
+   Calculate the sentiment of a sentance.
+   '''
+   translation = translator.translate(sentence).text
+   score = analyser.polarity_scores(translation)
 
-   score = score['compound']
+   return score['compound']
+
+
+def sentiment(score: float) -> str:
+   '''
+   Convert a sentiment score into a text representation.
+   '''
    if score >= 0.05:
-      return 'The sentiment of your text is Positive'
-   elif score > -0.5 and score < 0.05:
-      return 'The sentiment of your text is Neutral'
+      return 'Positive'
+   elif abs(score) < 0.05:
+      return 'Neutral'
    else:
-      return 'The sentiment of your text is Negative'
+      return 'Negative'
+
+
+def sentiment_analyzer_scores(sentence, analyser, translator) -> Tuple[float, str]:
+   '''
+   Return sentiment score, together with a string representation of that score.
+   '''
+   score = sentiment_score(sentence, analyser, translator)
+   return score, sentiment(score)
 
 
 def main():
@@ -21,17 +39,18 @@ def main():
     translator = Translator()
 
     st.markdown('''
-    # Markdown header.
+    # Sentiment analyzer
 
-    [Markdown link](https://github.com).
+    [Link to GitHub](https://github.com).
+
+    ## Analysis
     ''')
 
     sentence = st.text_area('Write your sentence')
 
     if st.button('Submit'):
-        result = sentiment_analyzer_scores(sentence, analyser, translator)
-        st.balloons()
-        st.success(result)
+        score, result = sentiment_analyzer_scores(sentence, analyser, translator)
+        st.success(f'The sentiment of your text is **{result}** ({score :.2f}).')
 
 if __name__ == '__main__':
     main()
