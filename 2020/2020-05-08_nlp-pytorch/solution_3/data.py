@@ -25,9 +25,13 @@ class VectorizedReviews(Dataset):
         return len(self.raw_reviews)
 
     def __getitem__(self, index: int) -> Dict:
-        row = self.raw_reviews[index]
-        review_vector = self.vectorizer.transform(row.text)
-        rating_index = row.rating
+        # https://stackoverflow.com/a/47604605/2543689
+        row = self.raw_reviews.iloc[index]
+        review_vector = list(self.vectorizer.transform([row.text]))
+        rating_index = row.stars
+
+        # print(type(review_vector))
+        # print(type(rating_index))
 
         return {
             'x_data': review_vector,

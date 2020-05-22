@@ -12,7 +12,11 @@ def generate_batches(dataset, batch_size, shuffle=True, drop_last=True, device='
     dataloader = torch.utils.data.DataLoader(dataset=dataset, batch_size=batch_size,
                             shuffle=shuffle, drop_last=drop_last)
 
+    print(dataset)
+    print(batch_size)
+    print(len(dataloader))
     for data_dict in dataloader:
+        print(data_dict)
         out_data_dict = {}
         for name, tensor in data_dict.items():
             out_data_dict[name] = data_dict[name].to(device)
