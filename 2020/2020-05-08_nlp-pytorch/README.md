@@ -29,3 +29,5 @@ conda remove --name nlp --all --yes
 - [PyYAML `yaml.load(input)` Deprecation](https://msg.pyyaml.org/load)
 - [`typing` &mdash; Support for type hints](https://docs.python.org/3/library/typing.html)
 - [Managing environments](https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html)
+- [How to Prepare Text Data for Machine Learning with scikit-learn](https://machinelearningmastery.com/prepare-text-data-machine-learning-scikit-learn/)
+- [`sklearn.feature_extraction.text.CountVectorizer`](https://scikit-learn.org/stable/modules/generated/sklearn.feature_extraction.text.CountVectorizer.html)
