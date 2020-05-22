@@ -13,11 +13,11 @@ an environment for running this code.
 conda env create --file environment.yml
 
 # Activate environment.
-conda activate smart-reply
+conda activate nlp
 
 # Update environment.
 # https://stackoverflow.com/a/43873901
-conda env update --name smart-reply --file .\environment.yml
+conda env update --name nlp --file environment.yml
 
 # (Optional) cleanup environment.
 conda remove --name nlp --all --yes
