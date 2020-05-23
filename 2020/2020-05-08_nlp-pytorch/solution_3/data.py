@@ -21,19 +21,34 @@ class VectorizedReviews(Dataset):
         self.vectorizer = CountVectorizer()
         self.vectorizer.fit(raw_reviews.text)
 
+        import torchvision.transforms as transforms
+        self.transform = transforms.Compose([transforms.ToTensor()])
+
     def __len__(self):
         return len(self.raw_reviews)
 
     def __getitem__(self, index: int) -> Dict:
         # https://stackoverflow.com/a/47604605/2543689
         row = self.raw_reviews.iloc[index]
-        review_vector = list(self.vectorizer.transform([row.text]))
-        rating_index = row.stars
-
-        # print(type(review_vector))
+        transformed = self.vectorizer.transform([row.text]).toarray()
+        # print(f'type(transformed) = {type(transformed)}')
+        # print(f'transformed = {transformed}')
+        review_vector = transformed
+        rating_index = int(row.stars)
         # print(type(rating_index))
 
-        return {
-            'x_data': review_vector,
+        # print(f'get item {index}')
+
+        # print(f'type(rating vector) = {type(review_vector)}')
+        # print(type(rating_index))
+
+        # return self.transform(review_vector), rating_index
+
+        result = {
+            'x_data': self.transform(review_vector),
             'y_target': rating_index
         }
+        
+        # # result = self.transform(result)
+
+        return result

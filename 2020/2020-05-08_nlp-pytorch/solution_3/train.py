@@ -8,18 +8,18 @@ import yaml
 import pandas as pd
 
 
-def generate_batches(dataset, batch_size, shuffle=True, drop_last=True, device='cpu'):
+def generate_batches(dataset, batch_size, device='cpu'):
     dataloader = torch.utils.data.DataLoader(dataset=dataset, batch_size=batch_size,
-                            shuffle=shuffle, drop_last=drop_last)
+                            shuffle=True, drop_last=True)
 
-    print(dataset)
-    print(batch_size)
-    print(len(dataloader))
+    # print(f'dataset = {dataset}')
+    # print(f'batch size = {batch_size}')
+    # print(f'===== dataloader size = {len(dataloader)} ====')
     for data_dict in dataloader:
-        print(data_dict)
+        # print(f'data dict = {data_dict}')
         out_data_dict = {}
         for name, tensor in data_dict.items():
-            out_data_dict[name] = data_dict[name].to(device)
+            out_data_dict[name] = tensor.to(device)
         yield out_data_dict
 
 
@@ -40,7 +40,7 @@ def train(config, dataset, device, model: nn.Module, loss, optimizer: Optimizer)
     print('Beginning training...')
 
     for epoch_index in range(int(config['hyperparameters']['num_epochs'])):
-        print(epoch_index)
+        print(f'Epoch index = {epoch_index}')
 
         batch_generator = generate_batches(dataset, 
                                        batch_size=int(config['hyperparameters']['batch_size']), 
@@ -53,12 +53,13 @@ def train(config, dataset, device, model: nn.Module, loss, optimizer: Optimizer)
         for batch_index, batch_dict in enumerate(batch_generator):
             optimizer.zero_grad()
 
-            ŷ = model(x_in=batch_dict['x_data'].float())
+            ŷ = model(batch_dict['x_data'].float())
             l = loss(ŷ, batch_dict['y_target'].float())
             loss_batch = l.item()
-            print(f'loss = {loss_batch}')
+            running_loss += (loss_batch - running_loss) / (batch_index + 1)
+            print(f'running loss = {running_loss}')
 
-            loss.backward()
+            l.backward()
             optimizer.step()
 
 
