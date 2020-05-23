@@ -47,7 +47,7 @@ def train(config, dataset, device, model: nn.Module, loss, optimizer: Optimizer)
                                        device=device)
 
         running_loss = 0.0
-        running_acc = 0.0
+        # running_acc = 0.0
         model.train()
     
         for batch_index, batch_dict in enumerate(batch_generator):
@@ -57,8 +57,9 @@ def train(config, dataset, device, model: nn.Module, loss, optimizer: Optimizer)
             l = loss(ŷ, batch_dict['y_target'].float())
             loss_batch = l.item()
             running_loss += (loss_batch - running_loss) / (batch_index + 1)
-            print(f'running loss = {running_loss}')
-
+            if batch_index % 20 == 0:
+                print(f'running loss = {running_loss}')
+    
             l.backward()
             optimizer.step()
 
@@ -67,15 +68,16 @@ def main(config):
     print(f'Configuration: {config}')
 
     raw_dataset = load_raw_dataset(config)
-    print(raw_dataset)
+    print(f'size of raw dataset = {len(raw_dataset)}')
 
     vectorized_reviews = VectorizedReviews(raw_dataset)
-    print(vectorized_reviews)
+    print(f'size of vectorized reviews = {len(vectorized_reviews)}')
+
     num_features = len(vectorized_reviews.vectorizer.vocabulary_)
-    print(num_features)
+    print(f'Num features = {num_features}')
 
     device = get_device(config)
-    print(device)
+    print(f'Using device = {device}')
 
     model = ReviewClassifier(num_features)
     model = model.to(device)

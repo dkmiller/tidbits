@@ -4,6 +4,7 @@ import numpy as np
 import pandas as pd
 from sklearn.feature_extraction.text import CountVectorizer
 from torch.utils.data import Dataset
+import torchvision.transforms as transforms
 from typing import Callable, Dict, List
 
 
@@ -20,8 +21,6 @@ class VectorizedReviews(Dataset):
         self.raw_reviews = raw_reviews
         self.vectorizer = CountVectorizer()
         self.vectorizer.fit(raw_reviews.text)
-
-        import torchvision.transforms as transforms
         self.transform = transforms.Compose([transforms.ToTensor()])
 
     def __len__(self):
@@ -31,24 +30,10 @@ class VectorizedReviews(Dataset):
         # https://stackoverflow.com/a/47604605/2543689
         row = self.raw_reviews.iloc[index]
         transformed = self.vectorizer.transform([row.text]).toarray()
-        # print(f'type(transformed) = {type(transformed)}')
-        # print(f'transformed = {transformed}')
         review_vector = transformed
         rating_index = int(row.stars)
-        # print(type(rating_index))
 
-        # print(f'get item {index}')
-
-        # print(f'type(rating vector) = {type(review_vector)}')
-        # print(type(rating_index))
-
-        # return self.transform(review_vector), rating_index
-
-        result = {
+        return {
             'x_data': self.transform(review_vector),
             'y_target': rating_index
         }
-        
-        # # result = self.transform(result)
-
-        return result
