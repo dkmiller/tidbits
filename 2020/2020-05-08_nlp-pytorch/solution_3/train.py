@@ -3,6 +3,7 @@ from data import raw_reviews, VectorizedReviews
 from model import ReviewClassifier
 import torch
 import torch.nn as nn
+import torch.onnx
 from torch.optim import Adam, Optimizer
 import yaml
 import pandas as pd
@@ -53,6 +54,11 @@ def train(config, dataset, device, model: nn.Module, loss, optimizer: Optimizer)
         for batch_index, batch_dict in enumerate(batch_generator):
             optimizer.zero_grad()
 
+
+            if batch_index == 0:
+                print('ONNX export')
+                torch.onnx.export(model, batch_dict['x_data'].float(), "model.onnx", export_params=True, opset_version=10, do_constant_folding=True)
+
             ŷ = model(batch_dict['x_data'].float())
             l = loss(ŷ, batch_dict['y_target'].float())
             loss_batch = l.item()
@@ -62,6 +68,7 @@ def train(config, dataset, device, model: nn.Module, loss, optimizer: Optimizer)
     
             l.backward()
             optimizer.step()
+    
 
 
 def main(config):
