@@ -34,3 +34,4 @@ conda remove --name nlp --all --yes
 - [TypeError: batch must contain tensors, numbers, dicts or lists; found object](https://discuss.pytorch.org/t/typeerror-batch-must-contain-tensors-numbers-dicts-or-lists-found-object/14665/3)
 - [How do I transform a "SciPy sparse matrix" to a "NumPy matrix"?](https://stackoverflow.com/a/26577144)
 - [Exporting a model from PyTorch to ONNX and running it using ONNX runtime](https://pytorch.org/tutorials/advanced/super_resolution_with_onnxruntime.html)
+- [[Running on windows 10] cuda runtime error (30) : unknown error at ..\aten\src\THC\THCGeneral.cpp:87](https://github.com/pytorch/pytorch/issues/17108)

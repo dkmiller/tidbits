@@ -17,9 +17,9 @@ def raw_reviews(path: str, num_reviews: int) -> pd.DataFrame:
 
 
 class VectorizedReviews(Dataset):
-    def __init__(self, raw_reviews: pd.DataFrame):
+    def __init__(self, raw_reviews: pd.DataFrame, max_features: int):
         self.raw_reviews = raw_reviews
-        self.vectorizer = CountVectorizer()
+        self.vectorizer = CountVectorizer(max_features=max_features)
         self.vectorizer.fit(raw_reviews.text)
         self.transform = transforms.Compose([transforms.ToTensor()])
 
