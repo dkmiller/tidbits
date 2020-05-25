@@ -6,6 +6,7 @@ import torch
 import torch.nn as nn
 import torch.onnx
 from torch.optim import Adam, Optimizer
+from torch.utils.tensorboard import SummaryWriter
 import yaml
 import pandas as pd
 from typeguard import typechecked
@@ -40,7 +41,7 @@ def load_raw_dataset(config, log: logging.Logger) -> pd.DataFrame:
 
 
 @typechecked
-def train(config, dataset, device, model: nn.Module, loss, optimizer: Optimizer, log: logging.Logger) -> None:
+def train(config, dataset, device, model: nn.Module, loss, optimizer: Optimizer, log: logging.Logger, writer: SummaryWriter) -> None:
     log.info('Beginning training...')
 
     num_epochs = int(config['hyperparameters']['num_epochs'])
@@ -55,25 +56,33 @@ def train(config, dataset, device, model: nn.Module, loss, optimizer: Optimizer,
         # running_acc = 0.0
         model.train()
     
+        batch_size = len(dataset) / num_epochs
         for batch_index, batch_dict in enumerate(batch_generator):
             optimizer.zero_grad()
 
-
-            if batch_index == 0:
-                log.debug('ONNX export')
-                torch.onnx.export(model, batch_dict['x_data'].float(), "model.onnx", export_params=True, opset_version=10, do_constant_folding=True)
-
             x = batch_dict['x_data'].float()
             y = batch_dict['y_target'].float()
-            ŷ = model(x)
+
+            if batch_index == 0:
+                file = config['files']['model_state_file']
+                log.debug(f'ONNX export to {file}')
+                torch.onnx.export(model, x, file, export_params=True)
+
+            ŷ = model(x, apply_activation=True)
+
+            # print(f'y = {y}')
+
             l = loss(ŷ, y)
 
             loss_batch = l.item()
             log.debug(f'loss batch = {loss_batch}')
 
             running_loss += (loss_batch - running_loss) / (batch_index + 1)
+            writer.add_scalar('loss/train/running', running_loss, batch_index)
+            writer.add_scalar('loss/train/batch', loss_batch, batch_index)
+
             if batch_index % 20 == 0:
-                log.info(f'index {batch_index}, running loss = {running_loss}')
+                log.info(f'index {batch_index} / {batch_size}, running loss = {running_loss}')
     
             l.backward()
             optimizer.step()
@@ -92,13 +101,16 @@ def main(config, log: logging.Logger) -> None:
     vectorized_reviews = VectorizedReviews(raw_dataset, max_features)
     log.debug(f'size of vectorized reviews = {len(vectorized_reviews)}')
 
-    num_features = len(vectorized_reviews.vectorizer.vocabulary_)
-    log.debug(f'Num features = {num_features}')
+    num_text_features = len(vectorized_reviews.text_vectorizer.vocabulary_)
+    log.debug(f'Num review tokens = {num_text_features}')
+
+    num_rating_features = len(vectorized_reviews.rating_vectorizer.vocabulary_)
+    log.debug(f'Rating vocabulary size = {num_rating_features}')
 
     device = get_device(config)
     log.info(f'Using device = {device}')
 
-    model = ReviewClassifier(num_features)
+    model = ReviewClassifier(num_text_features)
     model = model.to(device)
     log.info(model)
 
@@ -109,7 +121,12 @@ def main(config, log: logging.Logger) -> None:
     optimizer = Adam(model.parameters(), lr=learning_rate)
     log.info(f'optimizer = {optimizer}')
 
-    train(config, vectorized_reviews, device, model, loss, optimizer, log)
+    tboard = config['files']['log_dir']
+    log.info(f'Writing Tensorboard logs to {tboard}.')
+
+    writer = SummaryWriter(log_dir=tboard)
+
+    train(config, vectorized_reviews, device, model, loss, optimizer, log, writer)
 
 
 if __name__ == '__main__':

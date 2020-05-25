@@ -2,6 +2,13 @@
 
 From the O'Reilly book
 [with the same name](https://learning.oreilly.com/library/view/natural-language-processing/9781491978221/).
+Its' companion repository is
+[PyTorchNLPBook](https://github.com/joosthub/PyTorchNLPBook).
+
+Here is a PDF &mdash;
+[MLResources](https://github.com/dlsucomet/MLResources/blob/master/books/%5BNLP%5D%20Natural%20Language%20Processing%20with%20PyTorch%20(2019).pdf)
+That copy may be bootleg, i.e. I have no idea if the repositories owner has any
+right to host it.
 
 ## Environment
 
@@ -37,6 +44,10 @@ conda remove --name nlp-pytorch --all --yes
 - [[Running on windows 10] cuda runtime error (30) : unknown error at ..\aten\src\THC\THCGeneral.cpp:87](https://github.com/pytorch/pytorch/issues/17108)
 - [typeguard](https://typeguard.readthedocs.io/en/latest/) (compare
   [typecheck-decorator](https://pypi.org/project/typecheck-decorator/))
-- https://pytorch.org/docs/stable/tensorboard.html
-- https://github.com/KevinMusgrave/pytorch-metric-learning/issues/55
+- [`torch.utils.tensorboard`](https://pytorch.org/docs/stable/tensorboard.html)
+- [Conda UnsatisfiableError: The following specifications were found to be incompatible with your CUDA driver](https://github.com/KevinMusgrave/pytorch-metric-learning/issues/55)
 - [Managing environments](https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html)
+- [How to use Tensorboard with PyTorch?](https://discuss.pytorch.org/t/how-to-use-tensorboard-with-pytorch/61852)
+- [Tensorboard TypeError: __init__() got an unexpected keyword argument 'serialized_options'](https://stackoverflow.com/a/57842296)
+
+- https://discuss.pytorch.org/t/v1-0-1-nn-bcewithlogitsloss-returns-negative-loss-sigmoid-layer-not-deployed/57409/4

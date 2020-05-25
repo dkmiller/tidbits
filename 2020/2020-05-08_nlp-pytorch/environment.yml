@@ -9,16 +9,18 @@ dependencies:
   # ONNX isn't compatible with Python 3.7 yet.
   - onnx
   - pandas>=1.0.3
+  - protobuf>=3.12.1
   - pylint
   - pytest
   - pytorch>=1.5.0
   - pyyaml
   - scikit-learn
   - scipy
-  - tensorboard
   - torchvision
   - wheel
   - pip:
     - bidict
     - onnxruntime
+    # ?? Latest version has some issue.
+    - tensorboard>=2.2.1
     - typeguard
