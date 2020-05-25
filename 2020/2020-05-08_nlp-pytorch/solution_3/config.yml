@@ -3,9 +3,7 @@ compute:
 files:
   model_state_file: model.onnx
   review_json: /src/tidbits/2020/2020-05-08_nlp-pytorch/yelp-dataset/yelp_academic_dataset_review.json
-  sample_size: 2000
-  save_dir: model_storage/ch3/yelp/
-  vectorizer_file: vectorizer.json
+  sample_size: 2000000
   log_dir: tensorboard-runs
 hyperparameters:
   frequency_cutoff: 25

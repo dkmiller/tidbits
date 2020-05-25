@@ -41,19 +41,29 @@ def load_raw_dataset(config, log: logging.Logger) -> pd.DataFrame:
 
 
 @typechecked
+def log_compute_utilization(device: torch.device, index: int, writer: SummaryWriter) -> None:
+    total_memory = torch.cuda.get_device_properties(device).total_memory
+    allocated_memory = torch.cuda.memory_allocated(device)
+    memory_usage = float(allocated_memory) / total_memory
+
+    writer.add_scalar(f'compute/{device}/usage', memory_usage, index)
+
+
+@typechecked
 def train(config, dataset, device, model: nn.Module, loss, optimizer: Optimizer, log: logging.Logger, writer: SummaryWriter) -> None:
     log.info('Beginning training...')
+    hyperparameters = config['hyperparameters']
+    counter = 0
 
-    num_epochs = int(config['hyperparameters']['num_epochs'])
+    num_epochs = hyperparameters['num_epochs']
     for epoch_index in range(num_epochs):
         log.info(f'Epoch {epoch_index} / {num_epochs}')
 
         batch_generator = generate_batches(dataset, 
-                                       batch_size=int(config['hyperparameters']['batch_size']), 
+                                       batch_size=hyperparameters['batch_size'], 
                                        device=device)
 
         running_loss = 0.0
-        # running_acc = 0.0
         model.train()
     
         batch_size = len(dataset) / num_epochs
@@ -68,44 +78,46 @@ def train(config, dataset, device, model: nn.Module, loss, optimizer: Optimizer,
                 log.debug(f'ONNX export to {file}')
                 torch.onnx.export(model, x, file, export_params=True)
 
-            ŷ = model(x, apply_activation=True)
-
-            # print(f'y = {y}')
-
+            ŷ = model(x)
             l = loss(ŷ, y)
 
             loss_batch = l.item()
             log.debug(f'loss batch = {loss_batch}')
 
             running_loss += (loss_batch - running_loss) / (batch_index + 1)
-            writer.add_scalar('loss/train/running', running_loss, batch_index)
-            writer.add_scalar('loss/train/batch', loss_batch, batch_index)
+            writer.add_scalar('loss/train/running', running_loss, counter)
+            writer.add_scalar('loss/train/batch', loss_batch, counter)
+
+            log_compute_utilization(device, counter, writer)
 
             if batch_index % 20 == 0:
                 log.info(f'index {batch_index} / {batch_size}, running loss = {running_loss}')
     
             l.backward()
             optimizer.step()
+
+            counter += 1
     
 
 @typechecked
 def main(config, log: logging.Logger) -> None:
     log.debug(f'Configuration: {config}')
+    hyperparameters = config['hyperparameters']
 
     raw_dataset = load_raw_dataset(config, log)
-    log.debug(f'size of raw dataset = {len(raw_dataset)}')
+    log.info(f'size of raw dataset = {len(raw_dataset)}')
 
-    max_features = int(config['hyperparameters']['max_features'])
-    log.debug(f'Limiting to {max_features} features.')
+    max_features = hyperparameters['max_features']
+    log.info(f'Limiting to {max_features} features.')
 
     vectorized_reviews = VectorizedReviews(raw_dataset, max_features)
-    log.debug(f'size of vectorized reviews = {len(vectorized_reviews)}')
+    log.info(f'size of vectorized reviews = {len(vectorized_reviews)}')
 
     num_text_features = len(vectorized_reviews.text_vectorizer.vocabulary_)
-    log.debug(f'Num review tokens = {num_text_features}')
+    log.info(f'Num review tokens = {num_text_features}')
 
     num_rating_features = len(vectorized_reviews.rating_vectorizer.vocabulary_)
-    log.debug(f'Rating vocabulary size = {num_rating_features}')
+    log.info(f'Rating vocabulary size = {num_rating_features}')
 
     device = get_device(config)
     log.info(f'Using device = {device}')
@@ -117,14 +129,18 @@ def main(config, log: logging.Logger) -> None:
     loss = nn.BCEWithLogitsLoss()
     log.info(f'loss = {loss}')
 
-    learning_rate = float(config['hyperparameters']['learning_rate'])
+    learning_rate = hyperparameters['learning_rate']
     optimizer = Adam(model.parameters(), lr=learning_rate)
     log.info(f'optimizer = {optimizer}')
 
-    tboard = config['files']['log_dir']
-    log.info(f'Writing Tensorboard logs to {tboard}.')
+    tensorboard_directory = config['files']['log_dir']
+    log.info(f'Writing Tensorboard logs to {tensorboard_directory}.')
 
-    writer = SummaryWriter(log_dir=tboard)
+    seed = hyperparameters['seed']
+    torch.manual_seed(seed)
+    log.info(f'Using seed {seed}.')
+
+    writer = SummaryWriter(log_dir=tensorboard_directory)
 
     train(config, vectorized_reviews, device, model, loss, optimizer, log, writer)
 
@@ -136,7 +152,7 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     with open(args.config, 'r') as f:
-        config = yaml.load(f, Loader=yaml.BaseLoader)
+        config = yaml.safe_load(f)
 
     logging.basicConfig(level=args.level)
     logger = logging.getLogger()

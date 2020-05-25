@@ -18,14 +18,8 @@ class ReviewClassifier(nn.Module):
         # https://discuss.pytorch.org/t/error-optimizer-got-an-empty-parameter-list/1501
         self.linear = nn.Linear(in_features=num_features, out_features=1)
 
-    def forward(self, x_in, apply_activation: bool=False):
-        ŷ = self.linear(x_in).squeeze()
-
-        # print(ŷ)
-
-        if apply_activation:
-            ŷ = self.activation(ŷ)
-
-        # print(ŷ)
-
-        return ŷ
+        self.forward = Compose([
+            self.linear,
+            lambda x: x.squeeze(),
+            self.activation
+        ])

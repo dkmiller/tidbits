@@ -49,5 +49,6 @@ conda remove --name nlp-pytorch --all --yes
 - [Managing environments](https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html)
 - [How to use Tensorboard with PyTorch?](https://discuss.pytorch.org/t/how-to-use-tensorboard-with-pytorch/61852)
 - [Tensorboard TypeError: __init__() got an unexpected keyword argument 'serialized_options'](https://stackoverflow.com/a/57842296)
-
-- https://discuss.pytorch.org/t/v1-0-1-nn-bcewithlogitsloss-returns-negative-loss-sigmoid-layer-not-deployed/57409/4
+- [V1.0.1, `nn.BCEWithLogitsLoss` returns negative loss, Sigmoid layer not deployed](https://discuss.pytorch.org/t/v1-0-1-nn-bcewithlogitsloss-returns-negative-loss-sigmoid-layer-not-deployed/57409)
+- [Get total amount of free GPU memory and available using pytorch](https://stackoverflow.com/a/58216793)
+- [PyTorch &mdash; Reproducibility](https://pytorch.org/docs/stable/notes/randomness.html)
