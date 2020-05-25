@@ -13,14 +13,14 @@ an environment for running this code.
 conda env create --file environment.yml
 
 # Activate environment.
-conda activate nlp
+conda activate nlp-pytorch
 
 # Update environment.
 # https://stackoverflow.com/a/43873901
-conda env update --name nlp --file environment.yml
+conda env update --name nlp-pytorch --file environment.yml
 
 # (Optional) cleanup environment.
-conda remove --name nlp --all --yes
+conda remove --name nlp-pytorch --all --yes
 ```
 
 ## Links
@@ -39,3 +39,4 @@ conda remove --name nlp --all --yes
   [typecheck-decorator](https://pypi.org/project/typecheck-decorator/))
 - https://pytorch.org/docs/stable/tensorboard.html
 - https://github.com/KevinMusgrave/pytorch-metric-learning/issues/55
+- [Managing environments](https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html)
