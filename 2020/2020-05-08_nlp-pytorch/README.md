@@ -35,3 +35,7 @@ conda remove --name nlp --all --yes
 - [How do I transform a "SciPy sparse matrix" to a "NumPy matrix"?](https://stackoverflow.com/a/26577144)
 - [Exporting a model from PyTorch to ONNX and running it using ONNX runtime](https://pytorch.org/tutorials/advanced/super_resolution_with_onnxruntime.html)
 - [[Running on windows 10] cuda runtime error (30) : unknown error at ..\aten\src\THC\THCGeneral.cpp:87](https://github.com/pytorch/pytorch/issues/17108)
+- [typeguard](https://typeguard.readthedocs.io/en/latest/) (compare
+  [typecheck-decorator](https://pypi.org/project/typecheck-decorator/))
+- https://pytorch.org/docs/stable/tensorboard.html
+- https://github.com/KevinMusgrave/pytorch-metric-learning/issues/55

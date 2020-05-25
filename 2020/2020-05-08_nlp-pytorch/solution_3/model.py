@@ -1,6 +1,7 @@
 import torch
 import torch.nn as nn
 from torchvision.transforms import Compose
+from typeguard import typechecked
 
 
 class ReviewClassifier(nn.Module):
@@ -8,6 +9,7 @@ class ReviewClassifier(nn.Module):
     Simple perceptron.
     '''
 
+    @typechecked
     def __init__(self, num_features: int, activation=torch.sigmoid):
         super(ReviewClassifier, self).__init__()
         

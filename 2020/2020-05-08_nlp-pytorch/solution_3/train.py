@@ -8,9 +8,12 @@ import torch.onnx
 from torch.optim import Adam, Optimizer
 import yaml
 import pandas as pd
+from typeguard import typechecked
+from typing import Iterable
 
 
-def generate_batches(dataset, batch_size, device='cpu'):
+@typechecked
+def generate_batches(dataset, batch_size, device='cpu') -> Iterable[dict]:
     dataloader = torch.utils.data.DataLoader(dataset=dataset, batch_size=batch_size,
                             shuffle=True, drop_last=True)
     for data_dict in dataloader:
@@ -20,11 +23,13 @@ def generate_batches(dataset, batch_size, device='cpu'):
         yield out_data_dict
 
 
+@typechecked
 def get_device(config) -> torch.device:
     use_gpu = bool(config['compute']['gpu'])
     return torch.device('cuda' if use_gpu else 'cpu')
 
 
+@typechecked
 def load_raw_dataset(config, log: logging.Logger) -> pd.DataFrame:
     file_info = config['files']
     path = file_info['review_json']
@@ -34,7 +39,8 @@ def load_raw_dataset(config, log: logging.Logger) -> pd.DataFrame:
     return raw_reviews(path, num_reviews)
 
 
-def train(config, dataset, device, model: nn.Module, loss, optimizer: Optimizer, log: logging.Logger):
+@typechecked
+def train(config, dataset, device, model: nn.Module, loss, optimizer: Optimizer, log: logging.Logger) -> None:
     log.info('Beginning training...')
 
     num_epochs = int(config['hyperparameters']['num_epochs'])
@@ -73,7 +79,8 @@ def train(config, dataset, device, model: nn.Module, loss, optimizer: Optimizer,
             optimizer.step()
     
 
-def main(config, log: logging.Logger):
+@typechecked
+def main(config, log: logging.Logger) -> None:
     log.debug(f'Configuration: {config}')
 
     raw_dataset = load_raw_dataset(config, log)
