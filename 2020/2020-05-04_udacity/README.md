@@ -1,5 +1,7 @@
 # ML
 
+https://github.com/udacity/DSND_Term1/tree/master/lessons/DeepLearning/new-intro-to-pytorch
+
 ## Links
 
 - [Titanic](https://www.openml.org/d/40945)
