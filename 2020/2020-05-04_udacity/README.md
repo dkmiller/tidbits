@@ -2,6 +2,26 @@
 
 https://github.com/udacity/DSND_Term1/tree/master/lessons/DeepLearning/new-intro-to-pytorch
 
+## Environment
+
+Here are some commands for using Anaconda to create, update, and cleanup
+an environment for running this code.
+
+```powershell
+# Create environment.
+conda env create --file environment.yml
+
+# Activate environment.
+conda activate udacity
+
+# Update environment.
+# https://stackoverflow.com/a/43873901
+conda env update --name udacity --file environment.yml
+
+# (Optional) cleanup environment.
+conda remove --name udacity --all --yes
+```
+
 ## Links
 
 - [Titanic](https://www.openml.org/d/40945)
