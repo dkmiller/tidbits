@@ -40,6 +40,9 @@ for m in modules:
             # print(m.name)
             ms = __evil_(m.name)
             print(f'\t{len(ms)}')
+
+            max_len = max([len(ns.split('.')) for ns in ms])
+            print(f'\t{max_len}')
         # if m.name == 'torch':
         #     i = importlib.import_module(m.name)
         #     print(f'\t{dir(i)}')
