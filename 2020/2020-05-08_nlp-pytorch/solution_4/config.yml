@@ -2,3 +2,4 @@ data:
   surname_csv: /src/PyTorchNLPBook/data/surnames/surnames.csv
 hyperparameters:
   seed: 1
+  hidden_dim: 100

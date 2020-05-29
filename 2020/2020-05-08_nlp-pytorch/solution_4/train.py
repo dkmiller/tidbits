@@ -1,4 +1,5 @@
 import argparse
+import common
 import logging
 from models import MultilayerPerceptron
 import os
@@ -13,7 +14,7 @@ def main(config, log: logging.Logger) -> None:
 
     batch_size = 2 # number of samples input at once
     input_dim = 3
-    hidden_dim = 100
+    hidden_dim = hyperparameters['hidden_dim']
     output_dim = 4
 
     model = MultilayerPerceptron([input_dim, hidden_dim, output_dim])
@@ -30,18 +31,4 @@ def main(config, log: logging.Logger) -> None:
 
 
 if __name__ == '__main__':
-    # https://stackoverflow.com/a/5137509
-    dir_path = os.path.dirname(os.path.realpath(__file__))
-
-    parser = argparse.ArgumentParser()
-    parser.add_argument('--config', default=os.path.join(dir_path, 'config.yml'))
-    parser.add_argument('--level', default='INFO')
-    args = parser.parse_args()
-
-    with open(args.config, 'r') as f:
-        config = yaml.safe_load(f)
-
-    logging.basicConfig(level=args.level)
-    logger = logging.getLogger()
-
-    main(config, logger)
+    common.run(main)
