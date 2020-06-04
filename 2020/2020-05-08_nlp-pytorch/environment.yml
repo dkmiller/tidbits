@@ -9,7 +9,7 @@ dependencies:
   # ONNX isn't compatible with Python 3.7 yet.
   - onnx
   - pandas>=1.0.3
-  - protobuf>=3.12.1
+  - protobuf
   - pylint
   - pytest
   - pytorch>=1.5.0
@@ -21,6 +21,8 @@ dependencies:
   - pip:
     - bidict
     - onnxruntime
+    # - /src/pyconfigurableml/dist/pyconfigurableml-0.0.1-py3-none-any.whl
+    - pyconfigurableml
     # ?? Latest version has some issue.
     - tensorboard>=2.2.1
     - typeguard

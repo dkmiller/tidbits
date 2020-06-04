@@ -1,13 +1,21 @@
 import argparse
-import common
+import data
 import logging
 from models import MultilayerPerceptron
 import os
+import pandas as pd
+from pyconfigurableml.entry import run
 import torch
 from typeguard import typechecked
 import yaml
 
+
 @typechecked
+def get_device(hpms) -> torch.device:
+    use_gpu = hpms['gpu']
+    return torch.device('cuda' if use_gpu else 'cpu')
+
+
 def main(config, log: logging.Logger) -> None:
     hyperparameters = config['hyperparameters']
     torch.manual_seed(hyperparameters['seed'])
@@ -17,18 +25,33 @@ def main(config, log: logging.Logger) -> None:
     hidden_dim = hyperparameters['hidden_dim']
     output_dim = 4
 
-    model = MultilayerPerceptron([input_dim, hidden_dim, output_dim])
-    print(model)
+    df = pd.read_csv(config['data']['surname_csv'])
+    log.info(df)
+
+    dataset = data.Surnames(df)
+    log.info(dataset[0])
+
+    device = get_device(hyperparameters)
+    log.info(device)
+
+    model = MultilayerPerceptron([input_dim, hidden_dim, output_dim]).to(device)
+    log.info(model)
 
     x_input = torch.rand(batch_size, input_dim)
-    print(x_input)
+    log.info(x_input)
 
     y = model(x_input, apply_softmax = False)
-    print(y)
+    log.info(y)
 
     y_sm = model(x_input, apply_softmax = True)
-    print(y_sm)
+    log.info(y_sm)
+
+    loss = torch.nn.CrossEntropyLoss(dataset.class_weights())
+    log.info(loss)
+
+    optimizer = torch.optim.Adam(model.parameters(), lr=hyperparameters['learning_rate'])
+    log.info(optimizer)
 
 
 if __name__ == '__main__':
-    common.run(main)
+    run(main)
