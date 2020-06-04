@@ -22,7 +22,7 @@ dependencies:
     - bidict
     - onnxruntime
     # - /src/pyconfigurableml/dist/pyconfigurableml-0.0.1-py3-none-any.whl
-    - pyconfigurableml
+    - pyconfigurableml>=0.1.0
     # ?? Latest version has some issue.
     - tensorboard>=2.2.1
     - typeguard

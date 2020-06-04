@@ -53,5 +53,4 @@ def main(config, log: logging.Logger) -> None:
     log.info(optimizer)
 
 
-if __name__ == '__main__':
-    run(main)
+run(main, __file__, __name__)
