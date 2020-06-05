@@ -2,6 +2,15 @@
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
+        "acrConnectionName": {
+            "type": "string"
+        },
+        "acrName": {
+            "type": "string"
+        },
+        "acrResourceGroup": {
+            "type": "string"
+        },
         "agentCount": {
             "type": "int"
         },
@@ -13,6 +22,10 @@
         },
         "dnsPrefix": {
             "type": "string"
+        },
+        "guid": {
+            "type": "string",
+            "defaultValue": "[newGuid()]"
         },
         "location": {
             "type": "string"
@@ -47,6 +60,35 @@
                 "enableRBAC": true
             },
             "tags": "[parameters('tags')]"
+        },
+        {
+            "name": "[parameters('acrConnectionName')]",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2017-05-10",
+            "resourceGroup": "[parameters('acrResourceGroup')]",
+            "dependsOn": [
+                "[concat('Microsoft.ContainerService/managedClusters/', parameters('clusterName'))]"
+            ],
+            "properties": {
+                "mode": "Incremental",
+                "template": {
+                    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+                    "contentVersion": "1.0.0.0",
+                    "resources": [
+                        {
+                            "apiVersion": "2018-09-01-preview",
+                            "type": "Microsoft.ContainerRegistry/registries/providers/roleAssignments",
+                            "name": "[concat(parameters('acrName'), '/Microsoft.Authorization/', parameters('guid'))]",
+                            "properties": {
+                                "principalId": "[reference(parameters('clusterName'), '2020-03-01').identityProfile.kubeletidentity.objectId]",
+                                "principalType": "ServicePrincipal",
+                                "roleDefinitionId": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Authorization/roleDefinitions/', 'b24988ac-6180-42a0-ab88-20f7382dd24c')]",
+                                "scope": "[resourceId(parameters('acrResourceGroup'),'Microsoft.ContainerRegistry/registries/', parameters('acrName'))]"
+                            }
+                        }
+                    ]
+                }
+            }
         }
     ]
 }
