@@ -12,7 +12,7 @@
             "value": "aml1p-rg"
         },
         "agentCount": {
-            "value": 2
+            "value": 3
         },
         "agentVmSize": {
             "value": "Standard_DS2_v2"
