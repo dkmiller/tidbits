@@ -1,0 +1,30 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "agentCount": {
+            "value": 2
+        },
+        "agentVmSize": {
+            "value": "Standard_DS2_v2"
+        },
+        "clusterName": {
+            "value": "danmill-learn-aks"
+        },
+        "dnsPrefix": {
+            "value": "danmilllearnaks"
+        },
+        "location": {
+            "value": "westus2"
+        },
+        "osDiskSizeGB": {
+            "value": 50
+        },
+        "tags": {
+            "value": {
+                "createdBy": "danmill@microsoft.com",
+                "keep_me": "false"
+            }
+        }
+    }
+}

@@ -1,0 +1,52 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "agentCount": {
+            "type": "int"
+        },
+        "agentVmSize": {
+            "type": "string"
+        },
+        "clusterName": {
+            "type": "string"
+        },
+        "dnsPrefix": {
+            "type": "string"
+        },
+        "location": {
+            "type": "string"
+        },
+        "osDiskSizeGB": {
+            "type": "int"
+        },
+        "tags": {
+            "type": "object"
+        }
+    },
+    "resources": [
+        {
+            "apiVersion": "2020-03-01",
+            "type": "Microsoft.ContainerService/managedClusters",
+            "identity": {
+                "type": "SystemAssigned"
+            },
+            "location": "[parameters('location')]",
+            "name": "[parameters('clusterName')]",
+            "properties": {
+                "agentPoolProfiles": [
+                    {
+                        "count": "[parameters('agentCount')]",
+                        "mode": "System",
+                        "name": "agentpool",
+                        "osDiskSizeGB": "[parameters('osDiskSizeGB')]",
+                        "vmSize": "[parameters('agentVmSize')]"
+                    }
+                ],
+                "dnsPrefix": "[parameters('dnsPrefix')]",
+                "enableRBAC": true
+            },
+            "tags": "[parameters('tags')]"
+        }
+    ]
+}
