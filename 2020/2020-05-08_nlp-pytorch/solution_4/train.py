@@ -27,6 +27,7 @@ def generate_batches(dataset, batch_size, device='cpu') -> Iterable[dict]:
     for data_dict in dataloader:
         out_data_dict = {}
         for name, tensor in data_dict.items():
+            print(f'{name} -> {tensor.shape}')
             out_data_dict[name] = tensor.to(device)
         yield out_data_dict
 
@@ -51,19 +52,23 @@ def main(config, log: logging.Logger) -> None:
     log.info(device)
 
     # TODO: input and output dimensions should come from the data.
-    model = MultilayerPerceptron([input_dim, hidden_dim, output_dim]).to(device)
+    model = MultilayerPerceptron([
+        len(dataset.surname_vectorizer.vocabulary_),
+        hidden_dim,
+        len(dataset.nationality_vectorizer.vocabulary_)
+        ]).to(device)
     log.info(model)
 
-    x_input = torch.rand(batch_size, input_dim).to(device)
-    log.info(x_input)
+    # x_input = torch.rand(batch_size, len(dataset.surname_vectorizer.vocabulary_)).to(device)
+    # log.info(x_input)
 
-    y = model(x_input, apply_softmax = False)
-    log.info(y)
+    # y = model(x_input, apply_softmax = False)
+    # log.info(y)
 
-    y_sm = model(x_input, apply_softmax = True)
-    log.info(y_sm)
+    # y_sm = model(x_input, apply_softmax = True)
+    # log.info(y_sm)
 
-    loss = torch.nn.CrossEntropyLoss(dataset.class_weights())
+    loss = torch.nn.CrossEntropyLoss(dataset.class_weights().to(device))
     log.info(loss)
 
     optimizer = torch.optim.Adam(model.parameters(), lr=hyperparameters['learning_rate'])
@@ -81,10 +86,19 @@ def main(config, log: logging.Logger) -> None:
         for batch_index, batch_dict in enumerate(batch_generator):
             optimizer.zero_grad()
 
+
             x = batch_dict['x_data'].float()
-            y = batch_dict['y_target'].float()
+            y = batch_dict['y_target']
 
             ŷ = model(x)
+
+            log.info(x.shape)
+            log.info(ŷ.shape)
+            log.info(y.shape)
+            
+            l = loss(ŷ, y)
+            loss_batch = l.to('cpu').item()
+            log.info(loss_batch)
 
 
     
