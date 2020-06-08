@@ -2,8 +2,22 @@
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
+<<<<<<< HEAD
         "agentCount": {
             "value": 2
+=======
+        "acrConnectionName":{
+            "value": "danmill-learn-aks-connection"
+        },
+        "acrName": {
+            "value": "aml1pmlwus282c50c2b"
+        },
+        "acrResourceGroup": {
+            "value": "aml1p-rg"
+        },
+        "agentCount": {
+            "value": 3
+>>>>>>> 9cff6069c0b3e75faf3ed94b8cc40eadad75a98f
         },
         "agentVmSize": {
             "value": "Standard_DS2_v2"
