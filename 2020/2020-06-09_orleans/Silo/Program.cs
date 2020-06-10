@@ -1,12 +1,35 @@
 ﻿using System;
+using Microsoft.Extensions.Logging;
+using Orleans;
+using Orleans.Configuration;
+using Orleans.Hosting;
+using System.Threading.Tasks;
 
-namespace Silo
+namespace dkmiller.Silo
 {
     class Program
     {
-        static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            var host = new SiloHostBuilder()
+                .UseLocalhostClustering()
+                .Configure<ClusterOptions>(options =>
+                {
+                    options.ClusterId = "dev";
+                    options.ServiceId = "OrleansBasics";
+                })
+                .ConfigureApplicationParts(
+                    parts => parts.AddApplicationPart(typeof(Arithmetic).Assembly)
+                                .WithReferences()
+                    )
+                .ConfigureLogging(log => log.AddConsole())
+                .Build();
+
+                await host.StartAsync();
+                Console.WriteLine("Press Enter to terminate...\n\n");
+                Console.ReadLine();
+
+                await host.StopAsync();
         }
     }
 }
