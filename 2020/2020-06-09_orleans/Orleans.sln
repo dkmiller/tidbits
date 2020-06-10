@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26124.0
+MinimumVisualStudioVersion = 15.0.26124.0
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Core\Core.csproj", "{3EB8A284-BC1D-4C45-9B49-717DC1208AF7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client", "Client\Client.csproj", "{A9560ECC-D9E3-42D3-B44A-AE2712ABEB72}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Silo", "Silo\Silo.csproj", "{C37EF96E-D320-456D-B548-952B6BB850B1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3EB8A284-BC1D-4C45-9B49-717DC1208AF7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3EB8A284-BC1D-4C45-9B49-717DC1208AF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3EB8A284-BC1D-4C45-9B49-717DC1208AF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3EB8A284-BC1D-4C45-9B49-717DC1208AF7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A9560ECC-D9E3-42D3-B44A-AE2712ABEB72}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A9560ECC-D9E3-42D3-B44A-AE2712ABEB72}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A9560ECC-D9E3-42D3-B44A-AE2712ABEB72}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A9560ECC-D9E3-42D3-B44A-AE2712ABEB72}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C37EF96E-D320-456D-B548-952B6BB850B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C37EF96E-D320-456D-B548-952B6BB850B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C37EF96E-D320-456D-B548-952B6BB850B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C37EF96E-D320-456D-B548-952B6BB850B1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
