@@ -1,0 +1,11 @@
+<Project>
+
+  <PropertyGroup>
+    <NetCore>net5</NetCore>
+    <NetStandard>netstandard2.0</NetStandard>
+    <LangVersion>8</LangVersion>
+    <Nullable>enable</Nullable>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+
+</Project>
