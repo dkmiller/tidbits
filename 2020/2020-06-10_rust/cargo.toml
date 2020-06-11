@@ -1,0 +1,7 @@
+[package]
+name = 'first_cargo'
+version = '0.0.0'
+authors = ['Dan Miller <daniel.keegan.miller@gmail.com>']
+edition = '2018'
+
+[dependencies]
