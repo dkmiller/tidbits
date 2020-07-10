@@ -1,0 +1,9 @@
+name: data-science
+channels:
+  - pytorch
+  - conda-forge
+dependencies:
+  - python=3.7
+  - pytorch
+  - torchvision
+  - cudatoolkit
