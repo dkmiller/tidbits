@@ -1,0 +1,9 @@
+data:
+  surname_csv: /src/PyTorchNLPBook/data/surnames/surnames.csv
+hyperparameters:
+  batch_size: 64
+  gpu: false
+  hidden_dim: 100
+  learning_rate: 0.001
+  num_epochs: 100
+  seed: 1

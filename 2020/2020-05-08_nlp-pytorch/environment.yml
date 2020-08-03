@@ -1,0 +1,28 @@
+name: nlp-pytorch
+channels:
+  - conda-forge
+  - defaults
+  - pytorch
+dependencies:
+  - python=3.6
+  - pip
+  # ONNX isn't compatible with Python 3.7 yet.
+  - onnx
+  - pandas>=1.0.3
+  - protobuf
+  - pylint
+  - pytest
+  - pytorch>=1.5.0
+  - pyyaml
+  - scikit-learn
+  - scipy
+  - torchvision
+  - wheel
+  - pip:
+    - bidict
+    - onnxruntime
+    # - /src/pyconfigurableml/dist/pyconfigurableml-0.0.1-py3-none-any.whl
+    - pyconfigurableml>=0.1.0
+    # ?? Latest version has some issue.
+    - tensorboard>=2.2.1
+    - typeguard
