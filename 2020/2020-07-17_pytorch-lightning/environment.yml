@@ -1,0 +1,15 @@
+name: pt-lightning
+channels:
+- pytorch
+- conda-forge
+dependencies:
+- cudatoolkit>=10.2.89
+- pip>=20.2.2
+- python=3.7
+- pytorch>=1.6.0
+- pytorch-lightning>=0.8.5
+- tensorboard>=2.3.0
+- torchvision>=0.2.1
+- pip:
+  - azureml-core
+  - pyconfigurableml[munch]>=0.4.0
