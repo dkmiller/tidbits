@@ -4,7 +4,7 @@ interface Person {
 }
 
 export function greeter(person: Person) {
-  return "Hello, " + person.firstName + " " + person.lastName + "!";
+  return "~Hello, " + person.firstName + " " + person.lastName + "!";
 }
 
 // let user = { firstName: "Dan", lastName: "Miller"};
