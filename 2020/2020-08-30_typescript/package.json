@@ -1,0 +1,19 @@
+{
+  "name": "danmill_hello",
+  "version": "1.0.0",
+  "description": "Dan Miller learning TypeScript",
+  "main": "./dist/main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "browserify": "^16.5.2",
+    "gulp": "^4.0.2",
+    "gulp-typescript": "^6.0.0-alpha.1",
+    "tsify": "^5.0.2",
+    "typescript": "^4.0.2",
+    "vinyl-source-stream": "^2.0.0"
+  }
+}
