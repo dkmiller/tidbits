@@ -28,3 +28,4 @@ conda remove --name pt-lightning --all --yes
 - [`pytorch_mnist.py`](https://github.com/Azure/MachineLearningNotebooks/blob/master/how-to-use-azureml/ml-frameworks/pytorch/training/distributed-pytorch-with-nccl-gloo/pytorch_mnist.py)
 - [`loggers/comet.py`](https://github.com/PyTorchLightning/PyTorch-Lightning/blob/master/pytorch_lightning/loggers/comet.py)
 - [Set up and use compute targets for model training](https://docs.microsoft.com/en-us/azure/machine-learning/how-to-set-up-training-targets)
+- [Using pip and requirements.txt to install from the HEAD of a Github branch](https://codeinthehole.com/tips/using-pip-and-requirementstxt-to-install-from-the-head-of-a-github-branch/)

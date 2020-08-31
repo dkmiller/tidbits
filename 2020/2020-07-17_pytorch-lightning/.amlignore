@@ -1,0 +1,6 @@
+.vscode
+__pycache__
+data
+lightning_logs
+aml-lightning_default
+OfflineRun_*

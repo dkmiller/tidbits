@@ -13,3 +13,5 @@ dependencies:
 - pip:
   - azureml-core
   - pyconfigurableml[munch]>=0.4.0
+  # Sadly, `pip install` from here isn't working.
+  # - git+git://github.com/dkmiller/pytorch-lightning.git@cb986e7422bfdcfda6779ead90f57c43004a0007
