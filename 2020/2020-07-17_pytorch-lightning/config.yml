@@ -28,7 +28,7 @@ environment:
   name: pytorch-lightning
   file_path: environment.yml
 
-compute: gpu-nc6
+compute: danmill-nv6
 
 pyconfigurableml:
     munch: True
