@@ -1,0 +1,34 @@
+model:
+  batch_size: 64
+  kernel_size: 5
+  lr: 0.01
+  momentum: 0.5
+  weight_decay: 0.0001
+
+trainer:
+  gpus: 1
+  max_epochs: 10
+  min_epochs: 3
+  # Set to 16 for half-precision (faster, but less accurate).
+  precision: 32
+  weights_summary: top
+
+workspace:
+  subscription_id: 48bbc269-ce89-4f6f-9a12-c6f91fcb772d
+  resource_group: aml1p-rg
+  workspace_name: aml1p-ml-wus2
+
+run_config:
+  source_directory: .
+  script: train.py
+
+experiment: danmill-pytorch-lightning
+
+environment:
+  name: pytorch-lightning
+  file_path: environment.yml
+
+compute: danmill-nv6
+
+pyconfigurableml:
+    munch: True
