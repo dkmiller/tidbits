@@ -1,5 +1,16 @@
+data:
+  download: true
+  root: .
+
 model:
   image_size: 28
   color_range: 64
   hp1: 3
   lr: .001
+
+# https://pytorch-lightning.readthedocs.io/en/stable/trainer.html#trainer-class-api
+trainer:
+  gpus: 0
+  log_gpu_memory: true
+  max_epochs: 10
+ # TODO: https://github.com/PyTorchLightning/pytorch-lightning/issues/1518

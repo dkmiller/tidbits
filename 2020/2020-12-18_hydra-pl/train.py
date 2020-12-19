@@ -16,11 +16,10 @@ def main(config):
 
     model = AutoEncoder(**config.model)
 
-    import os
-    dataset = MNIST(os.getcwd(), download=True, transform=ToTensor())
+    dataset = MNIST(transform=ToTensor(), **config.data)
     train_loader = DataLoader(dataset)
 
-    trainer = pl.Trainer()
+    trainer = pl.Trainer(**config.trainer)
     trainer.fit(model, train_loader)
 
 
