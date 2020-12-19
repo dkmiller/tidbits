@@ -1,0 +1,17 @@
+name: hydra-pl
+
+channels:
+- defaults
+- conda-forge
+- pytorch
+
+dependencies:
+- pip==20.3.3
+- pytorch-lightning==1.1.0
+# Sadly, Python 3.8 doesn't "play nicely" with the torchvision library.
+- python=3.7
+- torchvision==0.4.2
+
+- pip:
+  - black==20.8b1
+  - hydra-core==1.0.4

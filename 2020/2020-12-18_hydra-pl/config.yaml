@@ -1,0 +1,5 @@
+model:
+  image_size: 28
+  color_range: 64
+  hp1: 3
+  lr: .001
