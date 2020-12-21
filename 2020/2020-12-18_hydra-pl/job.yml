@@ -1,0 +1,23 @@
+# yaml-language-server: $schema=https://azuremlsdk2.blob.core.windows.net/latest/commandJob.schema.json
+
+experiment_name: azuremlv2
+
+command: python train.py trainer.gpus=-1 +trainer.accelerator=mpi
+
+code:
+  directory: .
+
+environment:
+  name: hydra-pl
+  version: 3
+  conda_file: environment.yml
+  docker:
+    image: mcr.microsoft.com/azureml/openmpi3.1.2-cuda10.2-cudnn8-ubuntu18.04
+
+distribution:
+  type: mpi
+  process_count_per_instance: 2
+
+compute:
+  target: azureml:gpu-nc12-lowpri
+  node_count: 2

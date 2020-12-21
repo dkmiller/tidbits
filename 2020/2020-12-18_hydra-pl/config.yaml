@@ -1,3 +1,5 @@
+seed: 42
+
 data:
   download: true
   root: .
@@ -11,6 +13,7 @@ model:
 # https://pytorch-lightning.readthedocs.io/en/stable/trainer.html#trainer-class-api
 trainer:
   gpus: 0
-  log_gpu_memory: true
+  log_every_n_steps: 200
+  log_gpu_memory: all
   max_epochs: 10
- # TODO: https://github.com/PyTorchLightning/pytorch-lightning/issues/1518
+  # TODO: https://github.com/PyTorchLightning/pytorch-lightning/issues/1518
