@@ -23,7 +23,10 @@ git clean -xdf; az ml job create --file job.yml --query metadata.interaction_end
 
 ## Roadmap
 
-- [ ] Export model to ONNX periodically (end of batch?).
+- [ ] Export model to ONNX periodically.
+    - Ideally, do this at the end of each batch.
+    - Currently encountering "maximum recursion depth exceeded" when calling the
+      built-in `to_onnx` method.
 
 ## Links
 

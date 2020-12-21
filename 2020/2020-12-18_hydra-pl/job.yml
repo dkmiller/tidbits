@@ -9,10 +9,10 @@ code:
 
 environment:
   name: hydra-pl
-  version: 2
+  version: 4
   conda_file: environment.yml
   docker:
-    image: mcr.microsoft.com/azureml/intelmpi2018.3-ubuntu16.04:20201211.v1
+    image: mcr.microsoft.com/azureml/openmpi3.1.2-cuda10.2-cudnn8-ubuntu18.04
 
 distribution:
   type: mpi
