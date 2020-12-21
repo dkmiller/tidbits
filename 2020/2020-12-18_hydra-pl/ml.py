@@ -20,6 +20,7 @@ class AutoEncoder(pl.LightningModule):
             nn.Linear(color_range, image_size ** 2),
         )
 
+        self.example_input_array = None
         self.lr = lr
 
     def forward(self, x) -> Tensor:
@@ -28,6 +29,7 @@ class AutoEncoder(pl.LightningModule):
 
     def training_step(self, batch: Tuple[Tensor, Tensor], batch_id: int) -> Tensor:
         x, y = batch
+
         x = x.view(x.size(0), -1)
         z = self.encoder(x)
         x̂ = self.decoder(z)

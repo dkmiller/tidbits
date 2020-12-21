@@ -13,7 +13,7 @@ from torchvision.transforms import ToTensor
 from ml import AutoEncoder
 
 
-def mlflow_logger() -> Union[bool, LightningLoggerBase]:
+def create_logger() -> Union[bool, LightningLoggerBase]:
     """
     Loosely imitate:
     https://github.com/Azure/azureml-examples/blob/main/tutorials/using-pytorch-lightning/3.log-with-mlflow.ipynb
@@ -29,6 +29,12 @@ def mlflow_logger() -> Union[bool, LightningLoggerBase]:
     return rv
 
 
+def create_trainer(config) -> pl.Trainer:
+    logger = create_logger()
+    trainer = pl.Trainer(logger, **config.trainer)
+    return trainer
+
+
 @hydra.main(config_name="config")
 def main(config):
     log = logging.getLogger(__name__)
@@ -41,9 +47,7 @@ def main(config):
     dataset = MNIST(transform=ToTensor(), **config.data)
     train_loader = DataLoader(dataset)
 
-    logger = mlflow_logger()
-
-    trainer = pl.Trainer(logger, **config.trainer)
+    trainer = create_trainer(config)
     trainer.fit(model, train_loader)
 
 

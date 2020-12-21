@@ -21,7 +21,9 @@ python train.py data.root=/src/tmp/data data.download=false
 git clean -xdf; az ml job create --file job.yml --query metadata.interaction_endpoints.studio --out tsv
 ```
 
-TODO: ...
+## Roadmap
+
+- [ ] Export model to ONNX periodically (end of batch?).
 
 ## Links
 
