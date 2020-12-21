@@ -13,6 +13,9 @@ from torchvision.transforms import ToTensor
 from ml import AutoEncoder
 
 
+log = logging.getLogger(__name__)
+
+
 def create_logger() -> Union[bool, LightningLoggerBase]:
     """
     Loosely imitate:
@@ -20,10 +23,14 @@ def create_logger() -> Union[bool, LightningLoggerBase]:
     """
     run = Run.get_context()
     if isinstance(run, _SubmittedRun):
-        tracking_uri = run.experiment.workspace.get_mlflow_tracking_uri()
-        exp_name = run.id
+        experiment = run.experiment
+        tracking_uri = experiment.workspace.get_mlflow_tracking_uri()
+        exp_name = run.experiment.name
+        log.info(f"Using MLFlow logger with tracking URI {tracking_uri} and experiment name {exp_name}")
         rv = MLFlowLogger(exp_name, tracking_uri)
+        rv._run_id = run.id
     else:
+        log.warning("Unable to get AML run context! Logging locally.")
         rv = True
 
     return rv
@@ -37,7 +44,6 @@ def create_trainer(config) -> pl.Trainer:
 
 @hydra.main(config_name="config")
 def main(config):
-    log = logging.getLogger(__name__)
     log.info(f"Configuration: {config}")
 
     pl.seed_everything(config.seed)

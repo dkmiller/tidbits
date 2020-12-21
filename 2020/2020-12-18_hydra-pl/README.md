@@ -33,3 +33,4 @@ git clean -xdf; az ml job create --file job.yml --query metadata.interaction_end
 - [Lightning in 2 steps](https://pytorch-lightning.readthedocs.io/en/stable/new-project.html)
 - [Train models (create jobs)](https://azure.github.io/azureml-v2-preview/_build/html/quickstart/jobs.html)
 - [Distributed training](https://azure.github.io/azureml-v2-preview/_build/html/quickstart/distributed-training.html)
+- [azuremlv2 &gt; danmill](https://ml.azure.com/experiments/id/2eeb53e6-245e-4ec3-b52a-5be72ec5f20c?wsid=/subscriptions/48bbc269-ce89-4f6f-9a12-c6f91fcb772d/resourcegroups/aml1p-rg/workspaces/aml1p-ml-wus2&tid=72f988bf-86f1-41af-91ab-2d7cd011db47#21bc4a56-e69f-46fd-b141-8c08f8a616a8)

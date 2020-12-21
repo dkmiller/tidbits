@@ -17,3 +17,10 @@ trainer:
   log_gpu_memory: all
   max_epochs: 10
   # TODO: https://github.com/PyTorchLightning/pytorch-lightning/issues/1518
+
+hydra:
+  run:
+    # Without this, jobs fail with obscure error:
+    # FileNotFoundError: [Errno 2] No such file or directory: './raw/train-images-idx3-ubyte.gz'
+    # https://ml.azure.com/experiments/id/2eeb53e6-245e-4ec3-b52a-5be72ec5f20c/runs/fd8d7504-136c-4c64-ba9b-4605e31f8281?wsid=/subscriptions/48bbc269-ce89-4f6f-9a12-c6f91fcb772d/resourcegroups/aml1p-rg/workspaces/aml1p-ml-wus2&tid=72f988bf-86f1-41af-91ab-2d7cd011db47#outputsAndLogs
+    dir: .
