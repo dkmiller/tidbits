@@ -1,0 +1,42 @@
+# yaml-language-server: $schema=https://azuremlsdk2.blob.core.windows.net/latest/sweepJob.schema.json
+
+experiment_name: azuremlv2
+
+# TODO (feedback): language server should show me allowed values here.
+algorithm: random
+
+# Case sensitive!
+# TODO (feedback): when getting job type wrong (sweep vs. Sweep), error message
+# is SUPER uninformative:
+#
+# Error while parsing yaml file: sweep.yml
+#  {'search_space': ['Unknown field.'], 'objective': ['Unknown field.'], 'limits': ['Unknown field.'], 'trial': ['Unknown field.'], 'algorithm': ['Unknown field.']}
+job_type: Sweep
+
+search_space:
+  lr:
+    spec: uniform
+    min_value: .0001
+    max_value: .1
+  hp1:
+    spec: choice
+    values: [2, 3, 4, 5]
+
+objective:
+  primary_metric: train_loss
+  # TODO: there should be intellisense on possible values.
+  goal: minimize
+
+trial:
+  command: >-
+    python train.py model.lr={search_space.lr} model.hp1={search_space.hp1}
+  environment: azureml:hydra-pl:4
+  compute:
+    target: azureml:gpu-nc12-lowpri
+  code:
+    directory: .
+
+limits:
+  max_total_runs: 20
+  max_concurrent_runs: 2
+  max_duration_minutes: 20

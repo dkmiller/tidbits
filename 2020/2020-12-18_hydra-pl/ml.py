@@ -34,7 +34,7 @@ class AutoEncoder(pl.LightningModule):
         z = self.encoder(x)
         x̂ = self.decoder(z)
         loss = F.mse_loss(x̂, x)
-        self.log("train_loss", loss)
+        self.log("train_loss", loss, on_epoch=True, sync_dist=True)
         return loss
 
     def configure_optimizers(self):

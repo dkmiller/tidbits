@@ -3,7 +3,7 @@
 experiment_name: azuremlv2
 
 #  +trainer.accelerator=ddp
-command: python train.py trainer.gpus=1
+command: python train.py trainer.gpus=-1 +trainer.accelerator=dp
 
 code:
   directory: .
