@@ -9,11 +9,7 @@ Get a good working example nicely pulling together:
 
 # Running locally
 
-First time without the `data.download=...`.
-
-```
-python train.py data.root=/src/tmp/data data.download=false
-```
+Run `Submit.ps1 -Local`.
 
 # Running in AML
 

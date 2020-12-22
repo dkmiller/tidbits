@@ -1,2 +1,4 @@
 # Directories
+.hydra/
+lightning_logs/
 outputs/
