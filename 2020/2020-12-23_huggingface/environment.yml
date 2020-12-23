@@ -1,0 +1,13 @@
+name: huggingface
+
+channels:
+- defaults
+- huggingface
+- pytorch
+
+dependencies:
+- cudatoolkit=11.0
+- pip==20.3.3
+- pytorch==1.7.1
+- python=3.8
+- transformers==4.1.1
