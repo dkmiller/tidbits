@@ -3,7 +3,7 @@
 experiment_name: azuremlv2
 
 #  +trainer.accelerator=ddp
-command: python train.py trainer.gpus=-1 +trainer.accelerator=dp
+command: python train.py trainer.gpus=-1 +trainer.accelerator=ddp
 
 code:
   directory: .
@@ -15,10 +15,11 @@ environment:
   docker:
     image: mcr.microsoft.com/azureml/openmpi3.1.2-cuda10.2-cudnn8-ubuntu18.04
 
-# distribution:
-#   type: mpi
-#   process_count_per_instance: 2
+
+distribution:
+  type: pytorch
+  process_count_per_instance: 2
 
 compute:
   target: azureml:gpu-nc12-lowpri
-  # node_count: 2
+  node_count: 2
