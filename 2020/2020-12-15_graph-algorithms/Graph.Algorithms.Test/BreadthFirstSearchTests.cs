@@ -1,4 +1,5 @@
-﻿using Xunit;
+﻿using System.Linq;
+using Xunit;
 
 namespace Graph.Algorithms.Test
 {
@@ -26,13 +27,15 @@ namespace Graph.Algorithms.Test
         [Fact]
         public void StopsEarly()
         {
-            var c = new Node("c");
+            var d = new Node("d");
+            var c = new Node("c", d);
             var b = new Node("b");
             var a = new Node("a", b, c);
 
             var bfs = new BreadthFirstSearch<Node>(n => n == b);
             bfs.Visit(a);
 
+            Assert.Equal(2, bfs.Discovered.Count());
             Assert.Equal(new[] { a, b }, bfs.Discovered);
         }
     }

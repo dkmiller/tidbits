@@ -21,6 +21,10 @@ namespace Graph.Algorithms
             var q = new Queue<T>();
 
             Discover(node, q);
+            if (Goal(node))
+            {
+                return;
+            }
 
             while (q.TryDequeue(out var v))
             {
