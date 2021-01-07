@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using ByteSizeLib;
+using Microsoft.Extensions.Logging;
 using Microsoft.Graph;
 using System;
 using System.Collections.Generic;
@@ -20,6 +21,7 @@ namespace Sharepoint.Upload
         {
             Logger.LogInformation($"Uploading {file}");
             var drive = await GetDriveAsync();
+            Logger.LogInformation($"Using drive with ID {drive.Id}");
             var path = $"{Target}/{file.Directory}";
 
             var driveItem = await GetOrCreateFolderAsync(drive, path);
@@ -50,7 +52,8 @@ namespace Sharepoint.Upload
             }
             catch (ServiceException e) when (e.StatusCode == HttpStatusCode.NotFound)
             {
-                Logger.LogInformation($"Remote version does not exist, uploading file.");
+                var size = ByteSize.FromBytes(file.Info.Length);
+                Logger.LogInformation($"Remote version does not exist, uploading {size} file.");
                 var session = await requestBuilder
                     .CreateUploadSession()
                     .Request()
@@ -60,7 +63,7 @@ namespace Sharepoint.Upload
 
                 var upload = new LargeFileUploadTask<DriveItem>(session, uploadStream, maxSliceSize: NumFragments * MinFragmentSize);
 
-                var progress = new FileProgress(file.Name, file.Info.Length, Factory.CreateLogger<FileProgress>());
+                var progress = new FileProgress(file.Name, size, Factory.CreateLogger<FileProgress>());
                 var uploadResult = await upload.ResumeAsync(progress);
 
                 Logger.LogInformation($"Finished uploading {file.Name}. Status: {uploadResult.UploadSucceeded}");
@@ -69,7 +72,7 @@ namespace Sharepoint.Upload
 
         private async Task<DriveItem> GetOrCreateFolderAsync(Drive drive, string path)
         {
-            Logger.LogInformation($"Finding drive with path {path}");
+            Logger.LogInformation($"Finding drive item with path {path}");
 
             DriveItem result;
 
@@ -88,11 +91,11 @@ namespace Sharepoint.Upload
                     .Request()
                     .GetAsync();
 
-                Logger.LogInformation($"Drive already exists with ID {result.Id}");
+                Logger.LogInformation($"Drive item already exists with ID {result.Id}");
             }
             catch (ServiceException e) when (e.StatusCode == HttpStatusCode.NotFound)
             {
-                Logger.LogWarning($"Drive with path {path} does not exist; creating it.");
+                Logger.LogWarning($"Drive item with path {path} does not exist; creating it.");
                 var segments = path.Split(Path.AltDirectorySeparatorChar, options: StringSplitOptions.RemoveEmptyEntries);
                 var parentSegments = segments[..^1];
                 var parentPath = string.Join(Path.AltDirectorySeparatorChar, parentSegments);
@@ -117,7 +120,7 @@ namespace Sharepoint.Upload
                     .Request()
                     .AddAsync(newDrive);
 
-                Logger.LogInformation($"Created drive with ID {drive.Id}");
+                Logger.LogInformation($"Created drive item with ID {drive.Id}");
             }
 
             return result;
@@ -130,6 +133,7 @@ namespace Sharepoint.Upload
                 .GetByPath($"/teams/{Team}", Hostname)
                 .Request()
                 .GetAsync();
+            Logger.LogInformation($"Using site with ID {site.Id}");
 
             var drive = await GraphClient
                 .Sites[site.Id]

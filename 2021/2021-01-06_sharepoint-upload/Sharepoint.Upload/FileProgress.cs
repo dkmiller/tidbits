@@ -4,16 +4,15 @@ using System;
 
 namespace Sharepoint.Upload
 {
-    record FileProgress(string Name, long Total, ILogger Logger) : IProgress<long>
+    record FileProgress(string Name, ByteSize Total, ILogger Logger) : IProgress<long>
     {
-        private ByteSize TotalSize { get; } = ByteSize.FromBytes(Total);
-
         public void Report(long value)
         {
-            var percentage = (value * 100) / Total;
+            var totalBytes = Total.Bytes;
+            var percentage = value * 100 / totalBytes;
             var valueSize = ByteSize.FromBytes(value);
 
-            Logger.LogInformation($"Uploading {Name} in progress: {valueSize} of {TotalSize} ({percentage} percent).");
+            Logger.LogInformation($"Uploading {Name}: {percentage}% = {valueSize} / {Total}.");
         }
     }
 }
