@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace Sharepoint.Upload
@@ -16,7 +15,7 @@ namespace Sharepoint.Upload
             string hostname = "microsoft.sharepoint.com",
             string team = "AMLXLIAristotleworkinggroup",
             string filePath = @"\\FSU\Shares\TuringShare\",
-            string filePattern = @"NLR_Models\Monolingual\NLRv1-Base-Uncased\PT\**",
+            string filePattern = @"NLR_Models\Multilingual\TMLRv1\**",
             string targetPath = "General")
         {
             // https://github.com/dotnet/runtime/issues/34742
@@ -25,6 +24,19 @@ namespace Sharepoint.Upload
 
             var builder = new GraphClientBuilder(logger);
             var graphClient = await builder.BuildAsync(accessToken);
+
+            var filesClient = new FilesystemClient(filePath, filePattern);
+            var files = filesClient.SearchAsync();
+
+            var uploadClient = new UploadClient(hostname, team, targetPath, graphClient, logger);
+
+            await foreach (var file in files)
+            {
+                await uploadClient.UploadAsync(file);
+            }
+
+            // Finish here.
+            Environment.Exit(0);
 
             var site = await graphClient
                 .Sites
