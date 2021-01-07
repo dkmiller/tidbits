@@ -22,8 +22,8 @@ namespace Sharepoint.Upload
             string hostname,
             string team,
             string root,
-            string glob,
-            string target,
+            string glob = "**",
+            string target = "/",
             string token = "",
             int numFragments = 10)
         {

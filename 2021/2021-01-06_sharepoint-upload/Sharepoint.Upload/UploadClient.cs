@@ -1,7 +1,10 @@
 ﻿using Microsoft.Extensions.Logging;
 using Microsoft.Graph;
+using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Net;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Sharepoint.Upload
@@ -72,10 +75,16 @@ namespace Sharepoint.Upload
 
             try
             {
-                result = await GraphClient
+                var requestBuilder = GraphClient
                     .Drives[drive.Id]
-                    .Root
-                    .ItemWithPath(path)
+                    .Root;
+
+                if (!Regex.IsMatch(path, "^/+$|^$"))
+                {
+                    requestBuilder = requestBuilder.ItemWithPath(path);
+                }
+
+                result = await requestBuilder
                     .Request()
                     .GetAsync();
 
@@ -84,19 +93,23 @@ namespace Sharepoint.Upload
             catch (ServiceException e) when (e.StatusCode == HttpStatusCode.NotFound)
             {
                 Logger.LogWarning($"Drive with path {path} does not exist; creating it.");
-                var segments = path.Split(Path.AltDirectorySeparatorChar);
+                var segments = path.Split(Path.AltDirectorySeparatorChar, options: StringSplitOptions.RemoveEmptyEntries);
                 var parentSegments = segments[..^1];
                 var parentPath = string.Join(Path.AltDirectorySeparatorChar, parentSegments);
                 var parent = await GetOrCreateFolderAsync(drive, parentPath);
 
+                // https://docs.microsoft.com/en-us/graph/api/driveitem-post-children
                 var newDrive = new DriveItem
                 {
                     Name = segments[^1],
                     // Don't remove this. It's needed to tell SharePoint that we're creating a folder.
                     Folder = new(),
+                    AdditionalData = new Dictionary<string, object>
+                    {
+                        ["@microsoft.graph.conflictBehavior"] = "replace"
+                    }
                 };
 
-                // https://docs.microsoft.com/en-us/graph/api/driveitem-post-children
                 result = await GraphClient
                     .Drives[drive.Id]
                     .Items[parent.Id]

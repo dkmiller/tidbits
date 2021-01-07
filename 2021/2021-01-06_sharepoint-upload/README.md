@@ -6,12 +6,13 @@ Run example in PowerShell:
 
 ```powershell
 dotnet run --configuration Release `
-  --token $tok -`
   --hostname microsoft.sharepoint.com `
   --team AMLXLIAristotleworkinggroup `
   --root \\FSU\Shares\TuringShare\ `
-  --glob NLR_Models\Multilingual\TULRv1\** `
-  --target General
+  --glob NLR_Models\Scripts\** `
+  --num-fragments 30 `
+  --target General `
+  --token $tok `
 ```
 
 ## Links
