@@ -11,7 +11,8 @@ namespace Sharepoint.Upload
             string team = "AMLXLIAristotleworkinggroup",
             string filePath = @"\\FSU\Shares\TuringShare\",
             string filePattern = @"NLR_Models\Multilingual\TMLRv1\**",
-            string targetPath = "General")
+            string targetPath = "General",
+            int numFragments = 10)
         {
             // https://github.com/dotnet/runtime/issues/34742
             using var loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
@@ -23,7 +24,7 @@ namespace Sharepoint.Upload
             var filesClient = new FilesystemClient(filePath, filePattern);
             var files = filesClient.SearchAsync();
 
-            var uploadClient = new UploadClient(hostname, team, targetPath, graphClient, logger);
+            var uploadClient = new UploadClient(hostname, team, targetPath, graphClient, logger, numFragments);
 
             await foreach (var file in files)
             {
