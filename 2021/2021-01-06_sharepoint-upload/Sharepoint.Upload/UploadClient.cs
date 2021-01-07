@@ -4,8 +4,10 @@ using System.Threading.Tasks;
 
 namespace Sharepoint.Upload
 {
-    record UploadClient(string Hostname, string Team, string Target, IGraphServiceClient GraphClient, ILogger Logger, int NumFragments = 1)
+    record UploadClient(string Hostname, string Team, string Target, int NumFragments, IGraphServiceClient GraphClient, ILoggerFactory Factory)
     {
+        private ILogger Logger { get; } = Factory.CreateLogger<UploadClient>();
+            
         // See: https://docs.microsoft.com/en-us/graph/api/driveitem-createuploadsession?view=graph-rest-1.0#upload-bytes-to-the-upload-session
         const int MinFragmentSize = 320 * 1024;
 
@@ -34,7 +36,8 @@ namespace Sharepoint.Upload
 
             var upload = new LargeFileUploadTask<DriveItem>(session, uploadStream, maxSliceSize: NumFragments * MinFragmentSize);
 
-            var uploadResult = await upload.ResumeAsync(new FileProgress(file.Name, file.Info.Length, Logger));
+            var progress = new FileProgress(file.Name, file.Info.Length, Factory.CreateLogger<FileProgress>());
+            var uploadResult = await upload.ResumeAsync(progress);
 
             Logger.LogInformation($"Finished uploading {file.Name}. Status: {uploadResult.UploadSucceeded}");
         }
