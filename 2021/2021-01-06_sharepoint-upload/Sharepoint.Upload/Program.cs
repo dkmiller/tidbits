@@ -32,14 +32,14 @@ namespace Sharepoint.Upload
             var logger = loggerFactory.CreateLogger<Program>();
 
             var filesClient = new FilesystemClient(root, glob);
-            var files = filesClient.SearchAsync();
+            var files = filesClient.Search();
 
             var builder = new GraphClientBuilder(logger);
             var graphClient = await builder.BuildAsync(token);
 
             var uploadClient = new UploadClient(hostname, team, target, numFragments, graphClient, loggerFactory);
 
-            await foreach (var file in files)
+            foreach (var file in files)
             {
                 await uploadClient.UploadAsync(file);
             }

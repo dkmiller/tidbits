@@ -17,6 +17,7 @@ namespace Sharepoint.Upload
             var drive = await DriveAsync();
             var path = $"{Target}/{file.Directory}";
 
+            Logger.LogInformation($"Finding drive with path {path}");
             var driveItem = await GraphClient
                 .Drives[drive.Id]
                 .Root
