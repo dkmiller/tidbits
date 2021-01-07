@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using Microsoft.Graph;
+using System.IO;
 using System.Net;
 using System.Threading.Tasks;
 
@@ -15,10 +16,10 @@ namespace Sharepoint.Upload
         public async Task UploadAsync(File file)
         {
             Logger.LogInformation($"Uploading {file}");
-            var drive = await DriveAsync();
+            var drive = await GetDriveAsync();
             var path = $"{Target}/{file.Directory}";
 
-            var driveItem = await GetOrCreateDriveItemAsync(drive, path);
+            var driveItem = await GetOrCreateFolderAsync(drive, path);
             var itemRequestBuilder = GraphClient
                 .Drives[drive.Id]
                 .Items[driveItem.Id]
@@ -63,7 +64,7 @@ namespace Sharepoint.Upload
             }
         }
 
-        private async Task<DriveItem> GetOrCreateDriveItemAsync(Drive drive, string path)
+        private async Task<DriveItem> GetOrCreateFolderAsync(Drive drive, string path)
         {
             Logger.LogInformation($"Finding drive with path {path}");
 
@@ -77,25 +78,39 @@ namespace Sharepoint.Upload
                     .ItemWithPath(path)
                     .Request()
                     .GetAsync();
+
+                Logger.LogInformation($"Drive already exists with ID {result.Id}");
             }
             catch (ServiceException e) when (e.StatusCode == HttpStatusCode.NotFound)
             {
-                // TODO: this doesn't work! Follow:
+                Logger.LogWarning($"Drive with path {path} does not exist; creating it.");
+                var segments = path.Split(Path.AltDirectorySeparatorChar);
+                var parentSegments = segments[..^1];
+                var parentPath = string.Join(Path.AltDirectorySeparatorChar, parentSegments);
+                var parent = await GetOrCreateFolderAsync(drive, parentPath);
+
+                var newDrive = new DriveItem
+                {
+                    Name = segments[^1],
+                    // Don't remove this. It's needed to tell SharePoint that we're creating a folder.
+                    Folder = new(),
+                };
+
                 // https://docs.microsoft.com/en-us/graph/api/driveitem-post-children
-                Logger.LogWarning($"Drive item with path {path} does not exist; creating it.");
-                var item = new DriveItem();
                 result = await GraphClient
                     .Drives[drive.Id]
-                    .Root
-                    .ItemWithPath(path)
+                    .Items[parent.Id]
+                    .Children
                     .Request()
-                    .CreateAsync(item);
+                    .AddAsync(newDrive);
+
+                Logger.LogInformation($"Created drive with ID {drive.Id}");
             }
 
             return result;
         }
 
-        private async Task<Drive> DriveAsync()
+        private async Task<Drive> GetDriveAsync()
         {
             var site = await GraphClient
                 .Sites

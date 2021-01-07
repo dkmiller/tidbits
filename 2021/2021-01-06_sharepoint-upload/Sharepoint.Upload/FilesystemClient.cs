@@ -18,7 +18,8 @@ namespace Sharepoint.Upload
             foreach (var rawFile in rawFiles)
             {
                 var relativePath = regex.Replace(rawFile, "", 1);
-                var directory = Path.GetDirectoryName(relativePath).Replace(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar);
+                var directory = Path.GetDirectoryName(relativePath)!
+                    .Replace(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar);
                 var name = Path.GetFileName(relativePath);
                 var info = new FileInfo(rawFile);
 

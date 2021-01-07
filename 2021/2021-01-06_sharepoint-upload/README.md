@@ -23,3 +23,4 @@ dotnet run --configuration Release `
 - [FileUpload Task \#65](https://github.com/microsoftgraph/msgraph-sdk-dotnet-core/pull/65)
 - [Capturing CancelKeyPress to stop an async console app at a safe point](https://stackoverflow.com/a/56372898)
 - [How do I get a human-readable file size in bytes abbreviation using .NET?](https://stackoverflow.com/a/22366441)
+- [C\# 8: Slicing with Indexes and Ranges](https://www.codejourney.net/2019/02/csharp-8-slicing-indexes-ranges/)
