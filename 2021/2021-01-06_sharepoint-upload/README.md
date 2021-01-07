@@ -10,3 +10,4 @@ Title says it all.
 - [How to upload a large document in c\# using the Microsoft Graph API rest calls](https://stackoverflow.com/a/49780655)
 - [FileUpload Task \#65](https://github.com/microsoftgraph/msgraph-sdk-dotnet-core/pull/65)
 - [Capturing CancelKeyPress to stop an async console app at a safe point](https://stackoverflow.com/a/56372898)
+- [How do I get a human-readable file size in bytes abbreviation using .NET?](https://stackoverflow.com/a/22366441)

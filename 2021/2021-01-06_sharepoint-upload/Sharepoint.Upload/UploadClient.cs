@@ -31,7 +31,7 @@ namespace Sharepoint.Upload
 
             var upload = new LargeFileUploadTask<DriveItem>(session, uploadStream, maxSliceSize: 320 * 1024);
 
-            var uploadResult = await upload.ResumeAsync(new Progress(Logger, file.Info.Length));
+            var uploadResult = await upload.ResumeAsync(new FileProgress(file.Name, file.Info.Length, Logger));
 
             Logger.LogInformation($"Finished uploading {file.Name}. Status: {uploadResult.UploadSucceeded}");
         }
