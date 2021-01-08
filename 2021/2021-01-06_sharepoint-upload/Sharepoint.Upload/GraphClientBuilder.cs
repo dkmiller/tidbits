@@ -1,32 +1,24 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Azure.Core;
+using Azure.Identity;
+using Microsoft.Extensions.Logging;
 using Microsoft.Graph;
-using Microsoft.Identity.Client;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 
 namespace Sharepoint.Upload
 {
-    record GraphClientBuilder(
-        ILogger Logger,
-        string ClientId = "365ae7bd-e462-4dbe-9625-ac6e71e5ea03",
-        string RedirectUri = "http://localhost",
-        string TenantId = "72f988bf-86f1-41af-91ab-2d7cd011db47"
-        )
+    record GraphClientBuilder(ILogger Logger)
     {
-        private IPublicClientApplication App { get; } = PublicClientApplicationBuilder
-            .Create(ClientId)
-            .WithRedirectUri(RedirectUri)
-            .WithAuthority(AzureCloudInstance.AzurePublic, TenantId)
-            .Build();
+        private DefaultAzureCredential Credential { get; } = new();
 
         private async Task<string> GetAccessTokenAsync()
         {
-            Logger.LogInformation("Obtaining access token using interactive authentication.");
-            var authResult = await App
-                .AcquireTokenInteractive(new[] { "https://graph.microsoft.com/.default" })
-                .ExecuteAsync();
+            Logger.LogInformation("Obtaining access token using Azure credential.");
+            var token = await Credential.GetTokenAsync(
+                new TokenRequestContext(new[] { "https://graph.microsoft.com/.default" })
+                );
 
-            var accessToken = authResult.AccessToken;
+            var accessToken = token.Token;
             return accessToken;
         }
 
