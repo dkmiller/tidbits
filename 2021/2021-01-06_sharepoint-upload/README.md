@@ -26,3 +26,5 @@ dotnet run --configuration Release `
 - [How do I get a human-readable file size in bytes abbreviation using .NET?](https://stackoverflow.com/a/22366441)
 - [C\# 8: Slicing with Indexes and Ranges](https://www.codejourney.net/2019/02/csharp-8-slicing-indexes-ranges/)
 - [DefaultAzureCredential: Unifying How We Get Azure AD Token](https://www.rahulpnath.com/blog/defaultazurecredential-from-azure-sdk/)
+- [Microsoft Graph API - OAuth 2.0 Scopes](https://docs.microsoft.com/en-us/answers/questions/28515/microsoft-graph-api-oauth-20-scopes.html)
+- [Microsoft Graph permissions reference](https://docs.microsoft.com/en-us/graph/permissions-reference)

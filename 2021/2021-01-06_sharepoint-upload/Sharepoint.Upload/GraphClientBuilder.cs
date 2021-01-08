@@ -15,10 +15,11 @@ namespace Sharepoint.Upload
         {
             Logger.LogInformation("Obtaining access token using Azure credential.");
             var token = await Credential.GetTokenAsync(
-                new TokenRequestContext(new[] { "https://graph.microsoft.com/.default" })
+                new TokenRequestContext(new[] { "https://graph.microsoft.com/Sites.ReadWrite.All" })
                 );
 
             var accessToken = token.Token;
+            Logger.LogInformation($"Obtained access token:\n{accessToken}\n");
             return accessToken;
         }
 
