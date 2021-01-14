@@ -54,6 +54,10 @@ def main(config):
     log.info(f"GPUs: {torch.cuda.device_count()}")
     log.info(f"Environment: {os.environ}")
 
+    # https://azure.github.io/azureml-web/docs/cheatsheet/distributed-training#pytorch-lightning-ddp-accelerator-per-node-launch
+    # vs.: eth0
+    os.environ["NCCL_SOCKET_IFNAME"] = "^docker0,lo"
+
     pl.seed_everything(config.seed)
 
     model = AutoEncoder(**config.model)

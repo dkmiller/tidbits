@@ -10,7 +10,7 @@ experiment_name: azuremlv2
 command: >-
   python train.py
   trainer.gpus=2
-  trainer.num_nodes=2
+  trainer.num_nodes=1
   +trainer.accelerator=ddp
 
 code:
@@ -28,11 +28,11 @@ distribution:
   # Good news: it looks like this sets the appropriate environment variables
   # (MASTER_ADDR, MASTER_PORT, NCCL_SOCKET_IFNAME, NODE_RANK).
   type: pytorch
-  process_count_per_instance: 2
+  process_count_per_instance: 1
 
 compute:
   target: azureml:gpu-nc12-lowpri
-  node_count: 2
+  node_count: 1
 
 tags:
   from: cliv2

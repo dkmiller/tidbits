@@ -15,10 +15,12 @@ ws = Workspace("48bbc269-ce89-4f6f-9a12-c6f91fcb772d", "aml1p-rg", "aml1p-ml-wus
 env = Environment.from_conda_specification("hydra-pl", "environment.yml")
 env.docker.enabled = True
 env.docker.base_image = (
-    "mcr.microsoft.com/azureml/openmpi3.1.2-cuda10.1-cudnn7-ubuntu18.04"
+    "mcr.microsoft.com/azureml/openmpi3.1.2-cuda10.2-cudnn8-ubuntu18.04"
 )
 
-mpi_config = MpiConfiguration(process_count_per_node=1, node_count=1)
+node_count = 2
+
+mpi_config = MpiConfiguration(process_count_per_node=1, node_count=node_count)
 
 
 config = ScriptRunConfig(
@@ -27,7 +29,7 @@ config = ScriptRunConfig(
     compute_target="gpu-nc12-lowpri",
     distributed_job_config=mpi_config,
     environment=env,
-    arguments=["trainer.gpus=1", "trainer.num_nodes=1"],
+    arguments=["trainer.gpus=2", f"trainer.num_nodes={node_count}", "+trainer.accelerator=ddp"],
 )
 
 exp = Experiment(ws, "azuremlv2")
