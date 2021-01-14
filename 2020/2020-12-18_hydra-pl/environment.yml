@@ -6,11 +6,11 @@ channels:
 - pytorch
 
 dependencies:
-# Sadly, AML's "canonical" Docker images only support up to CUDA 10.2.
-# - cudatoolkit=10.2
+# Sadly, installing e.g. cudatoolkit, pytorch, pytorch-lightning via Conda
+# causes the resulting job to not recognize the GPU.
+
 - pip==20.3.3
-# - pytorch==1.7.1
-# - pytorch-lightning==1.1.1
+
 # Sadly, Python 3.8 doesn't "play nicely" with the torchvision library.
 - python=3.7
 - torchvision

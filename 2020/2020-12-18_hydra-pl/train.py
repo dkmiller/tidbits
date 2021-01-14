@@ -47,37 +47,12 @@ def create_trainer(config) -> pl.Trainer:
     return trainer
 
 
-def set_environment_variables(config, master_port: int = 6105) -> None:
-    """
-    Follow: https://azure.github.io/azureml-web/docs/cheatsheet/distributed-training#pytorch-lightning-ddp-accelerator-per-node-launch
-
-    TODO: is this needed?
-    """
-    single_node = config.trainer.num_nodes == 1
-
-    if single_node:
-        os.environ["MASTER_ADDR"] = os.environ["AZ_BATCHAI_MPI_MASTER_NODE"]
-        os.environ["MASTER_PORT"] = "54965"
-    else:
-        master_node_params = os.environ["AZ_BATCH_MASTER_NODE"].split(":")
-        os.environ["MASTER_ADDR"] = master_node_params[0]
-        # Do not overwrite master port with that defined in AZ_BATCH_MASTER_NODE
-        if "MASTER_PORT" not in os.environ:
-            os.environ["MASTER_PORT"] = str(master_port)
-
-    os.environ["NCCL_SOCKET_IFNAME"] = "^docker0,lo"
-    os.environ["NODE_RANK"] = os.environ["OMPI_COMM_WORLD_RANK"]
-
-
 @hydra.main(config_name="config")
 def main(config):
     log.info(f"Arguments: {sys.argv}")
     log.info(f"Configuration: {config}")
     log.info(f"GPUs: {torch.cuda.device_count()}")
     log.info(f"Environment: {os.environ}")
-
-    # This does not seem be to necessary with `pytorch` distribution type.
-    # set_environment_variables(config)
 
     pl.seed_everything(config.seed)
 
