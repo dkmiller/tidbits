@@ -16,6 +16,7 @@ trainer:
   log_every_n_steps: 200
   log_gpu_memory: all
   max_epochs: 10
+  num_nodes: 1
   # TODO: https://github.com/PyTorchLightning/pytorch-lightning/issues/1518
 
 hydra:

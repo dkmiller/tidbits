@@ -2,7 +2,10 @@ param(
     [ValidateSet("job", "sweep")]
     [string]$File = "job",
     [switch]$Local,
-    [string]$LocalDataLocation = "/src/tmp/data"
+    [string]$LocalDataLocation = "/src/tmp/data",
+    [string]$Subscription = "48bbc269-ce89-4f6f-9a12-c6f91fcb772d",
+    [string]$ResourceGroup = "aml1p-rg",
+    [string]$Workspace = "aml1p-ml-wus2"
 )
 
 
@@ -18,4 +21,10 @@ if ($Local) {
     }
 }
 
-az ml job create --file "$($File).yml" --query metadata.interaction_endpoints.studio --out tsv
+az ml job create `
+    --file "$($File).yml" `
+    --subscription $Subscription `
+    --workspace-name $Workspace `
+    --resource-group $ResourceGroup `
+    --query metadata.interaction_endpoints.studio `
+    -o tsv
