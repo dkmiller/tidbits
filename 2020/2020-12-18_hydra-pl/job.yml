@@ -24,7 +24,7 @@ environment:
     # https://github.com/tensorflow/tensorflow/issues/40423
     # Teams thread:
     # https://teams.microsoft.com/l/message/19:3e59e729bdca4e3fbb2d49d8a69648ca@thread.tacv2/1610585839678?tenantId=72f988bf-86f1-41af-91ab-2d7cd011db47&groupId=b3a785e4-b1e2-4864-a354-bcc0b354fd91&parentMessageId=1610585839678&teamName=AML%20Data%20Science&channelName=Ask%20your%20question!&createdTime=1610585839678
-    image: mcr.microsoft.com/azureml/openmpi3.1.2-cuda10.2-cudnn7-ubuntu18.04
+    image: mcr.microsoft.com/azureml/openmpi3.1.2-cuda10.1-cudnn7-ubuntu18.04
 
 
 distribution:
