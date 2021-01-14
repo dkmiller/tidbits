@@ -57,6 +57,8 @@ def main(config):
     # https://azure.github.io/azureml-web/docs/cheatsheet/distributed-training#pytorch-lightning-ddp-accelerator-per-node-launch
     # vs.: eth0
     os.environ["NCCL_SOCKET_IFNAME"] = "^docker0,lo"
+    # Without this, jobs hang (AML incorrectly sets the node rank).
+    os.environ["NODE_RANK"] = os.environ["OMPI_COMM_WORLD_RANK"]
 
     pl.seed_everything(config.seed)
 

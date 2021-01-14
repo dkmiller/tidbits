@@ -18,7 +18,7 @@ env.docker.base_image = (
     "mcr.microsoft.com/azureml/openmpi3.1.2-cuda10.2-cudnn8-ubuntu18.04"
 )
 
-node_count = 1
+node_count = 2
 
 mpi_config = MpiConfiguration(process_count_per_node=1, node_count=node_count)
 
