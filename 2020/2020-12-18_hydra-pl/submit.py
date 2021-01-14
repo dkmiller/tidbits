@@ -18,7 +18,7 @@ env.docker.base_image = (
     "mcr.microsoft.com/azureml/openmpi3.1.2-cuda10.2-cudnn8-ubuntu18.04"
 )
 
-node_count = 2
+node_count = 1
 
 mpi_config = MpiConfiguration(process_count_per_node=1, node_count=node_count)
 
@@ -34,6 +34,6 @@ config = ScriptRunConfig(
 
 exp = Experiment(ws, "azuremlv2")
 
-run = exp.submit(config, tags={"from": "sdkv1", "docker.enabled": "True", "cuda": "10.1", "pl": "pip"})
+run = exp.submit(config, tags={"from": "sdkv1"})
 
 print(run.get_portal_url())
