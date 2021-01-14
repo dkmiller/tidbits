@@ -10,7 +10,7 @@ experiment_name: azuremlv2
 command: >-
   python train.py
   trainer.gpus=2
-  trainer.num_nodes=1
+  trainer.num_nodes=2
   +trainer.accelerator=ddp
 
 code:
@@ -32,7 +32,7 @@ distribution:
 
 compute:
   target: azureml:gpu-nc12-lowpri
-  node_count: 1
+  node_count: 2
 
 tags:
   from: cliv2
