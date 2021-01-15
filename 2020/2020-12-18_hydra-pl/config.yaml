@@ -1,8 +1,13 @@
 seed: 42
 
+master_port: 6105
+
 data:
   download: true
   root: .
+
+loader:
+  batch_size: 32
 
 model:
   image_size: 28
