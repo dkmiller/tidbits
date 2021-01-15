@@ -18,19 +18,22 @@ env.docker.base_image = (
     "mcr.microsoft.com/azureml/openmpi3.1.2-cuda10.2-cudnn8-ubuntu18.04"
 )
 
-node_count = 1
+# ==============================================================================
+node_count = 2
+gpus_per_node = 4
+cluster = "gpu-nc24-lowpri"
+# ==============================================================================
 
 mpi_config = MpiConfiguration(process_count_per_node=1, node_count=node_count)
-
 
 config = ScriptRunConfig(
     source_directory=".",
     script="train.py",
-    compute_target="gpu-nc24-lowpri",
+    compute_target=cluster,
     distributed_job_config=mpi_config,
     environment=env,
     arguments=[
-        f"trainer.gpus=-1",
+        f"trainer.gpus={gpus_per_node}",
         f"trainer.num_nodes={node_count}",
         "+trainer.accelerator=ddp",
     ],

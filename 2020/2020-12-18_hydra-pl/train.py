@@ -47,28 +47,43 @@ def create_trainer(config) -> pl.Trainer:
     return trainer
 
 
+def set_environment_variable(variable: str, new_value: str) -> None:
+    old_value = os.environ.get(variable)
+    log.info(f"Setting {variable}: {old_value} -> {new_value}")
+    os.environ[variable] = new_value
+
+
+def copy_environment_variable(target: str, source: str) -> None:
+    set_environment_variable(target, os.environ[source])
+
+
 def set_environment_variables_for_nccl_backend(config) -> None:
     """
     Follow:
-    https://azure.github.io/azureml-web/docs/cheatsheet/distributed-training#pytorch-lightning-ddp-accelerator-per-node-launch
+    ~~https://azure.github.io/azureml-web/docs/cheatsheet/distributed-training#pytorch-lightning-ddp-accelerator-per-node-launch
+    https://github.com/Azure/azureml-examples/blob/main/tutorials/using-pytorch-lightning/src/azureml_env_adapter.py
     """
-    single_node = config.trainer.num_nodes == 1
 
-    if not single_node:
-        log.info(f"Running in multiple nodes")
-        old_value = os.environ.get("MASTER_ADDR")
-        master_node_params = os.environ["AZ_BATCH_MASTER_NODE"].split(":")
-        new_value = master_node_params[0]
+    copy_environment_variable("MASTER_ADDR", "AZ_BATCHAI_MPI_MASTER_NODE")
+    set_environment_variable("MASTER_PORT", "6105")
 
-        log.info(f"Setting MASTER_ADDR: {old_value} -> {new_value}")
-        os.environ["MASTER_ADDR"] = new_value
+    # Node rank is the word rank from MPI run.
+    copy_environment_variable("NODE_RANK", "OMPI_COMM_WORLD_RANK")
 
-        old_value = os.environ.get("NODE_RANK")
-        new_value = os.environ["OMPI_COMM_WORLD_RANK"]
-        log.info(f"Setting NODE_RANK: {old_value} -> {new_value}")
-        os.environ["NODE_RANK"] = new_value
 
-    os.environ["NCCL_SOCKET_IFNAME"] = "^docker0,lo"
+    # single_node = config.trainer.num_nodes == 1
+
+    # if not single_node:
+    #     log.info(f"Running in multiple nodes")
+    #     set_environment_variable(
+    #         "MASTER_ADDR", os.environ["AZ_BATCH_MASTER_NODE"].split(":")[0]
+    #     )
+
+    #     copy_environment_variable("NODE_RANK", "OMPI_COMM_WORLD_RANK")
+    #     copy_environment_variable("LOCAL_RANK", "OMPI_COMM_WORLD_LOCAL_RANK")
+    #     copy_environment_variable("WORLD_SIZE", "OMPI_COMM_WORLD_SIZE")
+
+    # set_environment_variable("NCCL_SOCKET_IFNAME", "^docker0,lo")
 
 
 @hydra.main(config_name="config")
