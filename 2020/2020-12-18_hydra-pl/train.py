@@ -53,12 +53,16 @@ def set_environment_variables(config) -> None:
     https://azure.github.io/azureml-web/docs/cheatsheet/distributed-training#pytorch-lightning-ddp-accelerator-per-node-launch
     """
     single_node = config.trainer.num_nodes == 1
+    old_value = os.environ.get("MASTER_ADDR")
 
     if single_node:
-        os.environ["MASTER_ADDR"] = os.environ["AZ_BATCHAI_MPI_MASTER_NODE"]
+        new_value = os.environ["AZ_BATCHAI_MPI_MASTER_NODE"]
     else:
         master_node_params = os.environ["AZ_BATCH_MASTER_NODE"].split(":")
-        os.environ["MASTER_ADDR"] = master_node_params[0]
+        new_value = master_node_params[0]
+
+    log.info(f"Setting MASTER_ADDR: {old_value} -> {new_value}")
+    os.environ["MASTER_ADDR"] = new_value
 
     os.environ["NCCL_SOCKET_IFNAME"] = "^docker0,lo"
     # Without this, jobs hang (AML incorrectly sets the node rank).
