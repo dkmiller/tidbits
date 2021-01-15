@@ -47,6 +47,24 @@ def create_trainer(config) -> pl.Trainer:
     return trainer
 
 
+def set_environment_variables(config) -> None:
+    """
+    Follow:
+    https://azure.github.io/azureml-web/docs/cheatsheet/distributed-training#pytorch-lightning-ddp-accelerator-per-node-launch
+    """
+    single_node = config.trainer.num_nodes == 1
+
+    if single_node:
+        os.environ["MASTER_ADDR"] = os.environ["AZ_BATCHAI_MPI_MASTER_NODE"]
+    else:
+        master_node_params = os.environ["AZ_BATCH_MASTER_NODE"].split(":")
+        os.environ["MASTER_ADDR"] = master_node_params[0]
+
+    os.environ["NCCL_SOCKET_IFNAME"] = "^docker0,lo"
+    # Without this, jobs hang (AML incorrectly sets the node rank).
+    os.environ["NODE_RANK"] = os.environ["OMPI_COMM_WORLD_RANK"]
+
+
 @hydra.main(config_name="config")
 def main(config):
     log.info(f"Arguments: {sys.argv}")
@@ -54,11 +72,7 @@ def main(config):
     log.info(f"GPUs: {torch.cuda.device_count()}")
     log.info(f"Environment: {os.environ}")
 
-    # https://azure.github.io/azureml-web/docs/cheatsheet/distributed-training#pytorch-lightning-ddp-accelerator-per-node-launch
-    # vs.: eth0
-    os.environ["NCCL_SOCKET_IFNAME"] = "^docker0,lo"
-    # Without this, jobs hang (AML incorrectly sets the node rank).
-    os.environ["NODE_RANK"] = os.environ["OMPI_COMM_WORLD_RANK"]
+    set_environment_variables(config)
 
     pl.seed_everything(config.seed)
 
