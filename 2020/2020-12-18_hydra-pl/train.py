@@ -47,26 +47,28 @@ def create_trainer(config) -> pl.Trainer:
     return trainer
 
 
-def set_environment_variables(config) -> None:
+def set_environment_variables_for_nccl_backend(config) -> None:
     """
     Follow:
     https://azure.github.io/azureml-web/docs/cheatsheet/distributed-training#pytorch-lightning-ddp-accelerator-per-node-launch
     """
     single_node = config.trainer.num_nodes == 1
-    old_value = os.environ.get("MASTER_ADDR")
 
-    if single_node:
-        new_value = os.environ["AZ_BATCHAI_MPI_MASTER_NODE"]
-    else:
+    if not single_node:
+        log.info(f"Running in multiple nodes")
+        old_value = os.environ.get("MASTER_ADDR")
         master_node_params = os.environ["AZ_BATCH_MASTER_NODE"].split(":")
         new_value = master_node_params[0]
 
-    log.info(f"Setting MASTER_ADDR: {old_value} -> {new_value}")
-    os.environ["MASTER_ADDR"] = new_value
+        log.info(f"Setting MASTER_ADDR: {old_value} -> {new_value}")
+        os.environ["MASTER_ADDR"] = new_value
+
+        old_value = os.environ.get("NODE_RANK")
+        new_value = os.environ["OMPI_COMM_WORLD_RANK"]
+        log.info(f"Setting NODE_RANK: {old_value} -> {new_value}")
+        os.environ["NODE_RANK"] = new_value
 
     os.environ["NCCL_SOCKET_IFNAME"] = "^docker0,lo"
-    # Without this, jobs hang (AML incorrectly sets the node rank).
-    os.environ["NODE_RANK"] = os.environ["OMPI_COMM_WORLD_RANK"]
 
 
 @hydra.main(config_name="config")
@@ -76,7 +78,7 @@ def main(config):
     log.info(f"GPUs: {torch.cuda.device_count()}")
     log.info(f"Environment: {os.environ}")
 
-    set_environment_variables(config)
+    set_environment_variables_for_nccl_backend(config)
 
     pl.seed_everything(config.seed)
 

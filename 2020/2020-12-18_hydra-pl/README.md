@@ -34,3 +34,4 @@ Run `Submit.ps1`, optionally with `-File sweep`.
 - [PyTorch Lightning ddp accelerator (Per-Node-Launch)](https://azure.github.io/azureml-web/docs/cheatsheet/distributed-training#pytorch-lightning-ddp-accelerator-per-node-launch)
 - [Multi-node distributed training with PyTorch Lightning](https://github.com/Azure/azureml-examples/blob/main/tutorials/using-pytorch-lightning/4.train-multi-node-ddp.ipynb)
 - [e2edemos &gt; tfv2-mnist-example &gt; Run 1](https://ml.azure.com/experiments/id/551a6619-86f5-4eec-9a66-ed354f13940f/runs/tfv2-mnist-example_1598911924_4a281f7b?wsid=/subscriptions/92c76a2f-0e1c-4216-b65e-abf7a3f34c1e/resourcegroups/demorg/workspaces/e2edemos&tid=72f988bf-86f1-41af-91ab-2d7cd011db47)
+- [Multi Node Distributed Training with PyTorch Lightning \& Azure ML](https://medium.com/microsoftazure/multi-node-distributed-training-with-pytorch-lightning-azure-ml-88ac59d43114)

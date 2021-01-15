@@ -18,7 +18,7 @@ env.docker.base_image = (
     "mcr.microsoft.com/azureml/openmpi3.1.2-cuda10.2-cudnn8-ubuntu18.04"
 )
 
-node_count = 2
+node_count = 1
 
 mpi_config = MpiConfiguration(process_count_per_node=1, node_count=node_count)
 
@@ -26,10 +26,14 @@ mpi_config = MpiConfiguration(process_count_per_node=1, node_count=node_count)
 config = ScriptRunConfig(
     source_directory=".",
     script="train.py",
-    compute_target="gpu-nc12-lowpri",
+    compute_target="gpu-nc24-lowpri",
     distributed_job_config=mpi_config,
     environment=env,
-    arguments=["trainer.gpus=2", f"trainer.num_nodes={node_count}", "+trainer.accelerator=ddp"],
+    arguments=[
+        f"trainer.gpus=-1",
+        f"trainer.num_nodes={node_count}",
+        "+trainer.accelerator=ddp",
+    ],
 )
 
 exp = Experiment(ws, "azuremlv2")
