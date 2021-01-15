@@ -1,0 +1,34 @@
+# yaml-language-server: $schema=https://azuremlsdk2.blob.core.windows.net/latest/commandJob.schema.json
+
+# See https://aka.ms/azuremlv2 for more details on how to use this job file.
+
+experiment_name: azuremlv2
+
+# Sadly, have to hard code num_nodes twice :( .
+# There is a plan for allowing trainer.num_nodes={compute.node_count}.
+command: >-
+  python train.py
+  trainer.gpus=-1
+  trainer.num_nodes=2
+  +trainer.accelerator=ddp
+
+code:
+  directory: .
+
+environment:
+  name: hydra-pl
+  version: 8
+  conda_file: environment.yml
+  docker:
+    image: mcr.microsoft.com/azureml/openmpi3.1.2-cuda10.2-cudnn8-ubuntu18.04
+
+compute:
+  target: azureml:gpu-nc24-lowpri
+  node_count: 2
+
+distribution:
+  type: mpi
+  process_count_per_instance: 1
+
+tags:
+  from: cliv2
