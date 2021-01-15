@@ -21,7 +21,7 @@ env.docker.base_image = (
 # ==============================================================================
 node_count = 2
 gpus_per_node = -1
-cluster = "gpu-nc12-lowpri"
+cluster = "gpu-nc24-lowpri"
 # ==============================================================================
 
 mpi_config = MpiConfiguration(process_count_per_node=1, node_count=node_count)

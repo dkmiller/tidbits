@@ -53,10 +53,10 @@ def set_environment_variables_for_nccl_backend(config) -> None:
     """
 
     os.environ["MASTER_ADDR"] = os.environ["AZ_BATCHAI_MPI_MASTER_NODE"]
-    os.environ["MASTER_PORT"] = config.master_port
+    os.environ["MASTER_PORT"] = str(config.master_port)
 
     # Node rank is the word rank from MPI run.
-    os.environ["NODE_RANK"] = os.environ["AZ_BATCHAI_MPI_MASTER_NODE"]
+    os.environ["NODE_RANK"] = os.environ["OMPI_COMM_WORLD_RANK"]
 
 
 @hydra.main(config_name="config")
