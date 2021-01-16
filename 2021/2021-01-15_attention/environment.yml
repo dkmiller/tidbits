@@ -1,0 +1,8 @@
+name: attention
+
+dependencies:
+- pip==20.3.3
+- python=3.8
+- pip:
+  - black==20.8b1
+  - pytorch-lightning==1.1.4
