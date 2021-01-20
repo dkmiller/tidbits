@@ -25,3 +25,6 @@ obj
 
 # Python
 __pycache__
+
+# Hydra
+outputs/
