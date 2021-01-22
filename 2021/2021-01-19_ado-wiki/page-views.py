@@ -3,6 +3,7 @@ from azure.identity import DefaultAzureCredential
 import hydra
 import jmespath
 import logging
+import pandas as pd
 import requests
 
 
@@ -28,26 +29,52 @@ def get_wiki_id(base_url: str, wiki_name: str, headers: Dict[str, str]) -> str:
     return wiki_id
 
 
-def get_all_page_stats(
-    base_url: str, wiki_name: str, headers: Dict[str, str], top: int = 100
-):
+def get_pages_batch(
+    base_url: str, wiki_name: str, json: dict, headers: Dict[str, str]
+) -> requests.Response:
     url = (
         f"{base_url}/_apis/wiki/wikis/{wiki_name}/pagesbatch?api-version=6.0-preview.1"
     )
+    log.info(f"Calling POST {url} with body {json}")
+    rv = requests.post(url, headers=headers, json=json)
+    return rv
+
+
+def get_all_page_stats(
+    base_url: str, wiki_name: str, headers: Dict[str, str], top: int = 100
+) -> pd.DataFrame:
+
+    count = None
+    continuation_token = None
     body = {"top": top, "pageViewsForDays": 30}
-    r = requests.post(url, headers=headers, json=body)
-    json = r.json()
+    pages = []
 
-    print(json)
-    # TODO: handle pagination.
+    while count != 0:
+        if continuation_token is not None:
+            body["continuationToken"] = continuation_token
 
-    pages = json["value"]
+        r = get_pages_batch(base_url, wiki_name, body, headers)
+        json = r.json()
+        new_pages = json["value"]
+        pages.extend(new_pages)
+        count = json["count"]
+        continuation_token = r.headers.get("x-ms-continuationtoken")
+        log.info(f"Got {len(new_pages)} pages.")
+
+    d = {"day": [], "path": [], "count": []}
+
     for page in pages:
         path = page["path"]
-        log.info(path)
-        for stat in page["viewStats"]:
-            print(stat)
-        print(page)
+        if "viewStats" in page:
+            for stat in page["viewStats"]:
+                d["day"].append(stat["day"])
+                d["path"].append(path)
+                d["count"].append(stat["count"])
+        else:
+            log.warning(f"Page {path} does not have view stats.")
+
+    rv = pd.DataFrame(d)
+    return rv
 
 
 @hydra.main(config_name="config")
@@ -61,6 +88,14 @@ def main(config):
 
     stats = get_all_page_stats(config.url, config.wiki, headers)
     log.info(f"Page view stats: {stats}")
+
+    agg_stats = (
+        stats.groupby(["path"])["count"]
+        .agg("sum")
+        .sort_values(ascending=False)
+        .head(30)
+    )
+    log.info(f"Aggregated stats: {agg_stats.to_string()}")
 
 
 if __name__ == "__main__":
