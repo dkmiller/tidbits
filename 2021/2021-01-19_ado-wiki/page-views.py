@@ -77,6 +77,22 @@ def get_all_page_stats(
     return rv
 
 
+def summarize_wiki_stats(stats: pd.DataFrame, top_pages: int) -> None:
+    log.info(f"Page view stats: {stats}")
+
+    log.info(f"Got page view stats for {stats.path.nunique()} pages")
+    total_views = stats["count"].sum()
+    log.info(f"Total page views: {total_views}")
+
+    agg_stats = (
+        stats.groupby(["path"])["count"]
+        .agg("sum")
+        .sort_values(ascending=False)
+        .head(top_pages)
+    )
+    log.info(f"Aggregated stats: {agg_stats.to_string()}")
+
+
 @hydra.main(config_name="config")
 def main(config):
     log.info(f"Configuration: {config}")
@@ -87,15 +103,7 @@ def main(config):
     log.info(f"ID of wiki {config.wiki} = {wiki_id}")
 
     stats = get_all_page_stats(config.url, config.wiki, headers)
-    log.info(f"Page view stats: {stats}")
-
-    agg_stats = (
-        stats.groupby(["path"])["count"]
-        .agg("sum")
-        .sort_values(ascending=False)
-        .head(30)
-    )
-    log.info(f"Aggregated stats: {agg_stats.to_string()}")
+    summarize_wiki_stats(stats, config.top_pages)
 
 
 if __name__ == "__main__":

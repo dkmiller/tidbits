@@ -4,3 +4,5 @@ scopes:
 url: https://dev.azure.com/msdata/Vienna
 
 wiki: aml-1p-onboarding
+
+top_pages: 30
