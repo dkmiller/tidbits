@@ -1,15 +1,24 @@
-import { greeter } from "./greeter";
-import { getStocks } from "./finance";
+import { showGreeting } from "./greeter";
+import { displayStockInfo } from "./finance";
 
-function showGreeting(divName: string, firstName: string, lastName: string) {
-    const elt = document.getElementById(divName);
-    let innerText = greeter({ firstName: firstName, lastName: lastName });
-    console.log(innerText);
-    elt.innerText = innerText;
-}
 
 showGreeting("greeting", "Type", "Script");
 
-const financeElt = document.getElementById("finance");
-getStocks("MSFT")
-    .then(x => financeElt.innerText = x );
+
+["MSFT", "GOOG", "NVDA"].forEach(
+    symbol => displayStockInfo(document, "sample_p", symbol)
+)
+
+// const financeElt = document.getElementById("finance");
+// getStocks("MSFT")
+//     .then(x => financeElt.innerText = x );
+
+// // getStocks("GOOG")
+// //     .then(x => {
+// //         const div = document.getElementById("sample_p");
+// //         const otherElt = document.createElement("other");
+// //         otherElt.innerText = x;
+// //         div?.appendChild(otherElt);
+// //     });
+
+// displayStockInfo(document, "sample_p", "NVDA");
