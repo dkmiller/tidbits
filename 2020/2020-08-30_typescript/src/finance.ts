@@ -17,3 +17,11 @@ export function displayStockInfo(doc: Document, id: string, symbol: string): Pro
     return getStocks(symbol)
         .then(x => new_element.innerText = x);
 }
+
+export function displayMultipleStockInfo(doc: Document, id: string, symbols: string): void {
+    return symbols.split(",")
+        .map(s => s.trim())
+        .forEach(
+            symbol => displayStockInfo(doc, id, symbol)
+        );
+}
