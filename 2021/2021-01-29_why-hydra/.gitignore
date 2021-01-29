@@ -1,0 +1,4 @@
+# Directories
+.hydra/
+lightning_logs/
+MNIST/
