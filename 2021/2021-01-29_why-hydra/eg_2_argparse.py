@@ -1,14 +1,18 @@
 import argparse
+import logging
 import pytorch_lightning as pl
 from torchvision.datasets import MNIST
 from torchvision.transforms import ToTensor
 from torch.utils.data import DataLoader
 
 
-from maturity_model.ml import AutoEncoder
+from ml import AutoEncoder
 
 
 def main(args):
+    logging.basicConfig(level="INFO")
+    logging.info(f"Arguments: {args}")
+
     pl.seed_everything(args.seed)
 
     model = AutoEncoder(
@@ -24,6 +28,22 @@ def main(args):
         root=args.root
     )
 
+    train_loader = DataLoader(
+        dataset,
+        batch_size=args.batch_size
+    )
+
+    trainer = pl.Trainer(
+        gpus=0,
+        log_every_n_steps=200,
+        log_gpu_memory="all",
+        max_epochs=10,
+        num_nodes=1
+    )
+
+    trainer.fit(model, train_loader)
+
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
 
@@ -38,6 +58,16 @@ if __name__ == "__main__":
     dataset = parser.add_argument_group("dataset configuration")
     dataset.add_argument("--download", default=True, type=bool)
     dataset.add_argument("--root", default=".", type=str)
+
+    dataset = parser.add_argument_group("dataloader configuration")
+    dataset.add_argument("--batch_size", default=32, type=int)
+
+    dataset = parser.add_argument_group("trainer configuration")
+    dataset.add_argument("--gpus", default=0, type=int)
+    dataset.add_argument("--log_every_n_steps", default=200, type=int)
+    dataset.add_argument("--log_gpu_memory", default="all", type=str)
+    dataset.add_argument("--max_epochs", default=10, type=int)
+    dataset.add_argument("--num_nodes", default=1, type=int)
 
     args = parser.parse_args()
     main(args)
