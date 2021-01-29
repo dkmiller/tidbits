@@ -33,7 +33,7 @@ def main(config):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
 
-    parser.add_argument("--config", default="config.json", type=str)
+    parser.add_argument("--config", default="eg_3_config.json", type=str)
     parser.add_argument("--log_level", default="INFO", type=str)
     args = parser.parse_args()
     with open(args.config) as f:
