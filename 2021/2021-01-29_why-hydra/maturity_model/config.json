@@ -1,0 +1,13 @@
+{
+    "seed": 42,
+    "model": {
+        "image_size": 28,
+        "color_range": 64,
+        "hyperparam_1": 3,
+        "learning_rate": 0.001
+    },
+    "dataset": {
+        "download": true,
+        "root": "."
+    }
+}
