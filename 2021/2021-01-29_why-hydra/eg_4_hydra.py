@@ -9,7 +9,7 @@ from torch.utils.data import DataLoader
 from ml import AutoEncoder
 
 
-@hydra.main(config_name="config")
+@hydra.main(config_name="eg_4_config")
 def main(config):
     logging.info(f"Configuration: {config}")
 
