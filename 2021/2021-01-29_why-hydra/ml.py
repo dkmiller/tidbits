@@ -8,21 +8,21 @@ from torch import Tensor
 
 
 class AutoEncoder(pl.LightningModule):
-    def __init__(self, image_size: int, color_range: int, lr: float, hp1: int):
+    def __init__(self, image_size: int, color_range: int, learning_rate: float, hyperparam_1: int):
         super().__init__()
         self.encoder = nn.Sequential(
             nn.Linear(image_size ** 2, color_range),
             nn.ReLU(),
-            nn.Linear(color_range, hp1),
+            nn.Linear(color_range, hyperparam_1),
         )
         self.decoder = nn.Sequential(
-            nn.Linear(hp1, color_range),
+            nn.Linear(hyperparam_1, color_range),
             nn.ReLU(),
             nn.Linear(color_range, image_size ** 2),
         )
 
         self.example_input_array = None
-        self.lr = lr
+        self.lr = learning_rate
 
     def forward(self, x) -> Tensor:
         y = self(x)

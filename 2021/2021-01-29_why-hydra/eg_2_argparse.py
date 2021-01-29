@@ -5,7 +5,7 @@ from torchvision.transforms import ToTensor
 from torch.utils.data import DataLoader
 
 
-from ml import AutoEncoder
+from maturity_model.ml import AutoEncoder
 
 
 def main(args):
