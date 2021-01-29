@@ -1,0 +1,13 @@
+python eg_2_argparse.py `
+  --seed 30 `
+  --image_size 28 `
+  --color_range 64 `
+  --hyperparam_1 4 `
+  --learning_rate 0.03 `
+  --download False `
+  --root . `
+  --batch_size 20 `
+  --gpus -1 `
+  --log_every_n_steps 300 `
+  --max_epochs 2 `
+  --num_nodes 1
