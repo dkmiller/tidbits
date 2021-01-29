@@ -49,19 +49,19 @@ class Configuration:
   trainer: TrainerConfig
 
 
-@hydra.main(config_name="config")
+@hydra.main(config_name="eg_5_config")
 def main(config: Configuration):
     log.info(f"Configuration: {config}")
 
     pl.seed_everything(config.seed)
 
-    model = AutoEncoder(**asdict(config.model))
+    model = AutoEncoder(**config.model)  # type: ignore
 
-    dataset = MNIST(transform=ToTensor(), **asdict(config.dataset))
+    dataset = MNIST(transform=ToTensor(), **config.dataset)  # type: ignore
 
-    train_loader = DataLoader(dataset, **asdict(config.dataloader))
+    train_loader = DataLoader(dataset, **config.dataloader)  # type: ignore
 
-    trainer = pl.Trainer(**asdict(config.trainer))
+    trainer = pl.Trainer(**config.trainer)  # type: ignore
 
     trainer.fit(model, train_loader)
 
