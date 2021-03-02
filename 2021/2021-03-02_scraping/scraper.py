@@ -2,6 +2,8 @@ import logging
 import re
 import scrapy
 from scrapy.http.response.html import HtmlResponse
+import time
+import uuid
 
 
 log = logging.getLogger(__name__)
@@ -10,6 +12,9 @@ log = logging.getLogger(__name__)
 counter = 0
 distinct_urls = set()
 
+file_name = f"{time.time()}_{uuid.uuid4()}.csv"
+with open(file_name, "a+") as f:
+    f.write("Title,LongUrl,ShortUrl\n")
 
 class TestSpider(scrapy.Spider):
     name = "test_spider"
@@ -24,13 +29,37 @@ class TestSpider(scrapy.Spider):
         counter += 1
         distinct_urls.add(response.url)
 
-        print(response.text)
+        # for x in response.xpath("//span[@class='rmp-rating-widget__results__rating js-rmp-avg-rating']"):
+        #     print("#" * 100)
+        #     print(x)
+        #     print(type(x))
+        #     print(dir(x))
+        #     print("#" * 100)
+
+        title = response.xpath("//title/text()").extract_first()
+        log.info(f"Visiting {title}")
+
+        for x in response.xpath("//link[@href]"):
+            log.debug(f"Found {x}")
+            url = x.xpath("@href").extract_first()
+            log.debug(f"Got URL {url}")
+            if "https://marriageheat.com/?p=" in url:
+                print("#" * 100)
+                print(url)
+                print("#" * 100)
+                with open(file_name, "a+") as f:
+                    f.write(f"\"{title}\",{response.url},{url}\n")
+
+
+
+
+        # print(response.text)
 
         m = re.search(r"Average rating\s+.*", response.text)
-        print(m)
+        # print(m)
 
-        if counter > 2:
-            return
+        # if counter > 2:
+        #     return
 
         # https://github.com/dkmiller/tidbits/blob/graph-algorithms/2020/2020-12-15_graph-algorithms/Graph.Algorithms/Web.cs
         SELECTOR = "//a[@href]"
