@@ -1,27 +1,32 @@
 param(
     $File,
-    [int]$Nonce
+    $Nonce,
+    $Domain,
+    [int]$Delay = 1
 )
 
-$Data = import-csv $File
-
-# https://stackoverflow.com/a/33156229
-$NewData = New-Object System.Collections.Generic.List[System.Object]
+$Data = Get-Content $File | ConvertFrom-Json
+$StatsFile = "$File-stats.csv"
 
 foreach ($Line in $Data) {
-    $Id = $Line.ShortUrl.Split("=")[-1]
-    write-host $Id
+    $Id = $Line.short_url.Split("=")[-1]
+    Write-Host "Processing page with ID: $Id"
     try {
-        $Resp = iwr "https://marriageheat.com/wp-admin/admin-ajax.php" -Method Post -Body "action=load_results&postID=$Id&nonce=$Nonce"
-        $Json = $Resp.Content | convertfrom-json
-        write-host $Json
+        $Body = "action=load_results&postID=$Id&nonce=$Nonce"
+        $Url = "https://$($Domain).com/wp-admin/admin-ajax.php"
+        Write-Host "Calling $Url with body $Body"
+        $Response = Invoke-WebRequest $Url -Method Post -Body $Body
+        $Json = $Response.Content | ConvertFrom-Json
+        Write-Host "Received: $Json"
         $Line | Add-Member -NotePropertyName VoteCount -NotePropertyValue $Json.voteCount
         $Line | Add-Member -NotePropertyName AvgRating -NotePropertyValue $Json.avgRating
-        $NewData.Add($Line)
-    
-    } catch {
+
+        $Line | Export-Csv $StatsFile -Append
+    }
+    catch {
         Write-Warning "failed :("
     }
-}
 
-$NewData | Export-Csv new-data.csv
+    Write-Host "Sleeping $Delay seconds..."
+    Start-Sleep -Seconds $Delay
+}
