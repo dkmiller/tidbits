@@ -1,6 +1,13 @@
 import { showGreeting } from "./greeter";
 import { displayStockInfo, displayMultipleStockInfo } from "./finance";
 
+import { Run } from "./entry";
+
+new Run({
+    initialSymbols: "MSFT, GOOG, NVDA",
+    initialDivId: "entry_point"
+}).run();
+
 
 showGreeting("greeting", "Type", "Script");
 
