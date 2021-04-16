@@ -1,0 +1,7 @@
+folders_filter: >-
+  displayName eq 'Inbox'
+
+messages_filter: >-
+  ((from/emailAddress/address) eq 'pcbot@microsoft.com') and startsWith(subject, 'Repository assignment confirmation')
+
+endpoint: https://graph.microsoft.com/v1.0/
