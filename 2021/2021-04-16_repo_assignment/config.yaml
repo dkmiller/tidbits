@@ -5,3 +5,14 @@ messages_filter: >-
   ((from/emailAddress/address) eq 'pcbot@microsoft.com') and startsWith(subject, 'Repository assignment confirmation')
 
 endpoint: https://graph.microsoft.com/v1.0/
+
+response_template: |
+  Hi {name},
+
+  I see you have assigned a repository to the "Azure Machine Learning Data
+  Science" entry in Service Tree. This team does not own those repositories, nor
+  does it have the resources to keep them free of legal or security
+  vulnerabilities.
+  
+  I have removed that assignment. Please assign the repository either to an
+  appropriate service, or two a pair of "human" (not DL / SG) aliases.
