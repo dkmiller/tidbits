@@ -1,4 +1,6 @@
-# TODO
+# Try programmatically responding to email
+
+Sadly, Microsoft Graph doesn't get access :( .
 
 ## Links
 

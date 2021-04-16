@@ -28,7 +28,7 @@ def get_sender(content) -> Tuple[str, str]:
     Return (name, email).
     """
     html = fromstring(content)
-    links =  html.xpath("//a")
+    links = html.xpath("//a")
     for link in links:
         from_link = str(link.get("href"))
         from_text = link.text_content()
@@ -50,19 +50,25 @@ def get_folder_id(endpoint: str, filter: str, headers: dict) -> str:
 def respond_to_email(endpoint, email, template: str, headers: dict) -> None:
     email_content = email["body"]["content"]
     (friendly_name, email_address) = get_sender(email_content)
-    print(friendly_name)
-    print(email_address)
+    log.info(f"Sending response to '{friendly_name}' at {email_address}")
     response_md = template.replace("${name}", friendly_name)
+
     response_html = markdown(response_md)
-    print(response_html)
-    # print(email_content)
-    # html = fromstring(email_content)
-    # links =  html.xpath("//a")
-    # print(links)
-    # for link in links:
-    #     print(vars(link))
-    #     print(link.get("href"))
-    #     print(link.text_content())
+
+    message_id = email["id"]
+    body = {
+        "comment": response_html,
+        "toRecipients": [
+            {"emailAddress": {"address": "danmill@microsoft.com", "name": "Dan Miller"}}
+        ],
+    }
+
+    url = f"{endpoint}me/messages/{message_id}/forward"
+    log.info(f"POST {url} with body:\n{body}")
+
+    r = requests.post(url, json=body, headers=headers)
+    log.info(f"Response: {r} {r.json()}")
+
 
 @hydra.main(config_name="config")
 def main(config):
@@ -80,8 +86,6 @@ def main(config):
 
     for email in emails:
         respond_to_email(config.endpoint, email, config.response_template, headers)
-
-
 
 
 if __name__ == "__main__":
