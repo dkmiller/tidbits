@@ -1,1 +1,2 @@
 haralyzer>=1.9.0
+PyJWT>=2.0.1

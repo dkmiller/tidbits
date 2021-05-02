@@ -73,12 +73,20 @@ def sniff_page(page: HarPage):
 
 
 def main(args):
-    logging.basicConfig(level="INFO")
+    logging.basicConfig(level=args.level)
     with open(args.archive, "r", encoding="utf-8") as f:
         body = json.load(f)
     har_parser = HarParser(body)
-    for page in har_parser.pages:
-        sniff_page(page)
+
+    from visitors import HttpArchiveVisitor
+
+    visitor = HttpArchiveVisitor()
+    visitor.visit(har_parser)
+
+    visitor.summarize()
+
+    # for page in har_parser.pages:
+    #     sniff_page(page)
 
 
 if __name__ == "__main__":
