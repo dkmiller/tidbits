@@ -6,12 +6,6 @@ import requests
 from urllib.parse import urlparse
 
 
-def emphasize(o):
-    print("#" * 80)
-    print(o)
-    print("#" * 80)
-
-
 def get_argument_parser():
     parser = argparse.ArgumentParser()
     parser.add_argument("--gfycat_id", default="2_sdSGQD")
@@ -31,7 +25,31 @@ def get_gfycat_client(args) -> GfycatClient:
 
 
 def get_reddit_client(args) -> praw.Reddit:
-    rv = praw.Reddit(client_id=args.reddit_id, client_secret=args.reddit_secret, user_agent=args.user_agent)
+    rv = praw.Reddit(
+        client_id=args.reddit_id,
+        client_secret=args.reddit_secret,
+        user_agent=args.user_agent,
+    )
+    return rv
+
+
+def extract(element, attribute: str, extension: str) -> list:
+    rv = []
+    try:
+        attr_value = element.attrib.get(attribute, None)
+        if attr_value and attr_value.endswith(extension):
+            rv.append(attr_value)
+    except Exception as e:
+        print(f"\t{e}")
+
+    try:
+        children = element.getchildren()
+        for child in children:
+            child_extraction = extract(child, attribute, extension)
+            rv.extend(child_extraction)
+    except BaseException as e:
+        print(f"\t{e}")
+
     return rv
 
 
@@ -41,50 +59,43 @@ def main(args):
     posts = reddit.subreddit(args.subreddit).top("all", limit=args.limit)
 
     for post in posts:
-        emphasize(post.title)
-        print(f"\tFound {post.url}")
+        message = f"{post.title}\n    {post.url}\n"
+        print(message)
         if args.output:
             with open(args.output, "a") as f:
-                f.write(f"{post.title}\n    {post.url}\n")
+                f.write(message)
         parsed_url = urlparse(post.url)
 
         if parsed_url.netloc == "gfycat.com":
             name = parsed_url.path.split("/")[-1]
             try:
-                print(gfycat.query_gfy(name))
+                gfycat_url = gfycat.query_gfy(name)["gfyItem"]["mp4Url"]
+                print(f"\tGfycat URL: {gfycat_url}")
             except BaseException as e:
                 print(f"\tFailed: {e}")
-        
+
         try:
             r = requests.get(post.url)
-            # from lxml import html
-            # tree = html.parse(r.raw)
             tree = html.fromstring(r.text)
             # print(tree)
-            next_links = [n for n in [c.attrib.get("content", None) for c in tree.getchildren()[0].getchildren()] if n and n.endswith(".mp4")]
-            if next_links:
-                print(next_links)
+            # next_links = [
+            #     n
+            #     for n in [
+            #         c.attrib.get("content", None)
+            #         for c in tree.getchildren()[0].getchildren()
+            #     ]
+            #     if n and n.endswith(".mp4")
+            # ]
+            # if next_links:
+            #     print(next_links)
+            new_next_links = extract(tree, "content", ".mp4")
+            if new_next_links:
+                print(f"\tAd-hoc links: {new_next_links}")
         except BaseException as e:
-            print(f"Failed: {e}")
-        
-        # if "gfycat" in post.url:
-
-
-        # r = requests.get(post.url, stream=True)
-        # https://stackoverflow.com/a/33511557
-        # TODO: consider lxml.
-        # t = lxml.html.parse(r.raw)
-        # print(t)
-        # https://www.reddit.com/r/learnpython/comments/abt1kp/downloading_gifs_on_reddit_from_gfycat/
-        # print(t.xpath("//source"))
-
-        # r = requests.get(post.url)
-        # print(r.text)
-        # soup = BeautifulSoup(r.text, "html.parser")
+            print(f"\tFailed: {e}")
 
 
 if __name__ == "__main__":
     parser = get_argument_parser()
     args = parser.parse_args()
     main(args)
-
