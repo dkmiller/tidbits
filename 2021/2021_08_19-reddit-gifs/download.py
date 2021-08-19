@@ -6,6 +6,25 @@ import requests
 from urllib.parse import urlparse
 
 
+class _SafeOperation:
+    def __init__(self, indent: str):
+        self.indent = indent
+
+    def __enter__(self):
+        pass
+
+    def __exit__(self, exc_type, exc_value, traceback):
+        if exc_type:
+            print(f"{self.indent}Failed: {exc_value}")
+
+        # https://stackoverflow.com/a/34113126
+        return not isinstance(exc_value, KeyboardInterrupt)
+
+
+def safe_operation(indent: str = "\t"):
+    return _SafeOperation(indent)
+
+
 def get_argument_parser():
     parser = argparse.ArgumentParser()
     parser.add_argument("--gfycat_id", default="2_sdSGQD")
@@ -35,22 +54,41 @@ def get_reddit_client(args) -> praw.Reddit:
 
 def extract(element, attribute: str, extension: str) -> list:
     rv = []
-    try:
+    with safe_operation():
         attr_value = element.attrib.get(attribute, None)
         if attr_value and attr_value.endswith(extension):
             rv.append(attr_value)
-    except Exception as e:
-        print(f"\t{e}")
 
-    try:
+    with safe_operation():
         children = element.getchildren()
         for child in children:
             child_extraction = extract(child, attribute, extension)
             rv.extend(child_extraction)
-    except BaseException as e:
-        print(f"\t{e}")
 
     return rv
+
+
+def get_official_gfycat_urls(gfycat, url: str) -> list:
+    rv = []
+    parsed_url = urlparse(url)
+    if parsed_url.netloc == "gfycat.com":
+        name = parsed_url.path.split("/")[-1]
+        with safe_operation():
+            gfycat_url = gfycat.query_gfy(name)["gfyItem"]["mp4Url"]
+            rv.append(gfycat_url)
+    return rv
+
+
+def get_adhoc_gfycat_urls(reddit, url: str) -> list:
+    rv = []
+
+    with safe_operation():
+        r = requests.get(url)
+        tree = html.fromstring(r.text)
+        gif_urls = extract(tree, "content", ".mp4")
+        rv.extend(gif_urls)
+
+    return list(set(rv))
 
 
 def main(args):
@@ -61,38 +99,18 @@ def main(args):
     for post in posts:
         message = f"{post.title}\n    {post.url}\n"
         print(message)
+
+        official_urls = get_official_gfycat_urls(gfycat, post.url)
+        adhoc_urls = get_adhoc_gfycat_urls(reddit, post.url)
+
+        for url in official_urls + adhoc_urls:
+            append = f"    {url}\n"
+            print(append)
+            message += append
+
         if args.output:
             with open(args.output, "a") as f:
                 f.write(message)
-        parsed_url = urlparse(post.url)
-
-        if parsed_url.netloc == "gfycat.com":
-            name = parsed_url.path.split("/")[-1]
-            try:
-                gfycat_url = gfycat.query_gfy(name)["gfyItem"]["mp4Url"]
-                print(f"\tGfycat URL: {gfycat_url}")
-            except BaseException as e:
-                print(f"\tFailed: {e}")
-
-        try:
-            r = requests.get(post.url)
-            tree = html.fromstring(r.text)
-            # print(tree)
-            # next_links = [
-            #     n
-            #     for n in [
-            #         c.attrib.get("content", None)
-            #         for c in tree.getchildren()[0].getchildren()
-            #     ]
-            #     if n and n.endswith(".mp4")
-            # ]
-            # if next_links:
-            #     print(next_links)
-            new_next_links = extract(tree, "content", ".mp4")
-            if new_next_links:
-                print(f"\tAd-hoc links: {new_next_links}")
-        except BaseException as e:
-            print(f"\tFailed: {e}")
 
 
 if __name__ == "__main__":
