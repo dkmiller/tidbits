@@ -1,0 +1,11 @@
+name: reddit-gifs
+
+dependencies:
+
+- python=3.9
+- pip
+- pip:
+  - black
+  - gfycat
+  - lxml
+  - praw
