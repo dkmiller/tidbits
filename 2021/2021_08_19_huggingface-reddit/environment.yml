@@ -1,0 +1,18 @@
+name: reddit
+
+channels:
+
+- defaults
+- huggingface
+- pytorch
+
+dependencies:
+
+- python=3.9
+- transformers
+- pytorch
+- pip:
+  - azure-identity
+  - azure-keyvault-secrets
+  - praw
+
