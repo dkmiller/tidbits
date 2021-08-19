@@ -1,4 +1,4 @@
-name: reddit
+name: huggingface-reddit
 
 channels:
 
@@ -8,11 +8,9 @@ channels:
 
 dependencies:
 
-- python=3.9
+- python=3.8
 - transformers
+- pip
 - pytorch
 - pip:
-  - azure-identity
-  - azure-keyvault-secrets
   - praw
-
