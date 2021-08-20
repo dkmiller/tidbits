@@ -1,0 +1,14 @@
+name: graph-learning2
+
+channels:
+
+- rusty1s
+- conda-forge
+
+dependencies:
+
+- pip
+- python=3.8
+  # - cudatoolkit=11.3
+- pytorch-geometric
+
