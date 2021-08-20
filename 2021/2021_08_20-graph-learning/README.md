@@ -28,3 +28,10 @@ Paper: _graph attention networks_.
 - Amin's recommendation: install from **source**.
 
 
+"Karate club": social anthropology paper
+
+- Nice small graph with some information (34 nodes)
+- Edge == consistently interact _outside_ Karate classes
+
+Sample notebook: https://colab.research.google.com/drive/1h3-vJGRVloF5zStxL5I0rSy4ZUPNsjy8?usp=sharing#scrollTo=etxOsz8QIbMO .
+
