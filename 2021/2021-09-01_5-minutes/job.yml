@@ -6,10 +6,9 @@ code:
 environment:
   docker:
     image: mcr.microsoft.com/azureml/openmpi3.1.2-ubuntu18.04
-  conda_file: file:environment.yml
+  conda_file: environment.yml
 
 compute:
   target: azureml:cpu-cluster
 
 experiment_name: hello-world
-
