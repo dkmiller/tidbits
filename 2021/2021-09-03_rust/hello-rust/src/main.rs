@@ -3,6 +3,7 @@ use serde::{Deserialize, Serialize};
 use serde_yaml::from_reader;
 use std::error::Error;
 use std::fs::{metadata, read_dir, File};
+use std::process::Command;
 
 #[derive(Serialize, Deserialize, Debug)]
 struct Config {
@@ -22,6 +23,30 @@ fn load_config(config_path: String) -> Result<Config, Box<Error>> {
     let c: Config = from_reader(f)?;
 
     Ok(c)
+}
+
+fn azure_account_token(resource: String) -> Result<String, Box<Error>> {
+    // https://stackoverflow.com/a/42993724/
+    // az account get-access-token --resource https://vault.azure.net/ --query accessToken -o tsv
+
+    let output = Command::new("az")
+        .args([
+            "account",
+            "get-access-token",
+            "--resource",
+            &resource,
+            "--query",
+            "accessToken",
+            "-o",
+            "tsv",
+        ])
+        .output()?;
+
+    let mut access_token = String::from_utf8_lossy(&output.stdout);
+
+    let x = access_token.to_mut();
+
+    Ok(x.to_string())
 }
 
 fn main() {
@@ -51,6 +76,12 @@ fn main() {
 
     match config {
         Ok(c) => println!("{:?}", c),
+        Err(e) => println!("{}", e),
+    };
+
+    let access_token = azure_account_token("https://vault.azure.net/".to_string());
+    match access_token {
+        Ok(s) => println!("{}", s),
         Err(e) => println!("{}", e),
     };
 }
