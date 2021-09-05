@@ -6,7 +6,7 @@ Follow: https://www.rust-lang.org/learn/get-started .
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 ```
 
-To run in debug mode: `cargo run --quiet`.
+To run in debug mode: `cargo run --quiet`. To format the code, run `cargo fmt`.
 
 ## Links
 

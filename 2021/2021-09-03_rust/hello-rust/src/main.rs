@@ -1,8 +1,8 @@
 use clap::Clap;
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 use serde_yaml::from_reader;
-use std::fs::{File, metadata, read_dir};
 use std::error::Error;
+use std::fs::{metadata, read_dir, File};
 
 #[derive(Serialize, Deserialize, Debug)]
 struct Config {
@@ -12,8 +12,8 @@ struct Config {
 
 #[derive(Clap)]
 struct Opts {
-    #[clap(default_value="config.yml")]
-    config: String
+    #[clap(default_value = "config.yml")]
+    config: String,
 }
 
 fn load_config(config_path: String) -> Result<Config, Box<Error>> {
@@ -22,20 +22,6 @@ fn load_config(config_path: String) -> Result<Config, Box<Error>> {
     let c: Config = from_reader(f)?;
 
     Ok(c)
-
-
-    // // let f = File::open(opts.config).unwrap();
-    // // // let conf: Config = serde_yaml::from_reader(f).unwrap();
-    // // // match f {
-    // // //     Ok(ff) => serde_yaml::from_reader(ff),
-    // // //     Err(e) => 1
-    // // // };
-    // // // let d = serde_yaml::from_reader(f);
-    // match f {
-    //     Ok(ff) => serde_yaml::from_reader(ff),
-    //     _ => _
-    //     Err(e) => 1
-    // };
 }
 
 fn main() {
@@ -65,6 +51,6 @@ fn main() {
 
     match config {
         Ok(c) => println!("{:?}", c),
-        Err(e) => println!("{}", e)
+        Err(e) => println!("{}", e),
     };
 }
