@@ -15,3 +15,4 @@ To run in debug mode: `cargo run --quiet`. To format the code, run `cargo fmt`.
 - https://github.com/seanmonstar/reqwest/blob/master/examples/json_typed.rs
 - https://github.com/seanmonstar/reqwest
 - https://fasterthanli.me/articles/a-half-hour-to-learn-rust
+- https://stevedonovan.github.io/rust-gentle-intro/6-error-handling.html

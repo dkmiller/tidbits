@@ -1,23 +1,15 @@
 use clap::Clap;
-use serde::{Deserialize, Serialize};
 use serde_yaml::from_reader;
 use std::error::Error;
 use std::fs::{metadata, read_dir, File};
 use std::process::Command;
 
-#[derive(Serialize, Deserialize, Debug)]
-struct Config {
-    a: String,
-    b: String,
-}
+mod models;
+use models::{Config, Opts};
 
-#[derive(Clap)]
-struct Opts {
-    #[clap(default_value = "config.yml")]
-    config: String,
-}
-
-fn load_config(config_path: String) -> Result<Config, Box<Error>> {
+/// Load a strongly typed configuration object from the specified path.
+fn load_config(config_path: String) -> Result<Config, Box<dyn Error>> {
+    // https://stackoverflow.com/a/55125216
     // https://stackoverflow.com/a/53243962/
     let f = File::open(config_path)?;
     let c: Config = from_reader(f)?;
@@ -25,10 +17,12 @@ fn load_config(config_path: String) -> Result<Config, Box<Error>> {
     Ok(c)
 }
 
-fn azure_account_token(resource: String) -> Result<String, Box<Error>> {
-    // https://stackoverflow.com/a/42993724/
+/// Get the access token corresponding to the users Azure CLI login
+/// and specified resource identifier.
+fn azure_access_token(resource: String) -> Result<String, Box<dyn Error>> {
     // az account get-access-token --resource https://vault.azure.net/ --query accessToken -o tsv
 
+    // https://stackoverflow.com/a/42993724/
     let output = Command::new("az")
         .args([
             "account",
@@ -42,11 +36,9 @@ fn azure_account_token(resource: String) -> Result<String, Box<Error>> {
         ])
         .output()?;
 
-    let mut access_token = String::from_utf8_lossy(&output.stdout);
+    let access_token = String::from_utf8_lossy(&output.stdout);
 
-    let x = access_token.to_mut();
-
-    Ok(x.to_string())
+    Ok(access_token.to_string())
 }
 
 fn main() {
@@ -79,7 +71,7 @@ fn main() {
         Err(e) => println!("{}", e),
     };
 
-    let access_token = azure_account_token("https://vault.azure.net/".to_string());
+    let access_token = azure_access_token("https://vault.azure.net/".to_string());
     match access_token {
         Ok(s) => println!("{}", s),
         Err(e) => println!("{}", e),
