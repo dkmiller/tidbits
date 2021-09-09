@@ -1,0 +1,6 @@
+dependencies:
+- pip
+- python=3.8
+- pip:
+  - azureml-mlflow
+  - mlflow
