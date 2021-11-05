@@ -26,6 +26,8 @@ WTF is this:
 
 > Message: input is not a valid input name per component definition
 
+Named datasets are lost in the pipelines UI.
+
 ## Links
 
 - https://marketplace.visualstudio.com/items?itemName=ms-toolsai.vscode-ai

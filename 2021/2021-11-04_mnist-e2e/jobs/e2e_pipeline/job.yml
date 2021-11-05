@@ -4,9 +4,46 @@ type: pipeline
 
 compute: azureml:cpu-cluster
 
+# TODO: why is it easier to put these here vs. in the `data` folder?
+inputs:
+  train_images_raw:
+    dataset:
+      paths:
+      - file: http://yann.lecun.com/exdb/mnist/train-images-idx3-ubyte.gz
+  train_labels_raw:
+    dataset:
+      paths:
+      - file: http://yann.lecun.com/exdb/mnist/train-labels-idx1-ubyte.gz
+  test_images_raw:
+    dataset:
+      paths:
+      - file: http://yann.lecun.com/exdb/mnist/t10k-images-idx3-ubyte.gz
+  test_labels_raw:
+    dataset:
+      paths:
+      - file: http://yann.lecun.com/exdb/mnist/t10k-labels-idx1-ubyte.gz
+
 jobs:
   extract_mnist_train_images:
     type: component
     component: file:../../components/extract_gz/component.yml
     inputs:
-      gz_files: {dataset: azureml:mnist-train-images-raw:1}
+      gz_files: ${{inputs.train_images_raw}}
+
+  extract_mnist_train_labels:
+    type: component
+    component: file:../../components/extract_gz/component.yml
+    inputs:
+      gz_files: ${{inputs.train_labels_raw}}
+
+  extract_mnist_test_images:
+    type: component
+    component: file:../../components/extract_gz/component.yml
+    inputs:
+      gz_files: ${{inputs.test_images_raw}}
+
+  extract_mnist_test_labels:
+    type: component
+    component: file:../../components/extract_gz/component.yml
+    inputs:
+      gz_files: ${{inputs.test_labels_raw}}
