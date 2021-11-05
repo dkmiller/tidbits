@@ -24,6 +24,8 @@ inputs:
       - file: http://yann.lecun.com/exdb/mnist/t10k-labels-idx1-ubyte.gz
 
 jobs:
+
+  # ===== Extraction ===========================================================
   extract_mnist_train_images:
     type: component
     component: file:../../components/extract_gz/component.yml
@@ -47,3 +49,28 @@ jobs:
     component: file:../../components/extract_gz/component.yml
     inputs:
       gz_files: ${{inputs.test_labels_raw}}
+
+  # ===== Conversion ===========================================================
+  convert_mnist_train_images_to_numpy:
+    type: component
+    component: file:../../components/convert_idx_to_npy/component.yml
+    inputs:
+      idx_files: ${{jobs.extract_mnist_train_images.outputs.decompressed_files}}
+
+  convert_mnist_train_labels_to_numpy:
+    type: component
+    component: file:../../components/convert_idx_to_npy/component.yml
+    inputs:
+      idx_files: ${{jobs.extract_mnist_train_labels.outputs.decompressed_files}}
+
+  convert_mnist_test_images_to_numpy:
+    type: component
+    component: file:../../components/convert_idx_to_npy/component.yml
+    inputs:
+      idx_files: ${{jobs.extract_mnist_test_images.outputs.decompressed_files}}
+
+  convert_mnist_test_labels_to_numpy:
+    type: component
+    component: file:../../components/convert_idx_to_npy/component.yml
+    inputs:
+      idx_files: ${{jobs.extract_mnist_test_labels.outputs.decompressed_files}}

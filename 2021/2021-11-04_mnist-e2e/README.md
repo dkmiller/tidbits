@@ -28,6 +28,10 @@ WTF is this:
 
 Named datasets are lost in the pipelines UI.
 
+CLI submission is **very** slow compared to component SDK.
+
+No reuse :/
+
 ## Links
 
 - https://marketplace.visualstudio.com/items?itemName=ms-toolsai.vscode-ai
@@ -37,3 +41,4 @@ Named datasets are lost in the pipelines UI.
 - https://docs.microsoft.com/en-us/azure/machine-learning/concept-component
 - https://docs.microsoft.com/en-us/azure/machine-learning/how-to-create-component-pipelines-cli
 - https://docs.microsoft.com/en-us/azure/machine-learning/reference-yaml-job-pipeline
+- https://github.com/Azure/azureml-examples/blob/main/cli/jobs/pipelines-with-components/nyc_taxi_data_regression/job.yml
