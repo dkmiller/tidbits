@@ -1,3 +1,5 @@
+# az ml job create --file .\jobs\e2e_pipeline\job.yml
+
 $schema: https://azuremlschemas.azureedge.net/latest/pipelineJob.schema.json
 
 type: pipeline
@@ -74,3 +76,14 @@ jobs:
     component: file:../../components/convert_idx_to_npy/component.yml
     inputs:
       idx_files: ${{jobs.extract_mnist_test_labels.outputs.decompressed_files}}
+
+  # ===== Training =============================================================
+  
+  train:
+    type: component
+    component: file:../../components/train_mnist/component.yml
+    inputs:
+      train_image: ${{jobs.convert_mnist_train_images_to_numpy.outputs.numpy_files}}
+      train_label: ${{jobs.convert_mnist_train_labels_to_numpy.outputs.numpy_files}}
+      test_image: ${{jobs.convert_mnist_test_images_to_numpy.outputs.numpy_files}}
+      test_label: ${{jobs.convert_mnist_test_labels_to_numpy.outputs.numpy_files}}

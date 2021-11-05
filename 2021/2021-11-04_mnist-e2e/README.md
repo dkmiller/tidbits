@@ -42,3 +42,4 @@ No reuse :/
 - https://docs.microsoft.com/en-us/azure/machine-learning/how-to-create-component-pipelines-cli
 - https://docs.microsoft.com/en-us/azure/machine-learning/reference-yaml-job-pipeline
 - https://github.com/Azure/azureml-examples/blob/main/cli/jobs/pipelines-with-components/nyc_taxi_data_regression/job.yml
+- https://www.pytorchlightning.ai/
