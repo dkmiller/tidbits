@@ -1,0 +1,12 @@
+$schema: https://azuremlschemas.azureedge.net/latest/pipelineJob.schema.json
+
+type: pipeline
+
+compute: azureml:cpu-cluster
+
+jobs:
+  extract_mnist_train_images:
+    type: component
+    component: file:../../components/extract_gz/component.yml
+    inputs:
+      gz_files: {dataset: azureml:mnist-train-images-raw:1}

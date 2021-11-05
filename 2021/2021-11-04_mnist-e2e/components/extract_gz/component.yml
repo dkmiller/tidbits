@@ -1,3 +1,6 @@
+$schema: https://azuremlschemas.azureedge.net/latest/commandComponent.schema.json
+
+
 name: extract-gz
 
 display_name: Extract GZ file
@@ -7,15 +10,18 @@ type: command
 description: Follow https://stackoverflow.com/a/13718208 .
 
 inputs:
-  raw_data: 
+  gz_files: 
     type: path
     description: Raw data (collection of .gz files)
 
 outputs:
-  model_output:
+  decompressed_files:
     type: path
 
-environment: azureml:AzureML-Minimal:1
+code:
+  local_path: .
+
+environment: azureml:AzureML-minimal-ubuntu18.04-py37-cpu-inference:20
 
 command: >-
-  foo
+  python run.py ${{inputs.gz_files}} ${{outputs.decompressed_files}}

@@ -15,7 +15,16 @@ don't link to corresponding YAML schema specs.
 
 `az ml component list` hangs indefinitely
 
-No schema file for component YMLs.
+~~No schema~~ file for component YMLs.
+- Very difficult to find it
+
+Intellisense for pipeline YAMLs sucks.
+
+Snapshot upload is horribly slow.
+
+WTF is this:
+
+> Message: input is not a valid input name per component definition
 
 ## Links
 
@@ -24,3 +33,5 @@ No schema file for component YMLs.
 - https://docs.microsoft.com/en-us/azure/machine-learning/reference-yaml-dataset
 - https://pypi.org/project/idx2numpy/
 - https://docs.microsoft.com/en-us/azure/machine-learning/concept-component
+- https://docs.microsoft.com/en-us/azure/machine-learning/how-to-create-component-pipelines-cli
+- https://docs.microsoft.com/en-us/azure/machine-learning/reference-yaml-job-pipeline
