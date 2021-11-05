@@ -87,3 +87,4 @@ jobs:
       train_label: ${{jobs.convert_mnist_train_labels_to_numpy.outputs.numpy_files}}
       test_image: ${{jobs.convert_mnist_test_images_to_numpy.outputs.numpy_files}}
       test_label: ${{jobs.convert_mnist_test_labels_to_numpy.outputs.numpy_files}}
+    compute: azureml:gpu-cluster
