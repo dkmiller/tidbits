@@ -1,0 +1,21 @@
+name: extract-gz
+
+display_name: Extract GZ file
+
+version: 0.0.0
+type: command
+description: Follow https://stackoverflow.com/a/13718208 .
+
+inputs:
+  raw_data: 
+    type: path
+    description: Raw data (collection of .gz files)
+
+outputs:
+  model_output:
+    type: path
+
+environment: azureml:AzureML-Minimal:1
+
+command: >-
+  foo
