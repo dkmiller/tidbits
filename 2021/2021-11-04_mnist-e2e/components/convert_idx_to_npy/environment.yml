@@ -1,0 +1,6 @@
+name: idx
+dependencies:
+- python=3.9
+- pip
+- pip:
+  - idx2numpy==1.2.3

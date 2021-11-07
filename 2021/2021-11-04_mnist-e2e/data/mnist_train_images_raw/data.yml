@@ -1,0 +1,11 @@
+# az ml dataset create --file data/mnist_train_images_raw/data.yml
+
+$schema: https://azuremlschemas.azureedge.net/latest/dataset.schema.json
+
+name: mnist-train-images-raw
+description: |
+  training set images (9912422 bytes)
+  http://yann.lecun.com/exdb/mnist/
+
+paths:
+- file: http://yann.lecun.com/exdb/mnist/train-images-idx3-ubyte.gz

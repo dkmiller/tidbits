@@ -1,0 +1,90 @@
+# az ml job create --file .\jobs\e2e_pipeline\job.yml
+
+$schema: https://azuremlschemas.azureedge.net/latest/pipelineJob.schema.json
+
+type: pipeline
+
+compute: azureml:cpu-cluster
+
+# TODO: why is it easier to put these here vs. in the `data` folder?
+inputs:
+  train_images_raw:
+    dataset:
+      paths:
+      - file: http://yann.lecun.com/exdb/mnist/train-images-idx3-ubyte.gz
+  train_labels_raw:
+    dataset:
+      paths:
+      - file: http://yann.lecun.com/exdb/mnist/train-labels-idx1-ubyte.gz
+  test_images_raw:
+    dataset:
+      paths:
+      - file: http://yann.lecun.com/exdb/mnist/t10k-images-idx3-ubyte.gz
+  test_labels_raw:
+    dataset:
+      paths:
+      - file: http://yann.lecun.com/exdb/mnist/t10k-labels-idx1-ubyte.gz
+
+jobs:
+
+  # ===== Extraction ===========================================================
+  extract_mnist_train_images:
+    type: component
+    component: file:../../components/extract_gz/component.yml
+    inputs:
+      gz_files: ${{inputs.train_images_raw}}
+
+  extract_mnist_train_labels:
+    type: component
+    component: file:../../components/extract_gz/component.yml
+    inputs:
+      gz_files: ${{inputs.train_labels_raw}}
+
+  extract_mnist_test_images:
+    type: component
+    component: file:../../components/extract_gz/component.yml
+    inputs:
+      gz_files: ${{inputs.test_images_raw}}
+
+  extract_mnist_test_labels:
+    type: component
+    component: file:../../components/extract_gz/component.yml
+    inputs:
+      gz_files: ${{inputs.test_labels_raw}}
+
+  # ===== Conversion ===========================================================
+  convert_mnist_train_images_to_numpy:
+    type: component
+    component: file:../../components/convert_idx_to_npy/component.yml
+    inputs:
+      idx_files: ${{jobs.extract_mnist_train_images.outputs.decompressed_files}}
+
+  convert_mnist_train_labels_to_numpy:
+    type: component
+    component: file:../../components/convert_idx_to_npy/component.yml
+    inputs:
+      idx_files: ${{jobs.extract_mnist_train_labels.outputs.decompressed_files}}
+
+  convert_mnist_test_images_to_numpy:
+    type: component
+    component: file:../../components/convert_idx_to_npy/component.yml
+    inputs:
+      idx_files: ${{jobs.extract_mnist_test_images.outputs.decompressed_files}}
+
+  convert_mnist_test_labels_to_numpy:
+    type: component
+    component: file:../../components/convert_idx_to_npy/component.yml
+    inputs:
+      idx_files: ${{jobs.extract_mnist_test_labels.outputs.decompressed_files}}
+
+  # ===== Training =============================================================
+  
+  train:
+    type: component
+    component: file:../../components/train_mnist/component.yml
+    inputs:
+      train_image: ${{jobs.convert_mnist_train_images_to_numpy.outputs.numpy_files}}
+      train_label: ${{jobs.convert_mnist_train_labels_to_numpy.outputs.numpy_files}}
+      test_image: ${{jobs.convert_mnist_test_images_to_numpy.outputs.numpy_files}}
+      test_label: ${{jobs.convert_mnist_test_labels_to_numpy.outputs.numpy_files}}
+    compute: azureml:gpu-cluster

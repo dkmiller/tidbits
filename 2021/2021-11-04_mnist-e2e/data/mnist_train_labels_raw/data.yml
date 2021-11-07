@@ -1,0 +1,11 @@
+# az ml dataset create --file data/mnist_train_labels_raw/data.yml
+
+$schema: https://azuremlschemas.azureedge.net/latest/dataset.schema.json
+
+name: mnist-train-labels-raw
+description: |
+  training set labels (28881 bytes)
+  http://yann.lecun.com/exdb/mnist/
+
+paths:
+- file: http://yann.lecun.com/exdb/mnist/train-labels-idx1-ubyte.gz

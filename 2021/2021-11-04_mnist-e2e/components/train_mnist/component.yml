@@ -1,0 +1,42 @@
+$schema: https://azuremlschemas.azureedge.net/latest/commandComponent.schema.json
+
+
+name: train-mnist
+
+display_name: Train MNIST model
+
+version: 0.0.0
+type: command
+description: TODO
+
+inputs:
+  train_image: 
+    type: path
+    description: Training data (.npy file)
+  train_label: 
+    type: path
+    description: Label data (.npy file)
+  test_image: 
+    type: path
+    description: Training data (.npy file)
+  test_label: 
+    type: path
+    description: Label data (.npy file)
+
+outputs:
+  model:
+    type: path
+
+code:
+  local_path: .
+
+environment:
+  conda_file: environment.yml
+  image: mcr.microsoft.com/azureml/openmpi4.1.0-cuda11.1-cudnn8-ubuntu20.04
+
+command: >-
+  python run.py
+  --train-image ${{inputs.train_image}}
+  --train-label ${{inputs.train_label}}
+  --test-image ${{inputs.test_image}}
+  --test-label ${{inputs.test_label}}

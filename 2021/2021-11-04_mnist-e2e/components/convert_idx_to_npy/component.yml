@@ -1,0 +1,29 @@
+$schema: https://azuremlschemas.azureedge.net/latest/commandComponent.schema.json
+
+
+name: convert-idx-to-npy
+
+display_name: Convert .idx -> .npy
+
+version: 0.0.0
+type: command
+description: Follow https://pypi.org/project/idx2numpy/ , https://numpy.org/doc/stable/reference/generated/numpy.save.html .
+
+inputs:
+  idx_files: 
+    type: path
+    description: Raw data (collection of files in IDX format)
+
+outputs:
+  numpy_files:
+    type: path
+
+code:
+  local_path: .
+
+environment:
+  conda_file: environment.yml
+  image: mcr.microsoft.com/azureml/openmpi4.1.0-ubuntu20.04
+
+command: >-
+  python run.py ${{inputs.idx_files}} ${{outputs.numpy_files}}
