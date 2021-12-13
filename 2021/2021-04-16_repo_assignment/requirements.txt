@@ -1,5 +1,5 @@
 beautifulsoup4==4.9.3
 hydra-core
-lxml==4.6.3
+lxml==4.6.5
 markdown2==2.4.0
 requests
