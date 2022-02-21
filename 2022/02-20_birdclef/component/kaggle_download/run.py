@@ -56,6 +56,8 @@ def main(config: Config):
     # https://stackoverflow.com/a/3451150
     with zipfile.ZipFile(zip_path, "r") as zip:
         zip.extractall(config.output)
+
+    log.info(f"Done unzipping, deleting {zip_path}")
     zip_path.unlink()
 
 

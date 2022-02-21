@@ -1,0 +1,27 @@
+$schema: https://azuremlschemas.azureedge.net/latest/commandComponent.schema.json
+type: command
+
+name: kaggle.competition.download
+display_name: Kaggle | download competition data
+version: 0
+
+inputs:
+  competition:
+    type: string
+    description: Name of Kaggle competition
+
+outputs:
+  competition_data:
+    type: path
+    description: Unzipped dataset for Kaggle competition
+
+code:
+  local_path: .
+
+environment:
+  conda_file: conda.yaml
+
+command: >-
+  python run.py
+  --competition ${{inputs.competition}}
+  --output ${{outputs.competition_data}}
