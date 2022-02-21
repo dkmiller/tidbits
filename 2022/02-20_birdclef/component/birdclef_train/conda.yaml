@@ -1,0 +1,6 @@
+name: birdclef_train
+dependencies:
+- python=3.8
+- pip:
+
+  - pytorch-lightning==1.5.10
