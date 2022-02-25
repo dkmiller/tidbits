@@ -2,20 +2,9 @@
 https://github.com/Azure/azureml-examples/blob/135b53562ada00535d6c3d5c9c76a50935df37d9/sdk/jobs/pipelines-with-components/pipeline-dsl-example.ipynb
 """
 
-from azure.identity import DefaultAzureCredential
-from azure.ml import dsl, MLClient
-from pathlib import Path
-from typing import Callable
 
-
-def load_local_component(folder_name: str) -> Callable:
-    # raise Exception(Path(__file__).absolute())
-    component_root = Path(__file__).parent.parent.absolute() / "component"
-    rv = dsl.load_component(yaml_file=component_root / f"{folder_name}/component.yaml")
-    return rv
-
-
-kaggle_download = load_local_component("kaggle_download")
+from azure.ml import dsl
+from core import load_local_component, get_ml_client
 
 
 @dsl.pipeline(
@@ -23,17 +12,25 @@ kaggle_download = load_local_component("kaggle_download")
     description="Basic Pipeline Job with 3 Hello World components",
 )
 def end_to_end_pipeline():
-    kaggle_job = kaggle_download(competition="birdclef-2022")
+    kaggle_download = load_local_component("kaggle_download")
+
+    kaggle_job = kaggle_download(
+        competition="birdclef-2022",
+        user="antifragilista",
+        api_key_vault_name="aml-ds-kv",
+        api_key_secret_name="danmill-kaggle-api-key",
+    )
 
 
-p = end_to_end_pipeline()
+def main():
+    p = end_to_end_pipeline()
+    ml_client = get_ml_client("aml1p-ml-wus2")
+    job = ml_client.jobs.create_or_update(
+        p, experiment_name="kaggle-birdclef", continue_run_on_step_failure=True
+    )
+    workspace_url = job.services["Studio"].endpoint
+    print(f"Created job: {workspace_url}")
 
-cred = DefaultAzureCredential()
-# https://ml.azure.com/compute/V10032G/details?wsid=/subscriptions/79f57c16-00fe-48da-87d4-5192e86cd047/resourcegroups/Alexander256/workspaces/Alexander256V100&tid=72f988bf-86f1-41af-91ab-2d7cd011db47
-ml_client = MLClient(
-    cred, "79f57c16-00fe-48da-87d4-5192e86cd047", "Alexander256", "Alexander256V100"
-)
 
-ml_client.jobs.create_or_update(
-    p, experiment_name="kaggle-birdclef", continue_run_on_step_failure=True
-)
+if __name__ == "__main__":
+    main()

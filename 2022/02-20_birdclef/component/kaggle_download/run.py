@@ -29,7 +29,10 @@ class Config:
 
 
 def get_kaggle_api_from_azure(vault_url: str, secret_name: str, user: str) -> KaggleApi:
-    cred = DefaultAzureCredential()
+    # WTF... why is this necessary.
+    cred = DefaultAzureCredential(
+        managed_identity_client_id="fc650f41-009d-4934-9662-699f2bc6d9b0"
+    )
     vault_client = SecretClient(vault_url, cred)
     api_key = vault_client.get_secret(secret_name).value
 

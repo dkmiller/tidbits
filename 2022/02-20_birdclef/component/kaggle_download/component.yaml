@@ -9,6 +9,18 @@ inputs:
   competition:
     type: string
     description: Name of Kaggle competition
+  user:
+    type: string
+    description: Kaggle username corresponding to the API key
+    optional: true
+  api_key_vault_name:
+    type: string
+    description: Name of the key vault containing the Kaggle API key
+    optional: true
+  api_key_secret_name:
+    type: string
+    description: Name of the secret containing the Kaggle API key
+    optional: true
 
 outputs:
   competition_data:
@@ -20,8 +32,12 @@ code:
 
 environment:
   conda_file: conda.yaml
+  image: mcr.microsoft.com/azureml/openmpi4.1.0-ubuntu20.04
 
 command: >-
   python run.py
   --competition ${{inputs.competition}}
   --output ${{outputs.competition_data}}
+  [--user ${{inputs.user}}]
+  [--vault-url https://${{inputs.api_key_vault_name}}.vault.azure.net/]
+  [--secret-name ${{inputs.api_key_secret_name}}]
