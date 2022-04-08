@@ -1,0 +1,11 @@
+name: download-reddit-data
+
+dependencies:
+
+- python=3.9
+- pip==21.2.4
+
+- pip:
+
+  - argparse-dataclass==0.2.1
+  - azureml-core==1.40.0
