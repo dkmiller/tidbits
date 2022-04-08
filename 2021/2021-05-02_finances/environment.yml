@@ -1,0 +1,9 @@
+name: finances
+dependencies:
+- pandas==1.2.4
+- pip==21.0.1
+- python=3.8
+- pip:
+  - black==21.4b2
+  # Sadly doesn't Conda install :(
+  - plotly-express==0.4.1
