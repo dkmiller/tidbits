@@ -1,0 +1,12 @@
+name: birdclef
+dependencies:
+- python=3.8
+- pip:
+
+  # https://github.com/Azure/azure-cli/issues/11274
+  - azure-cli==2.33.1
+  - black==22.1.0
+
+  # https://github.com/Azure/azureml-examples/blob/135b53562ada00535d6c3d5c9c76a50935df37d9/sdk/README.md
+  - --extra-index-url  https://azuremlsdktestpypi.azureedge.net/sdk-cli-v2
+  - azure-ml==0.0.57521499

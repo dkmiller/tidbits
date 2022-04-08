@@ -1,0 +1,10 @@
+name: kaggle_download
+
+dependencies:
+- python=3.9
+- pip:
+
+  - argparse-dataclass==0.2.1
+  - azure-identity==1.7.1
+  - azure-keyvault-secrets==4.3.0
+  - kaggle==1.5.12
