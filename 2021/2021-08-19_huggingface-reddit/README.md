@@ -8,6 +8,16 @@ Fine-tune a language model against top posts in the specified Subreddit.
 python pipelines/huggingface_reddit.py --config-dir conf --config-name experiments/huggingface_reddit
 ```
 
+## Components
+
+```
+python components/download_reddit_data/run.py  --output-directory ~/tmp --client-id XnkMHEYUujv1wA7EkmToWg --client-secret $client_secret --post-limit 100 --subreddits news,funny --top-mode all
+```
+
+```
+python components/prepare_json_data/run.py  --input-directory ~/tmp/ --source-jsonpaths $.title $.selftext --source-key title_and_text --target-key n_gilds --output-directory ~/tmp2/ --output-file-name data.json --target-jsonpath '$.gilded'
+```
+
 ## Links
 
 - [2020-12-23_huggingface](../../2020/2020-12-23_huggingface/generate-text.py)

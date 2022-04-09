@@ -35,6 +35,7 @@ outputs:
 command: >-
   python run.py
   --input-directory {inputs.input_directory}
+  --output-directory {outputs.output_data}
   --output-file-name {inputs.output_file_name}
   --source-jsonpaths {inputs.source_jsonpaths}
   --source-key {inputs.source_key}

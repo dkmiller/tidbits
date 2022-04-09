@@ -7,11 +7,13 @@ python run.py  --input-directory ~/tmp/ --source-jsonpaths '$.selftext'  --sourc
 from typing import List
 from argparse_dataclass import ArgumentParser
 from dataclasses import dataclass, field
+import itertools
 import json
 import jsonpath_ng
 import logging
 import os
 from pathlib import Path
+import sys
 
 
 log = logging.getLogger(__name__)
@@ -30,6 +32,14 @@ class Args:
     source_key: str
     source_jsonpaths: List[str] = field(metadata={"nargs": "*"})
 
+    def __post_init__(self):
+        # Likely related to the common runtime, Azure ML changed the behavior
+        # of parameters with spaces. Now, the parameter is passed as a single
+        # command line argument. Post-process to "bring back" the spaces.
+        # https://stackoverflow.com/a/716482
+        splits = map(lambda s: s.split(), self.source_jsonpaths)
+        self.source_jsonpaths = list(itertools.chain.from_iterable(splits))
+
 
 def merge_or_select_value(values: list):
     if len(values) == 0:
@@ -45,15 +55,16 @@ def select_and_merge_jsonpaths(o, jsonpaths: List[str]):
     path_parsers = list(map(jsonpath_ng.parse, jsonpaths))
     values = []
     for parser in path_parsers:
-        o_values = [m.value for m in parser.find(o)]
-        o_value = merge_or_select_value(o_values)
-        values.append(o_value)
+        parser_values = [m.value for m in parser.find(o)]
+        parser_value = merge_or_select_value(parser_values)
+        values.append(parser_value)
     rv = merge_or_select_value(values)
     return rv
 
 
 def main(args: Args):
-    log.info(f"Running using arguments {args}")
+    log.info(f"Unparsed arguments: {sys.argv}")
+    log.info(f"Parsed arguments {args}")
     json_files = Path(args.input_directory).rglob("*.json")
 
     output_dir = Path(args.output_directory)
@@ -62,14 +73,21 @@ def main(args: Args):
     for file_path in json_files:
         with file_path.open("r") as fp:
             lines = fp.readlines()
-            for l in lines:
-                j = json.loads(l)
-                source_value = select_and_merge_jsonpaths(j, args.source_jsonpaths)
-                target_value = select_and_merge_jsonpaths(j, [args.target_jsonpath])
-                bb = {args.source_key: source_value, args.target_key: target_value}
-                jj = json.dumps(bb)
+            for line in lines:
+                parsed_line = json.loads(line)
+                source_value = select_and_merge_jsonpaths(
+                    parsed_line, args.source_jsonpaths
+                )
+                target_value = select_and_merge_jsonpaths(
+                    parsed_line, [args.target_jsonpath]
+                )
+                output_object = {
+                    args.source_key: source_value,
+                    args.target_key: target_value,
+                }
+                output_line = json.dumps(output_object)
                 with output_path.open("a") as out_fp:
-                    out_fp.write(jj)
+                    out_fp.write(output_line)
                     out_fp.write(os.linesep)
 
 
