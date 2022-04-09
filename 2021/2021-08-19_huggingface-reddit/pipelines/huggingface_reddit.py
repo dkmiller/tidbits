@@ -6,7 +6,9 @@ class HuggingfaceReddit(AMLPipelineHelper):
     def build(self, config):
         download_reddit_data = self.component_load("download-reddit-data")
         prepare_json_data = self.component_load("prepare-json-data")
+
         data_read = self.component_load("canary-data-read")
+        split = self.component_load("split-data")
 
         @dsl.pipeline()
         def huggingface_reddit():
