@@ -25,6 +25,12 @@ inputs:
     - month
     - year
     - all
+  post_limit:
+    type: integer
+    default: 1000
+  posts_per_file:
+    type: integer
+    default: 10
 
 outputs:
   output_data:
@@ -36,6 +42,8 @@ command: >-
   --client-secret {inputs.client_secret}
   --subreddits {inputs.subreddits}
   --top-mode {inputs.top_mode}
+  --post-limit {inputs.post_limit}
+  --posts-per-file {inputs.posts_per_file}
 
   --output-directory {outputs.output_data}
 
