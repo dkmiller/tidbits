@@ -8,7 +8,11 @@ class HuggingfaceReddit(AMLPipelineHelper):
 
         @dsl.pipeline()
         def huggingface_reddit():
-            reddit_step = download_reddit_data(**config.download_reddit)
+            conf = config.download_reddit
+            reddit_step = download_reddit_data(**conf)
+            reddit_step.outputs.output_data.register_as(
+                name="reddit-data", description=f"{conf}"
+            )
 
         return huggingface_reddit
 
