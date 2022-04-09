@@ -71,8 +71,10 @@ def main(args: Args):
     output_dir.mkdir(exist_ok=True)
     output_path = output_dir / args.output_file_name
     for file_path in json_files:
+        log.info(f"Loading {file_path}")
         with file_path.open("r") as fp:
             lines = fp.readlines()
+            log.info(f"Found {len(lines)} lines")
             for line in lines:
                 parsed_line = json.loads(line)
                 source_value = select_and_merge_jsonpaths(
