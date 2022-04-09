@@ -1,5 +1,3 @@
-# python pipelines/huggingface_reddit.py --config-dir conf --config-name experiments/huggingface_reddit
-
 defaults:
 
 - aml: recife
@@ -15,3 +13,10 @@ download_reddit:
   client_secret: secret://reddit-client-secret
   post_limit: 10000
   subreddits: news,funny
+
+prepare_json_data:
+  output_file_name: data.json
+  source_jsonpaths: $.title $.selftext
+  source_key: text
+  target_jsonpath: $.gilded
+  target_key: label

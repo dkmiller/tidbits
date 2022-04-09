@@ -2,6 +2,12 @@
 
 Fine-tune a language model against top posts in the specified Subreddit.
 
+## Experiments
+
+```
+python pipelines/huggingface_reddit.py --config-dir conf --config-name experiments/huggingface_reddit
+```
+
 ## Links
 
 - [2020-12-23_huggingface](../../2020/2020-12-23_huggingface/generate-text.py)

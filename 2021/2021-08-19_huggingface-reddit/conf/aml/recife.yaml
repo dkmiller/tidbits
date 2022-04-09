@@ -6,4 +6,7 @@ aml:
   auth: azurecli
 
 compute:
+  compliant_datastore: heron_sandbox_storage
   default_compute_target: lin-cpu-0
+  linux_gpu_dc_target: lin-gpu-0
+  linux_gpu_prod_target: lin-gpu-0

@@ -1,8 +1,24 @@
 module_loader:
   local_steps_folder: ${hydra:runtime.cwd}/components/
-  use_local: '*'
+  use_local: >-
+    !canary-data-read,
+    !canary-gpu
+  use_remote_when_component_not_in_manifest: true
 
 modules:
+  registries:
+  - SubstrateAI
+
   manifest:
+
+  - name: canary-data-read
+    version: 0.0.14
+
+  - name: canary-gpu
+    version: 0.0.10
+
   - name: download-reddit-data
     yaml: download_reddit_data/component.yaml
+
+  - name: prepare-json-data
+    yaml: prepare_json_data/component.yaml
