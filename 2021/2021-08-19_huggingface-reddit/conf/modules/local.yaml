@@ -1,0 +1,8 @@
+module_loader:
+  local_steps_folder: ${hydra:runtime.cwd}/components/
+  use_local: '*'
+
+modules:
+  manifest:
+  - name: download-reddit-data
+    yaml: download_reddit_data/component.yaml

@@ -1,0 +1,9 @@
+aml:
+  subscription_id: 7e914327-0cdd-41e1-9ef9-183c51a9d79f
+  resource_group: EYESON.HERON.PROD.ecd48d72-6fc3-4536-ac02-94a920348d44
+  workspace_name: amlworkspace6upghgpmdpxoq
+  tenant: cdc5aeea-15c5-4db6-b079-fcadd2505dc2
+  auth: azurecli
+
+compute:
+  default_compute_target: lin-cpu-0

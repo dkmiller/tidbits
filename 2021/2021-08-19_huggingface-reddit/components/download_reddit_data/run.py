@@ -27,9 +27,10 @@ class Args:
 
 
 def resolve_secret(s: str) -> str:
-    if m := re.match(r"secret://(\w+)", s):
+    if m := re.match(r"secret://(.+)", s):
         secret_name = m.group(1)
         log.info(f"Resolving secret '{secret_name}' from Azure ML")
+        # https://docs.microsoft.com/en-us/azure/machine-learning/how-to-use-secrets-in-runs
         run = Run.get_context()
         if not isinstance(run, _SubmittedRun):
             raise RuntimeError("Secret resolution only works inside Azure ML")

@@ -1,0 +1,44 @@
+# yaml-language-server: $schema=https://componentsdk.blob.core.windows.net/jsonschema/CommandComponent.json
+
+$schema: http://azureml/sdk-2-0/CommandComponent.json
+type: CommandComponent
+name: download-reddit-data
+version: 0.0.0
+
+description: |
+  Download posts from a collection of sub-Reddits.
+
+inputs:
+  client_id:
+    type: string
+  client_secret:
+    type: string
+  subreddits:
+    type: string
+  top_mode:
+    default: all
+    type: enum
+    enum:
+    - hour
+    - day
+    - week
+    - month
+    - year
+    - all
+
+outputs:
+  output_data:
+    type: path
+
+command: >-
+  python run.py
+  --client-id {inputs.client_id}
+  --client-secret {inputs.client_secret}
+  --subreddits {inputs.subreddits}
+  --top-mode {inputs.top_mode}
+
+  --output-directory {outputs.output_data}
+
+environment:
+  conda:
+    conda_dependencies_file: conda.yaml
