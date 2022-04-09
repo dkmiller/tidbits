@@ -1,3 +1,11 @@
+"""
+https://huggingface.co/docs/transformers/tasks/sequence_classification
+
+https://huggingface.co/transformers/v3.2.0/custom_datasets.html
+
+https://huggingface.co/docs/datasets/use_dataset
+"""
+
 import json
 from pathlib import Path
 from torch.utils.data import Dataset
