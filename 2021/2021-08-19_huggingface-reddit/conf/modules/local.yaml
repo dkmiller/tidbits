@@ -1,0 +1,32 @@
+module_loader:
+  local_steps_folder: ${hydra:runtime.cwd}/components/
+  use_local: >-
+    !canary-data-read,
+    !canary-gpu,
+    !split-data
+  use_remote_when_component_not_in_manifest: true
+
+modules:
+  registries:
+  - SubstrateAI
+
+  manifest:
+
+  - name: canary-data-read
+    version: 0.0.14
+
+  - name: canary-gpu
+    version: 0.0.10
+
+  - name: download-reddit-data
+    yaml: download_reddit_data/component.yaml
+
+  - name: prepare-json-data
+    yaml: prepare_json_data/component.yaml
+
+  # You can use built-in components!
+  # Sadly, fails.
+  # Failed to pull Docker image viennaglobal.azurecr.io/azureml/azureml_0984dae5fbd2cbaa9e6642806d38f9be.
+  # Compute could not authenticate with the Docker registry to pull the image
+  - key: split-data
+    name: azureml://Split Data

@@ -1,0 +1,47 @@
+# yaml-language-server: $schema=https://componentsdk.blob.core.windows.net/jsonschema/CommandComponent.json
+
+$schema: http://azureml/sdk-2-0/CommandComponent.json
+type: CommandComponent
+name: prepare-json-data
+version: 0.0.0
+
+description: |
+  Convert a collection of JSON files into a single, merged file, with structure
+  like:
+
+  ```json
+  {"source_key": "source_value", "target_key": "target_value"}
+  ```
+
+inputs:
+  input_directory:
+    type: path
+  output_file_name:
+    type: string
+  source_jsonpaths:
+    type: string
+    description: Space-separated list of JSONPaths
+  source_key:
+    type: string
+  target_jsonpath:
+    type: string
+  target_key:
+    type: string
+
+outputs:
+  output_data:
+    type: path
+
+command: >-
+  python run.py
+  --input-directory {inputs.input_directory}
+  --output-directory {outputs.output_data}
+  --output-file-name {inputs.output_file_name}
+  --source-jsonpaths {inputs.source_jsonpaths}
+  --source-key {inputs.source_key}
+  --target-jsonpath {inputs.target_jsonpath}
+  --target-key {inputs.target_key}
+
+environment:
+  conda:
+    conda_dependencies_file: conda.yaml

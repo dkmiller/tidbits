@@ -1,0 +1,22 @@
+defaults:
+
+- aml: recife
+- modules: local
+
+run:
+  experiment_name: Huggingface-Reddit
+  continue_on_failure: true
+  submit: true
+
+download_reddit:
+  client_id: XnkMHEYUujv1wA7EkmToWg
+  client_secret: secret://reddit-client-secret
+  post_limit: 10000
+  subreddits: news,funny
+
+prepare_json_data:
+  output_file_name: data.json
+  source_jsonpaths: $.title $.selftext
+  source_key: text
+  target_jsonpath: $.gilded
+  target_key: label
