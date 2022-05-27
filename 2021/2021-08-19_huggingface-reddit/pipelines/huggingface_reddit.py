@@ -1,32 +1,31 @@
-from azure.ml.component import dsl
-from shrike.pipeline import AMLPipelineHelper
+from azure.identity import DefaultAzureCredential
+from azure.ai.ml import dsl, MLClient, load_component
 
 
-class HuggingfaceReddit(AMLPipelineHelper):
-    def build(self, config):
-        download_reddit_data = self.component_load("download-reddit-data")
-        prepare_json_data = self.component_load("prepare-json-data")
-
-        data_read = self.component_load("canary-data-read")
-        split = self.component_load("split-data")
-
-        @dsl.pipeline()
-        def huggingface_reddit():
-            reddit_conf = config.download_reddit
-            reddit_step = download_reddit_data(**reddit_conf)
-            reddit_output = reddit_step.outputs.output_data
-            reddit_output.register_as(name="reddit-data", description=f"{reddit_conf}")
-
-            prepare_step = prepare_json_data(
-                input_directory=reddit_output, **config.prepare_json_data
-            )
-            _ = data_read(input_data=prepare_step.outputs.output_data)
-
-        return huggingface_reddit
-
-    def pipeline_instance(self, pipeline_function, config):
-        return pipeline_function()
+download_reddit = load_component(
+    path="./components/download_reddit_data/component.yaml"
+)
 
 
-if __name__ == "__main__":
-    HuggingfaceReddit.main()
+@dsl.pipeline(name="dpv2", default_compute="cpu-cluster")
+def sample_pipeline():
+    reddit_step = download_reddit(
+        client_id="XnkMHEYUujv1wA7EkmToWg",
+        client_secret="secret://reddit-client-secret",
+        subreddits="news,funny",
+    )
+    reddit_step.environment_variables = {"AZUREML_COMPUTE_USE_COMMON_RUNTIME": "true"}
+
+
+p_job = sample_pipeline()
+
+
+cred = DefaultAzureCredential()
+ml_client = MLClient(
+    cred, "48bbc269-ce89-4f6f-9a12-c6f91fcb772d", "aml1p-rg", "aml1p-ml-wus2"
+)
+
+job = ml_client.jobs.create_or_update(p_job, experiment_name="Huggingface-Reddit")
+
+job_url = job.services["Studio"].endpoint
+print(job_url)

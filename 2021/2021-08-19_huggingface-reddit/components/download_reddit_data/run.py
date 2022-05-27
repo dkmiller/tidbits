@@ -9,6 +9,7 @@ import os
 from pathlib import Path
 from praw import Reddit
 import re
+import sys
 
 
 log = logging.getLogger(__name__)
@@ -73,6 +74,8 @@ def main(args: Args):
 
 
 if __name__ == "__main__":
+    print(f"Unparsed args: {sys.argv}")
+
     parser = ArgumentParser(Args)
     args = parser.parse_args()
     logging.basicConfig(level=args.logging_level)

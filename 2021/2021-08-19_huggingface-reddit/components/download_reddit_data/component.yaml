@@ -1,8 +1,7 @@
-# yaml-language-server: $schema=https://componentsdk.blob.core.windows.net/jsonschema/CommandComponent.json
+$schema: https://azuremlschemas.azureedge.net/development/CommandComponent.schema.json
+type: command
 
-$schema: http://azureml/sdk-2-0/CommandComponent.json
-type: CommandComponent
-name: download-reddit-data
+name: download_reddit_data
 version: 0.0.0
 
 description: |
@@ -17,14 +16,14 @@ inputs:
     type: string
   top_mode:
     default: all
-    type: enum
-    enum:
-    - hour
-    - day
-    - week
-    - month
-    - year
-    - all
+    type: string
+    # enum:
+    # - hour
+    # - day
+    # - week
+    # - month
+    # - year
+    # - all
   post_limit:
     type: integer
     default: 1000
@@ -36,17 +35,20 @@ outputs:
   output_data:
     type: path
 
+code: .
+
 command: >-
   python run.py
-  --client-id {inputs.client_id}
-  --client-secret {inputs.client_secret}
-  --subreddits {inputs.subreddits}
-  --top-mode {inputs.top_mode}
-  --post-limit {inputs.post_limit}
-  --posts-per-file {inputs.posts_per_file}
+  --client-id ${{inputs.client_id}}
+  --client-secret ${{inputs.client_secret}}
+  --subreddits ${{inputs.subreddits}}
+  --top-mode ${{inputs.top_mode}}
+  --post-limit ${{inputs.post_limit}}
+  --posts-per-file ${{inputs.posts_per_file}}
 
-  --output-directory {outputs.output_data}
+  --output-directory ${{outputs.output_data}}
 
 environment:
-  conda:
-    conda_dependencies_file: conda.yaml
+  conda_file: ./conda.yaml
+  # https://pythonspeed.com/articles/conda-docker-image-size/
+  image: continuumio/miniconda3

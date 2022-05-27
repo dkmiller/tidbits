@@ -39,7 +39,7 @@ cred = AzureCliCredential()
 token = cred.get_token("https://vault.azure.net/.default")
 headers = {"Authorization": f"Bearer {token.token}"}
 
-keyvault = "amlkeyvault6upghgpmdpxoq"
+keyvault = "aml1pmlwus29123222664"
 
 client_secret = "<your client secret>"
 
