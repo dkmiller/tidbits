@@ -1,0 +1,27 @@
+# yaml-language-server: $schema=https://componentsdk.blob.core.windows.net/jsonschema/CommandComponent.json
+
+$schema: http://azureml/sdk-2-0/CommandComponent.json
+type: CommandComponent
+name: download-eleutherai-pile
+version: 0.0.0
+
+description: |
+  Download EleutherAI's "the pile".
+
+outputs:
+  test:
+    type: path
+  train:
+    type: path
+  validate:
+    type: path
+
+command: >-
+  python run.py
+  --test {outputs.train}
+  --train {outputs.train}
+  --val {outputs.validate}
+
+environment:
+  conda:
+    conda_dependencies_file: conda.yaml

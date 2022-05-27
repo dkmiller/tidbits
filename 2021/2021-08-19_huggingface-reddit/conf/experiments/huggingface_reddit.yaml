@@ -11,8 +11,8 @@ run:
 download_reddit:
   client_id: XnkMHEYUujv1wA7EkmToWg
   client_secret: secret://reddit-client-secret
-  post_limit: 10000
-  subreddits: news,funny
+  post_limit: 50000
+  subreddits: news,funny,tifu,creepypasta
 
 prepare_json_data:
   output_file_name: data.json
