@@ -7,5 +7,6 @@ dependencies:
 
 - pip:
 
-  - black==22.3.0
   - azure-ai-ml==0.1.0b3
+  - black==22.3.0
+  - hydra-core==1.2.0

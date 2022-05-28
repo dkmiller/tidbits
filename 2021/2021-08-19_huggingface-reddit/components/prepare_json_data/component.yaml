@@ -1,8 +1,7 @@
-# yaml-language-server: $schema=https://componentsdk.blob.core.windows.net/jsonschema/CommandComponent.json
+$schema: https://azuremlschemas.azureedge.net/development/CommandComponent.schema.json
+type: command
 
-$schema: http://azureml/sdk-2-0/CommandComponent.json
-type: CommandComponent
-name: prepare-json-data
+name: prepare_json_data
 version: 0.0.0
 
 description: |
@@ -32,16 +31,18 @@ outputs:
   output_data:
     type: path
 
+code: .
+
 command: >-
   python run.py
-  --input-directory {inputs.input_directory}
-  --output-directory {outputs.output_data}
-  --output-file-name {inputs.output_file_name}
-  --source-jsonpaths {inputs.source_jsonpaths}
-  --source-key {inputs.source_key}
-  --target-jsonpath {inputs.target_jsonpath}
-  --target-key {inputs.target_key}
+  --input-directory ${{inputs.input_directory}}
+  --output-directory ${{outputs.output_data}}
+  --output-file-name ${{inputs.output_file_name}}
+  --source-jsonpaths ${{inputs.source_jsonpaths}}
+  --source-key ${{inputs.source_key}}
+  --target-jsonpath ${{inputs.target_jsonpath}}
+  --target-key ${{inputs.target_key}}
 
 environment:
-  conda:
-    conda_dependencies_file: conda.yaml
+  conda_file: conda.yaml
+  image: continuumio/miniconda3
