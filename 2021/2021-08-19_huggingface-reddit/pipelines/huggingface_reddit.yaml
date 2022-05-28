@@ -1,8 +1,9 @@
 pipeline:
   client_id: XnkMHEYUujv1wA7EkmToWg
   client_secret: secret://reddit-client-secret
-  subreddits: funny,gifs,news,pics
+  subreddits: creepypasta,funny,gifs,news,pics
   output_file_name: data.json
+  posts_per_file: 400
   source_jsonpaths: $.title $.selftext
   source_key: text
   target_jsonpath: $.gilded

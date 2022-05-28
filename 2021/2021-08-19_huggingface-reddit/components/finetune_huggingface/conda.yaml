@@ -7,6 +7,7 @@ dependencies:
 
 - pip:
 
+  - argparse-dataclass==0.2.1
   # https://huggingface.co/docs/transformers/main_classes/callback
   - azureml-core==1.40.0
   - datasets==2.0.0

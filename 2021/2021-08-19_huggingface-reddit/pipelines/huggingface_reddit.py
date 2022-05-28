@@ -11,6 +11,7 @@ download_reddit = load_component(
     path="./components/download_reddit_data/component.yaml"
 )
 prepare_json = load_component(path="./components/prepare_json_data/component.yaml")
+huggingface = load_component(path="./components/finetune_huggingface/component.yaml")
 
 
 # https://docs.microsoft.com/en-us/python/api/azure-ai-ml/azure.ai.ml.dsl?view=azure-ml-py
@@ -20,6 +21,7 @@ def sample_pipeline(
     client_secret: str,
     subreddits: str,
     output_file_name: str,
+    posts_per_file: int,
     source_jsonpaths: str,
     source_key: str,
     target_jsonpath: str,
@@ -28,6 +30,7 @@ def sample_pipeline(
     reddit_step = download_reddit(
         client_id=client_id,
         client_secret=client_secret,
+        posts_per_file=posts_per_file,
         subreddits=subreddits,
     )
     reddit_step.environment_variables = {"AZUREML_COMPUTE_USE_COMMON_RUNTIME": "true"}
@@ -42,8 +45,13 @@ def sample_pipeline(
     )
     json_step.environment_variables = {"AZUREML_COMPUTE_USE_COMMON_RUNTIME": "true"}
 
+    train_step = huggingface(
+        train_data=json_step.outputs.output_data, train_file=output_file_name
+    )
+    train_step.environment_variables = {"AZUREML_COMPUTE_USE_COMMON_RUNTIME": "true"}
 
-@hydra.main(config_name="config", config_path=".", version_base=None)
+
+@hydra.main(config_name="huggingface_reddit", config_path=".", version_base=None)
 def main(config):
     for k, level in config.logging.items():
         logging.getLogger(k).setLevel(level)
