@@ -1,7 +1,7 @@
 pipeline:
   client_id: XnkMHEYUujv1wA7EkmToWg
   client_secret: secret://reddit-client-secret
-  subreddits: news,funny
+  subreddits: funny,gifs,news,pics
   output_file_name: data.json
   source_jsonpaths: $.title $.selftext
   source_key: text
