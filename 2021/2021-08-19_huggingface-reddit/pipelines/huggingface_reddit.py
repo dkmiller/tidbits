@@ -46,7 +46,9 @@ def sample_pipeline(
     json_step.environment_variables = {"AZUREML_COMPUTE_USE_COMMON_RUNTIME": "true"}
 
     train_step = huggingface(
-        train_data=json_step.outputs.output_data, train_file=output_file_name
+        train_data=json_step.outputs.output_data,
+        train_file=output_file_name,
+        num_epochs=50,
     )
     # https://github.com/Azure/azureml-examples/blob/main/sdk/jobs/pipelines/2b_train_cifar_10_with_pytorch/train_cifar_10_with_pytorch.ipynb
     train_step.compute = "gpu-cluster"

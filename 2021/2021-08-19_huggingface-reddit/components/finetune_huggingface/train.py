@@ -50,15 +50,7 @@ def main(train_args: TrainingArguments, args: Args):
 
     model = AutoModelForSequenceClassification.from_pretrained(args.model, num_labels=2)
 
-    # training_args = TrainingArguments(
-    #     output_dir="./results",
-    #     learning_rate=2e-5,
-    #     per_device_train_batch_size=16,
-    #     per_device_eval_batch_size=16,
-    #     num_train_epochs=5,
-    #     weight_decay=0.01,
-    # )
-
+    # TODO: separate train and eval inputs.
     trainer = Trainer(
         model=model,
         args=train_args,
