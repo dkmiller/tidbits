@@ -15,10 +15,13 @@ huggingface = load_component(path="./components/finetune_huggingface/component.y
 
 
 # https://docs.microsoft.com/en-us/python/api/azure-ai-ml/azure.ai.ml.dsl?view=azure-ml-py
-@dsl.pipeline(default_compute="cpu-cluster", continue_on_step_failure=True)
+@dsl.pipeline(default_compute="cpu-cluster-lg", continue_on_step_failure=True)
 def sample_pipeline(
+    batch_size: int,
     client_id: str,
     client_secret: str,
+    model: str,
+    post_limit: int,
     subreddits: str,
     output_file_name: str,
     posts_per_file: int,
@@ -30,6 +33,7 @@ def sample_pipeline(
     reddit_step = download_reddit(
         client_id=client_id,
         client_secret=client_secret,
+        post_limit=post_limit,
         posts_per_file=posts_per_file,
         subreddits=subreddits,
     )
@@ -46,12 +50,14 @@ def sample_pipeline(
     json_step.environment_variables = {"AZUREML_COMPUTE_USE_COMMON_RUNTIME": "true"}
 
     train_step = huggingface(
+        batch_size=batch_size,
+        model=model,
         train_data=json_step.outputs.output_data,
         train_file=output_file_name,
         num_epochs=50,
     )
     # https://github.com/Azure/azureml-examples/blob/main/sdk/jobs/pipelines/2b_train_cifar_10_with_pytorch/train_cifar_10_with_pytorch.ipynb
-    train_step.compute = "gpu-cluster"
+    train_step.compute = "gpu-a100-80g"
     train_step.environment_variables = {"AZUREML_COMPUTE_USE_COMMON_RUNTIME": "true"}
 
 

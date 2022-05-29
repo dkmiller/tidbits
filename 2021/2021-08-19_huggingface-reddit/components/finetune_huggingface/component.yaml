@@ -22,7 +22,6 @@ inputs:
     default: 2e-5
   model:
     type: string
-    default: distilbert-base-uncased
   train_data:
     type: path
   train_file:
