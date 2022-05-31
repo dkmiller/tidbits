@@ -6,6 +6,7 @@ https://huggingface.co/docs/transformers/custom_datasets#finetune-with-the-train
 from argparse_dataclass import ArgumentParser
 from dataclasses import dataclass
 from datasets import load_dataset
+import logging
 from os.path import join
 from transformers import (
     AutoTokenizer,
@@ -15,6 +16,9 @@ from transformers import (
     TrainingArguments,
     Trainer,
 )
+
+
+log = logging.getLogger(__name__)
 
 
 @dataclass
@@ -35,6 +39,9 @@ def coalesce(example):
 
 
 def main(train_args: TrainingArguments, args: Args):
+    log.info(f"Parsed args: {args}")
+    log.info(f"Parsed training args: {train_args}")
+
     # https://huggingface.co/docs/datasets/loading#json
     dataset = load_dataset("json", data_files=join(args.input_dir, args.input_file))
     coalesced_dataset = dataset.map(coalesce)
@@ -64,6 +71,7 @@ def main(train_args: TrainingArguments, args: Args):
 
 
 if __name__ == "__main__":
+    logging.basicConfig(level="INFO")
     parser = HfArgumentParser(TrainingArguments)
     (train_args, unknown) = parser.parse_args_into_dataclasses(
         return_remaining_strings=True

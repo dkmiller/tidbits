@@ -2,6 +2,7 @@ pipeline:
   batch_size: 16
   client_id: XnkMHEYUujv1wA7EkmToWg
   client_secret: secret://reddit-client-secret
+  epochs: 50
   model: distilbert-base-uncased
   subreddits: >-
     funny,
@@ -25,8 +26,8 @@ experiment:
 
 defaults:
 
-- aml: babel
-- compute: babel
+- aml: dl
+- compute: dl
 
 logging:
   # https://github.com/Azure/azure-sdk-for-python/issues/9422

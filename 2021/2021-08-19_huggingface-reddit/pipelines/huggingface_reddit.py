@@ -44,6 +44,7 @@ class HuggingfaceReddit:
             batch_size: int,
             client_id: str,
             client_secret: str,
+            epochs: int,
             model: str,
             post_limit: int,
             subreddits: str,
@@ -82,7 +83,7 @@ class HuggingfaceReddit:
                 model=model,
                 train_data=json_step.outputs.output_data,
                 train_file=output_file_name,
-                num_epochs=50,
+                num_epochs=epochs,
             )
             # https://github.com/Azure/azureml-examples/blob/main/sdk/jobs/pipelines/2b_train_cifar_10_with_pytorch/train_cifar_10_with_pytorch.ipynb
             # Sadly, can't set pipeline parameter to compute.

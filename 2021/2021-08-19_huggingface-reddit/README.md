@@ -2,6 +2,10 @@
 
 Fine-tune a language model against top posts in the specified Subreddit.
 
+To-do
+
+- [ ] Environment [based on this](https://github.com/Azure/azureml-assets/tree/main/vision/src/environments/nvidia)
+
 ## Experiments
 
 ```
