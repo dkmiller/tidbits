@@ -1,0 +1,2 @@
+default: cpu-cluster-lg
+gpu: gpu-a100-80g
