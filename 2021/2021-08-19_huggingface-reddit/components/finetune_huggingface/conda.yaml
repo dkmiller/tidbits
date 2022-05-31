@@ -1,14 +1,23 @@
 name: finetune-huggingface
 
+channels:
+
+- nvidia
+- pytorch
+
 dependencies:
 
 - python=3.9
 - pip=21.2
 
+# https://stackoverflow.com/a/72244310
+- cudatoolkit=11.3
+- pytorch==1.11.0
+
 - pip:
 
+  - argparse-dataclass==0.2.1
   # https://huggingface.co/docs/transformers/main_classes/callback
   - azureml-core==1.40.0
   - datasets==2.0.0
-  - torch==1.11.0
   - transformers==4.18.0

@@ -2,10 +2,14 @@
 
 Fine-tune a language model against top posts in the specified Subreddit.
 
+To-do
+
+- [ ] Environment [based on this](https://github.com/Azure/azureml-assets/tree/main/vision/src/environments/nvidia)
+
 ## Experiments
 
 ```
-python pipelines/huggingface_reddit.py --config-dir conf --config-name experiments/huggingface_reddit
+python pipelines/huggingface_reddit.py
 ```
 
 ## Components
@@ -39,7 +43,7 @@ cred = AzureCliCredential()
 token = cred.get_token("https://vault.azure.net/.default")
 headers = {"Authorization": f"Bearer {token.token}"}
 
-keyvault = "amlkeyvault6upghgpmdpxoq"
+keyvault = "aml1pmlwus29123222664"
 
 client_secret = "<your client secret>"
 

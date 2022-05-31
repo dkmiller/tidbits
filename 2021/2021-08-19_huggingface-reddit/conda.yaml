@@ -1,11 +1,12 @@
-name: huggingface-reddit
+name: dpv2
 
 dependencies:
 
-- python=3.8
-- pip==21.2.4
+- python=3.9
+- pip=21.2
 
 - pip:
 
+  - azure-ai-ml==0.1.0b3
   - black==22.3.0
-  - shrike[pipeline]==1.21.10
+  - hydra-core==1.2.0

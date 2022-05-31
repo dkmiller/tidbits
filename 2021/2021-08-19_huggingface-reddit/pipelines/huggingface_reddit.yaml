@@ -1,0 +1,34 @@
+pipeline:
+  batch_size: 16
+  client_id: XnkMHEYUujv1wA7EkmToWg
+  client_secret: secret://reddit-client-secret
+  epochs: 50
+  model: distilbert-base-uncased
+  subreddits: >-
+    funny,
+    gifs,
+    IDontWorkHereLady,
+    legaladvice,
+    news,
+    pics,
+    TalesFromRetail,
+    talesfromtechsupport
+  output_file_name: data.json
+  post_limit: 1000
+  posts_per_file: 400
+  source_jsonpaths: $.title $.selftext
+  source_key: text
+  target_jsonpath: $.gilded
+  target_key: label
+
+experiment:
+  name: Huggingface-Reddit
+
+defaults:
+
+- aml: dl
+- compute: dl
+
+logging:
+  # https://github.com/Azure/azure-sdk-for-python/issues/9422
+  azure.core.pipeline.policies.http_logging_policy: WARNING

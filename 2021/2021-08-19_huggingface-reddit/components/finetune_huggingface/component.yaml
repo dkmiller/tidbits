@@ -1,0 +1,49 @@
+type: command
+
+name: finetune_huggingface
+display_name: Finetune Huggingface
+version: 0.0.0
+
+description: |
+  Fine-tune a Huggingface model.
+
+inputs:
+  batch_size:
+    type: integer
+    default: 16
+  decay:
+    type: number
+    default: 0.01
+  num_epochs:
+    type: integer
+    default: 5
+  learning_rate:
+    type: string
+    default: 2e-5
+  model:
+    type: string
+  train_data:
+    type: path
+  train_file:
+    type: string
+
+outputs:
+  checkpoint:
+    type: path
+
+code: .
+
+command: >-
+  python train.py
+  --model ${{inputs.model}}
+  --input-dir ${{inputs.train_data}}
+  --input-file ${{inputs.train_file}}
+  --output_dir ${{outputs.checkpoint}}
+  --learning_rate ${{inputs.learning_rate}}
+  --per_device_train_batch_size ${{inputs.batch_size}}
+  --num_train_epochs ${{inputs.num_epochs}}
+  --weight_decay ${{inputs.decay}}
+
+environment:
+  conda_file: conda.yaml
+  image: mcr.microsoft.com/azureml/openmpi4.1.0-cuda11.1-cudnn8-ubuntu20.04
