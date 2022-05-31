@@ -35,7 +35,7 @@ command: >-
   python run.py
   --client-id ${{inputs.client_id}}
   --client-secret ${{inputs.client_secret}}
-  --subreddits ${{inputs.subreddits}}
+  --subreddits "${{inputs.subreddits}}"
   --top-mode ${{inputs.top_mode}}
   --post-limit ${{inputs.post_limit}}
   --posts-per-file ${{inputs.posts_per_file}}

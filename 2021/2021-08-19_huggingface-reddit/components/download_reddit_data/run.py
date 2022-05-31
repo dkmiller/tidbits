@@ -6,6 +6,7 @@ from itertools import groupby, count
 import json
 import jsonpickle
 import logging
+from multiprocessing import Pool
 import os
 from pathlib import Path
 from praw import Reddit
@@ -68,38 +69,68 @@ def resolve_secret(s: str) -> str:
     return s
 
 
+def download_subreddit(subreddit: str, reddit: Reddit, args: Args):
+    log.info(
+        f"Downloading the top {args.post_limit} posts from '{subreddit}' by {args.top_mode}"
+    )
+    posts = reddit.subreddit(subreddit).top(args.top_mode, limit=args.post_limit)
+
+    # https://stackoverflow.com/a/40063403
+    c = count()
+    post_chunks = groupby(posts, lambda _: next(c) // args.posts_per_file)
+    for index, chunk in post_chunks:
+        file_name = f"top_{args.posts_per_file}__{index}.json"
+        file_path = Path(args.output_directory) / subreddit / file_name
+        log.info(f"Writing <={args.posts_per_file} posts to {file_path}")
+        # https://stackoverflow.com/a/62348146
+        file_path.parent.mkdir(parents=True, exist_ok=True)
+        for post in chunk:
+            log.debug(f"Writing {subreddit}/{post.id}")
+            post_raw = serialize(post)
+            # https://stackoverflow.com/a/57345569
+            with file_path.open("a") as fp:
+                fp.write(post_raw)
+                fp.write(os.linesep)
+
+
 def main(args: Args):
     log.info(f"Running using arguments {args}")
     client_secret = resolve_secret(args.client_secret)
     reddit = Reddit(
         client_id=args.client_id, client_secret=client_secret, user_agent="praw.ml"
     )
-    subreddits = args.subreddits.split(",")
-    log.info(f"Downloading data from {len(subreddits)} sub-reddits.")
 
-    # TODO: think about multithreading.
+    # https://stackoverflow.com/a/30933281
+    subreddits = list(filter(None, re.split(r"\s|,|;", args.subreddits)))
+    pool = Pool()
+    # https://stackoverflow.com/a/20354129
+    log.info(
+        f"Downloading {len(subreddits)} sub-reddits using {pool._processes} processes."
+    )
+
+    # https://replit.com/@allasamhita/Pool-apply
     for subreddit in subreddits:
-        log.info(
-            f"Downloading the top {args.post_limit} posts from '{subreddit}' by {args.top_mode}"
-        )
-        posts = reddit.subreddit(subreddit).top(args.top_mode, limit=args.post_limit)
+        pool.apply(download_subreddit, args=[subreddit, reddit, args])
+    pool.close()
+    pool.join()
+    # posts = reddit.subreddit(subreddit).top(args.top_mode, limit=args.post_limit)
 
-        # https://stackoverflow.com/a/40063403
-        c = count()
-        post_chunks = groupby(posts, lambda _: next(c) // args.posts_per_file)
-        for index, chunk in post_chunks:
-            file_name = f"top_{args.posts_per_file}__{index}.json"
-            file_path = Path(args.output_directory) / subreddit / file_name
-            log.info(f"Writing <={args.posts_per_file} posts to {file_path}")
-            # https://stackoverflow.com/a/62348146
-            file_path.parent.mkdir(parents=True, exist_ok=True)
-            for post in chunk:
-                log.debug(f"Writing {subreddit}/{post.id}")
-                post_raw = serialize(post)
-                # https://stackoverflow.com/a/57345569
-                with file_path.open("a") as fp:
-                    fp.write(post_raw)
-                    fp.write(os.linesep)
+    # # https://stackoverflow.com/a/40063403
+    # c = count()
+    # post_chunks = groupby(posts, lambda _: next(c) // args.posts_per_file)
+    # for index, chunk in post_chunks:
+    #     file_name = f"top_{args.posts_per_file}__{index}.json"
+    #     file_path = Path(args.output_directory) / subreddit / file_name
+    #     log.info(f"Writing <={args.posts_per_file} posts to {file_path}")
+    #     # https://stackoverflow.com/a/62348146
+    #     file_path.parent.mkdir(parents=True, exist_ok=True)
+    #     for post in chunk:
+    #         log.debug(f"Writing {subreddit}/{post.id}")
+    #         post_raw = serialize(post)
+    #         # https://stackoverflow.com/a/57345569
+    #         with file_path.open("a") as fp:
+    #             fp.write(post_raw)
+    #             fp.write(os.linesep)
 
 
 if __name__ == "__main__":

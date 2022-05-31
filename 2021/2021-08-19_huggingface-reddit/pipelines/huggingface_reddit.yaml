@@ -4,7 +4,6 @@ pipeline:
   client_secret: secret://reddit-client-secret
   model: distilbert-base-uncased
   subreddits: >-
-    creepypasta,
     funny,
     gifs,
     IDontWorkHereLady,
@@ -12,19 +11,22 @@ pipeline:
     news,
     pics,
     TalesFromRetail,
-    talesfromtechsupport,
-    TIFU
+    talesfromtechsupport
   output_file_name: data.json
-  post_limit: 10000
+  post_limit: 1000
   posts_per_file: 400
   source_jsonpaths: $.title $.selftext
   source_key: text
   target_jsonpath: $.gilded
   target_key: label
 
+experiment:
+  name: Huggingface-Reddit
+
 defaults:
 
-- aml: dl
+- aml: babel
+- compute: babel
 
 logging:
   # https://github.com/Azure/azure-sdk-for-python/issues/9422
