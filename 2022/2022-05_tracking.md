@@ -11,3 +11,6 @@
 | 2022-06-02 | :white_check_mark: |
 | 2022-06-03 | :white_check_mark: |
 | 2022-06-04 | :white_check_mark: |
+| 2022-06-05 | :white_check_mark: |
+| 2022-06-06 | :white_check_mark: |
+| 2022-06-07 | :question: |
