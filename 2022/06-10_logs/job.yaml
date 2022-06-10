@@ -1,0 +1,19 @@
+$schema: https://azuremlschemas.azureedge.net/latest/commandJob.schema.json
+
+command: |
+  ls -r ${{inputs.logs}}
+
+environment:
+  image: library/python:latest
+
+inputs:
+  # https://ml.azure.com/experiments/id/149bd9d3-32c1-483d-af2f-716a0f0db399/runs/demo_ray_actor_wrapper_1654867135_f37bc75a?wsid=/subscriptions/48bbc269-ce89-4f6f-9a12-c6f91fcb772d/resourceGroups/aml1p-rg/providers/Microsoft.MachineLearningServices/workspaces/aml1p-ml-wus2&tid=72f988bf-86f1-41af-91ab-2d7cd011db47#outputsAndLogs
+  logs:
+    type: uri_folder
+    path: https://aml1pmlwus27954171068.blob.core.windows.net/azureml/ExperimentRun/dcid.demo_ray_actor_wrapper_1654867135_f37bc75a/azureml-logs/
+    mode: ro_mount
+
+compute: azureml:cpu-cluster
+
+environment_variables:
+  AZUREML_COMPUTE_USE_COMMON_RUNTIME: "true"
