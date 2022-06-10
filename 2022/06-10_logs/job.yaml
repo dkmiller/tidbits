@@ -1,7 +1,7 @@
 $schema: https://azuremlschemas.azureedge.net/latest/commandJob.schema.json
 
 command: |
-  ls -r ${{inputs.logs}}
+  ls -R ${{inputs.logs}}
 
 environment:
   image: library/python:latest
