@@ -18,3 +18,4 @@
 | 2022-06-09 | :white_check_mark: |
 | 2022-06-10 | :white_check_mark: |
 | 2022-06-11 | :question: |
+| 2022-06-12 | :x: |
