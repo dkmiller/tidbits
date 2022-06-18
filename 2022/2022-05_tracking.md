@@ -22,3 +22,5 @@
 | 2022-06-13 | :white_check_mark: |
 | 2022-06-14 | :white_check_mark: |
 | 2022-06-15 | :white_check_mark: |
+| 2022-06-16 | :white_check_mark: |
+| 2022-06-17 | :white_check_mark: |
