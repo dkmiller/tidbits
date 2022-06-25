@@ -29,3 +29,5 @@
 | 2022-06-20 | :white_check_mark: |
 | 2022-06-21 | :white_check_mark: |
 | 2022-06-22 | :white_check_mark: |
+| 2022-06-23 | :white_check_mark: |
+| 2022-06-24 | :x: |
