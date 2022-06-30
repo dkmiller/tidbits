@@ -1,8 +1,6 @@
 from aiohttp import ClientSession, ContentTypeError
 import asyncio
 from azure.identity import DefaultAzureCredential
-import requests
-from json.decoder import JSONDecodeError
 from typing import List
 
 
@@ -68,59 +66,11 @@ class AsyncAzdoClient:
         service_connection: str,
         public_alias: str,
     ):
-        url = f"https://dev.azure.com/{organization}/_apis/securityroles/scopes/distributedtask.serviceendpointrole/roleassignments/resources/{project}_{service_connection}"
+        # https://stackoverflow.com/a/59288659
+        url = f"https://dev.azure.com/{organization}/_apis/securityroles/scopes/distributedtask.serviceendpointrole/roleassignments/resources/{project}_{service_connection}?api-version=5.1-preview"
         body = [{"roleName": "Administrator", "userId": public_alias}]
         async with self.session.put(url, headers=self.headers, json=body) as r:
             return r.status
-
-
-def main():
-    credential = DefaultAzureCredential()
-    token = credential.get_token("499b84ac-1321-427f-aa17-267ca6975798/.default")
-    headers = {"Authorization": f"Bearer {token.token}"}
-
-    # https://stackoverflow.com/a/67871296
-    r = requests.get(
-        "https://app.vssps.visualstudio.com/_apis/profile/profiles/me?api-version=6.0",
-        headers=headers,
-    )
-    public_alias = r.json()["publicAlias"]
-
-    r = requests.get(
-        f"https://app.vssps.visualstudio.com/_apis/accounts?memberId={public_alias}&api-version=6.0",
-        headers=headers,
-    )
-    value = r.json()["value"]
-    organizations = [x["accountName"] for x in value]
-
-    for organization in organizations:
-        print(organization)
-        r = requests.get(
-            f"https://dev.azure.com/{organization}/_apis/projects?api-version=6.0",
-            headers=headers,
-        )
-        value = r.json()["value"]
-        projects = [x["id"] for x in value]
-
-        for project in projects:
-            print(f"\t{project}")
-            r = requests.get(
-                f"https://dev.azure.com/{organization}/{project}/_apis/serviceendpoint/endpoints?api-version=6.0-preview.4",
-                headers=headers,
-            )
-
-            try:
-                value = r.json()["value"]
-
-                service_connections = [
-                    s for s in value if s["createdBy"]["id"] == public_alias
-                ]
-                if service_connections:
-                    print([s["name"] for s in service_connections])
-            # Happens when AzDO instance is deactivated:
-            # https://aka.ms/adofootprintreduction
-            except JSONDecodeError:
-                pass
 
 
 async def main_async(new_admin: str):
@@ -158,5 +108,5 @@ async def main_async(new_admin: str):
 
 
 if __name__ == "__main__":
-    # main()
-    asyncio.run(main_async("95a04521-4fe3-6223-82a3-ef9b229e2cc2"))
+    new_admin = "95a04521-4fe3-6223-82a3-ef9b229e2cc2"
+    asyncio.run(main_async(new_admin))
