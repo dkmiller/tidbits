@@ -1,4 +1,5 @@
 from aiohttp import ClientSession, ContentTypeError
+import argparse
 import asyncio
 from azure.identity import DefaultAzureCredential
 from typing import List
@@ -108,5 +109,7 @@ async def main_async(new_admin: str):
 
 
 if __name__ == "__main__":
-    new_admin = "95a04521-4fe3-6223-82a3-ef9b229e2cc2"
-    asyncio.run(main_async(new_admin))
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--new_admin", required=True)
+    args = parser.parse_args()
+    asyncio.run(main_async(args.new_admin))
