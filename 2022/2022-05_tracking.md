@@ -39,3 +39,5 @@
 | 2022-06-30 | :question: |
 | 2022-07-01 | :question: |
 | 2022-07-02 | :x: |
+| 2022-07-03 | :white_check_mark: |
+| 2022-07-04 | :white_check_mark: |
