@@ -50,3 +50,6 @@
 | 2022-07-11 | :white_check_mark: |
 | 2022-07-12 | :white_check_mark: |
 | 2022-07-13 | :white_check_mark: |
+| 2022-07-14 | :white_check_mark: |
+| 2022-07-15 | :x: |
+| 2022-07-16 | :x: |
