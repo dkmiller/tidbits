@@ -53,3 +53,14 @@
 | 2022-07-14 | :white_check_mark: |
 | 2022-07-15 | :x: |
 | 2022-07-16 | :x: |
+| 2022-07-17 | :white_check_mark: |
+| 2022-07-18 | :white_check_mark: |
+| 2022-07-19 | :white_check_mark: |
+| 2022-07-20 | :white_check_mark: |
+| 2022-07-21 | :white_check_mark: |
+| 2022-07-22 | :white_check_mark: |
+| 2022-07-23 | :white_check_mark: |
+| 2022-07-24 | :white_check_mark: |
+| 2022-07-25 | :white_check_mark: |
+| 2022-07-26 | :x: |
+| 2022-07-27 | :x: |
