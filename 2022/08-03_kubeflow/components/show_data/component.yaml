@@ -1,0 +1,16 @@
+name: show_data
+description: Show data
+
+inputs:
+- name: input
+
+implementation:
+  container:
+    image: ghcr.io/dkmiller/tidbits/show_data@sha256:ca70eef3b9267bef43e49a20c25af8663bd8aad0bf7adac1c57a6d1b28244c3d
+
+    command: [
+      python,
+      run.py,
+      --input,
+      {inputPath: input}
+    ]
