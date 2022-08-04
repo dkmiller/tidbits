@@ -1,0 +1,9 @@
+name: kubeflow
+
+dependencies:
+
+- python=3.9
+- pip=22.1
+
+- pip:
+  - kfp==1.8.13
