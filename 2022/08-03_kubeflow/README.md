@@ -4,6 +4,8 @@
 
 [Building components](https://www.kubeflow.org/docs/components/pipelines/sdk/component-development/)
 
+[Pipeline Parameters](https://www.kubeflow.org/docs/components/pipelines/sdk/parameters/)
+
 ## Setup
 
 Ensure Docker is up and running.
@@ -12,11 +14,11 @@ Ensure Docker is up and running.
 brew install kind
 kind create cluster
 
-# export PIPELINE_VERSION=1.8.3
+export PIPELINE_VERSION=1.8.3
 
-kubectl apply -k "github.com/kubeflow/pipelines/manifests/kustomize/cluster-scoped-resources?ref=1.8.3"
+kubectl apply -k "github.com/kubeflow/pipelines/manifests/kustomize/cluster-scoped-resources?ref=$PIPELINE_VERSION"
 kubectl wait --for condition=established --timeout=60s crd/applications.app.k8s.io
-kubectl apply -k "github.com/kubeflow/pipelines/manifests/kustomize/env/platform-agnostic-pns?ref=1.8.3"
+kubectl apply -k "github.com/kubeflow/pipelines/manifests/kustomize/env/platform-agnostic-pns?ref=$PIPELINE_VERSION"
 
 # Wait a while...
 kubectl port-forward -n kubeflow svc/ml-pipeline-ui 8080:80
@@ -36,13 +38,10 @@ docker login ghcr.io -u DUMMY
 
 Then, ...
 
-run `BuildAndPushComponents` to do just that. NOTE: you'll need to make them all
-public :/
-
 ```bash
 conda activate kubeflow
 
-~/miniforge3/envs/kubeflow/bin/python ./pipelines/sample.py
+python pipelines/sample.py
 ```
 
 ## Links

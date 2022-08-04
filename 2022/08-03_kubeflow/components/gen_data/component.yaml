@@ -10,7 +10,7 @@ outputs:
 
 implementation:
   container:
-    image: ghcr.io/dkmiller/tidbits/gen_data@sha256:2cec8706e89d5fb6e4cfad7b527fdc3f2489038fa3f317411c2573d19279b294
+    image: ghcr.io/dkmiller/tidbits/gen_data:latest
 
     command: [
       python,

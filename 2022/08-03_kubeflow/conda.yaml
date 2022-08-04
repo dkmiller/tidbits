@@ -6,4 +6,9 @@ dependencies:
 - pip=22.1
 
 - pip:
+
+  - -e kubeflow_assistant
+
+  - black==22.6.0
+  - docker==5.0.3
   - kfp==1.8.13
