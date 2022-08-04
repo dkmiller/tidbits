@@ -1,11 +1,22 @@
 name: gen_data
 description: Generate data
 
+inputs:
+- name: n_files
+  type: Integer
+
+outputs:
+- name: random_files
+
 implementation:
   container:
-    image: ghcr.io/dkmiller/tidbits/gen_data@sha256:bc81aaa1a7c3cb80bfb8ae5fea4e99a50ed1eb887fd72590908087136e8d97bd
+    image: ghcr.io/dkmiller/tidbits/gen_data@sha256:2cec8706e89d5fb6e4cfad7b527fdc3f2489038fa3f317411c2573d19279b294
 
     command: [
       python,
-      run.py
+      run.py,
+      --output,
+      {outputPath: random_files},
+      --n-files,
+      {inputValue: n_files}
     ]

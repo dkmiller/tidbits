@@ -56,3 +56,5 @@ conda activate kubeflow
 >  "ghcr.io/dkmiller/tidbits/gen_data:latest": failed to resolve reference
 >  "ghcr.io/dkmiller/tidbits/gen_data:latest": failed to authorize: failed to
 > fetch anonymous token: unexpected status: 401 Unauthorized
+
+https://stackoverflow.com/questions/56494402/

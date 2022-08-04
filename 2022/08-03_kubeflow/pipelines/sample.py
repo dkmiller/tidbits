@@ -3,9 +3,11 @@ import kfp.components as comp
 
 
 def sample_pipeline():
-    create_step_gen_data = comp.load_component_from_file("components/gen_data/component.yaml")
+    create_step_gen_data = comp.load_component_from_file(
+        "components/gen_data/component.yaml"
+    )
 
-    gen_data_step = create_step_gen_data()
+    gen_data_step = create_step_gen_data(n_files=10)
 
 
 def main():
