@@ -57,3 +57,11 @@ python pipelines/sample.py
 > fetch anonymous token: unexpected status: 401 Unauthorized
 
 https://stackoverflow.com/questions/56494402/
+
+[TFJob should work well with pipelines](https://github.com/kubeflow/pipelines/issues/677)
+
+[Add pipeline launcher components for other distributed training jobs](https://github.com/kubeflow/pipelines/issues/3445)
+
+https://linuxhint.com/kubectl-get-list-namespaces/
+
+https://github.com/kubeflow/pytorch-operator/issues/330

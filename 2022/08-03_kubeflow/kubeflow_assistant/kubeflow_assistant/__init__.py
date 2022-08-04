@@ -1,4 +1,9 @@
+"""
+Utilities for quickly iterating on local Kubeflow pipeline definitions.
+"""
+
 import docker
+from docker.errors import BuildError
 import functools
 import kfp.components as comp
 import logging
@@ -38,7 +43,15 @@ class KubeflowAssistant:
         build_path = self.component_docker_path(name)
 
         log.info(f"Building Docker image {image_tag} from path {build_path}")
-        image, _ = self.docker_client.images.build(path=build_path, tag=image_tag)  # type: ignore
+
+        try:
+            image, _ = self.docker_client.images.build(path=build_path, tag=image_tag)  # type: ignore
+        except BuildError as e:
+            debug_command = f"docker build -t {image_tag} {build_path}"
+            raise RuntimeError(
+                f"Docker build failed! See failure message above, debug with the command\n\n\t{debug_command}"
+            ) from e
+
         try:
             digest = image.attrs["RepoDigests"][0]  # type: ignore
         except IndexError:
