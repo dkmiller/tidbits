@@ -35,7 +35,7 @@ def sample_pipeline(n_file: int = 25):
     )
 
     # Copy-paste from: https://github.com/kubeflow/pipelines/blob/master/samples/contrib/pytorch-samples/Pipeline-Bert-Dist.ipynb
-    namespace = "default"
+    namespace = "kubeflow"
     dataset_path = "dataset_path"
     checkpoint_dir = "__checkpoint_dir__"
     num_samples = "__num_samples__"
@@ -48,157 +48,139 @@ def sample_pipeline(n_file: int = 25):
     dist_volume = "__dist_volume__"
 
     train_task = pytorch_job_op(
-        name="pytorch-bert-dist", 
-        namespace=namespace, 
-        master_spec=
-        {
-          "replicas": 1,
-          "imagePullPolicy": "Always",
-          "restartPolicy": "OnFailure",
-          "template": {
-            "metadata": {
-              "annotations": {
-                "sidecar.istio.io/inject": "false"
-              }
+        name="pytorch-bert-dist",
+        namespace=namespace,
+        master_spec={
+            "replicas": 1,
+            "imagePullPolicy": "Always",
+            "restartPolicy": "OnFailure",
+            "template": {
+                "metadata": {"annotations": {"sidecar.istio.io/inject": "false"}},
+                "spec": {
+                    "containers": [
+                        {
+                            "name": "pytorch",
+                            "image": "public.ecr.aws/pytorch-samples/kfp_samples:latest-gpu",
+                            "command": [
+                                "python3",
+                                "bert/agnews_classification_pytorch.py",
+                            ],
+                            "args": [
+                                "--dataset_path",
+                                dataset_path,
+                                "--checkpoint_dir",
+                                checkpoint_dir,
+                                "--script_args",
+                                f"model_name=bert.pth,num_samples={num_samples}",
+                                "--tensorboard_root",
+                                tensorboard_root,
+                                "--ptl_args",
+                                f"max_epochs={max_epochs},profiler=pytorch,gpus={gpus},accelerator=ddp,num_nodes={num_nodes}",
+                            ],
+                            "env": [
+                                {
+                                    "name": "MINIO_ACCESS_KEY",
+                                    "valueFrom": {
+                                        "secretKeyRef": {
+                                            "name": "mlpipeline-minio-artifact",
+                                            "key": "accesskey",
+                                        }
+                                    },
+                                },
+                                {
+                                    "name": "MINIO_SECRET_KEY",
+                                    "valueFrom": {
+                                        "secretKeyRef": {
+                                            "name": "mlpipeline-minio-artifact",
+                                            "key": "secretkey",
+                                        }
+                                    },
+                                },
+                            ],
+                            "ports": [
+                                {"containerPort": 24456, "name": "pytorchjob-port"}
+                            ],
+                            "resources": {"limits": {"nvidia.com/gpu": 2}},
+                            "volumeMounts": [
+                                {"mountPath": volume_mount_path, "name": "model-volume"}
+                            ],
+                        }
+                    ],
+                    "volumes": [
+                        {
+                            "name": "model-volume",
+                            "persistentVolumeClaim": {"claimName": dist_volume},
+                        }
+                    ],
+                },
             },
-            "spec": {
-              "containers": [
-                {
-                  "name": "pytorch",
-                  "image": "public.ecr.aws/pytorch-samples/kfp_samples:latest-gpu",
-                  "command": ["python3", "bert/agnews_classification_pytorch.py"],
-                  "args": [
-                    "--dataset_path", dataset_path,
-                    "--checkpoint_dir", checkpoint_dir,
-                    "--script_args", f"model_name=bert.pth,num_samples={num_samples}",
-                    "--tensorboard_root", tensorboard_root,
-                    "--ptl_args", f"max_epochs={max_epochs},profiler=pytorch,gpus={gpus},accelerator=ddp,num_nodes={num_nodes}"
-                  ],
-                  "env": [
-                    {
-                        "name": "MINIO_ACCESS_KEY",
-                        "valueFrom": {
-                            "secretKeyRef": {
-                                "name": "mlpipeline-minio-artifact",
-                                "key": "accesskey",
-                            }
-                        },
-                    },
-                    {
-                        "name": "MINIO_SECRET_KEY",
-                        "valueFrom": {
-                            "secretKeyRef": {
-                                "name": "mlpipeline-minio-artifact",
-                                "key": "secretkey",
-                            }
-                        },
-                    }
-                  ],
-                  "ports": [
-                    {
-                      "containerPort": 24456,
-                      "name": "pytorchjob-port"
-                    }
-                  ],
-                  "resources": {
-                    "limits": {
-                      "nvidia.com/gpu": 2
-                    }
-                  },
-                  "volumeMounts": [
-                    {
-                      "mountPath": volume_mount_path,
-                      "name": "model-volume"
-                    }
-                  ]
-                }
-              ],
-              "volumes": [
-                {
-                  "name": "model-volume",
-                  "persistentVolumeClaim": {
-                    "claimName": dist_volume
-                  }
-                }
-              ]
-            }
-          }
-        }, 
-        worker_spec=
-        {
-          "replicas": 1,
-          "imagePullPolicy": "Always",
-          "restartPolicy": "OnFailure",
-          "template": {
-            "metadata": {
-              "annotations": {
-                "sidecar.istio.io/inject": "false"
-              }
-            },
-            "spec": {
-              "containers": [
-                {
-                  "name": "pytorch",
-                  "image": "public.ecr.aws/pytorch-samples/kfp_samples:latest-gpu",
-                  "command": ["python3", "bert/agnews_classification_pytorch.py"],
-                  "args": [
-                    "--dataset_path", dataset_path,
-                    "--checkpoint_dir", checkpoint_dir,
-                    "--script_args", f"model_name=bert.pth,num_samples={num_samples}",
-                    "--tensorboard_root", tensorboard_root,
-                    "--ptl_args", f"max_epochs={max_epochs},profiler=pytorch,gpus={gpus},accelerator=ddp,num_nodes={num_nodes}"
-                  ],
-                  "env": [
-                    {
-                        "name": "MINIO_ACCESS_KEY",
-                        "valueFrom": {
-                            "secretKeyRef": {
-                                "name": "mlpipeline-minio-artifact",
-                                "key": "accesskey",
-                            }
-                        },
-                    },
-                    {
-                        "name": "MINIO_SECRET_KEY",
-                        "valueFrom": {
-                            "secretKeyRef": {
-                                "name": "mlpipeline-minio-artifact",
-                                "key": "secretkey",
-                            }
-                        },
-                    }
-                  ],
-                  "ports": [
-                    {
-                      "containerPort": 24456,
-                      "name": "pytorchjob-port"
-                    }
-                  ],
-                  "resources": {
-                    "limits": {
-                      "nvidia.com/gpu": 2
-                    }
-                  },
-                  "volumeMounts": [
-                    {
-                      "mountPath": volume_mount_path,
-                      "name": "model-volume"
-                    }
-                  ]
-                }
-              ],
-              "volumes": [
-                {
-                  "name": "model-volume",
-                  "persistentVolumeClaim": {
-                    "claimName": dist_volume
-                  }
-                }
-              ]
-            }
-          }
         },
-        delete_after_done=False
+        worker_spec={
+            "replicas": 1,
+            "imagePullPolicy": "Always",
+            "restartPolicy": "OnFailure",
+            "template": {
+                "metadata": {"annotations": {"sidecar.istio.io/inject": "false"}},
+                "spec": {
+                    "containers": [
+                        {
+                            "name": "pytorch",
+                            "image": "public.ecr.aws/pytorch-samples/kfp_samples:latest-gpu",
+                            "command": [
+                                "python3",
+                                "bert/agnews_classification_pytorch.py",
+                            ],
+                            "args": [
+                                "--dataset_path",
+                                dataset_path,
+                                "--checkpoint_dir",
+                                checkpoint_dir,
+                                "--script_args",
+                                f"model_name=bert.pth,num_samples={num_samples}",
+                                "--tensorboard_root",
+                                tensorboard_root,
+                                "--ptl_args",
+                                f"max_epochs={max_epochs},profiler=pytorch,gpus={gpus},accelerator=ddp,num_nodes={num_nodes}",
+                            ],
+                            "env": [
+                                {
+                                    "name": "MINIO_ACCESS_KEY",
+                                    "valueFrom": {
+                                        "secretKeyRef": {
+                                            "name": "mlpipeline-minio-artifact",
+                                            "key": "accesskey",
+                                        }
+                                    },
+                                },
+                                {
+                                    "name": "MINIO_SECRET_KEY",
+                                    "valueFrom": {
+                                        "secretKeyRef": {
+                                            "name": "mlpipeline-minio-artifact",
+                                            "key": "secretkey",
+                                        }
+                                    },
+                                },
+                            ],
+                            "ports": [
+                                {"containerPort": 24456, "name": "pytorchjob-port"}
+                            ],
+                            "resources": {"limits": {"nvidia.com/gpu": 2}},
+                            "volumeMounts": [
+                                {"mountPath": volume_mount_path, "name": "model-volume"}
+                            ],
+                        }
+                    ],
+                    "volumes": [
+                        {
+                            "name": "model-volume",
+                            "persistentVolumeClaim": {"claimName": dist_volume},
+                        }
+                    ],
+                },
+            },
+        },
+        delete_after_done=False,
     ).after(gen_data_step)
 
 

@@ -1,0 +1,23 @@
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: pytorchjobs-runner-role
+rules:
+- apiGroups: ["kubeflow.org"]
+  resources: ["pytorchjobs"]
+  verbs: ["*"]    # get all the access to PytorchJob resources
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: pytorchjobs-runner-role-bind
+subjects:
+- kind: ServiceAccount   # default service account can use
+  name: default
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: automl-role
+  apiGroup: rbac.authorization.k8s.io
