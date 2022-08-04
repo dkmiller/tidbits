@@ -64,3 +64,10 @@
 | 2022-07-25 | :white_check_mark: |
 | 2022-07-26 | :x: |
 | 2022-07-27 | :x: |
+| 2022-07-28 | :white_check_mark: |
+| 2022-07-29 | :white_check_mark: |
+| 2022-07-30 | :white_check_mark: |
+| 2022-07-31 | :white_check_mark: |
+| 2022-08-01 | :white_check_mark: |
+| 2022-08-02 | :white_check_mark: |
+| 2022-08-03 | :white_check_mark: |
