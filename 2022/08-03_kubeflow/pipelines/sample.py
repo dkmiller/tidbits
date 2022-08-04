@@ -9,23 +9,26 @@ log = logging.getLogger(__name__)
 
 
 @kfp.dsl.pipeline(name="sample")
-def sample_pipeline(n_file: int):
+def sample_pipeline(n_file: int = 25):
     assistant = KubeflowAssistant(Path(__file__).parent.parent)
 
-    create_step_gen_data = assistant.build_and_load_component("gen_data")
-    create_step_show_data = assistant.build_and_load_component("show_data")
+    gen_data = assistant.build_and_load_component("gen_data")
+    show_data = assistant.build_and_load_component("show_data")
+    show_data_r = assistant.build_and_load_component("show_data_r")
 
-    gen_data_step = create_step_gen_data(n_files=n_file)
+    gen_data_step = gen_data(n_files=n_file)
 
-    show_data_step = create_step_show_data(input=gen_data_step.outputs["random_files"])
+    show_data_step = show_data(input=gen_data_step.outputs["random_files"])
+    show_data_r_step = show_data_r(input=gen_data_step.outputs["random_files"])
 
 
 def main():
-    client = kfp.Client(host="http://localhost:8080")
-    run = client.create_run_from_pipeline_func(
-        sample_pipeline, arguments={"n_file": 20}
-    )
-    log.info(f"Submitted: {run}")
+    host = "http://localhost:8080"
+    client = kfp.Client(host=host)
+    run = client.create_run_from_pipeline_func(sample_pipeline, arguments={})
+
+    run_link = f"{host}/#/runs/details/{run.run_id}"
+    log.info(f"Submitted:\n\n\t{run_link}\n")
 
 
 if __name__ == "__main__":

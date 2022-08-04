@@ -35,18 +35,22 @@ class KubeflowAssistant:
         parsed = yaml.load(text, Loader=yaml.SafeLoader)
         image_tag = parsed["implementation"]["container"]["image"]
 
-        # TODO: handle conventions.
         build_path = self.component_docker_path(name)
 
         log.info(f"Building Docker image {image_tag} from path {build_path}")
         image, _ = self.docker_client.images.build(path=build_path, tag=image_tag)  # type: ignore
-        digest = image.attrs["RepoDigests"][0]  # type: ignore
+        try:
+            digest = image.attrs["RepoDigests"][0]  # type: ignore
+        except IndexError:
+            digest = image_tag
+            log.warning(f"Pushing {image_tag} for the first time")
 
         log.info(f"Pushing {image_tag}")
         r = self.docker_client.images.push(image_tag)
         log.info(f"Push result: {r}")
 
         # TODO: don't always do this.
+        # TODO: do this in the parsed YAML
         text = text.replace(image_tag, digest)
         log.debug(f"Raw component text\n\n{text}\n\n")
 
