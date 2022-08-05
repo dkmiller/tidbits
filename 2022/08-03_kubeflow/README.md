@@ -57,3 +57,6 @@ python pipelines/sample.py
 > fetch anonymous token: unexpected status: 401 Unauthorized
 
 https://stackoverflow.com/questions/56494402/
+
+Future: hyperparameter tuning via
+[Katib](https://www.kubeflow.org/docs/components/katib/hyperparameter/#katib-components)

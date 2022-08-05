@@ -37,6 +37,8 @@ class KubeflowAssistant:
 
         build_path = self.component_docker_path(name)
 
+        # Future: explore skipping this via local DB of already-built images
+        # and dirhashes and/or Git integration.
         log.info(f"Building Docker image {image_tag} from path {build_path}")
         image, _ = self.docker_client.images.build(path=build_path, tag=image_tag)  # type: ignore
         try:
@@ -46,8 +48,7 @@ class KubeflowAssistant:
             log.warning(f"Pushing {image_tag} for the first time")
 
         log.info(f"Pushing {image_tag}")
-        r = self.docker_client.images.push(image_tag)
-        log.info(f"Push result: {r}")
+        self.docker_client.images.push(image_tag)
 
         # TODO: don't always do this.
         # TODO: do this in the parsed YAML
