@@ -18,7 +18,7 @@ def sample_pipeline(n_file: int = 25):
 
     gen_data_step = gen_data(n_files=n_file)
 
-    show_data_step = show_data(input=gen_data_step.outputs["random_files"])
+    show_data_step = show_data(input=gen_data_step.outputs["random_files"], sleep_seconds=60)
     show_data_r_step = show_data_r(input=gen_data_step.outputs["random_files"])
 
 

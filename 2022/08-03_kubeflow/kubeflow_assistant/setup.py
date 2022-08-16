@@ -3,6 +3,9 @@
 
 from setuptools import setup
 
+# TODO: imitate
+# - https://git.musta.ch/airbnb/data/blob/master/airflow/teams/experimentation/projects/jitneyclient/setup.py
+
 setup(
     name="kubeflow-assistant",
     version="0.0",

@@ -3,6 +3,8 @@ description: Show data
 
 inputs:
 - name: input
+- name: sleep_seconds
+  type: Integer
 
 implementation:
   container:
@@ -12,5 +14,7 @@ implementation:
       python,
       run.py,
       --input,
-      {inputPath: input}
+      {inputPath: input},
+      --sleep,
+      {inputValue: sleep_seconds}
     ]
