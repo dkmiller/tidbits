@@ -1,0 +1,20 @@
+name: show_data
+description: Show data
+
+inputs:
+- name: input
+- name: sleep_seconds
+  type: Integer
+
+implementation:
+  container:
+    image: ghcr.io/dkmiller/tidbits/show_data:latest
+
+    command: [
+      python,
+      run.py,
+      --input,
+      {inputPath: input},
+      --sleep,
+      {inputValue: sleep_seconds}
+    ]

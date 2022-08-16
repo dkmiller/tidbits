@@ -1,0 +1,22 @@
+name: gen_data
+description: Generate data
+
+inputs:
+- name: n_files
+  type: Integer
+
+outputs:
+- name: random_files
+
+implementation:
+  container:
+    image: ghcr.io/dkmiller/tidbits/gen_data:latest
+
+    command: [
+      python,
+      run.py,
+      --output,
+      {outputPath: random_files},
+      --n-files,
+      {inputValue: n_files}
+    ]

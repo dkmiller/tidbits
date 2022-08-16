@@ -1,0 +1,16 @@
+name: show_data_r
+description: Show data (R)
+
+inputs:
+- name: input
+
+implementation:
+  container:
+    image: ghcr.io/dkmiller/tidbits/show_data_r:latest
+
+    command: [
+      Rscript,
+      run.r,
+      --input,
+      {inputPath: input}
+    ]
