@@ -71,3 +71,16 @@
 | 2022-08-01 | :white_check_mark: |
 | 2022-08-02 | :white_check_mark: |
 | 2022-08-03 | :white_check_mark: |
+| 2022-08-04 | :white_check_mark: |
+| 2022-08-05 | :white_check_mark: |
+| 2022-08-06 | :white_check_mark: |
+| 2022-08-07 | :white_check_mark: |
+| 2022-08-08 | :white_check_mark: |
+| 2022-08-09 | :white_check_mark: |
+| 2022-08-10 | :white_check_mark: |
+| 2022-08-11 | :white_check_mark: |
+| 2022-08-12 | :white_check_mark: |
+| 2022-08-13 | :white_check_mark: |
+| 2022-08-14 | :white_check_mark: |
+| 2022-08-15 | :white_check_mark: |
+| 2022-08-16 | :white_check_mark: |
