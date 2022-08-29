@@ -91,3 +91,8 @@
 | 2022-08-21 | :white_check_mark: |
 | 2022-08-22 | :x: |
 | 2022-08-23 | :x: |
+| 2022-08-24 | :white_check_mark: |
+| 2022-08-25 | :white_check_mark: |
+| 2022-08-26 | :white_check_mark: |
+| 2022-08-27 | :white_check_mark: |
+| 2022-08-28 | :x: |
