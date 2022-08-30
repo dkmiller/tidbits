@@ -1,6 +1,7 @@
 # Webscraping
 
-https://www.geeksforgeeks.org/extract-all-the-urls-from-the-webpage-using-python/
+Inspiration:
+[Extract all the URLs from the webpage Using Python](https://www.geeksforgeeks.org/extract-all-the-urls-from-the-webpage-using-python/)
 
 ## Algo
 
@@ -24,16 +25,16 @@ Methods:
 
 ## Alternatives
 
-https://en.wikipedia.org/wiki/Conflict-free_replicated_data_type
+[Conflict-free replicated data type](https://en.wikipedia.org/wiki/Conflict-free_replicated_data_type)
 
 ## Help
 
-https://stackoverflow.com/a/72619209
+[Unable to import psutil on M1 mac with miniforge: (`mach-o file, but is an incompatible architecture (have 'x86_64', need 'arm64e')`)](https://stackoverflow.com/a/72619209)
 
-https://github.com/ipython/ipython/issues/11270#issuecomment-427448691
+[ImportError: cannot import name 'generator_to_async_generator'](https://github.com/ipython/ipython/issues/11270#issuecomment-427448691)
 
-:/ https://github.com/microsoft/vscode-jupyter/issues/10637
+:confused: [Remote jupyterhub kernel fails to launch: "waiting for kernel to be idle"](https://github.com/microsoft/vscode-jupyter/issues/10637)
 
-https://github.com/microsoft/vscode-jupyter/issues/9014
+[Unable to start kernel - Waiting for Jupiter Session to be Idle (Kernel fails to start as completions request crahes without sending a response back)](https://github.com/microsoft/vscode-jupyter/issues/9014)
 
 [Case insensitive regular expression without `re.compile`?](https://stackoverflow.com/a/10444271)
