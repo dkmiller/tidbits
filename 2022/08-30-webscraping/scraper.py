@@ -31,6 +31,8 @@ class WebScraper:
     visited: set = field(default_factory=set)
 
     async def scrape(self):
+        if not self.queue:
+            self.queue.append(self.base)
         while True:
             with self.lock:
                 active_visits = self.active_visits
@@ -73,6 +75,8 @@ class WebScraper:
                 collected_links = [
                     re.sub(self.regex, "", l) for l in links if re.search(self.regex, l)
                 ]
+                if collected_links:
+                    log.info(f"Collected {len(collected_links)} links")
 
                 links = [x for x in links if x and self.base in x]
         except Exception as e:
@@ -92,10 +96,16 @@ class WebScraper:
 async def main(base: str, regex: str):
     async with aiohttp.ClientSession() as session:
         scraper = WebScraper(base, regex, session)
-        scraper.queue.append(base)
         await scraper.scrape()
+        print(scraper.collected)
 
 
 if __name__ == "__main__":
     logging.basicConfig(level="INFO")
-    asyncio.run(main("https://greyenlightenment.com/", "wordpress"))
+    import argparse
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--base", default="https://greyenlightenment.com/")
+    parser.add_argument("--regex", default="wordpress")
+    args = parser.parse_args()
+    asyncio.run(main(args.base, args.regex))

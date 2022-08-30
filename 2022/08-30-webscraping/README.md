@@ -35,3 +35,5 @@ https://github.com/ipython/ipython/issues/11270#issuecomment-427448691
 :/ https://github.com/microsoft/vscode-jupyter/issues/10637
 
 https://github.com/microsoft/vscode-jupyter/issues/9014
+
+[Case insensitive regular expression without `re.compile`?](https://stackoverflow.com/a/10444271)
