@@ -33,3 +33,5 @@ https://stackoverflow.com/a/72619209
 https://github.com/ipython/ipython/issues/11270#issuecomment-427448691
 
 :/ https://github.com/microsoft/vscode-jupyter/issues/10637
+
+https://github.com/microsoft/vscode-jupyter/issues/9014
