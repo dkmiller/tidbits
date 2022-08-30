@@ -28,3 +28,6 @@ __pycache__
 
 # Hydra
 outputs/
+
+# Jupyter
+.ipynb_checkpoints/

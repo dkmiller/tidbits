@@ -1,0 +1,6 @@
+name: webscraping
+dependencies:
+
+- python=3.10
+- pip:
+  - -r requirements.txt
