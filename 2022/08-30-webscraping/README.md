@@ -1,7 +1,10 @@
-# Webscraping
+# Webscraping + Jupyter/Quarto
 
 Inspiration:
 [Extract all the URLs from the webpage Using Python](https://www.geeksforgeeks.org/extract-all-the-urls-from-the-webpage-using-python/)
+
+Use Jupyter / [Quarto](https://quarto.org/docs/tools/vscode.html)
+notebooks for interacting with the results.
 
 ## Algo
 

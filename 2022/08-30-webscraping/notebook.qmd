@@ -1,0 +1,74 @@
+---
+title: Webscraping + Quarto
+format: gfm
+jupyter: python3
+---
+
+## Sanity-check your kernel + install dependencies.
+
+```{python}
+import sys
+print(sys.executable)
+os.environ["python_bin"] = sys.executable
+```
+
+```bash
+$python_bin -m pip install -r requirements.txt
+```
+
+## &#x1F449; Imports and configuration &#x1F448;
+
+On repeat runs start here.
+
+```{python}
+import aiohttp
+import asyncio
+from getpass import getpass
+from IPython.display import Image
+import logging
+
+from grouping import get_groups, show_groups
+from scraper import WebScraper
+```
+
+For case-insensitive regex:
+
+```python
+r = "(?i)-foo"
+```
+
+```{python}
+# https://stackoverflow.com/a/24418810
+base = getpass(prompt="URL: ")
+regex = getpass(prompt="regex: ")
+```
+
+## (Long) Run the scraper
+
+```{python}
+logging.basicConfig(level="INFO")
+
+async with aiohttp.ClientSession() as session:
+    scraper = WebScraper(base, regex, session)
+    await scraper.scrape()
+```
+
+## Group the data
+
+```{python}
+groups = get_groups(scraper.collected)
+show_groups(groups)
+
+groups_list = list(groups.values())
+```
+
+## What have we got?
+
+```{python}
+group_index = 2
+
+for url in groups_list[group_index]:
+    # https://stackoverflow.com/a/32370538
+    # https://stackoverflow.com/q/19471814
+    display(Image(url=url))
+```
