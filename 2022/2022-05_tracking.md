@@ -99,3 +99,9 @@
 | 2022-08-29 | :white_check_mark: |
 | 2022-08-30 | :question: |
 | 2022-08-31 | :x: |
+| 2022-09-01 | :white_check_mark: |
+| 2022-09-02 | :white_check_mark: |
+| 2022-09-03 | :white_check_mark: |
+| 2022-09-04 | :white_check_mark: |
+| 2022-09-05 | :white_check_mark: |
+| 2022-09-06 | :white_check_mark: |
