@@ -107,4 +107,6 @@
 | 2022-09-06 | :white_check_mark: |
 | 2022-09-07 | :white_check_mark: |
 | 2022-09-08 | :x: |
-| 2022-09-09 | :x: |
+| 2022-09-09 | :boom: |
+| 2022-09-10 | :white_check_mark: |
+| 2022-09-11 | :white_check_mark: |
