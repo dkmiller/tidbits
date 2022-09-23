@@ -117,3 +117,8 @@
 | 2022-09-16 | :white_check_mark: |
 | 2022-09-17 | :white_check_mark: |
 | 2022-09-18 | :white_check_mark: |
+| 2022-09-19 | :white_check_mark: |
+| 2022-09-20 | :white_check_mark: |
+| 2022-09-21 | :white_check_mark: |
+| 2022-09-22 | :white_check_mark: |
+| 2022-09-23 | :x: |
