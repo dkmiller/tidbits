@@ -8,15 +8,11 @@
  * Learn more at https://developers.cloudflare.com/workers/
  */
 
+import { Octokit } from "@octokit/core";
+
+
 export interface Env {
-	// Example binding to KV. Learn more at https://developers.cloudflare.com/workers/runtime-apis/kv/
-	// MY_KV_NAMESPACE: KVNamespace;
-	//
-	// Example binding to Durable Object. Learn more at https://developers.cloudflare.com/workers/runtime-apis/durable-objects/
-	// MY_DURABLE_OBJECT: DurableObjectNamespace;
-	//
-	// Example binding to R2. Learn more at https://developers.cloudflare.com/workers/runtime-apis/r2/
-	// MY_BUCKET: R2Bucket;
+	Dan_Kv: KVNamespace;
 }
 
 export default {
@@ -25,6 +21,31 @@ export default {
 		env: Env,
 		ctx: ExecutionContext
 	): Promise<Response> {
-		return new Response("Hello World!");
+		const method = request.method;
+		// https://stackoverflow.com/a/51865131
+		const headers = Array.from(request.headers.entries())
+			.map((k, v) => `${k}: ${v}`)
+			.join("\n");
+
+		const url = request.url;
+
+		let repoNames = "";
+		
+		try {
+			const pat = await env.Dan_Kv.get("github-pat");
+
+			// https://docs.github.com/en/rest/repos/repos#list-repositories-for-the-authenticated-user
+			const octokit = new Octokit({
+				auth: pat
+			});
+	
+			const privateRepos = await octokit.request('GET /user/repos', { 'visibility': 'private' });
+			repoNames = privateRepos.data.map(t => t.full_name).join(", ");
+		} catch (error) {
+			// https://stackoverflow.com/a/62611888
+			repoNames = error instanceof Error? error.message: `${error}`;
+		}
+
+		return new Response(`Hello\n\n${method} ${url}\n\n${headers}\n\n${repoNames}`);
 	},
 };

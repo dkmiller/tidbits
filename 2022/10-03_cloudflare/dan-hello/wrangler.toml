@@ -1,3 +1,7 @@
 name = "dan-hello"
 main = "src/index.ts"
 compatibility_date = "2022-10-04"
+
+kv_namespaces = [
+  { binding = "Dan_Kv", id = "5fdcbd1ae8ce430b9043e04e73053c5f", preview_id = "5a0eedcd03ce44d38487717fd0d46cd0" }
+]
