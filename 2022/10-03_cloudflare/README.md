@@ -13,8 +13,10 @@
 ## Run
 
 ```bash
-# TODO: install some stuff...
+# Install node_modules
+npm install
 
+# Run in browser.
 wrangler dev
 
 # Publish as prod (accesses prod key vault).
