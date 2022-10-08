@@ -131,8 +131,8 @@
 | 2022-09-30 | :white_check_mark: |
 | 2022-10-01 | :question: |
 | 2022-10-02 | :white_check_mark: |
-| 2022-10-02 | :white_check_mark: |
-| 2022-10-02 | :white_check_mark: |
-| 2022-10-02 | :white_check_mark: |
-| 2022-10-02 | :white_check_mark: |
-| 2022-10-02 | :white_check_mark: |
+| 2022-10-03 | :white_check_mark: |
+| 2022-10-04 | :white_check_mark: |
+| 2022-10-05 | :white_check_mark: |
+| 2022-10-06 | :white_check_mark: |
+| 2022-10-07 | :white_check_mark: |
