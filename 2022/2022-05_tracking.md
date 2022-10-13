@@ -138,3 +138,6 @@
 | 2022-10-07 | :white_check_mark: |
 | 2022-10-08 | :boom: |
 | 2022-10-09 | :white_check_mark: |
+| 2022-10-10 | :white_check_mark: |
+| 2022-10-11 | :white_check_mark: |
+| 2022-10-12 | :white_check_mark: |
