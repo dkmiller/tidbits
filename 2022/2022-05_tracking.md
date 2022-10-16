@@ -141,3 +141,6 @@
 | 2022-10-10 | :white_check_mark: |
 | 2022-10-11 | :white_check_mark: |
 | 2022-10-12 | :white_check_mark: |
+| 2022-10-13 | :white_check_mark: |
+| 2022-10-14 | :white_check_mark: |
+| 2022-10-15 | :boom: |
