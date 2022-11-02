@@ -1,159 +1,66 @@
 # Tracking
 
-| Date | Status |
-|-|-|
-| 2022-05-27 | :x: |
-| 2022-05-28 | :white_check_mark: |
-| 2022-05-29 | :white_check_mark: |
-| 2022-05-30 | :white_check_mark: |
-| 2022-05-31 | :white_check_mark: |
-| 2022-06-01 | :white_check_mark: |
-| 2022-06-02 | :white_check_mark: |
-| 2022-06-03 | :white_check_mark: |
-| 2022-06-04 | :white_check_mark: |
-| 2022-06-05 | :white_check_mark: |
-| 2022-06-06 | :white_check_mark: |
-| 2022-06-07 | :question: |
-| 2022-06-08 | :white_check_mark: |
-| 2022-06-09 | :white_check_mark: |
-| 2022-06-10 | :white_check_mark: |
-| 2022-06-11 | :question: |
-| 2022-06-12 | :x: |
-| 2022-06-13 | :white_check_mark: |
-| 2022-06-14 | :white_check_mark: |
-| 2022-06-15 | :white_check_mark: |
-| 2022-06-16 | :white_check_mark: |
-| 2022-06-17 | :white_check_mark: |
-| 2022-06-18 | :question: |
-| 2022-06-19 | :white_check_mark: |
-| 2022-06-20 | :white_check_mark: |
-| 2022-06-21 | :white_check_mark: |
-| 2022-06-22 | :white_check_mark: |
-| 2022-06-23 | :white_check_mark: |
-| 2022-06-24 | :x: |
-| 2022-06-25 | :x: |
-| 2022-06-26 | :white_check_mark: |
-| 2022-06-27 | :white_check_mark: |
-| 2022-06-28 | :white_check_mark: |
-| 2022-06-29 | :white_check_mark: |
-| 2022-06-30 | :question: |
-| 2022-07-01 | :question: |
-| 2022-07-02 | :x: |
-| 2022-07-03 | :white_check_mark: |
-| 2022-07-04 | :white_check_mark: |
-| 2022-07-05 | :white_check_mark: |
-| 2022-07-06 | :white_check_mark: |
-| 2022-07-07 | :white_check_mark: |
-| 2022-07-08 | :white_check_mark: |
-| 2022-07-09 | :white_check_mark: |
-| 2022-07-10 | :white_check_mark: |
-| 2022-07-11 | :white_check_mark: |
-| 2022-07-12 | :white_check_mark: |
-| 2022-07-13 | :white_check_mark: |
-| 2022-07-14 | :white_check_mark: |
-| 2022-07-15 | :x: |
-| 2022-07-16 | :x: |
-| 2022-07-17 | :white_check_mark: |
-| 2022-07-18 | :white_check_mark: |
-| 2022-07-19 | :white_check_mark: |
-| 2022-07-20 | :white_check_mark: |
-| 2022-07-21 | :white_check_mark: |
-| 2022-07-22 | :white_check_mark: |
-| 2022-07-23 | :white_check_mark: |
-| 2022-07-24 | :white_check_mark: |
-| 2022-07-25 | :white_check_mark: |
-| 2022-07-26 | :x: |
-| 2022-07-27 | :x: |
-| 2022-07-28 | :white_check_mark: |
-| 2022-07-29 | :white_check_mark: |
-| 2022-07-30 | :white_check_mark: |
-| 2022-07-31 | :white_check_mark: |
-| 2022-08-01 | :white_check_mark: |
-| 2022-08-02 | :white_check_mark: |
-| 2022-08-03 | :white_check_mark: |
-| 2022-08-04 | :white_check_mark: |
-| 2022-08-05 | :white_check_mark: |
-| 2022-08-06 | :white_check_mark: |
-| 2022-08-07 | :white_check_mark: |
-| 2022-08-08 | :white_check_mark: |
-| 2022-08-09 | :white_check_mark: |
-| 2022-08-10 | :white_check_mark: |
-| 2022-08-11 | :white_check_mark: |
-| 2022-08-12 | :white_check_mark: |
-| 2022-08-13 | :white_check_mark: |
-| 2022-08-14 | :white_check_mark: |
-| 2022-08-15 | :white_check_mark: |
-| 2022-08-16 | :white_check_mark: |
-| 2022-08-17 | :question: |
-| 2022-08-18 | :question: |
-| 2022-08-19 | :x: |
-| 2022-08-20 | :white_check_mark: |
-| 2022-08-21 | :white_check_mark: |
-| 2022-08-22 | :x: |
-| 2022-08-23 | :x: |
-| 2022-08-24 | :white_check_mark: |
-| 2022-08-25 | :white_check_mark: |
-| 2022-08-26 | :white_check_mark: |
-| 2022-08-27 | :white_check_mark: |
-| 2022-08-28 | :x: |
-| 2022-08-29 | :white_check_mark: |
-| 2022-08-30 | :question: |
-| 2022-08-31 | :x: |
-| 2022-09-01 | :white_check_mark: |
-| 2022-09-02 | :white_check_mark: |
-| 2022-09-03 | :white_check_mark: |
-| 2022-09-04 | :white_check_mark: |
-| 2022-09-05 | :white_check_mark: |
-| 2022-09-06 | :white_check_mark: |
-| 2022-09-07 | :white_check_mark: |
-| 2022-09-08 | :x: |
-| 2022-09-09 | :boom: |
-| 2022-09-10 | :white_check_mark: |
-| 2022-09-11 | :white_check_mark: |
-| 2022-09-12 | :white_check_mark: |
-| 2022-09-13 | :white_check_mark: |
-| 2022-09-14 | :white_check_mark: |
-| 2022-09-15 | :white_check_mark: |
-| 2022-09-16 | :white_check_mark: |
-| 2022-09-17 | :white_check_mark: |
-| 2022-09-18 | :white_check_mark: |
-| 2022-09-19 | :white_check_mark: |
-| 2022-09-20 | :white_check_mark: |
-| 2022-09-21 | :white_check_mark: |
-| 2022-09-22 | :white_check_mark: |
-| 2022-09-23 | :boom: |
-| 2022-09-24 | :white_check_mark: |
-| 2022-09-25 | :white_check_mark: |
-| 2022-09-26 | :white_check_mark: |
-| 2022-09-27 | :white_check_mark: |
-| 2022-09-28 | :question: |
-| 2022-09-29 | :question: |
-| 2022-09-30 | :white_check_mark: |
-| 2022-10-01 | :question: |
-| 2022-10-02 | :white_check_mark: |
-| 2022-10-03 | :white_check_mark: |
-| 2022-10-04 | :white_check_mark: |
-| 2022-10-05 | :white_check_mark: |
-| 2022-10-06 | :white_check_mark: |
-| 2022-10-07 | :white_check_mark: |
-| 2022-10-08 | :boom: |
-| 2022-10-09 | :white_check_mark: |
-| 2022-10-10 | :white_check_mark: |
-| 2022-10-11 | :white_check_mark: |
-| 2022-10-12 | :white_check_mark: |
-| 2022-10-13 | :white_check_mark: |
-| 2022-10-14 | :white_check_mark: |
-| 2022-10-15 | :boom: |
-| 2022-10-16 | :white_check_mark: |
-| 2022-10-17 | :white_check_mark: |
-| 2022-10-18 | :white_check_mark: |
-| 2022-10-19 | :white_check_mark: |
-| 2022-10-20 | :white_check_mark: |
-| 2022-10-21 | :white_check_mark: |
-| 2022-10-22 | :white_check_mark: |
-| 2022-10-23 | :white_check_mark: |
-| 2022-10-24 | :white_check_mark: |
-| 2022-10-25 | :white_check_mark: |
-| 2022-10-26 | :white_check_mark: |
-| 2022-10-27 | :white_check_mark: |
-| 2022-10-28 | :white_check_mark: |
+## May
+
+| S | M | T | W | T | F | S |
+|-:|-:|-:|-:|-:|-:|-:|
+| | | | | | 27 :x: | 28 :white_check_mark: |
+| 29 :white_check_mark: | 30 :white_check_mark: | 31 :white_check_mark: |
+
+## June
+
+| S | M | T | W | T | F | S |
+|-:|-:|-:|-:|-:|-:|-:|
+| | | | 1 :white_check_mark: | 2 :white_check_mark: | 3 :white_check_mark: | 4 :white_check_mark: |
+| 5 :white_check_mark: | 6 :white_check_mark: | 7 :question: | 8 :white_check_mark: | 9 :white_check_mark: | 10 :white_check_mark: | 11 :question: |
+| 12 :x: | 13 :white_check_mark: | 14 :white_check_mark: | 15 :white_check_mark: | 16 :white_check_mark: | 17 :white_check_mark: | 18 :question: |
+| 19 :white_check_mark: | 20 :white_check_mark: | 21 :white_check_mark: | 22 :white_check_mark: | 23 :white_check_mark: | 24 :x: | 25 :x: |
+| 26 :white_check_mark: | 27 :white_check_mark: | 28 :white_check_mark: | 29 :white_check_mark: | 30 :question: |
+
+## July
+
+| S | M | T | W | T | F | S |
+|-:|-:|-:|-:|-:|-:|-:|
+| | | | | | 1 :question: | 2 :x: |
+| 3 :white_check_mark: | 4 :white_check_mark: | 5 :white_check_mark: | 6 :white_check_mark: | 7 :white_check_mark: | 8 :white_check_mark: | 9 :white_check_mark: |
+| 10 :white_check_mark: | 11 :white_check_mark: | 12 :white_check_mark: | 13 :white_check_mark: | 14 :white_check_mark: | 15 :x: | 16 :x: |
+| 17 :white_check_mark: | 18 :white_check_mark: | 19 :white_check_mark: | 20 :white_check_mark: | 21 :white_check_mark: | 22 :white_check_mark: | 23 :white_check_mark: |
+| 24 :white_check_mark: | 25 :white_check_mark: | 26 :x: | 27 :x: | 28 :white_check_mark: | 29 :white_check_mark: | 30 :white_check_mark: |
+| 31 :white_check_mark: |
+
+## August
+
+| S | M | T | W | T | F | S |
+|-:|-:|-:|-:|-:|-:|-:|
+| | 1 :white_check_mark: | 2 :white_check_mark: | 3 :white_check_mark: | 4 :white_check_mark: | 5 :white_check_mark: | 6 :white_check_mark: |
+| 7 :white_check_mark: | 8 :white_check_mark: | 9 :white_check_mark: | 10 :white_check_mark: | 11 :white_check_mark: | 12 :white_check_mark: | 13 :white_check_mark: |
+| 14 :white_check_mark: | 15 :white_check_mark: | 16 :white_check_mark: | 17 :question: | 18 :question: | 19 :x: | 20 :white_check_mark: |
+| 21 :white_check_mark: | 22 :x: | 23 :x: | 24 :white_check_mark: | 25 :white_check_mark: | 26 :white_check_mark: | 27 :white_check_mark: |
+| 28 :x: | 29 :white_check_mark: | 30 :question: | 31 :x: |
+
+## September
+
+| S | M | T | W | T | F | S |
+|-:|-:|-:|-:|-:|-:|-:|
+| | | | | 1 :white_check_mark: | 2 :white_check_mark: | 3 :white_check_mark: |
+| 4 :white_check_mark: | 5 :white_check_mark: | 6 :white_check_mark: | 7 :white_check_mark: | 8 :x: | 9 :boom: | 10 :white_check_mark: |
+| 11 :white_check_mark: | 12 :white_check_mark: | 13 :white_check_mark: | 14 :white_check_mark: | 15 :white_check_mark: | 16 :white_check_mark: | 17 :white_check_mark: |
+| 18 :white_check_mark: | 19 :white_check_mark: | 20 :white_check_mark: | 21 :white_check_mark: | 22 :white_check_mark: | 23 :boom: | 24 :white_check_mark: |
+| 25 :white_check_mark: | 26 :white_check_mark: | 27 :white_check_mark: | 28 :question: | 29 :question: | 30 :white_check_mark: |
+
+## October
+
+| S | M | T | W | T | F | S |
+|-:|-:|-:|-:|-:|-:|-:|
+| | | | | | | 1 :question: |
+| 2 :white_check_mark: | 3 :white_check_mark: | 4 :white_check_mark: | 5 :white_check_mark: | 6 :white_check_mark: | 7 :white_check_mark: | 8 :boom: |
+| 9 :white_check_mark: | 10 :white_check_mark: | 11 :white_check_mark: | 12 :white_check_mark: | 13 :white_check_mark: | 14 :white_check_mark: | 15 :boom: |
+| 16 :white_check_mark: | 17 :white_check_mark: | 18 :white_check_mark: | 19 :white_check_mark: | 20 :white_check_mark: | 21 :white_check_mark: | 22 :white_check_mark: |
+| 23 :white_check_mark: | 24 :white_check_mark: | 25 :white_check_mark: | 26 :white_check_mark: | 27 :white_check_mark: | 28 :white_check_mark: | 29 :white_check_mark: |
+| 30 :white_check_mark: | 31 :white_check_mark: |
+
+## November
+
+| S | M | T | W | T | F | S |
+|-:|-:|-:|-:|-:|-:|-:|
+| | | 1 :white_check_mark: |
