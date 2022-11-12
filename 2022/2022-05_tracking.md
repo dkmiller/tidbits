@@ -26,4 +26,4 @@
 | 16 :white_check_mark: | 17 :white_check_mark: | 18 :white_check_mark: | 19 :white_check_mark: | 20 :white_check_mark: | 21 :white_check_mark: | 22 :white_check_mark: |
 | 23 :white_check_mark: | 24 :white_check_mark: | 25 :white_check_mark: | 26 :white_check_mark: | 27 :white_check_mark: | 28 :white_check_mark: | 29 :white_check_mark: |
 | 30 :white_check_mark: | 31 :white_check_mark: | **11/1** :white_check_mark: | 11/2 :white_check_mark: | 11/3 :white_check_mark: | 11/4 :white_check_mark: | 11/5 :boom: |
-| 11/6 :white_check_mark: |
+| 11/6 :white_check_mark: | 11/7 :white_check_mark: | 11/8 :white_check_mark: | 11/9 :white_check_mark: | 11/10 :white_check_mark: | 11/11 :white_check_mark: |
