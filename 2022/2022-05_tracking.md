@@ -1,5 +1,7 @@
 # Tracking
 
+Legend: :white_check_mark: &lt; :question: &lt; :x: &lt; :boom:.
+
 | Sun | Mon | Tue | Wed | Thu | Fri | Sat |
 |-:|-:|-:|-:|-:|-:|-:|
 | | | | | | **5/27** :x: | 28 :white_check_mark: |
