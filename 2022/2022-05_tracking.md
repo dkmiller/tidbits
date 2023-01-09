@@ -34,4 +34,5 @@
 | 12/11 :white_check_mark: | 12/12 :boom: | 12/13 :white_check_mark: | 12/14 :white_check_mark: | 12/15 :white_check_mark: | 12/16 :white_check_mark: | 12/17 :white_check_mark: |
 | 12/18 :white_check_mark: | 12/19 :question: | 12/20 :white_check_mark: | 12/21 :white_check_mark: | 12/22 :white_check_mark: | 12/23 :white_check_mark: | 12/24 :white_check_mark: |
 | 12/25 :white_check_mark: | 12/26 :white_check_mark: | 12/27 :white_check_mark: | 12/28 :white_check_mark: | 12/29 :question: | 12/30 :white_check_mark: | 12/31 :white_check_mark: |
-| **1/1** :white_check_mark: | 1/2 :white_check_mark: | 1/3 :white_check_mark: | 1/4 :white_check_mark: | 1/5 :white_check_mark: | 1/6 :question: |
+| **1/1** :white_check_mark: | 1/2 :white_check_mark: | 1/3 :white_check_mark: | 1/4 :white_check_mark: | 1/5 :white_check_mark: | 1/6 :question: | 1/7 :white_check_mark: |
+| 1/8 :question: | 1/9 :question: |
