@@ -1,0 +1,3 @@
+streamlit-ace==0.1.1
+streamlit==1.17.0
+sqlglot==10.5.3
