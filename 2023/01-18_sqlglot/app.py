@@ -1,7 +1,10 @@
+from typing import Tuple
+
+import streamlit as st
 from sqlglot import parse_one
 from sqlglot.expressions import Expression
-import streamlit as st
 from streamlit_ace import st_ace
+from streamlit_agraph import Config, Edge, Node, agraph
 
 
 def name(e: Expression):
@@ -10,46 +13,21 @@ def name(e: Expression):
 
 
 def visit(expr: Expression):
-    __lines = []
+    lines = set()
 
-    def _prune(item, parent, key):
-        # print(f"I'm at {name(item)}")
-        print(f'{name(item)}[label="({type(item).__name__}) {item}"];')
-        __lines.append(f'{name(item)}[label="({type(item).__name__}) {item}"];')
+    def prune(item, parent, _):
+        lines.add(f'{name(item)}[label="({type(item).__name__}) {item}"];')
         if parent:
-            __lines.append(f"{name(parent)} -- {name(item)};")
-            print(f"{name(parent)} -- {name(item)};")
-        #     print(f"\tparent = {name(parent)}")
-        # if key:
-        #     print(f"\tkey = {key}")
+            lines.add(f"{name(parent)} -- {name(item)};")
 
-    list(expr.bfs(prune=_prune))
-    body = "\n".join(__lines)
+    list(expr.bfs(prune=prune))
+    body = "\n".join(lines)
     return f"""
 graph {{
   {body}
 }}
     """
-    # return False
-    # print(f"{expr.alias_or_name or id(expr)} {type(expr).__name__}")
-    # for x in tree.bfs(prune=_prune):
-    #     print(f"---> {type(x[0])}")
-    # visit(x[0])
-    #     print(x)
-    # print(len(expr.expressions))
-    # for e in expr.expressions:
-    #     visit(e)
 
-
-# tree = parse_one("SELECT a + 1 AS z")
-# # print(tree.alias_or_name)
-# # print(type(tree).__name__)
-# # print(list(map(type,tree.expressions)))
-
-# visit(tree)
-
-
-# print(repr(tree))
 
 # Spawn a new Ace editor
 content = st_ace(value="SELECT a + 1 AS z", language="sql")
@@ -59,3 +37,21 @@ tree = parse_one(content)
 x = visit(tree)
 
 st.graphviz_chart(x)
+
+
+def to_agraph(e: Expression) -> Tuple[set, set]:
+    nodes = set()
+    edges = set()
+
+    def prune(item, parent, _):
+        nodes.add(Node(id=name(item), label=f"({type(item).__name__}) {item}"))
+        if parent:
+            edges.add(Edge(source=name(parent), target=name(item)))
+
+    list(e.bfs(prune=prune))
+    return nodes, edges
+
+
+nodes, edges = to_agraph(tree)
+
+agraph(nodes=nodes, edges=edges, config=Config())
