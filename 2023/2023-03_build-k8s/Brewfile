@@ -1,0 +1,2 @@
+brew "kind"
+brew "kubectl"
