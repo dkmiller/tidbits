@@ -66,4 +66,11 @@ Legend: :white_check_mark: &lt; :question: &lt; :x: &lt; :boom:.
 | 2 :white_check_mark: | 3 :white_check_mark: | 4 :white_check_mark: | 5 :white_check_mark: | 6 :white_check_mark: | 7 :x: | 8 :x: |
 | 9 :white_check_mark: | 10 :white_check_mark: | 11 :white_check_mark: | 12 :white_check_mark: | 13 :white_check_mark: | 14 :boom: | 15 :boom: |
 | 16 :boom: | 17 :white_check_mark: | 18 :white_check_mark: | 19 :white_check_mark: | 20 :white_check_mark: | 21 :white_check_mark: | 22 :white_check_mark: |
-| 23 :white_check_mark: | 25 :white_check_mark: | 26 :white_check_mark: | 27 :white_check_mark: | 28 :white_check_mark: | 29 :question: |
+| 23 :white_check_mark: | 24 :white_check_mark: | 25 :white_check_mark: | 26 :white_check_mark: | 27 :white_check_mark: | 28 :white_check_mark: | 29 :question: |
+| 30 :white_check_mark: |
+
+## May 2023
+
+| Sun | Mon | Tue | Wed | Thu | Fri | Sat |
+|-:|-:|-:|-:|-:|-:|-:|
+| | 1 :white_check_mark: | 2 :white_check_mark: | 3 :white_check_mark: |
