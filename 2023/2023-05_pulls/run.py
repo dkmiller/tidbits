@@ -58,6 +58,7 @@ async def main(args):
             # print(pull)
             # print("=" * 200)
             # print(f"/repos/{args.repo}/pulls/{pull['number']}/comments")
+            # https://stackoverflow.com/a/62585232
             comments = [c async for c in gh.getiter(f"/repos/{args.repo}/pulls/{pull['number']}/comments")]
             patch_set = PatchSet(diff)
 
