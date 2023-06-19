@@ -1,0 +1,3 @@
+find-primes==2.2.1
+streamlit==1.23.1
+pyppeteer==1.0.2
