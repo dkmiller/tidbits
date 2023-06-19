@@ -6,10 +6,10 @@ https://kind.sigs.k8s.io/docs/user/quick-start/#installation
 kind create cluster --config kind.yaml
 
 docker build -t api:0.0.1 containers/api/
-docker build -t ui:0.0.3 containers/ui/
+docker build -t ui:0.0.4 containers/ui/
 
 # "Ship" Docker images to local cluster.
-kind load docker-image api:0.0.1 ui:0.0.3
+kind load docker-image api:0.0.1 ui:0.0.4
 
 # https://stackoverflow.com/a/59493623
 kubectl apply -R -f k8s
@@ -33,9 +33,9 @@ http://localhost:8001/ui
 
 [`kubectl` Cheat Sheet](https://kubernetes.io/docs/reference/kubectl/cheatsheet/)
 
-https://fastapi.tiangolo.com/tutorial/first-steps/
+[FastAPI &gt; First Steps](https://fastapi.tiangolo.com/tutorial/first-steps/)
 
-https://kubernetes.io/docs/concepts/workloads/controllers/deployment/
+[Kubernetes &gt; Deployments](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/)
 
 https://iximiuz.com/en/posts/kubernetes-kind-load-docker-image/
 
@@ -56,3 +56,7 @@ https://kubernetes.io/docs/tutorials/
 https://kubernetes.io/docs/concepts/workloads/controllers/deployment/
 
 https://kubernetes.io/docs/concepts/workloads/pods/#working-with-pods
+
+https://kubernetes.io/docs/tasks/access-application-cluster/web-ui-dashboard/
+
+- https://stackoverflow.com/a/52176544
