@@ -1,0 +1,4 @@
+# bases:
+# - .
+patchesStrategicMerge:
+- overlays/images/ui.yaml

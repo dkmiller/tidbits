@@ -27,6 +27,11 @@ http://localhost:8001/ui
 
 ## Future
 
+- [ ] Python package to facilitate seamless development. It should provide
+      commands for:
+    - https://cachelib.readthedocs.io/en/stable/file/
+    - https://pypi.org/project/dirhash/
+    - https://www.mirantis.com/blog/introduction-to-kustomize-part-1-creating-a-kubernetes-app-out-of-multiple-pieces/
 - [ ] Build \& tag Docker images as `${name}:${dirhash}`.
 
 ## Links
@@ -60,3 +65,5 @@ https://kubernetes.io/docs/concepts/workloads/pods/#working-with-pods
 https://kubernetes.io/docs/tasks/access-application-cluster/web-ui-dashboard/
 
 - https://stackoverflow.com/a/52176544
+
+[Four-letter gods](https://anch.info/eng/fortuities/names/855/)
