@@ -9,3 +9,4 @@ Named after the
 - https://injector.readthedocs.io/
 - https://cachelib.readthedocs.io/file/
 - https://rich.readthedocs.io/
+- https://docker-py.readthedocs.io/

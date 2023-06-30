@@ -1,10 +1,13 @@
 from dataclasses import dataclass
+from itertools import chain
 from pathlib import Path
+from typing import Iterable
 
 from dirhash import dirhash
+from injector import Module, provider
 
 
-@dataclass(frozen=True)
+@dataclass
 class ImageDefinition:
     """
     Local definition of Docker image.
@@ -25,11 +28,21 @@ class ImageDefinition:
     def tag(self):
         return dirhash(str(self.location.parent.absolute()), self.algorithm)[:7]
 
+    @property
+    def uri(self):
+        return f"{self.name}:{self.tag}"
 
-@dataclass(frozen=True)
-class ImageClient:
+
+@dataclass
+class ImageClient(Module):
     """
     Detect Docker image definitions.
     """
 
     root: str
+
+    @provider
+    def image_definitions(self) -> Iterable[ImageDefinition]:
+        with_stem = Path(self.root).rglob("*.[dD]ockerfile")
+        without_stem = Path(self.root).rglob("[dD]ockerfile")
+        return map(ImageDefinition, chain(with_stem, without_stem))
