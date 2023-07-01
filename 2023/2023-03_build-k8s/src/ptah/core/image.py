@@ -1,10 +1,10 @@
 from dataclasses import dataclass
 from itertools import chain
 from pathlib import Path
-from typing import Iterable
+from typing import List
 
 from dirhash import dirhash
-from injector import Module, provider
+from injector import Module, multiprovider
 
 
 @dataclass
@@ -41,8 +41,8 @@ class ImageClient(Module):
 
     root: str
 
-    @provider
-    def image_definitions(self) -> Iterable[ImageDefinition]:
+    @multiprovider
+    def image_definitions(self) -> List[ImageDefinition]:
         with_stem = Path(self.root).rglob("*.[dD]ockerfile")
         without_stem = Path(self.root).rglob("[dD]ockerfile")
-        return map(ImageDefinition, chain(with_stem, without_stem))
+        return list(map(ImageDefinition, chain(with_stem, without_stem)))

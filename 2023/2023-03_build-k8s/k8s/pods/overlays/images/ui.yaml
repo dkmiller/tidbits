@@ -1,7 +1,0 @@
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: ui-deployment
-
-spec:
-  image: ui:0.0.5

@@ -33,6 +33,8 @@ http://localhost:8001/ui
     - https://pypi.org/project/dirhash/
     - https://www.mirantis.com/blog/introduction-to-kustomize-part-1-creating-a-kubernetes-app-out-of-multiple-pieces/
 - [ ] Build \& tag Docker images as `${name}:${dirhash}`.
+- [ ] OpenTelemetry: https://www.reddit.com/r/kubernetes/comments/13ce38b/opentelemetry_visualization/
+      https://github.com/magsther/awesome-opentelemetry
 
 ## Links
 

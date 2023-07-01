@@ -2,11 +2,11 @@ import typer
 from injector import Injector
 from rich import print
 
-from ptah.core import DockerClient, ImageClient
+from ptah.core import CacheClient, DockerClient, ImageClient
 
 
 def _injector(src: str, output: str):
-    return Injector([ImageClient(src)], auto_bind=True)
+    return Injector([CacheClient(), ImageClient(src)], auto_bind=True)
 
 
 app = typer.Typer()
@@ -26,12 +26,13 @@ def build(src: str = ".", output: str = ".build"):
 
 
 @app.command()
-def deploy(name: str, formal: bool = False):
+def deploy(src: str = ".", output: str = ".build"):
     """
     Publishes relevant Docker images to the appropriate feed; then ship any
     Kubernetes changes.
     """
-    if formal:
-        print(f"Goodbye Ms. {name}. Have a good day.")
-    else:
-        print(f"Bye {name}!")
+    build(src, output)
+
+    injector = _injector(src, output)
+    docker = injector.get(DockerClient)
+    docker.push()
