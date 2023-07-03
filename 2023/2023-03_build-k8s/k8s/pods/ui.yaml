@@ -5,7 +5,7 @@ metadata:
   labels:
     app: ui
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: ui
@@ -19,7 +19,7 @@ spec:
         image: ui:${ptah}
         ports:
         - containerPort: 8501
-    # https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/#define-a-liveness-command
+        # https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/#define-a-liveness-command
         # readinessProbe:
         #   exec:
         #     command:

@@ -5,8 +5,8 @@ https://github.com/dkmiller/notes/blob/main/airbnb/2023/06/12.md
 import asyncio
 import logging
 from argparse import ArgumentParser
-from pyppeteer import launch
 
+from pyppeteer import launch
 
 log = logging.getLogger(__name__)
 

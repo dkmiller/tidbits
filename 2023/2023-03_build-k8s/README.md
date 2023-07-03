@@ -16,6 +16,7 @@ kubectl apply -R -f k8s
 
 # Port forward:
 kubectl port-forward deployment/ui-deployment 8501:8501
+kubectl port-forward deployment/api-deployment 8000:8000
 
 # Cleanup
 kubectl delete deployments,ingress,pods,services --all
@@ -25,18 +26,21 @@ docker system prune --all --force
 
 https://stackoverflow.com/a/52176544/
 
-http://localhost:8001/ui
+Visiting the admin:
 
-http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/#/login
+```bash
+kubectl -n kubernetes-dashboard create token admin-user
+kubectl proxy
+```
+
+Pages:
+
+- Dashboard: http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/
+- UI: http://localhost:8501/
+- API: http://localhost:8000/docs
 
 ## Future
 
-- [ ] Python package to facilitate seamless development. It should provide
-      commands for:
-    - https://cachelib.readthedocs.io/en/stable/file/
-    - https://pypi.org/project/dirhash/
-    - https://www.mirantis.com/blog/introduction-to-kustomize-part-1-creating-a-kubernetes-app-out-of-multiple-pieces/
-- [ ] Build \& tag Docker images as `${name}:${dirhash}`.
 - [ ] OpenTelemetry: https://www.reddit.com/r/kubernetes/comments/13ce38b/opentelemetry_visualization/
       https://github.com/magsther/awesome-opentelemetry
 
@@ -48,9 +52,7 @@ http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kube
 
 [Kubernetes &gt; Deployments](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/)
 
-https://iximiuz.com/en/posts/kubernetes-kind-load-docker-image/
-
-https://kind.sigs.k8s.io/docs/user/ingress/
+[KiND &mdash; How I Wasted a Day Loading Local Docker Images](https://iximiuz.com/en/posts/kubernetes-kind-load-docker-image/)
 
 ----
 

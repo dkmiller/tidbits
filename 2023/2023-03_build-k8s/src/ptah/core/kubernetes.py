@@ -11,7 +11,6 @@ from rich import print
 from ptah.core.image import ImageDefinition
 from ptah.core.shell import ShellClient
 
-
 URL = re.compile(r"\$\{(https://.+)\}")
 
 
