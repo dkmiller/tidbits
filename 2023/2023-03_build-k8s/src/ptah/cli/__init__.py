@@ -28,7 +28,7 @@ def build(src: str = ".", output: str = ".build"):
 
 
 @app.command()
-def deploy(src: str = ".", output: str = ".build"):
+def ship(src: str = ".", output: str = ".build"):
     """
     Publishes relevant Docker images to the appropriate feed; then ship any
     Kubernetes changes.

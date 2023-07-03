@@ -19,6 +19,8 @@ kubectl port-forward deployment/ui-deployment 8501:8501
 
 # Cleanup
 kubectl delete deployments,ingress,pods,services --all
+
+docker system prune --all --force
 ```
 
 https://stackoverflow.com/a/52176544/
