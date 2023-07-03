@@ -9,7 +9,10 @@ console = Console()
 
 
 class ShellClient:
-    def run(self, args: List[str]):
+    def __call__(self, *args: str) -> str:
+        return self.run(list(args))
+
+    def run(self, args: List[str]) -> str:
         """
         TODO: follow https://janakiev.com/blog/python-shell-commands/ and stream output.
         """
@@ -18,6 +21,7 @@ class ShellClient:
             result = subprocess.run(args, stderr=subprocess.PIPE, stdout=subprocess.PIPE)
 
             if result.returncode != 0:
+                # https://johnlekberg.com/blog/2020-04-03-codec-errors.html
                 console.print(result.stdout.decode(errors="replace"))
                 console.print(result.stderr.decode(errors="replace"))
                 console.print(

@@ -37,4 +37,7 @@ def ship(src: str = ".", output: str = ".build"):
 
     injector = _injector(src, output)
     docker = injector.get(DockerClient)
+    k8s = injector.get(KubernetesClient)
+
     docker.push()
+    k8s.apply(output)

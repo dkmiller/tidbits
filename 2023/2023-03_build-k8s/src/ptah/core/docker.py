@@ -4,12 +4,9 @@ from typing import List
 from cachelib import FileSystemCache
 from injector import inject
 from rich import print
-from rich.console import Console
 
 from ptah.core.image import ImageDefinition
 from ptah.core.shell import ShellClient
-
-console = Console()
 
 
 @inject

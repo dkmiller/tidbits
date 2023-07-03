@@ -4,14 +4,21 @@ from pathlib import Path
 from typing import List
 
 from injector import inject
+from rich import print
 
 from ptah.core.image import ImageDefinition
+from ptah.core.shell import ShellClient
 
 
 @inject
 @dataclass
 class KubernetesClient:
+    """
+    TODO: proper way of passing source and target information around.
+    """
+
     image_definitions: List[ImageDefinition]
+    shell: ShellClient
 
     def build(self, source: str, target: str) -> None:
         try:
@@ -36,10 +43,23 @@ class KubernetesClient:
             target_path.write_text(content)
 
     def apply(self, target: str) -> None:
-        pass
+        # https://stackoverflow.com/a/59493623
+        output = self.shell("kubectl", "apply", "-R", "-f", target)
+        watch = []
+        skip = 0
+        for line in output.splitlines():
+            resource, status = line.split(maxsplit=1)
+            if resource.startswith("deployment.") and status != "unchanged":
+                # https://linuxhint.com/kubectl-list-deployments/
+                # kubectl rollout status deployment.apps/ui-deployment
+                watch.append(["kubectl", "rollout", "status", resource])
+            else:
+                skip += 1
 
+        msg = f"Watching {len(watch)} Kubernetes resources"
+        if skip:
+            msg += f" ({skip} unchanged)"
+        print(msg)
 
-# # https://stackoverflow.com/a/59493623
-# kubectl apply -R -f k8s
-
-# TODO: how to wait till deployment completes?
+        for w in watch:
+            self.shell.run(w)
