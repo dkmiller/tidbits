@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
       - name: api
-        image: api:0.0.1
+        image: api:${ptah}
         ports:
         - containerPort: 8000

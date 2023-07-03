@@ -1,3 +1,4 @@
 *.lock*
 *.egg-info/
+.build/
 .ptah/

@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: ui
-        image: ui:0.0.4
+        image: ui:${ptah}
         ports:
         - containerPort: 8501
     # https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/#define-a-liveness-command

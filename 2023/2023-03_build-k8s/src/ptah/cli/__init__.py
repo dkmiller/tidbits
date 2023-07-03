@@ -2,7 +2,7 @@ import typer
 from injector import Injector
 from rich import print
 
-from ptah.core import CacheClient, DockerClient, ImageClient
+from ptah.core import CacheClient, DockerClient, ImageClient, KubernetesClient
 
 
 def _injector(src: str, output: str):
@@ -22,7 +22,9 @@ def build(src: str = ".", output: str = ".build"):
 
     injector = _injector(src, output)
     docker = injector.get(DockerClient)
+    k8s = injector.get(KubernetesClient)
     docker.build()
+    k8s.build(src, output)
 
 
 @app.command()

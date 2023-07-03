@@ -73,4 +73,4 @@ class DockerClient:
                 # https://codeberg.org/hjacobs/pytest-kind/src/branch/main/pytest_kind/cluster.py
                 subprocess.run(["kind", "load", "docker-image"] + uris, check=True)
                 for uri in uris:
-                    self.cache.add(uri, "any")
+                    self.cache.set(uri, "any")
