@@ -1,13 +1,18 @@
+import re
 import shutil
 from dataclasses import dataclass
 from pathlib import Path
 from typing import List
 
+import requests
 from injector import inject
 from rich import print
 
 from ptah.core.image import ImageDefinition
 from ptah.core.shell import ShellClient
+
+
+URL = re.compile(r"\$\{(https://.+)\}")
 
 
 @inject
@@ -30,12 +35,18 @@ class KubernetesClient:
 
         for yaml in yamls:
             content = yaml.read_text()
+            m = URL.match(content)
+
             # TODO: proper way of detecting Kubernetes specs.
-            if "spec:" not in content:
+            if "spec:" not in content and "metadata:" not in content and not m:
                 continue
 
             for image in self.image_definitions:
                 content = content.replace(f"{image.name}:${{ptah}}", image.uri)
+
+            if m:
+                substitute = requests.get(m.group(1)).text
+                content = URL.sub(substitute, content)
 
             relative = str(yaml.relative_to(source))
             target_path = Path(target) / relative
@@ -47,6 +58,9 @@ class KubernetesClient:
         output = self.shell("kubectl", "apply", "-R", "-f", target)
         watch = []
         skip = 0
+        # TODO: stream events:
+        # https://stackoverflow.com/a/51931477/2543689
+        # kubectl get events --field-selector involvedObject.name=ui-deployment-7458788c98-szpxt
         for line in output.splitlines():
             resource, status = line.split(maxsplit=1)
             if resource.startswith("deployment.") and status != "unchanged":

@@ -27,6 +27,8 @@ https://stackoverflow.com/a/52176544/
 
 http://localhost:8001/ui
 
+http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/#/login
+
 ## Future
 
 - [ ] Python package to facilitate seamless development. It should provide

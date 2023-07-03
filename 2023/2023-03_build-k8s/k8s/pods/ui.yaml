@@ -20,9 +20,9 @@ spec:
         ports:
         - containerPort: 8501
     # https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/#define-a-liveness-command
-        readinessProbe:
-          exec:
-            command:
-            - /src/liveness.sh
-          initialDelaySeconds: 5
-          periodSeconds: 5
+        # readinessProbe:
+        #   exec:
+        #     command:
+        #     - /src/liveness.sh
+        #   initialDelaySeconds: 6
+        #   periodSeconds: 6
