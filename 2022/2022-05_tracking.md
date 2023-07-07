@@ -94,4 +94,4 @@ Legend: :white_check_mark: &lt; :question: &lt; :x: &lt; :boom:.
 | Sun | Mon | Tue | Wed | Thu | Fri | Sat |
 |-:|-:|-:|-:|-:|-:|-:|
 | | | | | | | 1 :white_check_mark: |
-| 2 :white_check_mark: |
+| 2 :white_check_mark: | 3 :white_check_mark: | 4 :white_check_mark: | 5 :white_check_mark: | 6 :white_check_mark: |
