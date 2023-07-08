@@ -7,3 +7,5 @@ echo "Hi from the liveness probe at $(date +%s)"
 echo "Hi from the liveness probe at $(date +%s)" > /proc/1/fd/1
 
 python /src/probe.py
+
+echo "Goodbye from the liveness probe at $(date +%s)" > /proc/1/fd/1

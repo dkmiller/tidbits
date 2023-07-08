@@ -16,18 +16,43 @@ kubectl apply -R -f k8s
 
 # Port forward:
 kubectl port-forward deployment/ui-deployment 8501:8501
+kubectl port-forward deployment/api-deployment 8000:8000
 
 # Cleanup
 kubectl delete deployments,ingress,pods,services --all
+
+docker system prune --all --force
 ```
 
 https://stackoverflow.com/a/52176544/
 
-http://localhost:8001/ui
+Visiting the admin. First command creates a token and copies it to the clipboard.
+
+```bash
+kubectl -n kubernetes-dashboard create token admin-user | pbcopy
+kubectl proxy
+```
+
+Pages:
+
+- Dashboard: http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/
+- UI: http://localhost:8501/
+- API: http://localhost:8000/docs
+
+Calling "localhost" from _inside_ a Docker image:
+
+```bash
+curl host.docker.internal:8000
+```
 
 ## Future
 
-- [ ] Build \& tag Docker images as `${name}:${dirhash}`.
+- [ ] OpenTelemetry: https://www.reddit.com/r/kubernetes/comments/13ce38b/opentelemetry_visualization/
+      https://github.com/magsther/awesome-opentelemetry
+- [ ] Liveness probe takes screenshot
+    - https://github.com/puppeteer/puppeteer/issues/4039
+    - https://github.com/puppeteer/puppeteer/issues/1947
+    - https://github.com/isholgueras/chrome-headless/issues/1
 
 ## Links
 
@@ -37,9 +62,7 @@ http://localhost:8001/ui
 
 [Kubernetes &gt; Deployments](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/)
 
-https://iximiuz.com/en/posts/kubernetes-kind-load-docker-image/
-
-https://kind.sigs.k8s.io/docs/user/ingress/
+[KiND &mdash; How I Wasted a Day Loading Local Docker Images](https://iximiuz.com/en/posts/kubernetes-kind-load-docker-image/)
 
 ----
 
@@ -60,3 +83,11 @@ https://kubernetes.io/docs/concepts/workloads/pods/#working-with-pods
 https://kubernetes.io/docs/tasks/access-application-cluster/web-ui-dashboard/
 
 - https://stackoverflow.com/a/52176544
+
+[Four-letter gods](https://anch.info/eng/fortuities/names/855/)
+
+https://stackoverflow.com/a/63112795
+
+https://github.com/davidteather/TikTok-Api/issues/178#issuecomment-657244793
+
+[Use await in python REPL directly](https://stackoverflow.com/a/68218635)

@@ -5,7 +5,7 @@ metadata:
   labels:
     app: api
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: api
@@ -16,6 +16,11 @@ spec:
     spec:
       containers:
       - name: api
-        image: api:0.0.1
+        image: api:${ptah}
         ports:
         - containerPort: 8000
+        # https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8000

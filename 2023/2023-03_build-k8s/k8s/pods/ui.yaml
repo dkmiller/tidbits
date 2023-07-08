@@ -5,7 +5,7 @@ metadata:
   labels:
     app: ui
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: ui
@@ -16,13 +16,23 @@ spec:
     spec:
       containers:
       - name: ui
-        image: ui:0.0.4
+        image: ui:${ptah}
         ports:
         - containerPort: 8501
-    # https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/#define-a-liveness-command
+        # https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/#define-a-liveness-command
+        # https://loft.sh/blog/kubernetes-readiness-probes-examples-and-common-pitfalls/
+        # https://kubebyexample.com/learning-paths/application-development-kubernetes/lesson-4-customize-deployments-application-2
         readinessProbe:
-          exec:
-            command:
-            - /src/liveness.sh
-          initialDelaySeconds: 5
-          periodSeconds: 5
+          httpGet:
+            path: /healthz
+            port: 8501
+
+        # TODO: bring this back.
+        # livenessProbe:
+        #   exec:
+        #     command:
+        #     - /src/liveness.sh
+        #   initialDelaySeconds: 6
+        #   periodSeconds: 6
+        #   # This needs a long timeout b/c the prime counting is slow.
+        #   timeoutSeconds: 45
