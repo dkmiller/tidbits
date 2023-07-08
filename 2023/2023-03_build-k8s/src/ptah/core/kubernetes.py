@@ -34,7 +34,7 @@ class KubernetesClient:
 
         for yaml in yamls:
             content = yaml.read_text()
-            m = URL.match(content)
+            m = URL.search(content, re.MULTILINE)
 
             # TODO: proper way of detecting Kubernetes specs.
             if "spec:" not in content and "metadata:" not in content and not m:

@@ -39,10 +39,20 @@ Pages:
 - UI: http://localhost:8501/
 - API: http://localhost:8000/docs
 
+Calling "localhost" from _inside_ a Docker image:
+
+```bash
+curl host.docker.internal:8000
+```
+
 ## Future
 
 - [ ] OpenTelemetry: https://www.reddit.com/r/kubernetes/comments/13ce38b/opentelemetry_visualization/
       https://github.com/magsther/awesome-opentelemetry
+- [ ] Liveness probe takes screenshot
+    - https://github.com/puppeteer/puppeteer/issues/4039
+    - https://github.com/puppeteer/puppeteer/issues/1947
+    - https://github.com/isholgueras/chrome-headless/issues/1
 
 ## Links
 
@@ -75,3 +85,9 @@ https://kubernetes.io/docs/tasks/access-application-cluster/web-ui-dashboard/
 - https://stackoverflow.com/a/52176544
 
 [Four-letter gods](https://anch.info/eng/fortuities/names/855/)
+
+https://stackoverflow.com/a/63112795
+
+https://github.com/davidteather/TikTok-Api/issues/178#issuecomment-657244793
+
+[Use await in python REPL directly](https://stackoverflow.com/a/68218635)

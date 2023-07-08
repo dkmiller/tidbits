@@ -26,7 +26,14 @@ class ImageDefinition:
 
     @property
     def tag(self):
-        return dirhash(str(self.location.parent.absolute()), self.algorithm)[:7]
+        dockerignore = self.location.parent / ".dockerignore"
+
+        if dockerignore.exists():
+            ignore = dockerignore.read_text().splitlines()
+        else:
+            ignore = None
+
+        return dirhash(str(self.location.parent.absolute()), self.algorithm, ignore=ignore)[:7]
 
     @property
     def uri(self):
