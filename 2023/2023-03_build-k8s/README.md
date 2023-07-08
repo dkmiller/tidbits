@@ -26,10 +26,10 @@ docker system prune --all --force
 
 https://stackoverflow.com/a/52176544/
 
-Visiting the admin:
+Visiting the admin. First command creates a token and copies it to the clipboard.
 
 ```bash
-kubectl -n kubernetes-dashboard create token admin-user
+kubectl -n kubernetes-dashboard create token admin-user | pbcopy
 kubectl proxy
 ```
 
