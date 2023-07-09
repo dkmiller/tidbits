@@ -22,3 +22,14 @@ count = prime_count(upper_bound)
 
 
 st.write(f"There are {count} primes <= {upper_bound}")
+
+
+route = st.text_input("URL route", "/")
+# impo
+
+# TODO: call (https://www.tutorialworks.com/kubernetes-pod-communication/)
+# http://api-service:8000
+# if deployed and localhost if local.
+
+# Make this a "proper" Python package which is installed in the Dockerfile.
+# Ideally exposing "app" and "probe" commands which simplify the Dockerfile.

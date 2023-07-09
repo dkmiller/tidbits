@@ -2,9 +2,10 @@ FROM python:3.11
 
 WORKDIR /src/
 
-COPY requirements.txt /src/
-RUN pip install -r requirements.txt
+COPY pyproject.toml /src/
+COPY api/__init__.py /src/api/
+RUN pip install -e .
 
 COPY . /src/
 
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0"]
+CMD ["api"]
