@@ -1,8 +1,17 @@
+import webbrowser
+
+import pyperclip
 import typer
 from injector import Injector
 from rich import print
 
-from ptah.core import CacheClient, DockerClient, ImageClient, KubernetesClient
+from ptah.core import (
+    CacheClient,
+    DockerClient,
+    ImageClient,
+    KubernetesClient,
+    ShellClient,
+)
 
 
 def _injector(src: str, output: str):
@@ -41,3 +50,17 @@ def ship(src: str = ".", output: str = ".build"):
 
     docker.push()
     k8s.apply(output)
+
+
+@app.command()
+def dash(namespace: str = "kubernetes-dashboard", user: str = "admin-user"):
+    """
+    Obtain the appropriate auth token, then open the Kubernetes dashboard with that token copied to
+    the clipboard.
+    """
+    injector = _injector(None, None)  # type: ignore
+    shell = injector.get(ShellClient)
+    token = shell("kubectl", "-n", namespace, "create", "token", user)
+    pyperclip.copy(token)
+    url = f"http://localhost:8001/api/v1/namespaces/{namespace}/services/https:{namespace}:/proxy/"
+    webbrowser.open(url)

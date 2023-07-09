@@ -29,7 +29,7 @@ https://stackoverflow.com/a/52176544/
 Visiting the admin. First command creates a token and copies it to the clipboard.
 
 ```bash
-kubectl -n kubernetes-dashboard create token admin-user | pbcopy
+kubectl -n kubernetes-dashboard create token admin-user | pbcopy && open 'http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/'
 kubectl proxy
 ```
 
