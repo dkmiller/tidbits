@@ -1,6 +1,11 @@
+from urllib.parse import urljoin
+
+import requests
 import streamlit as st
 from find_primes import all_primes
 from streamlit.logger import get_logger
+from ui.builders import injector
+from ui.models import Context
 
 # https://github.com/streamlit/streamlit/issues/4742
 log = get_logger(__name__)
@@ -14,6 +19,9 @@ def prime_count(upper_bound: float) -> int:
 
 
 log.info("Page load")
+
+
+st.set_page_config("UI", "🌐")
 st.title("Prime helper :abacus:!")
 
 
@@ -25,21 +33,25 @@ st.write(f"There are {count} primes <= {upper_bound}")
 
 
 route = st.text_input("URL route", "/")
-# impo
-
-# TODO: call (https://www.tutorialworks.com/kubernetes-pod-communication/)
-# http://api-service:8000
-# if deployed and localhost if local.
-
-# Make this a "proper" Python package which is installed in the Dockerfile.
-# Ideally exposing "app" and "probe" commands which simplify the Dockerfile.
 
 
-# def main():
-#     from streamlit.web import bootstrap
-#     # https://stackoverflow.com/a/76130057/
-#     bootstrap.run(__file__, '', [], {})
+context = injector().get(Context)
+
+if context == context.DEPLOYED:
+    log.info("Using service-to-service domain")
+    # https://www.tutorialworks.com/kubernetes-pod-communication/
+    domain = "api-service"
+else:
+    log.info("Using port-forwarded domain")
+    domain = "localhost"
 
 
-# if __name__ == "__main__":
-#     app()
+# https://stackoverflow.com/a/8223955
+url = urljoin(f"http://{domain}:8000", route)
+
+
+with st.spinner(f"Calling `{url}`"):
+    response = requests.get(url)
+response.raise_for_status()
+
+st.write(response.json())
