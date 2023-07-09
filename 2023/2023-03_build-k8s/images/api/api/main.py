@@ -1,10 +1,9 @@
 import logging
 
-from aiohttp import ClientSession
-from fastapi import FastAPI
 import uvicorn
-
+from aiohttp import ClientSession
 from api import models
+from fastapi import FastAPI
 
 # TODO: why?
 log = logging.getLogger("uvicorn")

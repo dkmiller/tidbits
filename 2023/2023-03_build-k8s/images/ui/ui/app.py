@@ -33,3 +33,13 @@ route = st.text_input("URL route", "/")
 
 # Make this a "proper" Python package which is installed in the Dockerfile.
 # Ideally exposing "app" and "probe" commands which simplify the Dockerfile.
+
+
+# def main():
+#     from streamlit.web import bootstrap
+#     # https://stackoverflow.com/a/76130057/
+#     bootstrap.run(__file__, '', [], {})
+
+
+# if __name__ == "__main__":
+#     app()

@@ -17,7 +17,13 @@ async def main(port: int):
     log.info("Starting probe")
     # https://github.com/puppeteer/puppeteer/issues/3698#issuecomment-504648941
     # https://github.com/isholgueras/chrome-headless/issues/1#issuecomment-924713127
-    browser = await launch({"dumpio": True, "args": ["--no-sandbox", "--disable-gpu", "--disable-software-rasterizer"], "headless": True})
+    browser = await launch(
+        {
+            "dumpio": True,
+            "args": ["--no-sandbox", "--disable-gpu", "--disable-software-rasterizer"],
+            "headless": True,
+        }
+    )
     page = await browser.newPage()
     url = f"http://host.docker.internal:{port}"
     await page.goto(url)

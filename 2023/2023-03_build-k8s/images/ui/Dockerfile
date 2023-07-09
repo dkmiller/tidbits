@@ -9,10 +9,11 @@ FROM python:3.11
 # RUN apt-get update && apt-get install -y chromium chromium-driver
 
 WORKDIR /src/
-COPY requirements.txt /src/
 
-RUN pip install -r requirements.txt
+COPY pyproject.toml /src/
+COPY ui/__init__.py /src/ui/
+RUN pip install -e .
 
 COPY . /src/
 
-CMD ["streamlit", "run", "app.py"]
+CMD ["ui"]
