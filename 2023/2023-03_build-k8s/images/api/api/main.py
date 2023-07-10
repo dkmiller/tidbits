@@ -1,7 +1,8 @@
 import logging
 
-import models
+import uvicorn
 from aiohttp import ClientSession
+from api import models
 from fastapi import FastAPI
 
 # TODO: why?
@@ -34,3 +35,8 @@ async def cat_fact() -> models.CatFact:
 async def health() -> models.Health:
     # https://emmer.dev/blog/writing-meaningful-health-check-endpoints/
     return models.Health(ok=True)
+
+
+def main():
+    # https://stackoverflow.com/a/62856862
+    uvicorn.run(app, host="0.0.0.0", port=8000)
