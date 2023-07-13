@@ -8,7 +8,9 @@ authors = [
 dependencies = [
     "cachelib>=0.10.2",
     "dirhash>=0.2.1",
+    "jsonpath-ng>=1.5.3",
     "injector>=0.20.1",
+    "psutil>=5.9.5",
     "pyperclip>=1.8.2",
     "requests",
     "rich>=13.4.2",

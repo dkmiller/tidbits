@@ -1,3 +1,5 @@
+from typing import Optional
+
 import typer
 from injector import Injector
 from rich import print
@@ -68,3 +70,21 @@ def ssh(pod: str):
     # https://stackoverflow.com/a/52691455/2543689
     # open SSH session with pod using os.system
     # kubectl exec -it $(kubectl get pods --no-headers -o custom-columns=":metadata.name" | grep ui) -- /bin/bash
+
+
+@app.command()
+def forward(kill: bool = False):
+    """
+    Non-blocking command searches for relevant processes, kills them, then
+    Use `Popen` from non-blocking command to search for relevant processes,
+    then spawn `os.system(kubectl...)` inside a retry block + infinite loop.
+
+    `ptah forward --kill` shuts down all the port-forwards.
+    """
+    injector = _injector(None, None)  # type: ignore
+    fwd = injector.get(pc.Forward)
+
+    if kill:
+        fwd.terminate()
+    else:
+        fwd.ensure()
