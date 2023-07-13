@@ -75,17 +75,6 @@ def ssh(pod: str):
 @app.command()
 def forward(kill: bool = False):
     """
-    TODO: find all deployments exposing ports, then run stuff below:
-
-    ```bash
-    kubectl proxy
-
-    kubectl port-forward deployment/api-deployment 8000:8000
-    ```
-
-    The command:
-    `ptah forward --deployment api-deployment` will block and do the forwarding.
-
     Non-blocking command searches for relevant processes, kills them, then
     Use `Popen` from non-blocking command to search for relevant processes,
     then spawn `os.system(kubectl...)` inside a retry block + infinite loop.
@@ -94,15 +83,8 @@ def forward(kill: bool = False):
     """
     injector = _injector(None, None)  # type: ignore
     fwd = injector.get(pc.Forward)
-    proc = injector.get(pc.ProcessClient)
-    commands = fwd.commands()
-    print(f"Commands: {commands}")
-    # import sys
-    # sys.exit(0)
 
     if kill:
-        for args in commands:
-            proc.terminate(args)
+        fwd.terminate()
     else:
-        for args in commands:
-            proc.ensure(args)
+        fwd.ensure()

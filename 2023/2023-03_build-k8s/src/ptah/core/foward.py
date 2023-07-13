@@ -1,5 +1,4 @@
 import json
-import os
 from dataclasses import dataclass
 from typing import List
 
@@ -7,6 +6,7 @@ from injector import inject
 from jsonpath_ng import parse
 from rich import print
 
+from ptah.core.process import ProcessClient
 from ptah.core.shell import ShellClient
 
 
@@ -22,6 +22,7 @@ class Forward:
     Manage port-forwarding
     """
 
+    process: ProcessClient
     shell: ShellClient
 
     # TODO: use dependency injection for this!
@@ -46,17 +47,14 @@ class Forward:
         print(rv)
         return rv
 
-        # raise Exception(rv)
+    def terminate(self):
+        commands = self.commands()
+        print(f"Terminating {len(commands)} port-forwarding processes")
+        for args in commands:
+            self.process.terminate(args)
 
-    # def ensure(self, deployment: str):
-    #     # https://stackoverflow.com/a/37468186/
-    #     deployment_raw = self.shell("kubectl", "get", f"deployment/{deployment}", "-o", "json")
-    #     deployment_ = json.loads(deployment_raw)
-    #     port_path = parse("$..containerPort")
-    #     port = [m.value for m in port_path.find(deployment_)][0]
-    #     self.command(f"kubectl port-forward deployment/{deployment} {port}:{port}\n")
-
-    # # TODO: retry.
-    # def command(self, command: str):
-    #     print(f"Running command\n\n\t{command}")
-    #     os.system(command)
+    def ensure(self):
+        commands = self.commands()
+        print(f"Ensuring {len(commands)} port-forwarding processes")
+        for args in commands:
+            self.process.ensure(args)
