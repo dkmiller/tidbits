@@ -1,4 +1,5 @@
 from typing import Optional
+
 import typer
 from injector import Injector
 from rich import print
@@ -72,7 +73,7 @@ def ssh(pod: str):
 
 
 @app.command()
-def foward(proxy: bool = False, deployment: Optional[str] = None, kill: bool = False):
+def forward(proxy: bool = True, deployment: Optional[str] = None, kill: bool = False):
     """
     TODO: find all deployments exposing ports, then run stuff below:
 
@@ -91,3 +92,34 @@ def foward(proxy: bool = False, deployment: Optional[str] = None, kill: bool = F
 
     `ptah forward --kill` shuts down all the port-forwards.
     """
+    injector = _injector(None, None)  # type: ignore
+    fwd = injector.get(pc.ProcessClient)
+
+    if kill:
+        fwd.kill(["kubectl", "proxy"])
+    elif proxy:
+        fwd.ensure(["kubectl", "proxy"])
+        pass
+    # elif deployment:
+    #     fwd.ensure(deployment)
+    # elif kill:
+    #     pass
+    # else:
+    #     ports = fwd.ports()
+
+
+# TODO: why do args starting with `arg` not show up with `--`?
+# AHHHHHH it's required vs. optional?
+@app.command()
+def wait(my_arg: str = "hi", your_arg: int = 42):
+    from ptah.core.process import ProcessClient
+
+    ps = ProcessClient().find(["kubectl", "proxy"])
+    pids = [p.pid for p in ps]
+    print(f"Found {len(ps)} processes: {pids}")
+
+    # ProcessClient().spawn(["kubectl", "proxy"])
+    # import sys
+    # print(sys.argv)
+    # import time
+    # time.sleep(10000000)
