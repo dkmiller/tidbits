@@ -1,7 +1,6 @@
 import base64
 import json
-import os
-import shlex
+import signal
 import sys
 from subprocess import Popen
 from typing import List
@@ -9,50 +8,65 @@ from typing import List
 import psutil
 
 
+def _sigterm_handler(_signo, _stack_frame):
+    """
+    Convert the Posix SIGKILL into a Python exception which may be caught and handled:
+    https://stackoverflow.com/a/24574672
+    """
+    sys.exit(0)
+
+
 class ProcessClient:
     def run(self, args: List[str]) -> None:
-        # https://stackoverflow.com/a/847800
-        command = " ".join(map(shlex.quote, args))
-        print(f"Running {command}")
-        # TODO: retry logic.
-        # TODO: propagate "kill" logic: https://stackoverflow.com/a/43323376
-        # lsof -n -i :8001
-        val = os.system(command)
-        print(f"Return code: {val}")
+        """
+        Run the process `args`, propagating terminate signals. You can debug for processes on a
+        port with
+
+        ```bash
+        lsof -n -i :8001
+        ```
+        """
+        print(f"Running {args}")
+
+        process = Popen(args)
+
+        try:
+            # https://stackoverflow.com/a/15108096
+            return_code = process.wait()
+            print(f"Return code: {return_code}")
+        finally:
+            # https://stackoverflow.com/a/43323376
+            print(f"Killing {process.pid}")
+            process.kill()
 
     def encode(self, input: List[str]) -> str:
+        """
+        JSON-serialize, then Base64-encode, a list of strings.
+        """
         serialized = json.dumps(input)
         input_b = serialized.encode()
         input_b64 = base64.b64encode(input_b)
         rv = input_b64.decode()
-        print(f"Base 64 + JSON encode: {input} --> {rv}")
         return rv
 
-    def decode(self, input: str) -> List[str]:
-        input_b = input.encode()
-        input_b64 = base64.b64decode(input_b)
-        decoded = input_b64.decode()
+    def decode(self, encoded: str) -> List[str]:
+        """
+        Base64-decode, then JSON-deserialize, a string into a list of strings.
+        """
+        encoded_b = encoded.encode()
+        encoded_b64 = base64.b64decode(encoded_b)
+        decoded = encoded_b64.decode()
         rv = json.loads(decoded)
-        print(f"Base 64 + JSON decode: {input} --> {rv}")
         return rv
 
-    def decode_and_run(self, arg: str):
-        decoded = self.decode(arg)
-        # args = json.loads(decoded)
-        # command = self.command(args)
-        self.run(decoded)
-
-    def spawn(self, args: List[str]):
+    def spawn(self, args: List[str]) -> None:
         # https://stackoverflow.com/a/27625288/
-        # serialized = json.dumps(args)
         encoded = self.encode(args)
         print(f"Running {sys.executable} -m {__name__} {encoded}")
         p = Popen([sys.executable, "-m", __name__, encoded])
         print(f"Kicked off {p.pid}")
 
     def find(self, args: List[str]) -> List[psutil.Process]:
-        #         [p for p in psutil.process_iter(["cmdline"]) if "ptah" in str(p.info["cmdline"])][0].info["cmdline"]
-        # ['/Users/dan/miniforge3/bin/python3.9', '-m', 'ptah.core.process', 'WyJrdWJlY3RsIiwgInByb3h5Il0=']
         encoded = self.encode(args)
         rv = []
         for p in psutil.process_iter(["cmdline"]):
@@ -70,11 +84,12 @@ class ProcessClient:
                 pass
         return rv
 
-    def kill(self, args: List[str]):
+    def terminate(self, args: List[str]):
         processes = self.find(args)
         for process in processes:
-            process.terminate()  # .kill()
-        else:
+            print(f"Terminating {process.pid}")
+            process.terminate()
+        if not processes:
             print(f"Found no processes running `{args}`")
 
     def ensure(self, args: List[str]):
@@ -85,30 +100,8 @@ class ProcessClient:
             self.spawn(args)
 
 
-# list(psutil.process_iter(["cmdline"]))[-1].info["cmdline"]
-
-#     def kill(self, args: List[str]):
-#         # /Users/dan/miniforge3/bin/python3.9 -m ptah.core.process WyJrdWJlY3RsIiwgInByb3h5Il0=
-#         impo
-
-
-# import subprocess
-
-# # https://stackoverflow.com/a/27625288/2543689
-# subprocess.Popen([""])
-# python -c "import psutil; print(list(psutil.process_iter([]))[0])"
-# python -c "import psutil; print([x.name() for x in psutil.process_iter([])])"
-
-# [p.info["cmdline"] for p in psutil.process_iter([])]
-
-# [p for p in psutil.process_iter([]) if "ptah" in str(p.info["cmdline"])][0].info["cmdline"]
-
-# os.system("kubectl port-forward deployment/api-deployment 8000:8000")
-
-# >>> [p for p in psutil.process_iter([]) if "kubectl" in str(p.info["cmdline"])][0].info["cmdline"]
-# ['kubectl', 'port-forward', 'deployment/api-deployment', '8000:8000']
-
 if __name__ == "__main__":
-    import sys
-
-    ProcessClient().decode_and_run(sys.argv[-1])
+    pc = ProcessClient()
+    decoded = pc.decode(sys.argv[-1])
+    signal.signal(signal.SIGTERM, _sigterm_handler)
+    pc.run(decoded)

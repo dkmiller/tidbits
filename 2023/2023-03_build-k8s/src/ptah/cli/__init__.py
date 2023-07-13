@@ -96,7 +96,7 @@ def forward(proxy: bool = True, deployment: Optional[str] = None, kill: bool = F
     fwd = injector.get(pc.ProcessClient)
 
     if kill:
-        fwd.kill(["kubectl", "proxy"])
+        fwd.terminate(["kubectl", "proxy"])
     elif proxy:
         fwd.ensure(["kubectl", "proxy"])
         pass
@@ -106,20 +106,3 @@ def forward(proxy: bool = True, deployment: Optional[str] = None, kill: bool = F
     #     pass
     # else:
     #     ports = fwd.ports()
-
-
-# TODO: why do args starting with `arg` not show up with `--`?
-# AHHHHHH it's required vs. optional?
-@app.command()
-def wait(my_arg: str = "hi", your_arg: int = 42):
-    from ptah.core.process import ProcessClient
-
-    ps = ProcessClient().find(["kubectl", "proxy"])
-    pids = [p.pid for p in ps]
-    print(f"Found {len(ps)} processes: {pids}")
-
-    # ProcessClient().spawn(["kubectl", "proxy"])
-    # import sys
-    # print(sys.argv)
-    # import time
-    # time.sleep(10000000)
