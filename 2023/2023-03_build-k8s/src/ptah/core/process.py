@@ -10,7 +10,7 @@ import psutil
 
 def _sigterm_handler(_signo, _stack_frame):
     """
-    Convert the Posix SIGKILL into a Python exception which may be caught and handled:
+    Convert the Posix SIGTERM into a Python exception which may be caught and handled:
     https://stackoverflow.com/a/24574672
     """
     sys.exit(0)

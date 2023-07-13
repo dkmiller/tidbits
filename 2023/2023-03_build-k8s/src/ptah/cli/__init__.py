@@ -73,7 +73,7 @@ def ssh(pod: str):
 
 
 @app.command()
-def forward(proxy: bool = True, deployment: Optional[str] = None, kill: bool = False):
+def forward(kill: bool = False):
     """
     TODO: find all deployments exposing ports, then run stuff below:
 
@@ -93,16 +93,16 @@ def forward(proxy: bool = True, deployment: Optional[str] = None, kill: bool = F
     `ptah forward --kill` shuts down all the port-forwards.
     """
     injector = _injector(None, None)  # type: ignore
-    fwd = injector.get(pc.ProcessClient)
+    fwd = injector.get(pc.Forward)
+    proc = injector.get(pc.ProcessClient)
+    commands = fwd.commands()
+    print(f"Commands: {commands}")
+    # import sys
+    # sys.exit(0)
 
     if kill:
-        fwd.terminate(["kubectl", "proxy"])
-    elif proxy:
-        fwd.ensure(["kubectl", "proxy"])
-        pass
-    # elif deployment:
-    #     fwd.ensure(deployment)
-    # elif kill:
-    #     pass
-    # else:
-    #     ports = fwd.ports()
+        for args in commands:
+            proc.terminate(args)
+    else:
+        for args in commands:
+            proc.ensure(args)

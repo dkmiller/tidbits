@@ -25,7 +25,7 @@ class Forward:
     shell: ShellClient
 
     # TODO: use dependency injection for this!
-    def ports(self) -> List[Port]:
+    def commands(self) -> List[List[str]]:
         # https://stackoverflow.com/a/56259811
         deployments_raw = self.shell("kubectl", "get", "deployments", "-o", "json")
         deployments = json.loads(deployments_raw)
@@ -37,26 +37,26 @@ class Forward:
         ports = [m.value for m in port_path.find(deployments)]
         names = [m.value for m in name_path.find(deployments)]
 
-        rv = [Port(["proxy"])]
+        rv = [["kubectl", "proxy"]]
 
         for index, number in enumerate(ports):
             name = names[index]
-            rv.append(Port(["port-forward", f"deployment/{name}", f"{number}:{number}"]))
+            rv.append(["kubectl", "port-forward", f"deployment/{name}", f"{number}:{number}"])
 
         print(rv)
         return rv
 
         # raise Exception(rv)
 
-    def ensure(self, deployment: str):
-        # https://stackoverflow.com/a/37468186/
-        deployment_raw = self.shell("kubectl", "get", f"deployment/{deployment}", "-o", "json")
-        deployment_ = json.loads(deployment_raw)
-        port_path = parse("$..containerPort")
-        port = [m.value for m in port_path.find(deployment_)][0]
-        self.command(f"kubectl port-forward deployment/{deployment} {port}:{port}\n")
+    # def ensure(self, deployment: str):
+    #     # https://stackoverflow.com/a/37468186/
+    #     deployment_raw = self.shell("kubectl", "get", f"deployment/{deployment}", "-o", "json")
+    #     deployment_ = json.loads(deployment_raw)
+    #     port_path = parse("$..containerPort")
+    #     port = [m.value for m in port_path.find(deployment_)][0]
+    #     self.command(f"kubectl port-forward deployment/{deployment} {port}:{port}\n")
 
-    # TODO: retry.
-    def command(self, command: str):
-        print(f"Running command\n\n\t{command}")
-        os.system(command)
+    # # TODO: retry.
+    # def command(self, command: str):
+    #     print(f"Running command\n\n\t{command}")
+    #     os.system(command)
