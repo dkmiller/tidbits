@@ -96,4 +96,14 @@ Legend: :white_check_mark: &lt; :grey_question: &lt; :x: &lt; :boom:.
 | | | | | | | 1 :white_check_mark: |
 | 2 :white_check_mark: | 3 :white_check_mark: | 4 :white_check_mark: | 5 :white_check_mark: | 6 :white_check_mark: | 7 :white_check_mark: | 8 :white_check_mark: |
 | 9 :white_check_mark: | 10 :white_check_mark: | 11 :white_check_mark: | 12 :white_check_mark: | 13 :white_check_mark: | 14 :white_check_mark: | 15 :white_check_mark: |
-| 16 :grey_question: | 17 :grey_question: | 18 :grey_question: | 19 :grey_question: |
+| 16 :grey_question: | 17 :grey_question: | 18 :grey_question: | 19 :grey_question: | 20 :boom: | 21 :boom: | 22 :white_check_mark: |
+| 23 :white_check_mark: | 24 :white_check_mark: | 25 :white_check_mark: | 26 :white_check_mark: | 27 :white_check_mark: | 28 :white_check_mark: | 29 :white_check_mark: |
+| 30 :white_check_mark: | 31 :white_check_mark: |
+
+## August 2023
+
+| Sun | Mon | Tue | Wed | Thu | Fri | Sat |
+|-:|-:|-:|-:|-:|-:|-:|
+| | | 1 :white_check_mark: | 2 :white_check_mark: | 3 :white_check_mark: | 4 :white_check_mark: | 5 :white_check_mark: |
+| 6 :white_check_mark: | 7 :white_check_mark: | 8 :white_check_mark: | 9 :white_check_mark: | 10 :white_check_mark: | 11 :white_check_mark: | 12 :white_check_mark: |
+| 13 :white_check_mark: | 14 :white_check_mark: | 15 :question: |
