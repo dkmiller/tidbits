@@ -48,7 +48,7 @@ def ship(src: str = ".", output: str = ".build"):
 
 
 @app.command()
-def dash(namespace: str = "kubernetes-dashboard", user: str = "admin-user"):
+def dash(namespace: str = "kubernetes-dashboard", user: str = "admin-user", grafana: bool = False):
     """
     Obtain the appropriate auth token, then open the Kubernetes dashboard with that token copied to
     the clipboard.
@@ -60,6 +60,9 @@ def dash(namespace: str = "kubernetes-dashboard", user: str = "admin-user"):
     fwd.ensure()
 
     dashboard = injector.get(pc.Dashboard)
+    if grafana:
+        dashboard.grafana("default")
+
     dashboard.spawn(namespace, user)
 
 

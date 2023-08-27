@@ -10,6 +10,12 @@ from ptah.core.shell import ShellClient
 @inject
 @dataclass
 class Helm:
+    """
+    Manage syncing and applying Helm charts via `helmfile.yaml`. Follows:
+    - https://dev.to/javidjms/helmfile-deploy-multiple-charts-in-your-cluster-k8s-422j
+    - https://helmfile.readthedocs.io/
+    """
+
     shell: ShellClient
 
     def helmfile_exists(self, target) -> bool:
@@ -19,11 +25,9 @@ class Helm:
     def build(self, target: str) -> None:
         if self.helmfile_exists(target):
             print("Syncing Helmfile")
-            # https://dev.to/javidjms/helmfile-deploy-multiple-charts-in-your-cluster-k8s-422j
             self.shell("helmfile", "sync")
 
     def apply(self, target: str) -> None:
         if self.helmfile_exists(target):
             print("Applying Helmfile")
-            # https://dev.to/javidjms/helmfile-deploy-multiple-charts-in-your-cluster-k8s-422j
             self.shell("helmfile", "apply")
