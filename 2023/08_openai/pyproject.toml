@@ -1,0 +1,19 @@
+[project]
+name = "mock-openai"
+readme = "README.md"
+version = "0.0.0"
+authors = [
+    { name = "Dan Miller", email = "daniel.keegan.miller@gmail.com" }
+]
+dependencies = [
+    "fastapi[all]==0.103.0",
+    "openai==0.27.9",
+    "requests",
+]
+
+[project.scripts]
+mock-openai = "mock_openai.app:main"
+
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
