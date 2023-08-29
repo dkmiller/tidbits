@@ -21,12 +21,12 @@ mock-openai
 import requests
 
 
-response = requests.post("https://air-openai-test2.openai.azure.com/openai/deployments/gpt35turbo/chat/completions?api-version=2023-03-15-preview", headers={"api-key": "..."}, json={"messages": [{"role": "system", "content": "You are an assistant"}, {"role": "user", "content": "Who is Dan Miller?"}]})
+response = requests.post("https://*.openai.azure.com/openai/deployments/gpt35turbo/chat/completions?api-version=2023-03-15-preview", headers={"api-key": "..."}, json={"messages": [{"role": "system", "content": "You are an assistant"}, {"role": "user", "content": "Who is Dan Miller?"}]})
 
 
 # Write me a lengthy essay in the style of the US Declaration of Independence
 
-response = requests.post("https://air-openai-test2.openai.azure.com/openai/deployments/gpt35turbo/chat/completions?api-version=2023-07-01-preview", headers={"api-key": "..."}, json={"messages": [{"role": "system", "content": "You are an assistant"}, {"role": "user", "content": "Count from one to one hundred, with the new number on a new line each time."}], "stream": True, "top_p": .95, "temperature": .7, "max_tokens": 1000}, stream=True)
+response = requests.post("https://*.openai.azure.com/openai/deployments/gpt35turbo/chat/completions?api-version=2023-07-01-preview", headers={"api-key": "..."}, json={"messages": [{"role": "system", "content": "You are an assistant"}, {"role": "user", "content": "Count from one to one hundred, with the new number on a new line each time."}], "stream": True, "top_p": .95, "temperature": .7, "max_tokens": 1000}, stream=True)
 
 for line in response.iter_lines():
     print(line)
@@ -37,7 +37,14 @@ for line in response.iter_lines():
 ...
 
 ```python
+import requests
 import openai
+
+
+requests.post("http://localhost:8000/config", json={"base": "https://air-openai-test2.openai.azure.com", "api_key": "..."})
+
+
+
 
 openai.api_key = "sk-fake"
 openai.api_base = "http://localhost:8000"
@@ -60,8 +67,8 @@ for chunk in response:
 
 ...
 
+
 ```python
-import requests
 
 response = requests.post("http://localhost:8000/stream?size=10&sleep=0.8", stream=True)
 
@@ -80,7 +87,7 @@ for chunk in response.iter_lines():
 
 
 ```python
-response = requests.post("https://air-openai-test2.openai.azure.com/openai/deployments/gpt35turbo/chat/completions?api-version=2023-07-01-preview", headers={"api-key": "..."}, json={"messages": [{"role": "system", "content": "You are an assistant"}, {"role": "user", "content": "Count from one to one hundred, with the new number on a new line each time."}], "stream": True}, stream=True)
+response = requests.post("https://*.openai.azure.com/openai/deployments/gpt35turbo/chat/completions?api-version=2023-07-01-preview", headers={"api-key": "..."}, json={"messages": [{"role": "system", "content": "You are an assistant"}, {"role": "user", "content": "Count from one to one hundred, with the new number on a new line each time."}], "stream": True}, stream=True)
 for line in response.iter_lines():
     print(line)
 ```
