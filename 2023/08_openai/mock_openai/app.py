@@ -70,7 +70,7 @@ import requests
 async def stream_openai(request: Request):
     def fake_stream():
         response = requests.post(
-            "https://air-openai-test2.openai.azure.com/openai/deployments/gpt35turbo/chat/completions?api-version=2023-07-01-preview",
+            "https://*.openai.azure.com/openai/deployments/gpt35turbo/chat/completions?api-version=2023-07-01-preview",
             headers={"api-key": "..."},
             json={
                 "messages": [

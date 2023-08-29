@@ -1,6 +1,6 @@
 # Mock OpenAI
 
-Fake the REST API for help in unit testing.
+Fake the Azure OpenAI REST API for help in unit testing. Start by learning how to proxy and test it.
 
 ## Running
 
@@ -11,39 +11,17 @@ which is API-compatible with Azure OpenAI.
 pip install -e .
 
 mock-openai
-
-# uvicorn mock_openai.app:app --reload
 ```
 
 ## Interactive
 
-```python
-import requests
-
-
-response = requests.post("https://*.openai.azure.com/openai/deployments/gpt35turbo/chat/completions?api-version=2023-03-15-preview", headers={"api-key": "..."}, json={"messages": [{"role": "system", "content": "You are an assistant"}, {"role": "user", "content": "Who is Dan Miller?"}]})
-
-
-# Write me a lengthy essay in the style of the US Declaration of Independence
-
-response = requests.post("https://*.openai.azure.com/openai/deployments/gpt35turbo/chat/completions?api-version=2023-07-01-preview", headers={"api-key": "..."}, json={"messages": [{"role": "system", "content": "You are an assistant"}, {"role": "user", "content": "Count from one to one hundred, with the new number on a new line each time."}], "stream": True, "top_p": .95, "temperature": .7, "max_tokens": 1000}, stream=True)
-
-for line in response.iter_lines():
-    print(line)
-
-```
-
-
-...
 
 ```python
 import requests
 import openai
 
 
-requests.post("http://localhost:8000/config", json={"base": "https://air-openai-test2.openai.azure.com", "api_key": "..."})
-
-
+requests.post("http://localhost:8000/config", json={"base": "https://*.openai.azure.com", "api_key": "..."})
 
 
 openai.api_key = "sk-fake"
@@ -65,8 +43,7 @@ for chunk in response:
 
 ```
 
-...
-
+Directly interact with the streaming APIs.
 
 ```python
 
@@ -76,18 +53,8 @@ for chunk in response.iter_lines():
     print(chunk)
 
 
-
 response = requests.post("http://localhost:8000/stream_openai", stream=True)
 for chunk in response.iter_lines():
     print(chunk)
 
-```
-
-
-
-
-```python
-response = requests.post("https://*.openai.azure.com/openai/deployments/gpt35turbo/chat/completions?api-version=2023-07-01-preview", headers={"api-key": "..."}, json={"messages": [{"role": "system", "content": "You are an assistant"}, {"role": "user", "content": "Count from one to one hundred, with the new number on a new line each time."}], "stream": True}, stream=True)
-for line in response.iter_lines():
-    print(line)
 ```
