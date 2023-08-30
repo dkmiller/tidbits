@@ -58,3 +58,13 @@ for chunk in response.iter_lines():
     print(chunk)
 
 ```
+
+## Profiling
+
+Run a command like:
+
+```bash
+time curl 'http://localhost:8000/test-proxy?mode=aiohttp_singleton'
+```
+
+TODO: try https://locust.io/
