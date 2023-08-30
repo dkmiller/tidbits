@@ -1,17 +1,49 @@
 import logging
 import time
 from pathlib import Path
+from socket import AF_INET
+from typing import Optional
 from urllib.parse import urljoin
 
+import aiohttp
+import httpx
 import requests
 import uvicorn
+from aiohttp import ClientSession
 from fastapi import FastAPI, Request, Response
-from fastapi.responses import StreamingResponse
+from fastapi.requests import Request
+from fastapi.responses import Response, StreamingResponse
+from starlette.background import BackgroundTask
 
-from mock_openai.models import Config
+from mock_openai.models import Config, Mode
 
 log = logging.getLogger("uvicorn")
-app = FastAPI()
+
+
+class SingletonAiohttp:
+    aiohttp_client: Optional[aiohttp.ClientSession] = None
+
+    @classmethod
+    def client_session(cls) -> aiohttp.ClientSession:
+        if cls.aiohttp_client is None:
+            log.info("Creating aiohttp client")
+            timeout = aiohttp.ClientTimeout()
+            connector = aiohttp.TCPConnector(family=AF_INET, limit_per_host=100)
+            cls.aiohttp_client = aiohttp.ClientSession(
+                timeout=timeout, connector=connector
+            )
+
+        return cls.aiohttp_client
+
+    @classmethod
+    async def close_aiohttp_client(cls) -> None:
+        if cls.aiohttp_client:
+            log.info("Closing aiohttp client")
+            await cls.aiohttp_client.close()
+            cls.aiohttp_client = None
+
+
+app = FastAPI(on_shutdown=[SingletonAiohttp.close_aiohttp_client])
 
 
 _config: Config
@@ -63,9 +95,6 @@ async def stream(request: Request, size: int = 20, sleep: float = 0.5):
     )
 
 
-import requests
-
-
 @app.post("/stream_openai")
 async def stream_openai(request: Request):
     def fake_stream():
@@ -95,6 +124,80 @@ async def stream_openai(request: Request):
         media_type="text/event-stream",
         headers={"x-content-type-options": "nosniff"},
     )
+
+
+@app.get("/test-proxy")
+async def test_proxy(mode: Mode):
+    # ~ 1s
+    if mode == Mode.httpx:
+        # Works! (http://localhost:8000/test-proxy)
+        # With or without the background part.
+        # https://github.com/tiangolo/fastapi/issues/1788#issuecomment-1320916419
+        client = httpx.AsyncClient()
+        request = client.build_request("get", "https://httpbun.com/get")
+        response = await client.send(request, stream=True)
+        return StreamingResponse(
+            response.aiter_raw(),
+            status_code=response.status_code,
+            headers=response.headers,
+            background=BackgroundTask(response.aclose),
+        )
+
+    # ~ 1s
+    if mode == Mode.requests:
+        response = requests.get("https://httpbun.com/get", stream=True)
+        return StreamingResponse(
+            response.iter_content(),
+            status_code=response.status_code,
+            headers=response.headers,
+        )
+
+    # https://github.com/dkmiller/tidbits/blob/master/2022/06-29_azdo-conns/add-to-all-service-connections.py
+    # async with ClientSession() as session:
+    # https://stackoverflow.com/a/61741161
+    # https://stackoverflow.com/a/45174286
+    # It looks like the session closes before the response completes.
+    # Doing this "properly" is a mess:
+    # https://github.com/tiangolo/fastapi/discussions/8301
+
+    # Fails!
+    # aiohttp.client_exceptions.ClientConnectionError: Connection closed
+    # With or without the background part.
+    # With or without auto_decompress=False
+    if mode == Mode.aiohttp_naive:
+        async with ClientSession() as session:
+            async with session.get("https://httpbun.com/get") as response:
+                return StreamingResponse(
+                    response.content.iter_any(),
+                    response.status,
+                    response.headers,
+                    background=BackgroundTask(response.wait_for_close),
+                )
+
+    # Works!
+    # ~ 1s
+    if mode == Mode.aiohttp_nowith:
+        async with ClientSession() as session:
+            response = await session.get("https://httpbun.com/get")
+            return StreamingResponse(
+                response.content.iter_any(),
+                response.status,
+                response.headers,
+                background=BackgroundTask(response.wait_for_close),
+            )
+
+    # Works!
+    # ~ .3s (2-3x faster than others)
+    # https://github.com/raphaelauv/fastAPI-aiohttp-example/
+    if mode == Mode.aiohttp_singleton:
+        session = SingletonAiohttp.client_session()
+        response = await session.get("https://httpbun.com/get")
+        return StreamingResponse(
+            response.content.iter_any(),
+            response.status,
+            response.headers,
+            background=BackgroundTask(response.wait_for_close),
+        )
 
 
 def main():
