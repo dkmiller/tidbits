@@ -25,7 +25,6 @@ def openai():
     process = None
 
     try:
-
         # https://github.com/dkmiller/tidbits/blob/master/2023/2023-03_build-k8s/src/ptah/core/process.py
         process = Popen(["mock-openai"])
         log.info("Spawned process %s", process.pid)

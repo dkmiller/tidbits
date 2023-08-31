@@ -1,14 +1,22 @@
 [project]
 name = "mock-openai"
 readme = "README.md"
-version = "0.0.0"
+version = "0.1.0"
 authors = [
     { name = "Dan Miller", email = "daniel.keegan.miller@gmail.com" }
 ]
 dependencies = [
+    "aiohttp==3.8.4",
     "fastapi[all]==0.103.0",
+    "httpx==0.23.0",
     "openai==0.27.9",
     "requests",
+]
+[project.optional-dependencies]
+dev = [
+    "black==23.7.0",
+    "isort==5.12.0",
+    "locust==2.16.1",
 ]
 
 [project.scripts]
@@ -17,3 +25,6 @@ mock-openai = "mock_openai.app:main"
 [build-system]
 requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
+
+[tool.isort]
+profile = "black"
