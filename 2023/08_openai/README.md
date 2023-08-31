@@ -67,4 +67,10 @@ Run a command like:
 time curl 'http://localhost:8000/test-proxy?mode=aiohttp_singleton'
 ```
 
-TODO: try https://locust.io/
+Better yet, install dev dependencies and use [Locust](https://locust.io/).
+
+```bash
+pip install -e ".[dev]"
+
+locust
+```
