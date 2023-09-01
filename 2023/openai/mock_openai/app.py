@@ -1,11 +1,8 @@
 import logging
 import time
 from pathlib import Path
-from socket import AF_INET
-from typing import Optional
 from urllib.parse import urljoin
 
-import aiohttp
 import httpx
 import requests
 import uvicorn
@@ -15,33 +12,10 @@ from fastapi.requests import Request
 from fastapi.responses import Response, StreamingResponse
 from starlette.background import BackgroundTask
 
+from mock_openai.aiohttp import SingletonAiohttp
 from mock_openai.models import Config, Mode
 
 log = logging.getLogger("uvicorn")
-
-
-class SingletonAiohttp:
-    aiohttp_client: Optional[aiohttp.ClientSession] = None
-
-    @classmethod
-    def client_session(cls) -> aiohttp.ClientSession:
-        if cls.aiohttp_client is None:
-            log.info("Creating aiohttp client")
-            timeout = aiohttp.ClientTimeout()
-            connector = aiohttp.TCPConnector(family=AF_INET, limit_per_host=100)
-            cls.aiohttp_client = aiohttp.ClientSession(
-                timeout=timeout, connector=connector
-            )
-
-        return cls.aiohttp_client
-
-    @classmethod
-    async def close_aiohttp_client(cls) -> None:
-        if cls.aiohttp_client:
-            log.info("Closing aiohttp client")
-            await cls.aiohttp_client.close()
-            cls.aiohttp_client = None
-
 
 app = FastAPI(on_shutdown=[SingletonAiohttp.close_aiohttp_client])
 
@@ -200,13 +174,19 @@ async def test_proxy(mode: Mode):
         )
 
 
-def main():
+import typer
+
+cli = typer.Typer()
+
+
+@cli.command()
+def main(host: str = "0.0.0.0", port: int = 8000, reload: bool = True):
     # https://stackoverflow.com/a/62856862
     uvicorn.run(
         f"{__name__}:app",
-        host="0.0.0.0",
-        port=8000,
-        reload=True,
+        host=host,
+        port=port,
+        reload=reload,
         # https://www.uvicorn.org/settings/
         reload_dirs=[str(Path(__file__).parent)],
     )
