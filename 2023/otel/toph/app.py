@@ -11,15 +11,24 @@ tracer = trace.get_tracer(__name__)
 app = FastAPI()
 
 
+def fail(value: str):
+    # This part captures exceptions nicely.
+    with tracer.start_as_current_span("fail"):
+        raise Exception(f"Fail: {value}")
+
+
 def roll_sum(sides, rolls):
     sum = 0
-    # This part captures exceptions nicely.
     with tracer.start_as_current_span("roll_sum"):
-        # raise Exception("boo!")
         for _ in range(0, rolls):
             result = randint(1, sides)
             sum += result
     return str(sum)
+
+
+@app.get("/fail")
+def get_fail(value: str):
+    fail(value)
 
 
 @app.get("/roll")
