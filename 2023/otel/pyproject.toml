@@ -1,0 +1,22 @@
+[project]
+name = "toph"
+readme = "README.md"
+version = "0.0.0"
+authors = [
+    { name = "Dan Miller", email = "daniel.keegan.miller@gmail.com" }
+]
+dependencies = [
+    "fastapi[standard]==0.103.0",
+    "opentelemetry-distro==0.40b0",
+    # Get this from:
+    # https://opentelemetry.io/docs/instrumentation/python/automatic/
+    "opentelemetry-instrumentation-fastapi==0.40b0",
+    "opentelemetry-exporter-otlp-proto-grpc==1.19.0",
+]
+
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[tool.isort]
+profile = "black"
