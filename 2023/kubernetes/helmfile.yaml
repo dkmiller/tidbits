@@ -1,0 +1,8 @@
+repositories:
+ - name: grafana
+   url: https://grafana.github.io/helm-charts
+
+releases:
+# https://github.com/grafana/helm-charts
+- name: grafana
+  chart: grafana/grafana

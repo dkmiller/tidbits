@@ -21,3 +21,21 @@ class Dashboard:
 
         pyperclip.copy(token)
         webbrowser.open(url)
+
+    def grafana(self, namespace: str):
+        password = self.shell(
+            "kubectl",
+            "get",
+            "secret",
+            "--namespace",
+            namespace,
+            "grafana",
+            "-o",
+            "jsonpath='{.data.admin-password}",
+        )
+        url = "http://localhost:3000"
+
+        print(f"Copy/pasting the password below and opening the URL:\n\n\t{password}\n\n\t{url}\n")
+
+        pyperclip.copy(password)
+        webbrowser.open(url)

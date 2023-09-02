@@ -3,6 +3,11 @@ https://kind.sigs.k8s.io/docs/user/quick-start/#installation
 - https://thoughtbot.com/blog/brewfile-a-gemfile-but-for-homebrew
 
 ```bash
+brew bundle install
+
+# https://github.com/roboll/helmfile/issues/1182#issuecomment-790499993
+helm plugin install https://github.com/databus23/helm-diff
+
 kind create cluster --config kind.yaml
 
 docker build -t api:0.0.1 containers/api/

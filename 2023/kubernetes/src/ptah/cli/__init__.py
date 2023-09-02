@@ -1,5 +1,3 @@
-from typing import Optional
-
 import typer
 from injector import Injector
 from rich import print
@@ -24,9 +22,11 @@ def build(src: str = ".", output: str = ".build"):
 
     injector = _injector(src, output)
     docker = injector.get(pc.DockerClient)
+    helm = injector.get(pc.Helm)
     k8s = injector.get(pc.KubernetesClient)
     docker.build()
     k8s.build(src, output)
+    helm.build(src)
 
 
 @app.command()
@@ -39,21 +39,31 @@ def ship(src: str = ".", output: str = ".build"):
 
     injector = _injector(src, output)
     docker = injector.get(pc.DockerClient)
+    helm = injector.get(pc.Helm)
     k8s = injector.get(pc.KubernetesClient)
 
     docker.push()
     k8s.apply(output)
+    helm.apply(src)
 
 
 @app.command()
-def dash(namespace: str = "kubernetes-dashboard", user: str = "admin-user"):
+def dash(namespace: str = "kubernetes-dashboard", user: str = "admin-user", grafana: bool = False):
     """
     Obtain the appropriate auth token, then open the Kubernetes dashboard with that token copied to
     the clipboard.
     """
     injector = _injector(None, None)  # type: ignore
+
+    # Make sure ports are being forwarded.
+    fwd = injector.get(pc.Forward)
+    fwd.ensure()
+
     dashboard = injector.get(pc.Dashboard)
-    dashboard.spawn(namespace, user)
+    if grafana:
+        dashboard.grafana("default")
+    else:
+        dashboard.spawn(namespace, user)
 
 
 @app.command()

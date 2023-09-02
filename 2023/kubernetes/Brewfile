@@ -1,0 +1,5 @@
+brew "kind"
+brew "kubectl"
+# https://helm.sh/docs/intro/install/
+brew "helm"
+brew "helmfile"

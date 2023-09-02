@@ -1,7 +1,7 @@
 [project]
 name = "ptah"
 readme = "README.md"
-version = "0.0.0"
+version = "0.1.0"
 authors = [
     { name = "Dan Miller", email = "daniel.keegan.miller@gmail.com" }
 ]

@@ -32,11 +32,16 @@ class Forward:
         deployments = json.loads(deployments_raw)
         # TODO: don't assume container ports and metadata names are in the same order.
         # https://stackoverflow.com/a/30683008/
-        port_path = parse("$..containerPort")
+        # TODO: [?(@.protocol=='TCP')]?
+        # We assume the first port for a service is the "main" one.
+        # Validate these using https://jsonpath.com/ .
+        port_path = parse("$..ports[0].containerPort")
         name_path = parse("$..metadata.name")
 
         ports = [m.value for m in port_path.find(deployments)]
         names = [m.value for m in name_path.find(deployments)]
+
+        assert len(ports) == len(names)
 
         rv = [["kubectl", "proxy"]]
 
