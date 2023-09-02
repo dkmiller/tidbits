@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: ui
-        image: tidbits.azurecr.io/streamlit-ui:${ptah}
+        image: ui:${ptah}
         ports:
         - containerPort: 8501
         # https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/#define-a-liveness-command

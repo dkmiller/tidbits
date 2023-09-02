@@ -62,8 +62,8 @@ def dash(namespace: str = "kubernetes-dashboard", user: str = "admin-user", graf
     dashboard = injector.get(pc.Dashboard)
     if grafana:
         dashboard.grafana("default")
-
-    dashboard.spawn(namespace, user)
+    else:
+        dashboard.spawn(namespace, user)
 
 
 @app.command()

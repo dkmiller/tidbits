@@ -53,19 +53,8 @@ class DockerClient:
         print(msg)
 
         if push:
-            kind_uris = [uri for uri in uris if not self.is_remote(uri)]
-            remote_uris = [uri for uri in uris if self.is_remote(uri)]
             # TODO: handle pushing to a remote registry.
-            if kind_uris:
             # https://codeberg.org/hjacobs/pytest-kind/src/branch/main/pytest_kind/cluster.py
-                self.shell.run(["kind", "load", "docker-image"] + uris)
-            for uri in remote_uris:
-                self.shell("docker", "push", uri)
+            self.shell.run(["kind", "load", "docker-image"] + uris)
             for uri in uris:
                 self.cache.set(f"push__{uri}", "any")
-
-    def is_remote(self, uri: str) -> bool:
-        """
-        Poor man's hack to detect whether a Docker image URI corresponds to a remote registry.
-        """
-        return "." in uri.split(":")[0]
