@@ -55,6 +55,8 @@ class DockerClient:
         if push:
             # TODO: handle pushing to a remote registry.
             # https://codeberg.org/hjacobs/pytest-kind/src/branch/main/pytest_kind/cluster.py
+            # Sadly, Kind doesn't support incremental loads:
+            # https://github.com/kubernetes-sigs/kind/issues/380
             self.shell.run(["kind", "load", "docker-image"] + uris)
             for uri in uris:
                 self.cache.set(f"push__{uri}", "any")

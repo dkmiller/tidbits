@@ -12,8 +12,9 @@ releases:
     - single-binary-grafana-values.yaml
 # https://grafana.com/docs/tempo/latest/setup/helm-chart/
 # https://github.com/grafana/tempo/issues/624
+# https://grafana.com/docs/helm-charts/tempo-distributed/next/get-started-helm-charts/
 
-# worked! http://grafana-tempo:3100/api/echo
+# worked! curl -v http://grafana-tempo:3100/api/echo
 - name: grafana-tempo
   chart: grafana/tempo
   # https://github.com/grafana/tempo/blob/main/example/helm/single-binary-grafana-values.yaml

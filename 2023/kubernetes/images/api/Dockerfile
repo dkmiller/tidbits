@@ -10,9 +10,14 @@ COPY . /src/
 
 # https://opentelemetry.io/docs/instrumentation/python/automatic/#configuring-the-agent
 ENV OTEL_SERVICE_NAME=api
-ENV OTEL_TRACES_EXPORTER=console
+ENV OTEL_TRACES_EXPORTER=console,otlp
 ENV OTEL_METRICS_EXPORTER=console
 ENV OTEL_LOGS_EXPORTER=console
-# ENV OTEL_EXPORTER_OTLP_ENDPOINT=
+# Values from:
+# https://github.com/grafana/helm-charts/tree/main/charts/tempo
+ENV OTEL_EXPORTER_OTLP_ENDPOINT=http://grafana-tempo:4317
+
+ENV GRPC_VERBOSITY=debug
+ENV GRPC_TRACE=http,call_error,connectivity_state
 
 CMD [ "opentelemetry-instrument", "api"]
