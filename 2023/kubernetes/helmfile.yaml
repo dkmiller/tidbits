@@ -1,8 +1,15 @@
 repositories:
- - name: grafana
-   url: https://grafana.github.io/helm-charts
+- name: grafana
+  url: https://grafana.github.io/helm-charts
+- name: jaegertracing
+  url: https://jaegertracing.github.io/helm-charts
 
 releases:
 # https://github.com/grafana/helm-charts
 - name: grafana
   chart: grafana/grafana
+# https://grafana.com/docs/agent/latest/operator/helm-getting-started/
+- name: grafana-agent
+  chart: grafana/grafana-agent-operator
+# - name: jaeger
+#   chart: jaegertracing/jaeger

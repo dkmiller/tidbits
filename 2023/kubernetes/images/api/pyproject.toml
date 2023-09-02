@@ -1,6 +1,6 @@
 [project]
 name = "api"
-version = "0.0.0"
+version = "0.1.0"
 authors = [
     { name = "Dan Miller", email = "daniel.keegan.miller@gmail.com" }
 ]
@@ -8,6 +8,10 @@ dependencies = [
     "aiohttp==3.8.4",
     "fastapi==0.99.1",
     "uvicorn",
+
+    "opentelemetry-distro==0.40b0",
+    "opentelemetry-instrumentation-fastapi==0.40b0",
+    "opentelemetry-exporter-otlp-proto-grpc==1.19.0",
 ]
 
 [project.scripts]
