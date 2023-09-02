@@ -42,9 +42,9 @@ def ship(src: str = ".", output: str = ".build"):
     helm = injector.get(pc.Helm)
     k8s = injector.get(pc.KubernetesClient)
 
+    helm.apply(src)
     docker.push()
     k8s.apply(output)
-    helm.apply(src)
 
 
 @app.command()
@@ -80,6 +80,8 @@ def ssh(pod: str):
     # https://stackoverflow.com/a/52691455/2543689
     # open SSH session with pod using os.system
     # kubectl exec -it $(kubectl get pods --no-headers -o custom-columns=":metadata.name" | grep ui) -- /bin/bash
+
+    # kubectl exec -it api-deployment-5fc7fc8769-t5w85 -- /bin/bash
 
 
 @app.command()
