@@ -1,4 +1,5 @@
 from .caching import CacheClient
+from .cleanup import Cleanup
 from .dashboard import Dashboard
 from .docker import DockerClient
 from .forward import Forward

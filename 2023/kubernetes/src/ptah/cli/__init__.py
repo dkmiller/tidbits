@@ -93,3 +93,16 @@ def forward(kill: bool = False):
         fwd.terminate()
     else:
         fwd.ensure()
+
+
+@app.command()
+def nuke(whatif: bool = True):
+    """
+    Hard-delete all running Kind clusters and pre-built Docker images.
+
+    WARNING: this is an extreme command!
+    """
+    injector = _injector(None, None)  # type: ignore
+    clean = injector.get(pc.Cleanup)
+
+    clean.cleanup(whatif)
