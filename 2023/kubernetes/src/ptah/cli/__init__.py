@@ -24,7 +24,10 @@ def build(src: str = ".", output: str = ".build"):
     docker = injector.get(pc.DockerClient)
     helm = injector.get(pc.Helm)
     k8s = injector.get(pc.KubernetesClient)
+    kind = injector.get(pc.Kind)
+
     docker.build()
+    kind.create("kind.yaml")
     k8s.build(src, output)
     helm.build(src)
 
@@ -48,7 +51,7 @@ def ship(src: str = ".", output: str = ".build"):
 
 
 @app.command()
-def dash(namespace: str = "kubernetes-dashboard", user: str = "admin-user", grafana: bool = False):
+def dash(namespace: str = "kube-system", user: str = "dashboard-admin", grafana: bool = False):
     """
     Obtain the appropriate auth token, then open the Kubernetes dashboard with that token copied to
     the clipboard.

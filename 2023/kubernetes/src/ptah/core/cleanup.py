@@ -3,15 +3,18 @@ from dataclasses import dataclass
 from injector import inject
 from rich import print
 
+from ptah.core.forward import Forward
 from ptah.core.shell import ShellClient
 
 
 @inject
 @dataclass
 class Cleanup:
+    forward: Forward
     shell: ShellClient
 
     def cleanup(self, whatif: bool):
+        self.forward.terminate()
         self.kind(whatif)
         self.docker(whatif)
 

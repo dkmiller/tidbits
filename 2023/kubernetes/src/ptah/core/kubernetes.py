@@ -1,17 +1,13 @@
-import re
 import shutil
 from dataclasses import dataclass
 from pathlib import Path
 from typing import List
 
-import requests
 from injector import inject
 from rich import print
 
 from ptah.core.image import ImageDefinition
 from ptah.core.shell import ShellClient
-
-URL = re.compile(r"\$\{(https://.+)\}")
 
 
 @inject
@@ -34,18 +30,13 @@ class KubernetesClient:
 
         for yaml in yamls:
             content = yaml.read_text()
-            m = URL.search(content, re.MULTILINE)
 
             # TODO: proper way of detecting Kubernetes specs.
-            if "spec:" not in content and "metadata:" not in content and not m:
+            if "spec:" not in content and "metadata:" not in content:
                 continue
 
             for image in self.image_definitions:
                 content = content.replace(f"{image.name}:${{ptah}}", image.uri)
-
-            if m:
-                substitute = requests.get(m.group(1)).text
-                content = URL.sub(substitute, content)
 
             relative = str(yaml.relative_to(source))
             target_path = Path(target) / relative

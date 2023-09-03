@@ -5,6 +5,7 @@ from .docker import DockerClient
 from .forward import Forward
 from .helm import Helm
 from .image import ImageClient
+from .kind import Kind
 from .kubernetes import KubernetesClient
 from .shell import ShellClient
 from .ssh import Ssh
