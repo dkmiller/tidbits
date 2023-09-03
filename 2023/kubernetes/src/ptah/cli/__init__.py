@@ -71,17 +71,10 @@ def ssh(pod: str):
     """
     Obtains the pod with given label and opens an SSH session with it.
     """
-    raise NotImplementedError()
+    injector = _injector(None, None)  # type: ignore
 
-    # TODO (https://stackoverflow.com/a/55897287):
-    # def ssh(pod), calls SshClient
-    # Get pod by label, name most similar pods if not exist?
-    # https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#list-and-watch-filtering
-    # https://stackoverflow.com/a/52691455/2543689
-    # open SSH session with pod using os.system
-    # kubectl exec -it $(kubectl get pods --no-headers -o custom-columns=":metadata.name" | grep ui) -- /bin/bash
-
-    # kubectl exec -it api-deployment-5fc7fc8769-t5w85 -- /bin/bash
+    _ssh = injector.get(pc.Ssh)
+    _ssh.start(pod)
 
 
 @app.command()

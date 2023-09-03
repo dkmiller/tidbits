@@ -6,3 +6,4 @@ from .helm import Helm
 from .image import ImageClient
 from .kubernetes import KubernetesClient
 from .shell import ShellClient
+from .ssh import Ssh
