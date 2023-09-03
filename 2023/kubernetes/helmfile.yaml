@@ -14,5 +14,6 @@ releases:
       - single-binary-grafana-values.yaml
 
   # https://grafana.com/docs/tempo/latest/setup/helm-chart/
+  # https://grafana.com/docs/tempo/latest/setup/set-up-test-app/
   - name: grafana-tempo
     chart: grafana/tempo
