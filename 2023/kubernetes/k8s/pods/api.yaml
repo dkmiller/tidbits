@@ -17,6 +17,15 @@ spec:
       containers:
       - name: api
         image: api:${ptah}
+        env:
+        # Value from:
+        # https://github.com/grafana/helm-charts/tree/main/charts/tempo
+        - name: OTEL_EXPORTER_OTLP_ENDPOINT
+          value: http://grafana-tempo:4317
+        - name: OTEL_TRACES_EXPORTER
+          value: console,otlp
+        - name: OTEL_METRICS_EXPORTER
+          value: console,otlp
         ports:
         - containerPort: 8000
         # https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/

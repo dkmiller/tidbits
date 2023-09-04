@@ -1,3 +1,6 @@
+# TODO:
+# https://www.vultr.com/docs/how-to-use-opentelemetry-with-streamlit-applications/
+
 from urllib.parse import urljoin
 
 import requests

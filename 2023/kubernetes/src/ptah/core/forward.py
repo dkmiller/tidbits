@@ -56,6 +56,8 @@ class Forward:
         commands = self.commands()
         print(f"Terminating {len(commands)} port-forwarding processes")
         for args in commands:
+            # TODO: why do I need this for the dashboard?
+            # kill -9 $(lsof -t -i :8001)
             self.process.terminate(args)
 
     def ensure(self):

@@ -24,7 +24,10 @@ def build(src: str = ".", output: str = ".build"):
     docker = injector.get(pc.DockerClient)
     helm = injector.get(pc.Helm)
     k8s = injector.get(pc.KubernetesClient)
+    kind = injector.get(pc.Kind)
+
     docker.build()
+    kind.create("kind.yaml")
     k8s.build(src, output)
     helm.build(src)
 
@@ -42,13 +45,13 @@ def ship(src: str = ".", output: str = ".build"):
     helm = injector.get(pc.Helm)
     k8s = injector.get(pc.KubernetesClient)
 
+    helm.apply(src)
     docker.push()
     k8s.apply(output)
-    helm.apply(src)
 
 
 @app.command()
-def dash(namespace: str = "kubernetes-dashboard", user: str = "admin-user", grafana: bool = False):
+def dash(namespace: str = "kube-system", user: str = "dashboard-admin", grafana: bool = False):
     """
     Obtain the appropriate auth token, then open the Kubernetes dashboard with that token copied to
     the clipboard.
@@ -71,15 +74,10 @@ def ssh(pod: str):
     """
     Obtains the pod with given label and opens an SSH session with it.
     """
-    raise NotImplementedError()
+    injector = _injector(None, None)  # type: ignore
 
-    # TODO (https://stackoverflow.com/a/55897287):
-    # def ssh(pod), calls SshClient
-    # Get pod by label, name most similar pods if not exist?
-    # https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#list-and-watch-filtering
-    # https://stackoverflow.com/a/52691455/2543689
-    # open SSH session with pod using os.system
-    # kubectl exec -it $(kubectl get pods --no-headers -o custom-columns=":metadata.name" | grep ui) -- /bin/bash
+    _ssh = injector.get(pc.Ssh)
+    _ssh.start(pod)
 
 
 @app.command()
@@ -98,3 +96,16 @@ def forward(kill: bool = False):
         fwd.terminate()
     else:
         fwd.ensure()
+
+
+@app.command()
+def nuke(whatif: bool = True):
+    """
+    Hard-delete all running Kind clusters and pre-built Docker images.
+
+    WARNING: this is an extreme command!
+    """
+    injector = _injector(None, None)  # type: ignore
+    clean = injector.get(pc.Cleanup)
+
+    clean.cleanup(whatif)

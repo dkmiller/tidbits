@@ -4,6 +4,13 @@ import uvicorn
 from aiohttp import ClientSession
 from api import models
 from fastapi import FastAPI
+from opentelemetry import trace
+from opentelemetry.sdk.trace import TracerProvider
+
+provider = TracerProvider()
+trace.set_tracer_provider(provider)
+tracer = trace.get_tracer(__name__)
+
 
 # TODO: why?
 log = logging.getLogger("uvicorn")
@@ -25,10 +32,11 @@ async def cat_fact() -> models.CatFact:
     # TODO: dependency injection for sessions:
     # https://github.com/tiangolo/fastapi/discussions/8301
     async with ClientSession() as session:
-        async with session.get("https://catfact.ninja/fact") as response:
-            parsed = await response.json()
-            log.info("Got a cat fact!")
-            return models.CatFact(**parsed)
+        with tracer.start_as_current_span("cat_fact"):
+            async with session.get("https://catfact.ninja/fact") as response:
+                parsed = await response.json()
+                log.info("Got a cat fact!")
+                return models.CatFact(**parsed)
 
 
 @app.get("/health")

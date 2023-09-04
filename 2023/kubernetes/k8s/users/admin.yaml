@@ -1,10 +1,11 @@
+# https://www.virtualizationhowto.com/2021/06/kubernetes-dashboard-helm-installation-and-configuration/
 # https://github.com/kubernetes/dashboard/blob/master/docs/user/access-control/creating-sample-user.md
 
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: admin-user
-  namespace: kubernetes-dashboard
+  name: dashboard-admin
+  namespace: kube-system
 
 ---
 
@@ -18,5 +19,5 @@ roleRef:
   name: cluster-admin
 subjects:
 - kind: ServiceAccount
-  name: admin-user
-  namespace: kubernetes-dashboard
+  name: dashboard-admin
+  namespace: kube-system

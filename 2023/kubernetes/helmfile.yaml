@@ -1,8 +1,38 @@
 repositories:
- - name: grafana
-   url: https://grafana.github.io/helm-charts
+- name: k8s-dashboard
+  url: https://kubernetes.github.io/dashboard
+- name: grafana
+  url: https://grafana.github.io/helm-charts
 
 releases:
+
+- name: kubernetes-dashboard
+  chart: k8s-dashboard/kubernetes-dashboard
+  version: 6.0.8
+  values:
+  - name:
+      fullnameOverride: kubernetes-dashboard
+
 # https://github.com/grafana/helm-charts
 - name: grafana
   chart: grafana/grafana
+  version: 6.59.0
+  values:
+  - datasources:
+      datasources.yaml:
+        apiVersion: 1
+
+        datasources:
+          - name: Tempo
+            type: tempo
+            # Verify this URL by SSH'ing into another pod and running:
+            # curl -v http://grafana-tempo:3100/api/echo
+            # (https://github.com/grafana/tempo/issues/624)
+            url: http://grafana-tempo:3100
+            isDefault: true
+
+# https://grafana.com/docs/tempo/latest/setup/helm-chart/
+# https://grafana.com/docs/tempo/latest/setup/set-up-test-app/
+- name: grafana-tempo
+  chart: grafana/tempo
+  version: 1.6.0
