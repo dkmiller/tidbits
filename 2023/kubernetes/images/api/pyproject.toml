@@ -5,7 +5,7 @@ authors = [
     { name = "Dan Miller", email = "daniel.keegan.miller@gmail.com" }
 ]
 dependencies = [
-    "aiohttp==3.8.4",
+    "aiohttp==3.8.5",
     "fastapi==0.99.1",
     "uvicorn",
 
