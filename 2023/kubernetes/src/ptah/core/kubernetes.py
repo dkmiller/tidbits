@@ -44,6 +44,10 @@ class KubernetesClient:
             target_path.write_text(content)
 
     def apply(self, target: str) -> None:
+        if not any(Path(target).rglob("*.yaml")):
+            print("Empty build target")
+            return
+
         # https://stackoverflow.com/a/59493623
         output = self.shell("kubectl", "apply", "-R", "-f", target)
         watch = []
