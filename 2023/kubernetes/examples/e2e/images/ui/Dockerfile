@@ -16,4 +16,6 @@ RUN pip install -e .
 
 COPY . /src/
 
-CMD ["ui"]
+ENV OTEL_SERVICE_NAME=ui
+
+CMD ["opentelemetry-instrument", "ui"]

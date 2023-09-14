@@ -2,20 +2,19 @@ import logging
 
 import uvicorn
 from aiohttp import ClientSession
-from api import models
+from api import builders, models
 from fastapi import FastAPI
+from fastapi.responses import StreamingResponse
+from fastapi_injector import Injected, attach_injector
 from opentelemetry import trace
-from opentelemetry.sdk.trace import TracerProvider
-
-provider = TracerProvider()
-trace.set_tracer_provider(provider)
-tracer = trace.get_tracer(__name__)
-
+from starlette.background import BackgroundTask
 
 # TODO: why?
 log = logging.getLogger("uvicorn")
+tracer = trace.get_tracer(__name__)
 
 app = FastAPI()
+attach_injector(app, builders.injector())
 
 
 @app.get("/")
@@ -25,24 +24,34 @@ async def root():
 
 
 @app.get("/cat-fact")
-async def cat_fact() -> models.CatFact:
+async def cat_fact(session=Injected(ClientSession)) -> models.CatFact:
     """
     Follow https://apipheny.io/free-api/ to get free facts about cats.
     """
     # TODO: dependency injection for sessions:
     # https://github.com/tiangolo/fastapi/discussions/8301
-    async with ClientSession() as session:
-        with tracer.start_as_current_span("cat_fact"):
-            async with session.get("https://catfact.ninja/fact") as response:
-                parsed = await response.json()
-                log.info("Got a cat fact!")
-                return models.CatFact(**parsed)
+    with tracer.start_as_current_span("cat_fact"):
+        async with session.get("https://catfact.ninja/fact") as response:
+            parsed = await response.json()
+            log.info("Got a cat fact!")
+            return models.CatFact(**parsed)
 
 
 @app.get("/health")
 async def health() -> models.Health:
     # https://emmer.dev/blog/writing-meaningful-health-check-endpoints/
     return models.Health(ok=True)
+
+
+@app.get("/httpbun")
+async def httpbun(session=Injected(ClientSession)):
+    response = await session.get("https://httpbun.com/get")
+    return StreamingResponse(
+        response.content.iter_any(),
+        response.status,
+        response.headers,
+        background=BackgroundTask(response.wait_for_close),
+    )
 
 
 def main():
