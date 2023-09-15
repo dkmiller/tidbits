@@ -17,6 +17,18 @@ spec:
       containers:
       - name: ui
         image: ui:${ptah}
+        env:
+        # TODO: how do we not duplicate this?
+        - name: OTEL_EXPORTER_OTLP_ENDPOINT
+          value: http://grafana-tempo:4317
+        - name: OTEL_TRACES_EXPORTER
+          value: console,otlp
+        - name: OTEL_METRICS_EXPORTER
+          value: console,otlp
+        - name: OTEL_INSTRUMENTATION_HTTP_CAPTURE_HEADERS_SERVER_REQUEST
+          value: .*
+        - name: OTEL_INSTRUMENTATION_HTTP_CAPTURE_HEADERS_SERVER_RESPONSE
+          value: .*
         ports:
         - containerPort: 8501
         # https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/#define-a-liveness-command

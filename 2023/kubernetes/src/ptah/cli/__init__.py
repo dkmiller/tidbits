@@ -27,7 +27,7 @@ def build(src: str = ".", output: str = ".build"):
     kind = injector.get(pc.Kind)
 
     docker.build()
-    kind.create("kind.yaml")
+    kind.create()
     k8s.build(src, output)
     helm.build(src)
 

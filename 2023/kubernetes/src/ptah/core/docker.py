@@ -6,6 +6,7 @@ from injector import inject
 from rich import print
 
 from ptah.core.image import ImageDefinition
+from ptah.core.kind import Kind
 from ptah.core.shell import ShellClient
 
 
@@ -14,6 +15,7 @@ from ptah.core.shell import ShellClient
 class DockerClient:
     cache: FileSystemCache
     image_definitions: List[ImageDefinition]
+    kind: Kind
     shell: ShellClient
 
     def build(self) -> None:
@@ -57,6 +59,8 @@ class DockerClient:
             # https://codeberg.org/hjacobs/pytest-kind/src/branch/main/pytest_kind/cluster.py
             # Sadly, Kind doesn't support incremental loads:
             # https://github.com/kubernetes-sigs/kind/issues/380
-            self.shell.run(["kind", "load", "docker-image"] + uris)
+            args = ["kind", "load", "docker-image"] + uris
+            args += ["--name", self.kind.cluster]
+            self.shell.run(args)
             for uri in uris:
                 self.cache.set(f"push__{uri}", "any")
