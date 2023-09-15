@@ -10,10 +10,9 @@ dependencies = [
     "fastapi-injector==0.5.1",
     "uvicorn",
 
-    "opentelemetry-distro==0.40b0",
+    "opentelemetry-distro[otlp]==0.40b0",
     "opentelemetry-instrumentation-aiohttp-client==0.40b0",
     "opentelemetry-instrumentation-fastapi==0.40b0",
-    "opentelemetry-exporter-otlp-proto-grpc==1.19.0",
 ]
 
 [project.scripts]
