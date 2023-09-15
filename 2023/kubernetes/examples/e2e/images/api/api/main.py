@@ -28,8 +28,6 @@ async def cat_fact(session=Injected(ClientSession)) -> models.CatFact:
     """
     Follow https://apipheny.io/free-api/ to get free facts about cats.
     """
-    # TODO: dependency injection for sessions:
-    # https://github.com/tiangolo/fastapi/discussions/8301
     with tracer.start_as_current_span("cat_fact"):
         async with session.get("https://catfact.ninja/fact") as response:
             parsed = await response.json()
