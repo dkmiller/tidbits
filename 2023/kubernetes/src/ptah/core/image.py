@@ -2,8 +2,10 @@ from dataclasses import dataclass
 from itertools import chain
 from pathlib import Path
 from typing import List
+from urllib.parse import urlparse
 
 from dirhash import dirhash
+from dockerfile_parse import DockerfileParser
 from injector import Module, multiprovider
 
 
@@ -15,6 +17,10 @@ class ImageDefinition:
 
     location: Path
     algorithm: str = "md5"
+
+    @property
+    def parser(self) -> DockerfileParser:
+        return DockerfileParser(path=str(self.location))
 
     @property
     def name(self):
@@ -37,8 +43,13 @@ class ImageDefinition:
 
     @property
     def uri(self):
-        return f"{self.name}:{self.tag}"
-
+        suffix = f"{self.name}:{self.tag}"
+        source = self.parser.labels.get("org.opencontainers.image.source")
+        if source and "github.com" in source:
+            parsed = urlparse(source)
+            return f"ghcr.io{parsed.path}/{suffix}"
+        else:
+            return suffix
 
 @dataclass
 class ImageClient(Module):

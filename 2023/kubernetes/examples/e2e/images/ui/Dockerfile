@@ -1,6 +1,8 @@
 # https://stackoverflow.com/a/71611002
 # TODO: --platform=linux/amd64
-FROM python:3.11
+FROM python:3.11-slim
+
+LABEL org.opencontainers.image.source=https://github.com/dkmiller/tidbits
 
 # TODO: bring this back.
 # https://github.com/davidteather/TikTok-Api/issues/95#issuecomment-673789306
@@ -12,7 +14,7 @@ WORKDIR /src/
 
 COPY pyproject.toml /src/
 COPY ui/__init__.py /src/ui/
-RUN pip install -e .
+RUN pip install -e . && opentelemetry-bootstrap --action=install
 
 COPY . /src/
 

@@ -8,6 +8,7 @@ authors = [
 dependencies = [
     "cachelib>=0.10.2",
     "dirhash>=0.2.1",
+    "dockerfile-parse>=2.0.1",
     "jsonpath-ng>=1.5.3",
     "injector>=0.20.1",
     "omegaconf>=2.3.0",

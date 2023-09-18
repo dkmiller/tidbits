@@ -55,12 +55,18 @@ class DockerClient:
         print(msg)
 
         if push:
+            remote_uris = [u for u in uris if "/" in u]
+            local_uris = [u for u in uris if "/" not in u]
+
             # TODO: handle pushing to a remote registry.
             # https://codeberg.org/hjacobs/pytest-kind/src/branch/main/pytest_kind/cluster.py
-            # Sadly, Kind doesn't support incremental loads:
-            # https://github.com/kubernetes-sigs/kind/issues/380
-            args = ["kind", "load", "docker-image"] + uris
-            args += ["--name", self.kind.cluster]
-            self.shell.run(args)
+            if local_uris:
+                # Sadly, Kind doesn't support incremental loads:
+                # https://github.com/kubernetes-sigs/kind/issues/380
+                args = ["kind", "load", "docker-image"] + local_uris
+                args += ["--name", self.kind.cluster]
+                self.shell.run(args)
+            for uri in remote_uris:
+                self.shell("docker", "push", uri)
             for uri in uris:
                 self.cache.set(f"push__{uri}", "any")
