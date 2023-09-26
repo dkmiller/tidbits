@@ -1,0 +1,8 @@
+[browser]
+gatherUsageStats = false
+
+[client]
+caching = false
+
+[server]
+runOnSave = true
