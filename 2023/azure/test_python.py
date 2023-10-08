@@ -56,3 +56,21 @@ def test_get_subscriptions(resource):
     )
     response.raise_for_status()
     assert response.json()["value"]
+
+
+@mock.patch.dict(
+    os.environ, {**PATCHED_ENV, "MSI_ENDPOINT": "http://127.0.0.1:8000/passthrough"}
+)
+def test_get_secret():
+    from azure.identity import DefaultAzureCredential
+
+    credential = DefaultAzureCredential()
+    token = credential.get_token("https://vault.azure.net/.default")
+    assert token
+
+    response = requests.get(
+        "https://puppy-monitor-kv.vault.azure.net/secrets?api-version=7.4",
+        headers={"Authorization": f"Bearer {token.token}"},
+    )
+    response.raise_for_status()
+    assert response.json()["value"]
