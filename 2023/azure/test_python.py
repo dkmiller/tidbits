@@ -50,6 +50,9 @@ def test_get_subscriptions(resource):
     token = credential.get_token(resource)
     assert token
 
+    # Imitate:
+    # https://github.com/dkmiller/tidbits/blob/90244b0c0de06267bc75ff7196d539e9a45f4af1/2021/2021-08-19_huggingface-reddit/README.md?plain=1#L43
+
     response = requests.get(
         "https://management.azure.com/subscriptions?api-version=2022-12-01",
         headers={"Authorization": f"Bearer {token.token}"},
