@@ -1,0 +1,9 @@
+injector==0.21.0
+fastapi[all]==0.99.1
+fastapi-utils==0.2.1
+honeycomb-opentelemetry==0.2.3b0
+opentelemetry-distro[otlp]==0.41b0
+opentelemetry-instrumentation-aiohttp-client==0.41b0
+opentelemetry-instrumentation-fastapi==0.41b0
+opentelemetry-instrumentation-urllib3==0.41b0
+opentelemetry-util-http==0.41b0
