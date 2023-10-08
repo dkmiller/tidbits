@@ -8,20 +8,13 @@ from kubeflow_assistant import KubeflowAssistant
 log = logging.getLogger(__name__)
 
 
-@kfp.dsl.pipeline(name="sample")
-def sample_pipeline(n_file: int = 25):
+@kfp.dsl.pipeline(name="mnist")
+def sample_pipeline():
     assistant = KubeflowAssistant(Path(__file__).parent.parent)
 
-    gen_data = assistant.build_and_load_component("gen_data")
-    show_data = assistant.build_and_load_component("show_data")
-    show_data_r = assistant.build_and_load_component("show_data_r")
+    download_mnist = assistant.build_and_load_component("download_mnist")
 
-    gen_data_step = gen_data(n_files=n_file)
-
-    show_data_step = show_data(
-        input=gen_data_step.outputs["random_files"], sleep_seconds=60
-    )
-    show_data_r_step = show_data_r(input=gen_data_step.outputs["random_files"])
+    data_step = download_mnist()
 
 
 def main():

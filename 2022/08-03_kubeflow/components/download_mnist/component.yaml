@@ -1,0 +1,54 @@
+name: download_mnist
+description: |
+  Download and extract the original MNIST database from
+  http://yann.lecun.com/exdb/mnist/ .
+
+inputs:
+- name: images_file
+  type: String
+  default: images.npy
+- name: labels_file
+  type: String
+  default: labels.npy
+
+- name: train_images
+  type: String
+  default: http://yann.lecun.com/exdb/mnist/train-images-idx3-ubyte.gz
+- name: train_labels
+  type: String
+  default: http://yann.lecun.com/exdb/mnist/train-labels-idx1-ubyte.gz
+- name: test_images
+  type: String
+  default: http://yann.lecun.com/exdb/mnist/t10k-images-idx3-ubyte.gz
+- name: test_labels
+  type: String
+  default: http://yann.lecun.com/exdb/mnist/t10k-labels-idx1-ubyte.gz
+
+outputs:
+- name: train
+- name: test
+
+implementation:
+  container:
+    image: docker-registry.d.musta.ch/dan/component/download_mnist:latest
+
+    command: [
+      python,
+      run.py,
+      --images-file,
+      {inputValue: images_file},
+      --labels-file,
+      {inputValue: labels_file},
+      --train-images,
+      {inputValue: train_images},
+      --train-labels,
+      {inputValue: train_labels},
+      --test-images,
+      {inputValue: test_images},
+      --test-labels,
+      {inputValue: test_labels},
+      --train,
+      {outputPath: train},
+      --test,
+      {outputPath: test}
+    ]
