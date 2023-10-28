@@ -1,13 +1,15 @@
+import os
 import evaluate
+import wandb
+import numpy as np
 from datasets import load_dataset
 from transformers import (
+    AutoModelForSequenceClassification,
     AutoTokenizer,
     DataCollatorWithPadding,
-    AutoModelForSequenceClassification,
-    TrainingArguments,
     Trainer,
+    TrainingArguments,
 )
-import numpy as np
 
 
 def compute_metrics(eval_pred):
@@ -42,8 +44,14 @@ model = AutoModelForSequenceClassification.from_pretrained(
 )
 
 
+checkpoint = "my_awesome_model"
+
+os.environ["WANDB_PROJECT"] = "nlp"
+os.environ["WANDB_LOG_MODEL"] = checkpoint
+
+
 training_args = TrainingArguments(
-    output_dir="my_awesome_model",
+    output_dir=checkpoint,
     learning_rate=2e-5,
     per_device_train_batch_size=16,
     per_device_eval_batch_size=16,
@@ -52,6 +60,7 @@ training_args = TrainingArguments(
     evaluation_strategy="epoch",
     save_strategy="epoch",
     load_best_model_at_end=True,
+    report_to=["wandb"],
 )
 
 trainer = Trainer(
@@ -65,3 +74,4 @@ trainer = Trainer(
 )
 
 trainer.train()
+wandb.finish()
