@@ -1,9 +1,9 @@
 import os
+import socket
+import threading
 import uuid
 from pathlib import Path
 
-import socket
-import threading
 import paramiko
 from cryptography.hazmat.backends import default_backend as crypto_default_backend
 from cryptography.hazmat.primitives import serialization as crypto_serialization
@@ -30,10 +30,10 @@ def key_pair():
 @fixture
 def ssh(key_pair):
     # https://gist.github.com/cschwede/3e2c025408ab4af531651098331cce45
-    host_key = paramiko.RSAKey(filename=private_key_file)#key_pair["private"])
+    host_key = paramiko.RSAKey(filename=private_key_file)  # key_pair["private"])
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-    sock.bind(('', 0))
+    sock.bind(("", 0))
 
     sock.listen(100)
     client, addr = sock.accept()

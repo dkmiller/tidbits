@@ -1,1 +1,0 @@
-docker run -e PUID=1000 -e PGID=1000 -e TZ=Etc/UTC -e PUBLIC_KEY="$(cat /Users/dan/.ssh/id_rsa_1d098bdcbe2a49908361c6c56f815def.pub)" -e USER_NAME=dan -e LOG_STDOUT=true -p 2222:2222 linuxserver/openssh-server:version-9.3_p2-r0

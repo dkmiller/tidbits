@@ -1,19 +1,21 @@
-import os
 import uuid
 from pathlib import Path
+from subprocess import check_output
 
-import socket
-import threading
-import paramiko
 from cryptography.hazmat.backends import default_backend as crypto_default_backend
 from cryptography.hazmat.primitives import serialization as crypto_serialization
 from cryptography.hazmat.primitives.asymmetric import rsa
-from pathlib import Path
-
-
 
 # https://unix.stackexchange.com/a/257648
-SSH_CHMOD =  0o600
+SSH_CHMOD = 0o600
+
+
+def write_key(path: Path, content: bytes):
+    # https://stackoverflow.com/a/22449476/
+    path.write_bytes(content)
+    # https://stackoverflow.com/q/57264050/
+    # https://stackoverflow.com/a/17776766/
+    path.chmod(SSH_CHMOD)
 
 
 def private_public_key_pair() -> tuple[Path, Path]:
@@ -37,18 +39,12 @@ def private_public_key_pair() -> tuple[Path, Path]:
     private_key_file = Path.home() / suffix
     public_key_file = Path.home() / f"{suffix}.pub"
 
-
-    # https://stackoverflow.com/a/22449476/
-    private_key_file.write_bytes(private_key)
-    # https://stackoverflow.com/q/57264050/
-    # https://stackoverflow.com/a/17776766/
-    private_key_file.chmod(SSH_CHMOD)
-    # os.chmod(private_key_file, SSH_CHMOD)
+    write_key(private_key_file, private_key)
+    write_key(public_key_file, public_key)
 
     # https://stackoverflow.com/a/56592179/
-    os.system(f"ssh-keygen -p -m PEM -f {private_key_file} -N ''")
-
-    public_key_file.write_bytes(public_key)
-    os.chmod(public_key_file, SSH_CHMOD)
+    # It's not enough to naively replace "PRIVATE KEY" with "RSA PRIVATE KEY":
+    # https://www.diffchecker.com/g7UNtu8E/
+    check_output(["ssh-keygen", "-p", "-m", "PEM", "-f", private_key_file, "-N", ""])
 
     return (private_key_file, public_key_file)
