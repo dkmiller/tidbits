@@ -9,3 +9,6 @@ TODO:
 
 - https://www.fabfile.org/
 - https://hub.docker.com/r/linuxserver/openssh-server
+
+
+[`expected OPENSSH key` means user is unknown](https://github.com/paramiko/paramiko/issues/1612)
