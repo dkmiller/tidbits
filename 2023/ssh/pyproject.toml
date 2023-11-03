@@ -23,3 +23,6 @@ gen-rsa = "ssh.cli:gen_rsa"
 
 [tool.isort]
 profile = "black"
+
+[tool.pytest.ini_options]
+addopts = "-s"

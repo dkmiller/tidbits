@@ -19,13 +19,16 @@ docker run \
   -e USER_NAME=$(whoami) \
   -e LOG_STDOUT=true \
   -p $PORT:$PORT \
-  linuxserver/openssh-server:version-9.3_p2-r0 &
+  linuxserver/openssh-server:version-9.3_p2-r0
 
-sleep 3
+echo "ssh -i ~/.ssh/id_rsa_$HEX -p $PORT $(whoami)@localhost"
 
-ssh -i ~/.ssh/id_rsa_$HEX -p $PORT $(whoami)@localhost
 
-docker stop $(docker ps -a -q)
+# sleep 3
 
-# https://stackoverflow.com/a/62309999/
-sed -i '' "/localhost/d" ~/.ssh/known_hosts
+# ssh -i ~/.ssh/id_rsa_$HEX -p $PORT $(whoami)@localhost
+
+# docker stop $(docker ps -a -q)
+
+# # https://stackoverflow.com/a/62309999/
+# sed -i '' "/localhost/d" ~/.ssh/known_hosts
