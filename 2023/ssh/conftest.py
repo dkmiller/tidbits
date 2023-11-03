@@ -6,6 +6,9 @@ from pytest import fixture
 from ssh.paramiko import Server
 from ssh.rsa import private_public_key_pair
 
+# TODO: there should be separate, module-wide fixtures private_key and public_key, the latter
+# depending on the former.
+
 
 @fixture
 def key_pair():

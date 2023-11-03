@@ -21,14 +21,11 @@ docker run \
   -p $PORT:$PORT \
   linuxserver/openssh-server:version-9.3_p2-r0
 
-echo "ssh -i ~/.ssh/id_rsa_$HEX -p $PORT $(whoami)@localhost"
+sleep 3
 
+ssh -i ~/.ssh/id_rsa_$HEX -p $PORT $(whoami)@localhost
 
-# sleep 3
+docker stop $(docker ps -a -q)
 
-# ssh -i ~/.ssh/id_rsa_$HEX -p $PORT $(whoami)@localhost
-
-# docker stop $(docker ps -a -q)
-
-# # https://stackoverflow.com/a/62309999/
-# sed -i '' "/localhost/d" ~/.ssh/known_hosts
+# https://stackoverflow.com/a/62309999/
+sed -i '' "/localhost/d" ~/.ssh/known_hosts

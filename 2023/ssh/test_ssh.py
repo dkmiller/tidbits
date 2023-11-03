@@ -84,6 +84,3 @@ def test_ssh():
 
     assert result.exited == 0
     assert result.stdout.strip().lower() == user
-
-
-# ssh -i ~/.ssh/id_rsa_335b4717ecec4597ab9655aaee15a382 dan@localhost -p 2223
