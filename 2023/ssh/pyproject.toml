@@ -1,0 +1,17 @@
+[project]
+name = "ssh"
+readme = "README.md"
+version = "0.0.0"
+authors = [
+    { name = "Dan Miller", email = "daniel.keegan.miller@gmail.com" }
+]
+dependencies = [
+    "pandas==2.1.2",
+    "cryptography==41.0.5",
+    "fabric==3.2.2",
+    "paramiko==3.3.1",
+    "pytest==7.4.3",
+]
+
+[project.scripts]
+gen-rsa = "ssh.cli:gen_rsa"

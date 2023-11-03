@@ -1,43 +1,53 @@
-from pytest import fixture
-from cryptography.hazmat.primitives import serialization as crypto_serialization
-from cryptography.hazmat.primitives.asymmetric import rsa
-from cryptography.hazmat.backends import default_backend as crypto_default_backend
-import tempfile
+import os
 import uuid
 from pathlib import Path
+
+import socket
+import threading
+import paramiko
+from cryptography.hazmat.backends import default_backend as crypto_default_backend
+from cryptography.hazmat.primitives import serialization as crypto_serialization
+from cryptography.hazmat.primitives.asymmetric import rsa
+from pytest import fixture
+
+from ssh.paramiko import Server
+from ssh.rsa import private_public_key_pair
 
 
 @fixture
 def key_pair():
-    # https://stackoverflow.com/a/39126754/
+    private_key_file, public_key_file = private_public_key_pair()
 
-    key = rsa.generate_private_key(
-        backend=crypto_default_backend(), public_exponent=65537, key_size=2048
-    )
+    # https://docs.pytest.org/en/7.1.x/how-to/fixtures.html#yield-fixtures-recommended
+    yield {
+        "public": public_key_file.absolute(),
+        "private": private_key_file.absolute(),
+    }
+    private_key_file.unlink()
+    public_key_file.unlink()
 
-    private_key = key.private_bytes(
-        crypto_serialization.Encoding.PEM,
-        crypto_serialization.PrivateFormat.PKCS8,
-        crypto_serialization.NoEncryption(),
-    )
 
-    public_key = key.public_key().public_bytes(
-        crypto_serialization.Encoding.OpenSSH, crypto_serialization.PublicFormat.OpenSSH
-    )
+@fixture
+def ssh(key_pair):
+    # https://gist.github.com/cschwede/3e2c025408ab4af531651098331cce45
+    host_key = paramiko.RSAKey(filename=private_key_file)#key_pair["private"])
+    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+    sock.bind(('', 0))
 
-    suffix = f"id_rsa_{uuid.uuid4().hex}"
+    sock.listen(100)
+    client, addr = sock.accept()
 
-    private_key_file = Path.home() / suffix
-    public_key_file = Path.home() / f"{suffix}.pub"
+    t = paramiko.Transport(client)
+    t.set_gss_host(socket.getfqdn(""))
+    t.load_server_moduli()
+    t.add_server_key(host_key)
+    server = Server()
+    t.start_server(server=server)
+    # Wait 30 seconds for a command
+    server.event.wait(1000)
 
-    private_key_file.write_bytes(private_key)
-    public_key_file.write_bytes(public_key)
+    # https://stackoverflow.com/a/1365284/
+    yield {"port": sock.getsockname()[1], **key_pair}
 
-    try:
-        yield {
-            "public": public_key_file.absolute(),
-            "private": private_key_file.absolute(),
-        }
-    except:
-        private_key_file.unlink()
-        public_key_file.unlink()
+    t.close()
