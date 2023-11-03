@@ -18,6 +18,12 @@ def write_key(path: Path, content: bytes):
     path.chmod(SSH_CHMOD)
 
 
+def private_key():
+    return rsa.generate_private_key(
+        backend=crypto_default_backend(), public_exponent=65537, key_size=2048
+    )
+
+
 def private_public_key_pair() -> tuple[Path, Path]:
     # https://stackoverflow.com/a/39126754/
     key = rsa.generate_private_key(
