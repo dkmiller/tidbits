@@ -25,6 +25,7 @@ obj
 
 # Python
 __pycache__
+*.egg-info/
 
 # Hydra
 outputs/
