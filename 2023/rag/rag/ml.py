@@ -1,10 +1,14 @@
+import logging
 from functools import lru_cache
+
 from cache_decorator import Cache
 from sentence_transformers import SentenceTransformer
 
-
 # https://stackoverflow.com/a/33045252/
 # Embeddable = str | list[str]
+
+
+log = logging.getLogger(__name__)
 
 
 @lru_cache(maxsize=1)
@@ -14,6 +18,7 @@ def embedding_model():
 
 @Cache()
 def embedding(content: list[str]):
+    log.info("Calculating embeddings for %s chunks", len(content))
     model = embedding_model()
     return model.encode(content, normalize_embeddings=True)
 
