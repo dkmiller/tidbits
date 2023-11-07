@@ -1,0 +1,7 @@
+[project]
+name = "pyc"
+version = "0.0.0"
+dependencies = [
+    "omegaconf==2.3.0",
+    "pyinstaller==6.1.0"
+]
