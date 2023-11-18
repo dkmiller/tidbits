@@ -17,3 +17,5 @@ https://earthly.dev/blog/build-golang-bazel-gazelle/
 https://stackoverflow.com/a/50278242/
 
 https://stackoverflow.com/a/63829704/
+
+https://tutorialedge.net/golang/consuming-restful-api-with-go/
