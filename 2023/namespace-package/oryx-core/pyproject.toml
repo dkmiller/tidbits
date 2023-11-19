@@ -1,0 +1,6 @@
+[project]
+name = "oryx-core"
+version = "0.0.0"
+dependencies = [
+    "pandas"
+]

@@ -1,0 +1,6 @@
+[project]
+name = "oryx"
+version = "0.0.0"
+dependencies = [
+    "oryx-core @ file:///Users/dan/src/tidbits/2023/namespace-package/oryx-core/"
+]
