@@ -12,5 +12,5 @@ dependencies = [
 oryx = "oryx.cli:main"
 
 [tool.setuptools.packages.find]
-where = ["src/"]
+where = ["src"]
 include = ["oryx.cli"]
