@@ -4,3 +4,7 @@ version = "0.0.0"
 dependencies = [
     "pandas"
 ]
+
+[tool.setuptools.packages.find]
+where = ["src/"]
+include = ["oryx.core"]

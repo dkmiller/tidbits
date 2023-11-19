@@ -1,0 +1,16 @@
+[project]
+name = "oryx-cli"
+version = "0.0.0"
+dependencies = [
+    "oryx-core>=0.0.0",
+    "oryx==0.0.0",
+    # "oryx-core @ file:///{$PROJECT_ROOT}/oryx-core/",
+    # "oryx @ file:///{$PROJECT_ROOT}/oryx/",
+]
+
+[project.scripts]
+oryx = "oryx.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src/"]
+include = ["oryx.cli"]

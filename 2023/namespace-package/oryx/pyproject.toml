@@ -2,5 +2,11 @@
 name = "oryx"
 version = "0.0.0"
 dependencies = [
-    "oryx-core @ file:///Users/dan/src/tidbits/2023/namespace-package/oryx-core/"
+    # Sadly, does not work.
+    # "oryx-core @ file:///{$PROJECT_ROOT}/oryx-core/"
+    "oryx-core>=0.0.0",
 ]
+
+[tool.setuptools.packages.find]
+where = ["src/"]
+include = ["oryx"]
