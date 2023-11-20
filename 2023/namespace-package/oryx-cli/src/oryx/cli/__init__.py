@@ -1,4 +1,4 @@
-from oryx import oryx_method
+from oryx.operations import oryx_method
 
 def main():
     print("Hi from oryx-cli!")

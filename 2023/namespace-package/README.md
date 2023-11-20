@@ -24,6 +24,12 @@ pip install -e ./oryx/
 pip install -e oryx-core/ oryx/
 
 pip install -e oryx-core -e oryx -e oryx-cli
+
+# Works!
+pip install -e oryx-core --config-settings editable_mode=strict
+
+# Works!
+pip install -e oryx-core -e oryx-operations -e oryx-cli --config-settings editable_mode=strict
 ```
 
 ## Links
@@ -43,3 +49,10 @@ https://github.com/pdm-project/pdm/discussions/600
 https://setuptools.pypa.io/en/latest/userguide/package_discovery.html
 
 https://github.com/dkmiller/modern-python-package/
+
+https://stackoverflow.com/a/76214384/
+
+- VS Code approach is better than `editable_mode=strict` approach; no obvious way to do multiple
+  of the latter in single `requirements.txt` file.
+
+https://setuptools.pypa.io/en/latest/userguide/development_mode.html

@@ -1,2 +1,2 @@
-pip uninstall -y oryx oryx-core oryx-cli
+pip uninstall -y oryx-core oryx-operations oryx-cli
 

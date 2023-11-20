@@ -9,4 +9,4 @@ dependencies = [
 
 [tool.setuptools.packages.find]
 where = ["src"]
-include = ["oryx"]
+include = ["oryx.operations"]

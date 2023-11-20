@@ -1,0 +1,7 @@
+{
+    "python.analysis.extraPaths": [
+        "oryx-core/src",
+        "oryx-operations/src",
+        "oryx-cli/src"
+    ]
+}
