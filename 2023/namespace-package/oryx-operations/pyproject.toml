@@ -2,8 +2,6 @@
 name = "oryx"
 version = "0.0.0"
 dependencies = [
-    # Sadly, does not work.
-    # "oryx-core @ file:///{$PROJECT_ROOT}/oryx-core/"
     "oryx-core>=0.0.0",
 ]
 
