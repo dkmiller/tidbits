@@ -1,4 +1,6 @@
 import socket
+from socket import socket
+from threading import Lock
 
 import paramiko
 from pytest import fixture
@@ -54,3 +56,14 @@ def ssh(key_pair):
     yield {"port": sock.getsockname()[1], **key_pair}
 
     t.close()
+
+
+@fixture
+def port():
+    """
+    TODO
+    """
+    # https://www.scivision.dev/get-available-port-for-shell-script/
+    with socket() as s:
+        s.bind(("", 0))
+        yield s.getsockname()[1]

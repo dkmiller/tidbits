@@ -19,7 +19,7 @@ def server(sha: str):
 
     import paramiko
 
-    from ssh.server import Server, run_server
+    from ssh.server import run_server
 
     logging.basicConfig(level="INFO")
 
@@ -28,5 +28,5 @@ def server(sha: str):
     run_server("dan", 5555, Path.home().resolve() / ".ssh" / f"id_rsa_{sha}")
 
 
-
-# ssh -i ~/.ssh/id_rsa_16505ade1dbd42f38623fd2aef236a27 -p 5555 dan@localhost ls
+# TODO: why do I need to CTRL+C to exit after running this?
+# ssh -i ~/.ssh/id_rsa_16505ade1dbd42f38623fd2aef236a27 -p 5555 dan@localhost my-command2

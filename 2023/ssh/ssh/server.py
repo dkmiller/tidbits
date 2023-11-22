@@ -1,11 +1,18 @@
 import logging
+import socket
 import threading
 from dataclasses import dataclass, field
 from pathlib import Path
-import socket
 
 import docker
-from paramiko import AUTH_FAILED, AUTH_SUCCESSFUL, OPEN_SUCCEEDED, ServerInterface, RSAKey, Transport
+from paramiko import (
+    AUTH_FAILED,
+    AUTH_SUCCESSFUL,
+    OPEN_SUCCEEDED,
+    RSAKey,
+    ServerInterface,
+    Transport,
+)
 
 from ssh.models import SshHost
 
@@ -71,11 +78,10 @@ class Server(ServerInterface):
         return True
 
     def check_channel_shell_request(self, channel):
+        self.event.set()
         return True
 
     def check_channel_exec_request(self, channel, command):
-        print(f"Command: {command}")
-        # raise Exception(f"Command: {command}")
         log.info("Running `%s`", command)
         self.event.set()
         return True
