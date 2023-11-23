@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 from pathlib import Path
-from subprocess import check_output
+from subprocess import check_output, Popen
 
 from ssh.models import SshHost
 
@@ -34,9 +34,17 @@ class SshCliWrapper:
         ]
         return check_output(args)
 
-    def forward(self, local_port: int, destination_port: int):
-        from subprocess import Popen
+    def exec_background(self, *command) -> Popen:
+        # TODO: dedup with self.exec
+        args = [
+            "ssh",
+            *self._parameters(),
+            self._hostname(),
+            *command,
+        ]
+        return Popen(args)
 
+    def forward(self, local_port: int, destination_port: int) -> Popen:
         args = [
             "ssh",
             *self._parameters(),

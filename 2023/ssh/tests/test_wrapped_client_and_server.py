@@ -59,10 +59,22 @@ def test_client_can_forward_port_from_server(key_pair):
     # https://it-tools.tech/random-port-generator
     local_port = 24464
     destination_port = 63752
+    destination_port = local_port
+
+    response_str = None
 
     try:
         proc = ssh_client.forward(local_port, destination_port)
-        proc.kill()
+        # https://unix.stackexchange.com/q/289364
+        # https://superuser.com/a/115556
+        # https://stackoverflow.com/a/19139134/
+        nc = ssh_client.exec_background("bash", "-c", f"echo 'hi from cmdline' | nc -l localhost {destination_port}")
+        import requests
+        try:
+            response = requests.get(f"http://localhost:{local_port}/foo")
+            response_str = f"{response.status_code} {response.text}"
+        except:
+            pass
 
         # TODO: ssh_client.exec --> "process" variant
         # ( https://github.com/dkmiller/tidbits/blob/main/2023/kubernetes/src/ptah/core/process.py )
@@ -71,4 +83,9 @@ def test_client_can_forward_port_from_server(key_pair):
         # (sadly, no python or python3 + no screen)
         # requests.get from local
     finally:
+        server_logs = server.logs()
         server.stop()
+        proc.kill()
+        nc.kill()
+
+    raise Exception(f"{response_str} {server_logs}")
