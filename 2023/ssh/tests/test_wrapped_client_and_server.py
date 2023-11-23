@@ -1,7 +1,8 @@
+import logging
 import time
 from uuid import uuid4
+
 import pytest
-import logging
 
 from ssh import SshCliWrapper, SshHost, run_dockerized_server
 
@@ -80,8 +81,6 @@ def test_client_can_forward_port_from_server(key_pair):
         # https://superuser.com/a/115556
         # https://stackoverflow.com/a/19139134/
 
-
-
         raw_response = """HTTP/1.1 200 OK
 Content-Type: text/plain
 Connection: close
@@ -90,32 +89,33 @@ content-length: 57
 Hi from ssh server 50ca245d-a96e-47b1-a042-180dd751ee77
 """
 
-#  | nc -l localhost 24464
+        #  | nc -l localhost 24464
 
-        command = f"""
+        command = (
+            f"""
 echo -e "{raw_response}" | nc -l localhost 24464
-""".strip().encode("unicode_escape").decode()
-        
+""".strip()
+            .encode("unicode_escape")
+            .decode()
+        )
+
         log.warning("command: %s", command)
 
-
-# output = subprocess.check_output(
-#         [
-#             "ssh",
-#             "-i",
-#             "~/.ssh/id_rsa_16505ade1dbd42f38623fd2aef236a27",
-#             "-p",
-#             "2222",
-#             "-o",
-#             "StrictHostKeyChecking=accept-new",
-#             "dan@localhost",
-#             "/bin/bash",
-#             "-c",
-#             shlex.quote(command),
-#         ]
-#     )
-
-
+        # output = subprocess.check_output(
+        #         [
+        #             "ssh",
+        #             "-i",
+        #             "~/.ssh/id_rsa_16505ade1dbd42f38623fd2aef236a27",
+        #             "-p",
+        #             "2222",
+        #             "-o",
+        #             "StrictHostKeyChecking=accept-new",
+        #             "dan@localhost",
+        #             "/bin/bash",
+        #             "-c",
+        #             shlex.quote(command),
+        #         ]
+        #     )
 
         # response_text = f"\nHi from ssh server {random_str}\n"
         # response_whole = f"HTTP/1.1 200 OK\nContent-Type: text/plain\nConnection: close\ncontent-length: {len(response_text)}\n{response_text}"

@@ -1,7 +1,7 @@
 import logging
 from dataclasses import dataclass
 from pathlib import Path
-from subprocess import check_output, Popen
+from subprocess import Popen, check_output
 
 log = logging.getLogger(__name__)
 

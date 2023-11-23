@@ -1,6 +1,7 @@
 docker build -t ssh .
 
 # Cleanup any pre-existing port stuff
+# Get only the port from lsof: https://stackoverflow.com/a/62453482/
 kill -9 $(lsof -t -i :24464)
 kill -9 $(lsof -t -i :63752)
 
