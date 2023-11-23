@@ -41,7 +41,7 @@ echo -e "{raw_response}" | nc -l localhost 24464
 print(f"----- command -----\n{command}\n----------")
 
 
-output = subprocess.check_output(
+netcat_proc = subprocess.Popen(
         [
             "ssh",
             "-i",
@@ -57,7 +57,26 @@ output = subprocess.check_output(
         ]
     )
 
-print(f"----- output -----\n{output.decode()}\n----------")
+
+import requests
+
+try:
+    import time
+    time.sleep(1)
+    print(requests.get("http://localhost:63752/foo").text)
+except Exception as e:
+    print(e)
+
+
+# port_forward_proc.kill()
+
+(output, err) = netcat_proc.communicate()  
+
+#This makes the wait possible
+p_status = netcat_proc.wait()
+
+
+print(f"----- output -----\n{output}\n----------")
 
 
 # curl -v http://localhost:24464/foo
