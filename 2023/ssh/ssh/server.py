@@ -19,24 +19,25 @@ from ssh.models import SshHost
 log = logging.getLogger(__name__)
 
 
-def run_dockerized_server(host_config: SshHost, public_key: str):
+def run_dockerized_server(host_config: SshHost, public_key: str, ports: list[int] = []):
     assert (
         host_config.port == 2222
     ), "https://github.com/linuxserver/docker-openssh-server/issues/30"
     client = docker.from_env()
+    client.images.build(path=str(Path(__file__).parent.parent))
+    ports_dict = {host_config.port: host_config.port}
+    for port in ports:
+        ports_dict[port] = port
+    log.warning("Ports: %s", ports_dict)
     container = client.containers.run(
-        "linuxserver/openssh-server:version-9.3_p2-r0",
+        "ssh",
         environment={
-            "PUID": 1000,
-            "PGID": 1000,
-            "TZ": "Etc/UTC",
             "PUBLIC_KEY": public_key,
             "USER_NAME": host_config.user,
             # https://github.com/linuxserver/docker-openssh-server/issues/30#issuecomment-1525103465
             "LISTEN_PORT": host_config.port,
-            "LOG_STDOUT": True,
         },
-        ports={host_config.port: host_config.port},
+        ports=ports_dict,
         hostname=host_config.host,
         detach=True,
     )

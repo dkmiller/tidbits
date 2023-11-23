@@ -1,6 +1,10 @@
+import logging
 from dataclasses import dataclass
 from pathlib import Path
 from subprocess import check_output, Popen
+
+log = logging.getLogger(__name__)
+
 
 from ssh.models import SshHost
 
@@ -14,8 +18,8 @@ class SshCliWrapper:
         return [
             "-o",
             # https://stackoverflow.com/a/61946687/
-            # TODO: relace this with accept-new and/or handle host key checking...
-            "StrictHostKeyChecking=no",
+            # TODO: clean up host keys. This is needed for port forwarding.
+            "StrictHostKeyChecking=accept-new",
             "-i",
             str(self.identity.absolute()),
             "-p",
@@ -32,6 +36,7 @@ class SshCliWrapper:
             self._hostname(),
             *command,
         ]
+        log.warning("exec %s", args)
         return check_output(args)
 
     def exec_background(self, *command) -> Popen:
@@ -42,6 +47,7 @@ class SshCliWrapper:
             self._hostname(),
             *command,
         ]
+        log.warning("exec_background %s", args)
         return Popen(args)
 
     def forward(self, local_port: int, destination_port: int) -> Popen:
@@ -53,6 +59,7 @@ class SshCliWrapper:
             f"{local_port}:localhost:{destination_port}",
             self._hostname(),
         ]
+        log.warning("forward %s", args)
         return Popen(args)
         #         ssh -o ConnectTimeout=3 -fN -L $LOCALHOST $TARGET &
         # return check_output(args)
