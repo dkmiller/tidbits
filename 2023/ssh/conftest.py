@@ -1,11 +1,16 @@
 import socket
+from socket import socket
+from threading import Lock
+from uuid import uuid4
 
 import paramiko
 from pytest import fixture
 
-from ssh.paramiko import Server
+from ssh import SshHost
+
+# from ssh.paramiko import Server
+from ssh.port import Ports, free_ports
 from ssh.rsa import private_public_key_pair
-from ssh import rsa
 
 # TODO: there should be separate, module-wide fixtures private_key and public_key, the latter
 # depending on the former.
@@ -19,15 +24,28 @@ from ssh import rsa
 
 @fixture
 def key_pair():
-    private_key_file, public_key_file = private_public_key_pair()
+    pair = private_public_key_pair()
 
     # https://docs.pytest.org/en/7.1.x/how-to/fixtures.html#yield-fixtures-recommended
-    yield {
-        "public": public_key_file.absolute(),
-        "private": private_key_file.absolute(),
-    }
-    private_key_file.unlink()
-    public_key_file.unlink()
+    yield pair
+
+    pair.private.unlink()
+    pair.public.unlink()
+
+
+@fixture
+def ports():
+    return free_ports()
+
+
+@fixture
+def user():
+    return str(uuid4())[:8]
+
+
+@fixture
+def host(user):
+    return SshHost("localhost", 2222, user)
 
 
 @fixture
@@ -54,3 +72,14 @@ def ssh(key_pair):
     yield {"port": sock.getsockname()[1], **key_pair}
 
     t.close()
+
+
+@fixture
+def port():
+    """
+    TODO
+    """
+    # https://www.scivision.dev/get-available-port-for-shell-script/
+    with socket() as s:
+        s.bind(("", 0))
+        yield s.getsockname()[1]

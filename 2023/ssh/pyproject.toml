@@ -1,7 +1,7 @@
 [project]
 name = "ssh"
 readme = "README.md"
-version = "0.0.0"
+version = "0.1.0"
 authors = [
     { name = "Dan Miller", email = "daniel.keegan.miller@gmail.com" }
 ]
@@ -11,18 +11,23 @@ dependencies = [
     "fabric==3.2.2",
     "paramiko==3.3.1",
     "pytest==7.4.3",
+    "typer==0.9.0",
 ]
 [project.optional-dependencies]
 dev = [
     "black==23.7.1",
     "isort==5.12.0",
+    "pytest-timeout==2.2.0",
 ]
 
 [project.scripts]
 gen-rsa = "ssh.cli:gen_rsa"
+server = "ssh.cli:app"
 
 [tool.isort]
 profile = "black"
 
 [tool.pytest.ini_options]
 addopts = "-s"
+# https://stackoverflow.com/a/51633600/
+log_cli_level = "INFO"

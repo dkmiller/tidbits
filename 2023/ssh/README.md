@@ -96,3 +96,33 @@ flowchart TD
     wrapped_wrapped --> wrapped_python
     wrapped_python --> python_python
 ```
+
+----
+
+## Misc
+
+https://stackoverflow.com/a/34659332/
+
+```bash
+lsof -i :12343
+```
+
+## Debugging
+
+In warp terminal:
+
+```bash
+./docker_v2.sh
+```
+
+In MacBook (i.e., separate) terminal:
+
+```bash
+python debug.py
+```
+
+In MacBook, _third_ terminal:
+
+```bash
+curl -v http://localhost:63752/foo
+```
