@@ -4,8 +4,14 @@ import time
 
 import requests
 
+from ssh import SshHost
+from ssh.known_hosts import KnownHostsClient
 
-openssh_port = 2222
+host = SshHost("localhost", 2222, "dan")
+
+KnownHostsClient().reset(host)
+
+
 local_port = 63752
 remote_port = 24464
 
@@ -15,13 +21,13 @@ port_forward_output = subprocess.check_output(
         "-i",
         "~/.ssh/id_rsa_16505ade1dbd42f38623fd2aef236a27",
         "-p",
-        str(openssh_port),
+        str(host.port),
         "-o",
         "StrictHostKeyChecking=accept-new",
         "-fN",
         "-L",
-        f"{local_port}:localhost:{remote_port}",
-        "dan@localhost",
+        f"{local_port}:{host.host}:{remote_port}",
+        f"{host.user}@{host.host}",
     ]
 )
 
@@ -57,10 +63,10 @@ netcat_proc = subprocess.Popen(
         "-i",
         "~/.ssh/id_rsa_16505ade1dbd42f38623fd2aef236a27",
         "-p",
-        str(openssh_port),
+        str(host.port),
         "-o",
         "StrictHostKeyChecking=accept-new",
-        "dan@localhost",
+        f"{host.user}@{host.host}",
         "/bin/bash",
         "-c",
         shlex.quote(command),
@@ -70,7 +76,7 @@ netcat_proc = subprocess.Popen(
 
 try:
     time.sleep(1)
-    print(requests.get(f"http://localhost:{local_port}/foo").text)
+    print(requests.get(f"http://{host.host}:{local_port}/foo").text)
 except Exception as e:
     print(e)
 
@@ -88,3 +94,5 @@ print(f"----- output -----\n{output}\n----------")
 
 
 # curl -v http://localhost:24464/foo
+
+KnownHostsClient().reset(host)
