@@ -4,6 +4,7 @@ import threading
 from contextlib import contextmanager
 from dataclasses import dataclass, field
 from pathlib import Path
+from typing import Union
 
 import docker
 from docker.models.containers import Container
@@ -50,7 +51,11 @@ def run_dockerized_server(
 
 
 @contextmanager
-def dockerized_server_safe(host_config: SshHost, public_key: str, ports: list[int]):
+def dockerized_server_safe(
+    host_config: SshHost, public_key: Union[Path, str], ports: list[int]
+):
+    if isinstance(public_key, Path):
+        public_key = public_key.read_text()
     container = run_dockerized_server(host_config, public_key, ports)
     try:
         yield container

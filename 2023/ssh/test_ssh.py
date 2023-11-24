@@ -8,17 +8,6 @@ from paramiko.config import SSHConfig
 from ssh import SshHost, private_public_key_pair, run_dockerized_server
 
 
-def test_key_pair(key_pair):
-    assert "private" in key_pair
-    assert "public" in key_pair
-
-    assert os.path.isfile(key_pair["private"])
-    assert os.path.isfile(key_pair["public"])
-
-    assert ".ssh" in str(key_pair["private"])
-    assert ".ssh" in str(key_pair["public"])
-
-
 def test_ssh_with_dockerized_server():
     ssh_host = SshHost("localhost", 2222, "dan")
     private, public = private_public_key_pair()

@@ -3,11 +3,15 @@ import shlex
 
 log = logging.getLogger(__name__)
 
+# https://unix.stackexchange.com/q/289364
+# https://superuser.com/a/115556
+# https://stackoverflow.com/a/19139134/
+
 
 class NetcatClient:
     """
     The OpenSSH Docker image is very limited, with the only natural HTTP host being the
-    `nc` executable.
+    `nc` executable (https://unix.stackexchange.com/a/715981).
     """
 
     def http_response(self, body: str) -> str:
@@ -29,6 +33,7 @@ content-length: {len(body)}
         a remote SSH host. This returns a command usable inside a remote bash session.
         """
         raw_command = f'echo -e "{http_response}" | nc -l localhost {remote_port}'
+        # Escaping newlines: https://stackoverflow.com/a/15392758/
         rv = raw_command.encode("unicode_escape").decode()
         log.info("Remote bash command: %s", rv)
         return rv

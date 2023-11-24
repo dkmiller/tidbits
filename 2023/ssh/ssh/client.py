@@ -1,5 +1,7 @@
 import logging
-from dataclasses import dataclass
+import shlex
+from contextlib import contextmanager
+from dataclasses import dataclass, field
 from pathlib import Path
 from subprocess import PIPE, Popen
 
@@ -12,6 +14,7 @@ log = logging.getLogger(__name__)
 class SshCliWrapper:
     identity: Path
     host: SshHost
+    processes: list[Popen] = field(default_factory=list)
 
     def prefix(self):
         """
@@ -42,16 +45,19 @@ class SshCliWrapper:
         return self._popen(args)
 
     def _popen(self, args: list[str]) -> Popen:
-        log.info("Popen %s", args)
         # https://stackoverflow.com/a/31867499/
         rv = Popen(args, stderr=PIPE, stdout=PIPE)
-        log.info("Spawned %s", rv.pid)
+        self.processes.append(rv)
+        # Make logged commands copy/pasteable.
+        copyable_args = " ".join(map(shlex.quote, args))
+        log.info("Spawned process %s: %s", rv.pid, copyable_args)
         return rv
 
     def forward(self, local_port: int, remote_port: int) -> Popen:
         """
         Spawn a process that forwards the specified remote port to the specified local port.
         """
+        log.info("Forwarding remote port %s --> local port %s", remote_port, local_port)
         args = [
             *self.prefix(),
             "-fN",
@@ -61,3 +67,22 @@ class SshCliWrapper:
             self.target(),
         ]
         return self._popen(args)
+
+
+@contextmanager
+def ssh_cli_wrapper(identity: Path, host: SshHost):
+    ssh_cli = SshCliWrapper(identity, host)
+    try:
+        yield ssh_cli
+    finally:
+        for proc in ssh_cli.processes:
+            # https://stackoverflow.com/a/43276598/
+            if proc.poll():
+                log.info(
+                    "Process %s already terminated with status %s",
+                    proc.pid,
+                    proc.poll(),
+                )
+            else:
+                log.info("Killing %s", proc.pid)
+                proc.kill()

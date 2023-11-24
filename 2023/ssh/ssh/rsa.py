@@ -1,4 +1,5 @@
 import uuid
+from dataclasses import dataclass
 from pathlib import Path
 from subprocess import check_output
 
@@ -8,6 +9,12 @@ from cryptography.hazmat.primitives.asymmetric import rsa
 
 # https://unix.stackexchange.com/a/257648
 SSH_CHMOD = 0o600
+
+
+@dataclass(frozen=True)
+class KeyPair:
+    private: Path
+    public: Path
 
 
 def write_key(path: Path, content: bytes):
@@ -24,7 +31,7 @@ def private_key():
     )
 
 
-def private_public_key_pair() -> tuple[Path, Path]:
+def private_public_key_pair() -> KeyPair:
     # https://stackoverflow.com/a/39126754/
     key = rsa.generate_private_key(
         backend=crypto_default_backend(), public_exponent=65537, key_size=2048
@@ -42,8 +49,9 @@ def private_public_key_pair() -> tuple[Path, Path]:
 
     suffix = f".ssh/id_rsa_{uuid.uuid4().hex}"
 
-    private_key_file = Path.home() / suffix
-    public_key_file = Path.home() / f"{suffix}.pub"
+    home = Path.home().resolve().absolute()
+    private_key_file = home / suffix
+    public_key_file = home / f"{suffix}.pub"
 
     write_key(private_key_file, private_key)
     write_key(public_key_file, public_key)
@@ -53,4 +61,4 @@ def private_public_key_pair() -> tuple[Path, Path]:
     # https://www.diffchecker.com/g7UNtu8E/
     check_output(["ssh-keygen", "-p", "-m", "PEM", "-f", private_key_file, "-N", ""])
 
-    return (private_key_file, public_key_file)
+    return KeyPair(private_key_file, public_key_file)
