@@ -16,6 +16,12 @@ class KnownHostsClient:
         """
         In unit and integration testing, it's necessary to clean up known hosts configuration
         between tests giving the same localhost reference different public/private key pairs.
+
+        Replaces the simple shell call
+
+        ```bash
+        sed -i '' "/localhost/d" ~/.ssh/known_hosts
+        ```
         """
         # https://superuser.com/a/30089
         output = check_output(["ssh-keygen", "-R", f"[{host.host}]:{host.port}"])

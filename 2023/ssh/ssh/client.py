@@ -14,6 +14,26 @@ class SshCliWrapper:
     identity: Path
     host: SshHost
 
+    def prefix(self):
+        """
+        Shared prefix of SSH command: `ssh -i * -p * -o * ...`.
+        """
+        return [
+            "ssh",
+            "-i",
+            str(self.identity.absolute()),
+            "-p",
+            str(self.host.port),
+            "-o",
+            "StrictHostKeyChecking=accept-new",
+        ]
+
+    def target(self):
+        """
+        Target of SSH commands and port forwarding, e.g. `dan@localhost`.
+        """
+        return f"{self.host.user}@{self.host.host}"
+
     def _parameters(self):
         return [
             "-o",
@@ -50,27 +70,20 @@ class SshCliWrapper:
         log.warning("exec_background %s", args)
         return Popen(args)
 
-    def forward(self, local_port: int, destination_port: int) -> Popen:
+    def popen(self, args: list[str]) -> Popen:
+        log.info("Popen %s", args)
+        return Popen(args)
+
+    def forward(self, local_port: int, remote_port: int) -> Popen:
+        """
+        Spawn a process that forwards the specified remote port to the specified local port.
+        """
         args = [
-            "ssh",
-            *self._parameters(),
+            *self.prefix(),
             "-fN",
             "-L",
-            f"{local_port}:localhost:{destination_port}",
-            self._hostname(),
+            # https://phoenixnap.com/kb/ssh-port-forwarding
+            f"{local_port}:{self.host.host}:{remote_port}",
+            self.target(),
         ]
-        log.warning("forward %s", args)
-        return Popen(args)
-        #         ssh -o ConnectTimeout=3 -fN -L $LOCALHOST $TARGET &
-        # return check_output(args)
-
-        # ssh_target = f"{self.user}@{self.host}"
-        # localhost = f"{port}:localhost:{port}"
-        # url = f"http://localhost:{port}/?token={token}"
-        # ssh_tunnel = common.ONE_BRAIN_CLI_ROOT / "one_brain/scripts/ssh_tunnel.sh"
-        # command = f"/bin/bash {ssh_tunnel} {url} {localhost} {ssh_target} {port}"
-
-
-# ssh -L local_port:destination_server_ip:remote_port ssh_server_hostname
-
-# https://phoenixnap.com/kb/ssh-port-forwarding
+        return self.popen(args)
