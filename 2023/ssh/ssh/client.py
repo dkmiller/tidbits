@@ -44,7 +44,9 @@ class SshCliWrapper:
     def _popen(self, args: list[str]) -> Popen:
         log.info("Popen %s", args)
         # https://stackoverflow.com/a/31867499/
-        return Popen(args, stderr=PIPE, stdout=PIPE)
+        rv = Popen(args, stderr=PIPE, stdout=PIPE)
+        log.info("Spawned %s", rv.pid)
+        return rv
 
     def forward(self, local_port: int, remote_port: int) -> Popen:
         """

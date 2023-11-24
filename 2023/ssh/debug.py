@@ -30,6 +30,7 @@ KnownHostsClient().reset(host)
 
 local_port = 63752
 remote_port = 24464
+
 private_key = Path.home().resolve() / ".ssh/id_rsa_16505ade1dbd42f38623fd2aef236a27"
 public_key = Path.home().resolve() / ".ssh/id_rsa_16505ade1dbd42f38623fd2aef236a27.pub"
 request_path = f"/{uuid4()}"
@@ -51,6 +52,8 @@ ssh_cli = SshCliWrapper(private_key, host)
 
 try:
     port_forward_proc = ssh_cli.forward(local_port, remote_port)
+
+    # ==================================================================================================
 
     netcat_proc = ssh_cli.exec(*NetcatClient().ssh_exec(response_body, remote_port))
 

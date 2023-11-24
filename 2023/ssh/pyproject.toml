@@ -28,3 +28,5 @@ profile = "black"
 
 [tool.pytest.ini_options]
 addopts = "-s"
+# https://stackoverflow.com/a/51633600/
+log_cli_level = "INFO"

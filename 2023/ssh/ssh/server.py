@@ -1,10 +1,12 @@
 import logging
 import socket
 import threading
+from contextlib import contextmanager
 from dataclasses import dataclass, field
 from pathlib import Path
 
 import docker
+from docker.models.containers import Container
 from paramiko import (
     AUTH_FAILED,
     AUTH_SUCCESSFUL,
@@ -19,7 +21,9 @@ from ssh.models import SshHost
 log = logging.getLogger(__name__)
 
 
-def run_dockerized_server(host_config: SshHost, public_key: str, ports: list[int] = []):
+def run_dockerized_server(
+    host_config: SshHost, public_key: str, ports: list[int] = []
+) -> Container:
     assert (
         host_config.port == 2222
     ), "https://github.com/linuxserver/docker-openssh-server/issues/30"
@@ -42,7 +46,16 @@ def run_dockerized_server(host_config: SshHost, public_key: str, ports: list[int
         detach=True,
     )
 
-    return container
+    return container  # type: ignore
+
+
+@contextmanager
+def dockerized_server_safe(host_config: SshHost, public_key: str, ports: list[int]):
+    container = run_dockerized_server(host_config, public_key, ports)
+    try:
+        yield container
+    finally:
+        container.stop()
 
 
 # https://stackoverflow.com/q/68768419/
