@@ -1,14 +1,12 @@
 from abc import ABC, abstractmethod
+from subprocess import Popen
 
 
 class SshClient(ABC):
     @abstractmethod
-    def exec(self, args: list[str]):
+    def exec(self, *args) -> Popen:
         pass
 
-    def tunnel(self, local_port: int, remote_port: int):
+    @abstractmethod
+    def forward(self, local_port: int, remote_port: int) -> Popen:
         pass
-
-
-class SshServer(ABC):
-    pass

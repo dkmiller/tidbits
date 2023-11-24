@@ -5,6 +5,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from subprocess import PIPE, Popen
 
+from ssh.abstractions import SshClient
 from ssh.models import SshHost
 from ssh.process import kill
 
@@ -12,7 +13,7 @@ log = logging.getLogger(__name__)
 
 
 @dataclass
-class SshCliWrapper:
+class SshCliWrapper(SshClient):
     identity: Path
     host: SshHost
     processes: list[Popen] = field(default_factory=list)
