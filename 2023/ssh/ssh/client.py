@@ -6,6 +6,7 @@ from pathlib import Path
 from subprocess import PIPE, Popen
 
 from ssh.models import SshHost
+from ssh.process import kill
 
 log = logging.getLogger(__name__)
 
@@ -75,14 +76,5 @@ def ssh_cli_wrapper(identity: Path, host: SshHost):
     try:
         yield ssh_cli
     finally:
-        for proc in ssh_cli.processes:
-            # https://stackoverflow.com/a/43276598/
-            if proc.poll():
-                log.info(
-                    "Process %s already terminated with status %s",
-                    proc.pid,
-                    proc.poll(),
-                )
-            else:
-                log.info("Killing %s", proc.pid)
-                proc.kill()
+        for process in ssh_cli.processes:
+            kill(process)

@@ -23,6 +23,7 @@ class NetcatClient:
 Content-Type: text/plain
 Connection: close
 content-length: {len(body)}
+
 {body}"""
         log.info("Raw HTTP Response:\n%s", rv)
         return rv

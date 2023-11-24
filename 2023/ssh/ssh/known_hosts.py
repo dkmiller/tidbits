@@ -1,5 +1,5 @@
 import logging
-from subprocess import check_output
+from subprocess import PIPE, check_output
 
 from ssh.models import SshHost
 
@@ -24,5 +24,7 @@ class KnownHostsClient:
         ```
         """
         # https://superuser.com/a/30089
-        output = check_output(["ssh-keygen", "-R", f"[{host.host}]:{host.port}"])
+        output = check_output(
+            ["ssh-keygen", "-R", f"[{host.host}]:{host.port}"], stderr=PIPE
+        )
         log.info(output)

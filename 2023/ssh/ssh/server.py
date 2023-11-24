@@ -1,6 +1,7 @@
 import logging
 import socket
 import threading
+import time
 from contextlib import contextmanager
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -17,6 +18,7 @@ from paramiko import (
     Transport,
 )
 
+from ssh.known_hosts import KnownHostsClient
 from ssh.models import SshHost
 
 log = logging.getLogger(__name__)
@@ -54,13 +56,20 @@ def run_dockerized_server(
 def dockerized_server_safe(
     host_config: SshHost, public_key: Union[Path, str], ports: list[int]
 ):
+    known_hosts = KnownHostsClient()
+    known_hosts.reset(host_config)
+
     if isinstance(public_key, Path):
         public_key = public_key.read_text()
     container = run_dockerized_server(host_config, public_key, ports)
+    # TODO: find polling mechanism.
+    time.sleep(2)
+
     try:
         yield container
     finally:
         container.stop()
+        known_hosts.reset(host_config)
 
 
 # https://stackoverflow.com/q/68768419/

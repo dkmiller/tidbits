@@ -6,7 +6,7 @@ from uuid import uuid4
 import paramiko
 from pytest import fixture
 
-from ssh import rsa
+from ssh import SshHost
 
 # from ssh.paramiko import Server
 from ssh.port import Ports, free_ports
@@ -41,6 +41,11 @@ def ports():
 @fixture
 def user():
     return str(uuid4())[:8]
+
+
+@fixture
+def host(user):
+    return SshHost("localhost", 2222, user)
 
 
 @fixture
