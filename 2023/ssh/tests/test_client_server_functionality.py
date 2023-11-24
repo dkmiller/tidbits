@@ -4,47 +4,59 @@ from uuid import uuid4
 import pytest
 import requests
 
-from ssh import dockerized_server_safe, ssh_cli_wrapper, wait
-from ssh.netcat import NetcatClient
+from ssh import NetcatClient, dockerized_server_safe, ssh_cli_wrapper, wait
 
+CLIENTS = [ssh_cli_wrapper]
+SERVERS = [dockerized_server_safe]
 TIMEOUT = pytest.mark.timeout(10)
 
 
-def test_client_can_call_whoami_in_server(key_pair, ports, host):
-    with dockerized_server_safe(host, key_pair.public, [ports.remote]):
-        with ssh_cli_wrapper(key_pair.private, host) as ssh_cli:
-            whoami = wait(ssh_cli.exec("whoami"))
+@pytest.mark.parametrize("client", CLIENTS)
+@pytest.mark.parametrize("server", SERVERS)
+@TIMEOUT
+def test_client_can_call_whoami_in_server(client, server, key_pair, ports, host):
+    with server(host, key_pair.public, [ports.remote]):
+        with client(key_pair.private, host) as ssh:
+            whoami = wait(ssh.exec("whoami"))
             assert whoami.stdout.strip() == host.user
 
 
+@pytest.mark.parametrize("client", CLIENTS)
+@pytest.mark.parametrize("server", SERVERS)
 @TIMEOUT
-def test_client_can_touch_file_in_server(key_pair, ports, host):
-    with dockerized_server_safe(host, key_pair.public, [ports.remote]):
-        with ssh_cli_wrapper(key_pair.private, host) as ssh_cli:
+def test_client_can_touch_file_in_server(client, server, key_pair, ports, host):
+    with server(host, key_pair.public, [ports.remote]):
+        with client(key_pair.private, host) as ssh_cli:
             file_name = str(uuid4())
             wait(ssh_cli.exec("touch", file_name))
             ls = wait(ssh_cli.exec("ls", file_name))
             assert ls.stdout.strip() == file_name
 
 
+@pytest.mark.parametrize("client", CLIENTS)
+@pytest.mark.parametrize("server", SERVERS)
 @pytest.mark.parametrize("executable", ["bash", "ls", "nc", "which"])
 @TIMEOUT
-def test_client_can_run_which_in_server(key_pair, executable, ports, host):
-    with dockerized_server_safe(host, key_pair.public, [ports.remote]):
-        with ssh_cli_wrapper(key_pair.private, host) as ssh_cli:
+def test_client_can_run_which_in_server(
+    client, server, key_pair, executable, ports, host
+):
+    with server(host, key_pair.public, [ports.remote]):
+        with client(key_pair.private, host) as ssh_cli:
             which = wait(ssh_cli.exec("which", executable))
             assert which.stdout.strip().split("/")[-1] == executable
 
 
+@pytest.mark.parametrize("client", CLIENTS)
+@pytest.mark.parametrize("server", SERVERS)
 @TIMEOUT
-def test_client_can_forward_port_from_server(key_pair, ports, host):
+def test_client_can_forward_port_from_server(client, server, key_pair, ports, host):
     netcat = NetcatClient()
 
     response_body = f"Hi from SSH server: {uuid4()}"
     netcat_command = netcat.ssh_exec(response_body, ports.remote)
 
-    with dockerized_server_safe(host, key_pair.public, [ports.remote]):
-        with ssh_cli_wrapper(key_pair.private, host) as ssh_cli:
+    with server(host, key_pair.public, [ports.remote]):
+        with client(key_pair.private, host) as ssh_cli:
             ssh_cli.forward(ports.local, ports.remote)
             netcat_proc = ssh_cli.exec(*netcat_command)
 
