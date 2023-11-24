@@ -1,12 +1,11 @@
 import logging
 from dataclasses import dataclass
 from pathlib import Path
-from subprocess import Popen, check_output
-
-log = logging.getLogger(__name__)
-
+from subprocess import PIPE, Popen
 
 from ssh.models import SshHost
+
+log = logging.getLogger(__name__)
 
 
 @dataclass
@@ -25,6 +24,7 @@ class SshCliWrapper:
             "-p",
             str(self.host.port),
             "-o",
+            # https://stackoverflow.com/a/61946687/
             "StrictHostKeyChecking=accept-new",
         ]
 
@@ -34,45 +34,17 @@ class SshCliWrapper:
         """
         return f"{self.host.user}@{self.host.host}"
 
-    def _parameters(self):
-        return [
-            "-o",
-            # https://stackoverflow.com/a/61946687/
-            # TODO: clean up host keys. This is needed for port forwarding.
-            "StrictHostKeyChecking=accept-new",
-            "-i",
-            str(self.identity.absolute()),
-            "-p",
-            str(self.host.port),
-        ]
+    def exec(self, *command):
+        """
+        Remotely invoke a possibly long-running command and return a reference to the process.
+        """
+        args = [*self.prefix(), self.target(), *command]
+        return self._popen(args)
 
-    def _hostname(self):
-        return f"{self.host.user}@{self.host.host}"
-
-    def exec(self, *command) -> bytes:
-        args = [
-            "ssh",
-            *self._parameters(),
-            self._hostname(),
-            *command,
-        ]
-        log.warning("exec %s", args)
-        return check_output(args)
-
-    def exec_background(self, *command) -> Popen:
-        # TODO: dedup with self.exec
-        args = [
-            "ssh",
-            *self._parameters(),
-            self._hostname(),
-            *command,
-        ]
-        log.warning("exec_background %s", args)
-        return Popen(args)
-
-    def popen(self, args: list[str]) -> Popen:
+    def _popen(self, args: list[str]) -> Popen:
         log.info("Popen %s", args)
-        return Popen(args)
+        # https://stackoverflow.com/a/31867499/
+        return Popen(args, stderr=PIPE, stdout=PIPE)
 
     def forward(self, local_port: int, remote_port: int) -> Popen:
         """
@@ -86,4 +58,4 @@ class SshCliWrapper:
             f"{local_port}:{self.host.host}:{remote_port}",
             self.target(),
         ]
-        return self.popen(args)
+        return self._popen(args)
