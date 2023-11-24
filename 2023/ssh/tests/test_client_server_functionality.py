@@ -6,6 +6,7 @@ import requests
 
 from ssh import NetcatClient, dockerized_server_safe, ssh_cli_wrapper, wait
 
+# Cartesian product via parametrize: https://stackoverflow.com/q/22171681/
 CLIENTS = [ssh_cli_wrapper]
 SERVERS = [dockerized_server_safe]
 TIMEOUT = pytest.mark.timeout(10)
@@ -31,6 +32,17 @@ def test_client_can_touch_file_in_server(client, server, key_pair, ports, host):
             wait(ssh_cli.exec("touch", file_name))
             ls = wait(ssh_cli.exec("ls", file_name))
             assert ls.stdout.strip() == file_name
+
+
+@pytest.mark.parametrize("client", CLIENTS)
+@pytest.mark.parametrize("server", SERVERS)
+@TIMEOUT
+def test_client_can_run_uname_in_server(client, server, key_pair, ports, host):
+    with server(host, key_pair.public, [ports.remote]):
+        with client(key_pair.private, host) as ssh:
+            uname = wait(ssh.exec("uname", "-a"))
+            prefix = uname.stdout.split()[0]
+            assert prefix in ["Darwin", "Linux"]
 
 
 @pytest.mark.parametrize("client", CLIENTS)
