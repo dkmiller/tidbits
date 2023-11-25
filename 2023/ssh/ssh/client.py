@@ -1,6 +1,7 @@
 import asyncio
 import logging
 import shlex
+from asyncio import Task
 from contextlib import contextmanager
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -9,7 +10,6 @@ from subprocess import PIPE, Popen
 from ssh.abstractions import SshClient
 from ssh.models import SshHost
 from ssh.process import aexec, kill
-from asyncio import Task
 
 log = logging.getLogger(__name__)
 
@@ -78,11 +78,11 @@ class SshCliWrapper(SshClient):
         ]
 
         return await asyncio.create_subprocess_exec(
-                args[0],
-                *args[1:],
-                stdin=asyncio.subprocess.PIPE,
-                stdout=asyncio.subprocess.PIPE,
-            )
+            args[0],
+            *args[1:],
+            stdin=asyncio.subprocess.PIPE,
+            stdout=asyncio.subprocess.PIPE,
+        )
 
         # exec = aexec(*args)
         # task = asyncio.create_task(exec)
