@@ -1,3 +1,4 @@
+import asyncio
 import logging
 from dataclasses import dataclass
 from subprocess import Popen
@@ -10,6 +11,20 @@ class Result:
     stderr: str
     stdout: str
     status: int
+
+
+async def aexec(*args: str):
+    process = await asyncio.create_subprocess_exec(
+        args[0],
+        *args[1:],
+        stdin=asyncio.subprocess.PIPE,
+        stdout=asyncio.subprocess.PIPE,
+    )
+    (stdout, stderr) = await process.communicate()
+    return_code = await process.wait()
+    from ssh.process import Result
+
+    return Result((stderr or b"").decode(), stdout.decode(), return_code)
 
 
 def wait(process: Popen) -> Result:

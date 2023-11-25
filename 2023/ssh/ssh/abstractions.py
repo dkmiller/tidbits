@@ -1,5 +1,4 @@
 from abc import ABC, abstractmethod
-from subprocess import Popen
 
 
 class SshClient(ABC):
@@ -11,9 +10,9 @@ class SshClient(ABC):
     """
 
     @abstractmethod
-    def exec(self, *args) -> Popen:
+    async def exec(self, *args) -> str:
         pass
 
     @abstractmethod
-    def forward(self, local_port: int, remote_port: int) -> Popen:
+    async def forward(self, local_port: int, remote_port: int) -> None:
         pass

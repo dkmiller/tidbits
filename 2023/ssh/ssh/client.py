@@ -1,3 +1,4 @@
+import asyncio
 import logging
 import shlex
 from contextlib import contextmanager
@@ -7,7 +8,8 @@ from subprocess import PIPE, Popen
 
 from ssh.abstractions import SshClient
 from ssh.models import SshHost
-from ssh.process import kill
+from ssh.process import aexec, kill
+from asyncio import Task
 
 log = logging.getLogger(__name__)
 
@@ -16,7 +18,7 @@ log = logging.getLogger(__name__)
 class SshCliWrapper(SshClient):
     identity: Path
     host: SshHost
-    processes: list[Popen] = field(default_factory=list)
+    tasks: list[Task] = field(default_factory=list)
 
     def prefix(self):
         """
@@ -39,12 +41,18 @@ class SshCliWrapper(SshClient):
         """
         return f"{self.host.user}@{self.host.host}"
 
-    def exec(self, *command):
-        """
-        Remotely invoke a possibly long-running command and return a reference to the process.
-        """
-        args = [*self.prefix(), self.target(), *command]
-        return self._popen(args)
+    # def exec(self, *command):
+    #     """
+    #     Remotely invoke a possibly long-running command and return a reference to the process.
+    #     """
+    #     args = [*self.prefix(), self.target(), *command]
+    #     return self._popen(args)
+
+    async def exec(self, *args: str) -> str:
+        args = (*self.prefix(), self.target(), *args)
+        rv = await aexec(*args)
+        assert rv.status == 0, rv
+        return rv.stdout
 
     def _popen(self, args: list[str]) -> Popen:
         # https://stackoverflow.com/a/31867499/
@@ -55,7 +63,7 @@ class SshCliWrapper(SshClient):
         log.info("Spawned process %s: %s", rv.pid, copyable_args)
         return rv
 
-    def forward(self, local_port: int, remote_port: int) -> Popen:
+    async def forward(self, local_port: int, remote_port: int):
         """
         Spawn a process that forwards the specified remote port to the specified local port.
         """
@@ -68,7 +76,20 @@ class SshCliWrapper(SshClient):
             f"{local_port}:{self.host.host}:{remote_port}",
             self.target(),
         ]
-        return self._popen(args)
+
+        return await asyncio.create_subprocess_exec(
+                args[0],
+                *args[1:],
+                stdin=asyncio.subprocess.PIPE,
+                stdout=asyncio.subprocess.PIPE,
+            )
+
+        # exec = aexec(*args)
+        # task = asyncio.create_task(exec)
+        # self.tasks.append(task)
+        # await asyncio.sleep(0)
+        # # return await task
+        # # return self._popen(args)
 
 
 @contextmanager
@@ -77,8 +98,11 @@ def ssh_cli_wrapper(identity: Path, host: SshHost):
     try:
         yield ssh_cli
     finally:
-        for process in ssh_cli.processes:
-            kill(process)
+        for task in ssh_cli.tasks:
+            # https://superfastpython.com/asyncio-cancel-task/#How_to_Cancel_a_Task
+            task.cancel()
+        # for process in ssh_cli.processes:
+        #     kill(process)
 
 
 # from fabric import Config, Connection
