@@ -1,15 +1,10 @@
-import asyncio
 import logging
-import shlex
-from asyncio import Task
-from contextlib import contextmanager
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from pathlib import Path
-from subprocess import PIPE, Popen
 
 from ssh.abstractions import SshClient
 from ssh.models import SshHost
-from ssh.process import aexec, kill
+from ssh.process import spawn, spawn_and_wait
 
 log = logging.getLogger(__name__)
 
@@ -18,7 +13,6 @@ log = logging.getLogger(__name__)
 class SshCliWrapper(SshClient):
     identity: Path
     host: SshHost
-    tasks: list[Task] = field(default_factory=list)
 
     def prefix(self):
         """
@@ -41,68 +35,31 @@ class SshCliWrapper(SshClient):
         """
         return f"{self.host.user}@{self.host.host}"
 
-    # def exec(self, *command):
-    #     """
-    #     Remotely invoke a possibly long-running command and return a reference to the process.
-    #     """
-    #     args = [*self.prefix(), self.target(), *command]
-    #     return self._popen(args)
-
     async def exec(self, *args: str) -> str:
+        """
+        Remotely invoke a possibly long-running command and wait until it finishes, returning the
+        standard output if it succeeds, throwing an exception if not.
+        """
         args = (*self.prefix(), self.target(), *args)
-        rv = await aexec(*args)
-        assert rv.status == 0, rv
-        return rv.stdout
-
-    def _popen(self, args: list[str]) -> Popen:
-        # https://stackoverflow.com/a/31867499/
-        rv = Popen(args, stderr=PIPE, stdout=PIPE)
-        self.processes.append(rv)
-        # Make logged commands copy/pasteable.
-        copyable_args = " ".join(map(shlex.quote, args))
-        log.info("Spawned process %s: %s", rv.pid, copyable_args)
-        return rv
+        result = await spawn_and_wait(args)
+        assert result.status == 0, result
+        return result.stdout
 
     async def forward(self, local_port: int, remote_port: int):
         """
         Spawn a process that forwards the specified remote port to the specified local port.
         """
         log.info("Forwarding remote port %s --> local port %s", remote_port, local_port)
-        args = [
+        args = (
             *self.prefix(),
             "-fN",
             "-L",
             # https://phoenixnap.com/kb/ssh-port-forwarding
             f"{local_port}:{self.host.host}:{remote_port}",
             self.target(),
-        ]
-
-        return await asyncio.create_subprocess_exec(
-            args[0],
-            *args[1:],
-            stdin=asyncio.subprocess.PIPE,
-            stdout=asyncio.subprocess.PIPE,
         )
 
-        # exec = aexec(*args)
-        # task = asyncio.create_task(exec)
-        # self.tasks.append(task)
-        # await asyncio.sleep(0)
-        # # return await task
-        # # return self._popen(args)
-
-
-@contextmanager
-def ssh_cli_wrapper(identity: Path, host: SshHost):
-    ssh_cli = SshCliWrapper(identity, host)
-    try:
-        yield ssh_cli
-    finally:
-        for task in ssh_cli.tasks:
-            # https://superfastpython.com/asyncio-cancel-task/#How_to_Cancel_a_Task
-            task.cancel()
-        # for process in ssh_cli.processes:
-        #     kill(process)
+        return await spawn(args)
 
 
 # from fabric import Config, Connection
