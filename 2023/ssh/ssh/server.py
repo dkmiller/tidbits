@@ -24,6 +24,9 @@ from ssh.models import SshHost
 log = logging.getLogger(__name__)
 
 
+SLEEP_SECONDS = 0.1
+
+
 def run_dockerized_server(
     host_config: SshHost, public_key: str, ports: list[int] = []
 ) -> Container:
@@ -35,12 +38,13 @@ def run_dockerized_server(
     ports_dict = {host_config.port: host_config.port}
     for port in ports:
         ports_dict[port] = port
-    log.warning("Ports: %s", ports_dict)
+    log.info("Ports: %s", ports_dict)
     container = None
     # TODO: cleanup only containers listening to the same port.
-    for other in client.containers.list(filters={"status": "running"}):
-        log.info("Stopping %s", other.name)
-        other.stop()
+    while client.containers.list():
+        for other in client.containers.list():
+            log.warning("Stopping %s", other.name)
+            other.stop(timeout=1)
     while container is None:
         try:
             container = client.containers.run(
@@ -59,6 +63,17 @@ def run_dockerized_server(
             log.warning("Failure starting container: %s", e)
 
     log.info("Spawned container %s", container.name)
+
+    container: Container
+
+    while b"Server listening on" not in container.logs():
+        log.warning(
+            "Container %s not ready yet: %s", container.name, container.logs().decode()
+        )
+        time.sleep(SLEEP_SECONDS)
+        container.reload()
+    log.info("Container %s is ready!", container.name)
+
     return container  # type: ignore
 
 
@@ -72,8 +87,6 @@ def dockerized_server_safe(
     if isinstance(public_key, Path):
         public_key = public_key.read_text()
     container = run_dockerized_server(host_config, public_key, ports)
-    # TODO: find polling mechanism.
-    time.sleep(2)
 
     try:
         yield container
@@ -82,6 +95,8 @@ def dockerized_server_safe(
         container.stop(timeout=1)
         while container.status == "running":
             log.warning("Container %s still running", container.name)
+            container.reload()
+            time.sleep(SLEEP_SECONDS)
         known_hosts.reset(host_config)
 
 
