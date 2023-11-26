@@ -7,6 +7,7 @@ import pytest
 import requests
 
 from ssh import NetcatClient, SshCliWrapper, dockerized_server_safe
+from ssh.client import FabricClient
 
 log = logging.getLogger(__name__)
 
@@ -24,7 +25,7 @@ def standard(func):
     """
 
     # Cartesian product via parametrize: https://stackoverflow.com/q/22171681/
-    @pytest.mark.parametrize("client", [SshCliWrapper])
+    @pytest.mark.parametrize("client", [FabricClient, SshCliWrapper])
     @pytest.mark.parametrize("server", [dockerized_server_safe])
     @pytest.mark.timeout(10)
     @pytest.mark.asyncio
@@ -62,7 +63,7 @@ async def test_client_can_run_uname_in_server(client, server, key_pair, ports, h
         assert prefix in ["Darwin", "Linux"]
 
 
-@pytest.mark.parametrize("executable", ["bash", "ls", "nc", "which"])
+@pytest.mark.parametrize("executable", ["bash", "echo", "ls", "nc", "which"])
 @standard
 async def test_client_can_run_which_in_server(
     client, server, key_pair, executable, ports, host

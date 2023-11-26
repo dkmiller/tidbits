@@ -43,4 +43,4 @@ content-length: {len(body)}
         http_response = self.http_response(body)
         remote_command = self.remote_bash_command(http_response, remote_port)
         quoted_command = shlex.quote(remote_command)
-        return ["/bin/bash", "-c", quoted_command]
+        return ["bash", "-c", quoted_command]

@@ -36,19 +36,29 @@ def run_dockerized_server(
     for port in ports:
         ports_dict[port] = port
     log.warning("Ports: %s", ports_dict)
-    container = client.containers.run(
-        "ssh",
-        environment={
-            "PUBLIC_KEY": public_key,
-            "USER_NAME": host_config.user,
-            # https://github.com/linuxserver/docker-openssh-server/issues/30#issuecomment-1525103465
-            "LISTEN_PORT": host_config.port,
-        },
-        ports=ports_dict,
-        hostname=host_config.host,
-        detach=True,
-    )
+    container = None
+    # TODO: cleanup only containers listening to the same port.
+    for other in client.containers.list(filters={"status": "running"}):
+        log.info("Stopping %s", other.name)
+        other.stop()
+    while container is None:
+        try:
+            container = client.containers.run(
+                "ssh",
+                environment={
+                    "PUBLIC_KEY": public_key,
+                    "USER_NAME": host_config.user,
+                    # https://github.com/linuxserver/docker-openssh-server/issues/30#issuecomment-1525103465
+                    "LISTEN_PORT": host_config.port,
+                },
+                ports=ports_dict,
+                hostname=host_config.host,
+                detach=True,
+            )
+        except Exception as e:
+            log.warning("Failure starting container: %s", e)
 
+    log.info("Spawned container %s", container.name)
     return container  # type: ignore
 
 
@@ -68,7 +78,10 @@ def dockerized_server_safe(
     try:
         yield container
     finally:
-        container.stop()
+        log.info("Stopping container %s", container.name)
+        container.stop(timeout=1)
+        while container.status == "running":
+            log.warning("Container %s still running", container.name)
         known_hosts.reset(host_config)
 
 
