@@ -1,5 +1,7 @@
 import logging
+import shlex
 from dataclasses import dataclass
+from functools import cached_property
 from pathlib import Path
 
 from fabric import Config, Connection
@@ -68,10 +70,22 @@ class SshCliWrapper(SshClient):
 
 @dataclass
 class FabricClient(SshClient):
+    """
+    https://docs.fabfile.org/en/latest/api/connection.html
+    TODO: handle
+
+    ```
+    tests/test_client_server_functionality.py .Warning: Permanently added '[localhost]:2222' (ED25519) to the list of known hosts.
+    ```
+
+    possibly via https://github.com/fabric/fabric/issues/2071
+    """
+
     identity: Path
     host: SshHost
 
-    async def exec(self, *args) -> str:
+    @cached_property
+    def connection(self):
         # https://phoenixnap.com/kb/ssh-config
         ssh_conf = SSHConfig.from_text(
             f"""
@@ -79,19 +93,29 @@ class FabricClient(SshClient):
             HostName localhost
             User {self.host.user}
             IdentityFile {str(self.identity)}
+            StrictHostKeyChecking accept-new
         """
         )
         config = Config(ssh_config=ssh_conf)
-        import shlex
-
         # https://github.com/fabric/fabric/issues/2071
-        command = " ".join(map(shlex.quote, args))
-        conn = Connection(
-            self.host.host, user=self.host.user, port=self.host.port, config=config
+        return Connection(
+            self.host.host,
+            user=self.host.user,
+            port=self.host.port,
+            config=config,
+            forward_agent=True,
         )
-        result: Result = conn.run(command, hide=True)
+
+    async def exec(self, *args) -> str:
+        # TODO: map(shlex.quote, args) ?
+        command = " ".join(args)
+        result: Result = self.connection.run(command, hide=True)
         assert result.ok, result
         return result.stdout
 
     async def forward(self, local_port: int, remote_port: int) -> None:
         raise NotImplementedError()
+        # with self.connection.forward_local(local_port, remote_port=remote_port):
+        #     import time
+        #     # TODO: better logic for dropping the connection.
+        #     time.sleep(4)

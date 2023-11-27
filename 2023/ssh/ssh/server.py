@@ -39,7 +39,7 @@ def run_dockerized_server(
     for port in ports:
         ports_dict[port] = port
     log.info("Ports: %s", ports_dict)
-    container = None
+    container: Union[None, Container] = None
     # TODO: cleanup only containers listening to the same port.
     while client.containers.list():
         for other in client.containers.list():
@@ -63,8 +63,6 @@ def run_dockerized_server(
             log.warning("Failure starting container: %s", e)
 
     log.info("Spawned container %s", container.name)
-
-    container: Container
 
     while b"Server listening on" not in container.logs():
         log.warning(
