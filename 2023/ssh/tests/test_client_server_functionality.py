@@ -195,91 +195,41 @@ def test_screen_session_with_netcat_and_fabric_client(key_pair, ports, host):
     with dockerized_server_safe(host, key_pair.public, [ports.remote]):
         ssh = FabricClient(key_pair.private, host)
         with ssh.connection.forward_local(ports.local, remote_port=ports.remote):
-            # from multiprocessing import Process
-
-            # from fabric import Config, Connection
-            # from paramiko.config import SSHConfig
-
-            # ssh_conf_text = f"""
-            # Host localhost
-            #     HostName localhost
-            #     User {host.user}
-            #     IdentityFile {str(ssh.identity)}
-            # """
-
-            # ssh_conf = SSHConfig.from_text(ssh_conf_text)
-            # config = Config(ssh_config=ssh_conf)
-            # # https://github.com/fabric/fabric/issues/2071
-            # conn = Connection(
-            #     host.host, user=host.user, port=host.port, config=config, forward_agent=True
-            # )
-
             unescaped_command = " ".join(netcat_command)
-            import shlex
-
-            escaped_command = " ".join(map(shlex.quote, netcat_command))
-
-            # return f"{self._list} || screen -S {self.session_name} -m -d"
-
             log.info("Running %s", unescaped_command)
             ssh.connection.run(f"screen -S netcat -m -d {unescaped_command}", hide=True)
 
             assert ".netcat" in ssh.connection.run("screen -ls", hide=True).stdout
 
-            import time
-
-            # time.sleep(2)
-            assert ".netcat" in ssh.connection.run("screen -ls", hide=True).stdout
-
-            path = uuid4()
             res = ssh.connection.run(
-                f"curl -v http://{host.host}:{ports.remote}/{uuid4()}", hide=True
+                f"curl -v http://{host.host}:{ports.remote}/constant_path", hide=True
             )
             assert res.ok
             assert response_body in res.stdout
-
-            # response = requests_get_with_retry_sync(f"http://{host.host}:{ports.local}/{uuid4()}")
-
-            # raise Exception(f"Unescaped:\n\n{unescaped_command}\n\nEscaped:\n\n{escaped_command}")
-
-            # p1 = Process(
-            #     target=func1, args=(ssh_conf_text, " ".join(netcat_command), host)
-            # )
-            # p1.start()
-            # p2 = Process(
-            #     target=func2, args=(f"http://{host.host}:{ports.local}/{uuid4()}")
-            # )
-            # p2.start()
-            # p1.join()
-            # p2.join()
+            assert "Excess found in a read" not in res.stderr
 
 
-# screen -S foo_name -m -d sleep 1m
-# root@beedcee47c87:/# screen -ls
-# There is a screen on:
-# 	48.foo_name	(Detached)
-# 1 Socket in /tmp/screens/S-root.
-# root@beedcee47c87:/# screen -XS foo_name stuff '^C'
-# root@beedcee47c87:/# screen -ls
-# No Sockets found in /tmp/screens/S-root.
+@pytest.mark.timeout(10)
+def test_fabric_can_port_forward_from_remote_screen_session_with_netcat(
+    key_pair, ports, host
+):
+    netcat = NetcatClient()
 
-# # # forward_coro = ssh.forward(ports.local, ports.remote)
-#     netcat_coro = ssh.exec(*netcat_command)
-#     request_coro = requests_get_with_retry(
-#         f"http://{host.host}:{ports.local}/{uuid4()}"
-#     )
+    response_body = f"Hi from SSH server: {uuid4()}"
+    netcat_command = netcat.ssh_exec(response_body, ports.remote)
 
-#     netcat_stdout, response = await asyncio.gather(
-#         netcat_coro, request_coro, return_exceptions=True
-#     )
-#     response.raise_for_status()
-#     assert response.text == response_body
-#     # Obtain raw request: https://stackoverflow.com/a/60058128/
-#     request = response.request
+    with dockerized_server_safe(host, key_pair.public, [ports.remote]):
+        ssh = FabricClient(key_pair.private, host)
+        unescaped_command = " ".join(netcat_command)
+        log.info("Running %s", unescaped_command)
+        ssh.connection.run(f"screen -S netcat -m -d {unescaped_command}", hide=True)
 
-#     assert all(
-#         f"{name}: {value}" in netcat_stdout
-#         for name, value in request.headers.items()
-#     )
+        assert ".netcat" in ssh.connection.run("screen -ls", hide=True).stdout
+        with ssh.connection.forward_local(ports.local, remote_port=ports.remote):
+            response = requests.get(
+                f"http://{host.host}:{ports.local}/constant_path", timeout=1
+            )
 
-#     assert f"{request.method} {request.path_url}" in netcat_stdout
+        response.raise_for_status()
+        # TODO: why is the "strip" required?
+        assert response.text.strip() == response_body.strip()
