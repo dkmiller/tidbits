@@ -19,6 +19,8 @@ class SshClient(ABC):
     - forward a specified remote to local port
 
     Sadly, `multiprocess` won't work because there's no way to cancel `Process` objects.
+
+    TODO: convert back to synchronous methods, make forward return a context manager.
     """
 
     identity: Path
