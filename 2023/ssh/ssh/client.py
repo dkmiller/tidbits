@@ -1,16 +1,21 @@
 import logging
 import shlex
+from contextlib import contextmanager
 from dataclasses import dataclass
 from functools import cached_property
 from pathlib import Path
+from subprocess import PIPE, Popen
 
 from fabric import Config, Connection
-from fabric.runners import Result
 from paramiko.config import SSHConfig
 
-from ssh.abstractions import SshClient
+# TODO: pip install typing-extensions on Python < 3.11
+# https://stackoverflow.com/a/77247460/
+from typing_extensions import Self
+
+from ssh.abstractions import Result, SshClient
 from ssh.models import SshHost
-from ssh.process import spawn, spawn_and_wait
+from ssh.process import kill, wait
 
 log = logging.getLogger(__name__)
 
@@ -19,6 +24,10 @@ log = logging.getLogger(__name__)
 class SshCliWrapper(SshClient):
     identity: Path
     host: SshHost
+
+    @classmethod
+    def construct(cls, identity: Path, host: SshHost) -> Self:
+        return cls(identity, host)
 
     def prefix(self):
         """
@@ -41,31 +50,36 @@ class SshCliWrapper(SshClient):
         """
         return f"{self.host.user}@{self.host.host}"
 
-    async def exec(self, *args: str) -> str:
-        """
-        Remotely invoke a possibly long-running command and wait until it finishes, returning the
-        standard output if it succeeds, throwing an exception if not.
-        """
-        args = (*self.prefix(), self.target(), *args)
-        result = await spawn_and_wait(args)
-        assert result.status == 0, result
-        return result.stdout
+    def popen(self, args: tuple[str, ...]) -> Popen:
+        # https://stackoverflow.com/a/31867499/
+        rv = Popen(args, stderr=PIPE, stdout=PIPE)
+        # Make logged commands copy/pasteable.
+        copyable_args = " ".join(map(shlex.quote, args))
+        log.info("Spawned process %s: %s", rv.pid, copyable_args)
+        return rv
 
-    async def forward(self, local_port: int, remote_port: int):
-        """
-        Spawn a process that forwards the specified remote port to the specified local port.
-        """
+    def exec(self, *args: str) -> Result:
+        args = (*self.prefix(), self.target(), *args)
+        process = self.popen(args)
+        return wait(process)
+
+    @contextmanager
+    def forward(self, local_port: int, remote_port: int):
         log.info("Forwarding remote port %s --> local port %s", remote_port, local_port)
         args = (
             *self.prefix(),
-            "-fN",
+            # "-fN",
+            "-N",
             "-L",
             # https://phoenixnap.com/kb/ssh-port-forwarding
             f"{local_port}:{self.host.host}:{remote_port}",
             self.target(),
         )
-
-        return await spawn(args)
+        process = self.popen(args)
+        try:
+            yield
+        finally:
+            kill(process)
 
 
 @dataclass
@@ -106,6 +120,7 @@ class FabricClient(SshClient):
             forward_agent=True,
         )
 
+    # TODO: back to sync!
     async def exec(self, *args) -> str:
         # TODO: map(shlex.quote, args) ?
         command = " ".join(args)
@@ -113,6 +128,9 @@ class FabricClient(SshClient):
         assert result.ok, result
         return result.stdout
 
+    # TODO: use @contextlib.contextmanager?
+    # - https://adamj.eu/tech/2021/07/04/python-type-hints-how-to-type-a-context-manager/
+    # - https://stackoverflow.com/q/49733699/
     async def forward(self, local_port: int, remote_port: int) -> None:
         raise NotImplementedError()
         # with self.connection.forward_local(local_port, remote_port=remote_port):

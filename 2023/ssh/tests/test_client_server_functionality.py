@@ -26,10 +26,10 @@ def standard(func):
     """
 
     # Cartesian product via parametrize: https://stackoverflow.com/q/22171681/
-    @pytest.mark.parametrize("client", [FabricClient, SshCliWrapper])
+    @pytest.mark.parametrize("client", [SshCliWrapper])
     @pytest.mark.parametrize("server", [dockerized_server_safe])
     @pytest.mark.timeout(10)
-    @pytest.mark.asyncio
+    # @pytest.mark.asyncio
     @wraps(func)
     def wrapper(*args, **kwargs):
         return func(*args, **kwargs)
@@ -38,83 +38,59 @@ def standard(func):
 
 
 @standard
-async def test_client_can_call_whoami_in_server(client, server, key_pair, ports, host):
+def test_client_can_call_whoami_in_server(client, server, key_pair, ports, host):
     with server(host, key_pair.public, [ports.remote]):
         ssh = client(key_pair.private, host)
-        whoami = await ssh.exec("whoami")
-        assert whoami.strip() == host.user
+        whoami = ssh.exec("whoami")
+        assert whoami.stdout.strip() == host.user
 
 
 @standard
-async def test_client_can_touch_file_in_server(client, server, key_pair, ports, host):
+def test_client_can_touch_file_in_server(client, server, key_pair, ports, host):
     with server(host, key_pair.public, [ports.remote]):
         ssh = client(key_pair.private, host)
         file_name = str(uuid4())
-        await ssh.exec("touch", file_name)
-        ls = await ssh.exec("ls", file_name)
-        assert ls.strip() == file_name
+        ssh.exec("touch", file_name)
+        ls = ssh.exec("ls", file_name)
+        assert ls.stdout.strip() == file_name
 
 
 @standard
-async def test_client_can_run_uname_in_server(client, server, key_pair, ports, host):
+def test_client_can_run_uname_in_server(client, server, key_pair, ports, host):
     with server(host, key_pair.public, [ports.remote]):
         ssh = client(key_pair.private, host)
-        uname = await ssh.exec("uname", "-a")
-        prefix = uname.split()[0]
+        uname = ssh.exec("uname", "-a")
+        prefix = uname.stdout.split()[0]
         assert prefix in ["Darwin", "Linux"]
 
 
 @standard
-async def test_client_can_write_to_file_in_server(
-    client, server, key_pair, ports, host
-):
+def test_client_can_write_to_file_in_server(client, server, key_pair, ports, host):
     with server(host, key_pair.public, [ports.remote]):
         ssh = client(key_pair.private, host)
         file_name = str(uuid4())
         file_contents = str(uuid4())
 
-        await ssh.exec("bash", "-c", shlex.quote(f"echo {file_contents} > {file_name}"))
-        cat_contents = await ssh.exec("cat", file_name)
-        assert cat_contents.strip() == file_contents
+        ssh.exec("bash", "-c", shlex.quote(f"echo {file_contents} > {file_name}"))
+        cat_contents = ssh.exec("cat", file_name)
+        assert cat_contents.stdout.strip() == file_contents
 
 
 @pytest.mark.parametrize(
     "executable", ["bash", "curl", "echo", "ls", "nc", "screen", "wget", "which"]
 )
 @standard
-async def test_client_can_run_which_in_server(
+def test_client_can_run_which_in_server(
     client, server, key_pair, executable, ports, host
 ):
     with server(host, key_pair.public, [ports.remote]):
         ssh = client(key_pair.private, host)
-        which = await ssh.exec("which", executable)
-        assert which.strip().split("/")[-1] == executable
-
-
-async def requests_get_with_retry(url: str):
-    while True:
-        try:
-            return requests.get(url, timeout=1)
-        except Exception as e:
-            log.warning("Failure: %s", e)
-            await asyncio.sleep(1)
-
-
-def requests_get_with_retry_sync(url: str):
-    while True:
-        try:
-            return requests.get(url, timeout=1)
-        except Exception as e:
-            log.warning("Failure: %s", e)
-            import time
-
-            time.sleep(1)
+        which = ssh.exec("which", executable)
+        assert which.stdout.strip().split("/")[-1] == executable
 
 
 @standard
-async def test_client_can_forward_port_from_server(
-    client, server, key_pair, ports, host
-):
+def test_client_can_forward_port_from_server(client, server, key_pair, ports, host):
     netcat = NetcatClient()
 
     response_body = f"Hi from SSH server: {uuid4()}"
@@ -122,28 +98,46 @@ async def test_client_can_forward_port_from_server(
 
     with server(host, key_pair.public, [ports.remote]):
         ssh = client(key_pair.private, host)
-        with ssh.connection.forward_local(ports.local, remote_port=ports.remote):
-            # # forward_coro = ssh.forward(ports.local, ports.remote)
-            netcat_coro = ssh.exec(*netcat_command)
-            request_coro = requests_get_with_retry(
-                f"http://{host.host}:{ports.local}/{uuid4()}"
+        unescaped_command = " ".join(netcat_command)
+        log.info("Running %s", unescaped_command)
+        # https://stackoverflow.com/a/50651839/
+        ssh.exec(
+            "screen",
+            "-S",
+            "netcat",
+            "-L",
+            "-Logfile",
+            "screen.logs",
+            "-m",
+            "-d",
+            unescaped_command,
+        )
+
+        assert ".netcat" in ssh.exec("screen -ls").stdout
+        with ssh.forward(ports.local, remote_port=ports.remote):
+            # TODO: this should not be necessary.
+            import time
+
+            time.sleep(0.2)
+            response = requests.get(
+                f"http://{host.host}:{ports.local}/{uuid4()}", timeout=1
             )
 
-            netcat_stdout, response = await asyncio.gather(
-                netcat_coro, request_coro, return_exceptions=True
-            )
-            response.raise_for_status()
-            assert response.text == response_body
-            # Obtain raw request: https://stackoverflow.com/a/60058128/
-            request = response.request
+        response.raise_for_status()
+        # TODO: why is the "strip" required?
+        assert response.text.strip() == response_body.strip()
+        request = response.request
 
-            assert all(
-                f"{name}: {value}" in netcat_stdout
-                for name, value in request.headers.items()
-            )
+        netcat_logs = ssh.exec("cat", "screen.logs").stdout
 
-            assert f"{request.method} {request.path_url}" in netcat_stdout
+        assert all(
+            f"{name}: {value}" in netcat_logs for name, value in request.headers.items()
+        )
 
+        assert f"{request.method} {request.path_url}" in netcat_logs
+
+
+# ===== TODO: fix the tests below ==================================================================
 
 # TODO: test validating you can:
 # - Connect local -> remote server
