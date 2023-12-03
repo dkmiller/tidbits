@@ -21,7 +21,7 @@ log = logging.getLogger(__name__)
 
 
 @dataclass
-class SshCliWrapper(SshClient):
+class ClientBase:
     identity: Path
     host: SshHost
 
@@ -29,6 +29,8 @@ class SshCliWrapper(SshClient):
     def construct(cls, identity: Path, host: SshHost) -> Self:
         return cls(identity, host)
 
+
+class SshCliWrapper(ClientBase):
     def prefix(self):
         """
         Shared prefix of SSH command: `ssh -i * -p * -o * ...`.
@@ -86,32 +88,18 @@ class SshCliWrapper(SshClient):
             kill(process)
 
 
-@dataclass
-class FabricClient(SshClient):
+class FabricClient(ClientBase):
     """
-    https://docs.fabfile.org/en/latest/api/connection.html
-    TODO: handle
-
-    ```
-    tests/test_client_server_functionality.py .Warning: Permanently added '[localhost]:2222' (ED25519) to the list of known hosts.
-    ```
-
-    possibly via https://github.com/fabric/fabric/issues/2071
+    SSH client implementation using the
+    [Paramiko Fabric](https://docs.fabfile.org/en/latest/api/connection.html) library.
     """
-
-    identity: Path
-    host: SshHost
-
-    @classmethod
-    def construct(cls, identity: Path, host: SshHost) -> Self:
-        return cls(identity, host)
 
     @cached_property
     def connection(self):
         text = host_config(self.host, self.identity)
         ssh_config = SSHConfig.from_text(text)
         config = Config(ssh_config=ssh_config)
-        # https://github.com/fabric/fabric/issues/2071
+        # This implicitly accepts new SSH hosts: https://github.com/fabric/fabric/issues/2071
         return Connection(
             self.host.host,
             user=self.host.user,
