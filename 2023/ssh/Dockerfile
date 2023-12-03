@@ -3,6 +3,8 @@
 # with boilerplate configuration set and port forwarding enabled.
 FROM linuxserver/openssh-server:version-9.3_p2-r0
 
+RUN apk add --no-cache --upgrade screen
+
 ENV PUID=1000
 ENV PGID=1000
 ENV TZ=Etc/UTC

@@ -19,10 +19,11 @@ class NetcatClient:
         Construct the raw text for a successful plaintext HTTP response containing the specified
         body.
         """
+        # TODO: the +1 is probably wrong...
         rv = f"""HTTP/1.1 200 OK
 Content-Type: text/plain
 Connection: close
-content-length: {len(body)}
+content-length: {len(body) + 1}
 
 {body}"""
         log.info("Raw HTTP Response:\n%s", rv)
@@ -43,4 +44,4 @@ content-length: {len(body)}
         http_response = self.http_response(body)
         remote_command = self.remote_bash_command(http_response, remote_port)
         quoted_command = shlex.quote(remote_command)
-        return ["/bin/bash", "-c", quoted_command]
+        return ["bash", "-c", quoted_command]

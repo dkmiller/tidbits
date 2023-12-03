@@ -1,15 +1,12 @@
+"""
+Process-related utilities.
+"""
 import logging
-from dataclasses import dataclass
 from subprocess import Popen
 
+from ssh.abstractions import Result
+
 log = logging.getLogger(__name__)
-
-
-@dataclass(frozen=True)
-class Result:
-    stderr: str
-    stdout: str
-    status: int
 
 
 def wait(process: Popen) -> Result:
