@@ -7,6 +7,7 @@ from pathlib import Path
 from subprocess import PIPE, Popen
 
 from fabric import Config, Connection
+from fabric.runners import Result as FabricResult
 from paramiko.config import SSHConfig
 
 # TODO: pip install typing-extensions on Python < 3.11
@@ -98,6 +99,10 @@ class FabricClient(SshClient):
     identity: Path
     host: SshHost
 
+    @classmethod
+    def construct(cls, identity: Path, host: SshHost) -> Self:
+        return cls(identity, host)
+
     @cached_property
     def connection(self):
         # https://phoenixnap.com/kb/ssh-config
@@ -120,20 +125,15 @@ class FabricClient(SshClient):
             forward_agent=True,
         )
 
-    # TODO: back to sync!
-    async def exec(self, *args) -> str:
+    def exec(self, *args):
         # TODO: map(shlex.quote, args) ?
         command = " ".join(args)
-        result: Result = self.connection.run(command, hide=True)
-        assert result.ok, result
-        return result.stdout
+        res: FabricResult = self.connection.run(command, hide=True)
+        return Result(res.stderr, res.stdout, res.return_code)
 
-    # TODO: use @contextlib.contextmanager?
     # - https://adamj.eu/tech/2021/07/04/python-type-hints-how-to-type-a-context-manager/
     # - https://stackoverflow.com/q/49733699/
-    async def forward(self, local_port: int, remote_port: int) -> None:
-        raise NotImplementedError()
-        # with self.connection.forward_local(local_port, remote_port=remote_port):
-        #     import time
-        #     # TODO: better logic for dropping the connection.
-        #     time.sleep(4)
+    @contextmanager
+    def forward(self, local_port: int, remote_port: int):
+        with self.connection.forward_local(local_port, remote_port=remote_port):
+            yield

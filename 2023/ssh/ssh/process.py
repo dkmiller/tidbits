@@ -11,8 +11,9 @@ import shlex
 from dataclasses import dataclass
 from subprocess import Popen
 
-log = logging.getLogger(__name__)
 from ssh.abstractions import Result
+
+log = logging.getLogger(__name__)
 
 
 def wait(process: Popen) -> Result:
