@@ -126,3 +126,7 @@ In MacBook, _third_ terminal:
 ```bash
 curl -v http://localhost:63752/foo
 ```
+
+## Lessons
+
+- Multiprocessing and async don't help. Plain old `Popen` and context managers are better.

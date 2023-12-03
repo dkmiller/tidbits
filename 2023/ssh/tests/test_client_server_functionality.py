@@ -28,7 +28,6 @@ def standard(func):
     @pytest.mark.parametrize("client", [FabricClient, SshCliWrapper])
     @pytest.mark.parametrize("server", [dockerized_server_safe])
     @pytest.mark.timeout(10)
-    # @pytest.mark.asyncio
     @wraps(func)
     def wrapper(*args, **kwargs):
         return func(*args, **kwargs)
@@ -142,11 +141,11 @@ def test_remote_screen_session_with_netcat_and_curl(
 ):
     """
     Connect local -> remote server
-    
+
     Start a screen session with netcat exposed on a specified port remotely
-    
+
     Curl that screen session _remotely_
-    
+
     (All this needed to ensure remote netcat server is behaving properly, before bringing port
     forwarding into the mix.)
     """

@@ -126,7 +126,12 @@ class FabricClient(SshClient):
         )
 
     def exec(self, *args):
-        # TODO: map(shlex.quote, args) ?
+        """
+        Naively convert the provided args into a shell command, invoke it remotely, and convert
+        the resulting Fabric `Result` into the standard dataclass.
+
+        Warning: this does not handle command escaping.
+        """
         command = " ".join(args)
         res: FabricResult = self.connection.run(command, hide=True)
         return Result(res.stderr, res.stdout, res.return_code)
