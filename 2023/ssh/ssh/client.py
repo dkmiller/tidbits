@@ -1,5 +1,6 @@
 import logging
 import shlex
+import time
 from contextlib import contextmanager
 from dataclasses import dataclass
 from functools import cached_property
@@ -9,9 +10,6 @@ from subprocess import PIPE, Popen
 from fabric import Config, Connection
 from fabric.runners import Result as FabricResult
 from paramiko.config import SSHConfig
-
-# TODO: pip install typing-extensions on Python < 3.11
-# https://stackoverflow.com/a/77247460/
 from typing_extensions import Self
 
 from ssh.abstractions import Result, SshClient
@@ -77,6 +75,9 @@ class SshCliWrapper(SshClient):
             self.target(),
         )
         process = self.popen(args)
+        # TODO: this should not be necessary.
+        time.sleep(0.2)
+
         try:
             yield
         finally:

@@ -113,10 +113,6 @@ def test_client_can_forward_port_from_server(client, server, key_pair, ports, ho
 
         assert ".netcat" in ssh.exec("screen -ls").stdout
         with ssh.forward(ports.local, remote_port=ports.remote):
-            # TODO: this should not be necessary.
-            import time
-
-            time.sleep(0.2)
             response = requests.get(
                 f"http://{host.host}:{ports.local}/{uuid4()}", timeout=1
             )
@@ -140,11 +136,8 @@ def test_remote_screen_session_with_netcat_and_curl(
     client, server, key_pair, ports, host
 ):
     """
-    Connect local -> remote server
-
-    Start a screen session with netcat exposed on a specified port remotely
-
-    Curl that screen session _remotely_
+    Connect local -> remote server. Start a screen session with netcat exposed on a specified port
+    remotely. Curl that screen session remotely.
 
     (All this needed to ensure remote netcat server is behaving properly, before bringing port
     forwarding into the mix.)
@@ -160,15 +153,10 @@ def test_remote_screen_session_with_netcat_and_curl(
             unescaped_command = " ".join(netcat_command)
             log.info("Running %s", unescaped_command)
             ssh.exec("screen", "-S", "netcat", "-m", "-d", unescaped_command)
-            # f"screen -S netcat -m -d {unescaped_command}", hide=True)
 
             assert ".netcat" in ssh.exec("screen", "-ls").stdout
 
-            res = ssh.exec(
-                "curl", "-v", f"http://{host.host}:{ports.remote}/constant_path"
-            )
-            #     f"curl -v http://{host.host}:{ports.remote}/constant_path", hide=True
-            # )
-            assert res.status == 0
-            assert response_body in res.stdout
-            assert "Excess found in a read" not in res.stderr
+            curl = ssh.exec("curl", "-v", f"http://{host.host}:{ports.remote}/path")
+            assert curl.status == 0
+            assert response_body in curl.stdout
+            assert "Excess found in a read" not in curl.stderr

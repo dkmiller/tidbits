@@ -130,3 +130,5 @@ curl -v http://localhost:63752/foo
 ## Lessons
 
 - Multiprocessing and async don't help. Plain old `Popen` and context managers are better.
+- Don't try to parallelize "remote server" and "HTTP client" from the SSH client side. Use `screen`
+  or something similar to let the long-running remote HTTP server run independently.
