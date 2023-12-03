@@ -1,3 +1,6 @@
+"""
+Implementation-agnostic interfaces.
+"""
 from abc import ABC, abstractmethod
 from collections.abc import Generator
 from contextlib import contextmanager
@@ -11,6 +14,10 @@ from ssh.models import SshHost
 
 @dataclass(frozen=True)
 class Result:
+    """
+    Result of running a process, including standard output, error, and exit code.
+    """
+
     stderr: str
     stdout: str
     status: int
@@ -46,6 +53,9 @@ class SshClient(ABC):
         resulting standard output, error, and code.
         """
 
+    # Type hints and context managers:
+    # - https://adamj.eu/tech/2021/07/04/python-type-hints-how-to-type-a-context-manager/
+    # - https://stackoverflow.com/q/49733699/
     @abstractmethod
     @contextmanager
     def forward(self, local_port: int, remote_port: int) -> Generator[None, None, None]:

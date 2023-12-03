@@ -1,4 +1,4 @@
-from .client import SshCliWrapper
+from .client import FabricClient, SshCliWrapper
 from .known_hosts import KnownHostsClient
 from .models import SshHost
 from .netcat import NetcatClient

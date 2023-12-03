@@ -6,8 +6,7 @@ from uuid import uuid4
 import pytest
 import requests
 
-from ssh import NetcatClient, SshCliWrapper, dockerized_server_safe
-from ssh.client import FabricClient
+from ssh import FabricClient, NetcatClient, SshCliWrapper, dockerized_server_safe
 
 log = logging.getLogger(__name__)
 

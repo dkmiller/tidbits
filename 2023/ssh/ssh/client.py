@@ -13,6 +13,7 @@ from paramiko.config import SSHConfig
 from typing_extensions import Self
 
 from ssh.abstractions import Result, SshClient
+from ssh.config import host_config
 from ssh.models import SshHost
 from ssh.process import kill, wait
 
@@ -67,7 +68,8 @@ class SshCliWrapper(SshClient):
         log.info("Forwarding remote port %s --> local port %s", remote_port, local_port)
         args = (
             *self.prefix(),
-            # "-fN",
+            # Why not -f? That runs the port forwarding in a process we can't control from
+            # Python, which makes it difficult to cancel.
             "-N",
             "-L",
             # https://phoenixnap.com/kb/ssh-port-forwarding
@@ -106,17 +108,9 @@ class FabricClient(SshClient):
 
     @cached_property
     def connection(self):
-        # https://phoenixnap.com/kb/ssh-config
-        ssh_conf = SSHConfig.from_text(
-            f"""
-        Host localhost
-            HostName localhost
-            User {self.host.user}
-            IdentityFile {str(self.identity)}
-            StrictHostKeyChecking accept-new
-        """
-        )
-        config = Config(ssh_config=ssh_conf)
+        text = host_config(self.host, self.identity)
+        ssh_config = SSHConfig.from_text(text)
+        config = Config(ssh_config=ssh_config)
         # https://github.com/fabric/fabric/issues/2071
         return Connection(
             self.host.host,
@@ -137,8 +131,6 @@ class FabricClient(SshClient):
         res: FabricResult = self.connection.run(command, hide=True)
         return Result(res.stderr, res.stdout, res.return_code)
 
-    # - https://adamj.eu/tech/2021/07/04/python-type-hints-how-to-type-a-context-manager/
-    # - https://stackoverflow.com/q/49733699/
     @contextmanager
     def forward(self, local_port: int, remote_port: int):
         with self.connection.forward_local(local_port, remote_port=remote_port):
