@@ -1,3 +1,4 @@
+import inspect
 import logging
 import shlex
 from functools import wraps
@@ -12,10 +13,20 @@ from ssh.abstractions import SshClient, SshServer
 log = logging.getLogger(__name__)
 
 
-def standard(func):
+# TODO: this should be much simpler via indirect parameterization;
+# - https://docs.pytest.org/en/stable/example/parametrize.html#indirect-parametrization
+# or fixture params:
+# - https://docs.pytest.org/en/7.1.x/how-to/fixtures.html#fixture-parametrize
+
+
+# TODO: clean this up. It is no longer used.
+def client_server_pairs(func):
     """
-    Standard set of decorators for SSH client/server functionality testing. Injects all client/
-    server implementations along with a standard timeout.
+    Python does not support "parameterized fixtures", and in addition testing SSH client/server
+    interaction is challenging.
+
+    This specialized decorator uses a combination of parameterization, existing fixtures, and
+    type hacking to inject `client:SshClient` and `server:SshServer`
 
     TODO: find a way to abstract away the boilerplate client/server construction by modifying the
     wrapped function's signature:
@@ -25,7 +36,6 @@ def standard(func):
     """
 
     # TODO: why? You can't have "parameterized fixtures".
-    import inspect
 
     original_sig: inspect.Signature = inspect.signature(func)
 
@@ -85,10 +95,7 @@ def standard(func):
         with server.serve():
             return func(*args, client=client, **kwargs)
 
-    # raise Exception(f"{type(sig)} {sig}")
     wrapper.__signature__ = sig
-
-    # raise Exception(wrapper.__signature__)
 
     # Change function signature: https://stackoverflow.com/a/33112180/
 
@@ -97,29 +104,29 @@ def standard(func):
     return wrapper
 
 
-@standard
-def test_client_can_call_whoami_in_server(client: SshClient):
+@pytest.mark.timeout(3)
+def test_client_can_call_whoami_in_server(client):
     whoami = client.exec("whoami")
     assert whoami.stdout.strip() == client.host.user
 
 
-@standard
-def test_client_can_touch_file_in_server(client: SshClient):
+@pytest.mark.timeout(3)
+def test_client_can_touch_file_in_server(client):
     file_name = str(uuid4())
     client.exec("touch", file_name)
     ls = client.exec("ls", file_name)
     assert ls.stdout.strip() == file_name
 
 
-@standard
-def test_client_can_run_uname_in_server(client: SshClient):
+@pytest.mark.timeout(3)
+def test_client_can_run_uname_in_server(client):
     uname = client.exec("uname", "-a")
     prefix = uname.stdout.split()[0]
     assert prefix in ["Darwin", "Linux"]
 
 
-@standard
-def test_client_can_write_to_file_in_server(client: SshClient):
+@pytest.mark.timeout(4)
+def test_client_can_write_to_file_in_server(client):
     file_name = str(uuid4())
     file_contents = str(uuid4())
 
@@ -131,14 +138,14 @@ def test_client_can_write_to_file_in_server(client: SshClient):
 @pytest.mark.parametrize(
     "executable", ["bash", "curl", "echo", "ls", "nc", "screen", "wget", "which"]
 )
-@standard
-def test_client_can_run_which_in_server(client: SshClient, executable):
+@pytest.mark.timeout(4)
+def test_client_can_run_which_in_server(client, executable):
     which = client.exec("which", executable)
     assert which.stdout.strip().split("/")[-1] == executable
 
 
-@standard
-def test_client_can_forward_port_from_server(client: SshClient, ports):
+@pytest.mark.timeout(10)
+def test_client_can_forward_port_from_server(client, ports):
     netcat = NetcatClient()
 
     response_body = f"Hi from SSH server: {uuid4()}"
@@ -179,8 +186,8 @@ def test_client_can_forward_port_from_server(client: SshClient, ports):
     assert f"{request.method} {request.path_url}" in netcat_logs
 
 
-@standard
-def test_remote_screen_session_with_netcat_and_curl(client: SshClient, ports):
+@pytest.mark.timeout(10)
+def test_remote_screen_session_with_netcat_and_curl(client, ports):
     """
     Connect local -> remote server. Start a screen session with netcat exposed on a specified port
     remotely. Curl that screen session remotely.
