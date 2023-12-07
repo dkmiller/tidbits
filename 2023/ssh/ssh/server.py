@@ -84,13 +84,16 @@ class OpensshDockerWrapper(ServerBase, SshServer):
         return container
 
     def wait(self, container: Container):
+        prefix_length = 0
         while b"Server listening on" not in container.logs():
+            logs = container.logs().decode()
             log.warning(
                 "Container %s not ready yet: %s",
                 container.name,
-                container.logs().decode(),
+                logs[prefix_length:],
             )
             time.sleep(SLEEP_SECONDS)
+            prefix_length = len(logs)
             container.reload()
         log.info("Container %s is ready!", container.name)
 

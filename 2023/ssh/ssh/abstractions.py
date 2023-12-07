@@ -22,6 +22,14 @@ class Result:
     stdout: str
     status: int
 
+    def ok_stdout(self) -> str:
+        """
+        Similar to `response.raise_for_status()`. Asserts the exit code is `0`, then returns
+        stripped standard output.
+        """
+        assert self.status == 0, f"{self.stdout}\n{self.stderr}"
+        return self.stdout.strip()
+
 
 # https://stackoverflow.com/a/44800925/
 @dataclass

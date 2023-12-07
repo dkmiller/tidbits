@@ -83,7 +83,8 @@ def port():
 
 
 # Replace the nasty decorator:
-# https://docs.pytest.org/en/7.1.x/how-to/fixtures.html#fixture-parametrize
+# - https://docs.pytest.org/en/7.1.x/how-to/fixtures.html#fixture-parametrize
+# - https://docs.pytest.org/en/stable/example/parametrize.html#indirect-parametrization
 
 
 @fixture(params=[OpensshDockerWrapper])
