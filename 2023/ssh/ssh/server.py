@@ -1,10 +1,10 @@
 import logging
 import socket
-import threading
 import time
 from contextlib import contextmanager
 from dataclasses import dataclass, field
 from pathlib import Path
+from threading import Event
 from typing import Union
 
 import docker
@@ -21,6 +21,7 @@ from paramiko import (
 from ssh.abstractions import SshServer
 from ssh.known_hosts import KnownHostsClient
 from ssh.models import SshHost
+from ssh.process import kill, popen
 
 log = logging.getLogger(__name__)
 
@@ -122,6 +123,36 @@ class OpensshDockerWrapper(ServerBase, SshServer):
             for other in self.client.containers.list():
                 log.warning("Stopping %s", other.name)
                 other.stop(timeout=1)
+
+
+class ParamikoServer(ServerBase, ServerInterface, SshServer):
+    event: Event = field(default_factory=Event)
+
+    def check_channel_request(self, kind, channelID):
+        return OPEN_SUCCEEDED
+
+    def get_allowed_auths(self, username):
+        return "publickey"
+
+    def run(self):
+        pass
+
+    @contextmanager
+    def serve(self):
+        args = (
+            "server",
+            "--host",
+            self.host.host,
+            "--port",
+            str(self.host.port),
+            "--user",
+            self.host.user,
+            "--public-key",
+            self.public_key,
+        )
+        process = popen(args)
+        yield
+        kill(process)
 
 
 # https://stackoverflow.com/q/68768419/

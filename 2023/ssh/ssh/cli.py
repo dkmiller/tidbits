@@ -1,5 +1,10 @@
+import logging
+from pathlib import Path
+
+import paramiko
 import typer
 
+from ssh import SshHost
 from ssh.rsa import private_public_key_pair
 
 # https://stackoverflow.com/a/76375308/
@@ -13,19 +18,18 @@ def gen_rsa():
 
 
 @app.command()
-def server(sha: str):
-    import logging
-    from pathlib import Path
+def server(host: str, port: int, user: str, public_key: str):
+    from ssh.server import ParamikoServer
 
-    import paramiko
-
-    from ssh.server import run_server
+    server = ParamikoServer(SshHost(host, port, user), public_key, [])
 
     logging.basicConfig(level="INFO")
 
     paramiko.util.log_to_file("demo_server.log")
 
-    run_server("dan", 5555, Path.home().resolve() / ".ssh" / f"id_rsa_{sha}")
+    server.run()
+
+    # run_server("dan", 5555, Path.home().resolve() / ".ssh" / f"id_rsa_{sha}")
 
 
 # TODO: why do I need to CTRL+C to exit after running this?

@@ -82,6 +82,13 @@ def port():
         yield s.getsockname()[1]
 
 
+@fixture(scope="session", autouse=True)
+def build_docker_image():
+    # Ensure image is built before tests start so that timeouts are meaningful:
+    # https://stackoverflow.com/a/40155582/
+    OpensshDockerWrapper(None, None, []).build()
+
+
 # Replace the nasty decorator:
 # - https://docs.pytest.org/en/7.1.x/how-to/fixtures.html#fixture-parametrize
 # - https://docs.pytest.org/en/stable/example/parametrize.html#indirect-parametrization

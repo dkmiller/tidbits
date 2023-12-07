@@ -1,11 +1,9 @@
 import logging
-import shlex
 import time
 from contextlib import contextmanager
 from dataclasses import dataclass
 from functools import cached_property
 from pathlib import Path
-from subprocess import PIPE, Popen
 
 from fabric import Config, Connection
 from fabric.runners import Result as FabricResult
@@ -15,7 +13,7 @@ from typing_extensions import Self
 from ssh.abstractions import Result, SshClient
 from ssh.config import host_config
 from ssh.models import SshHost
-from ssh.process import kill, wait
+from ssh.process import kill, popen, wait
 
 log = logging.getLogger(__name__)
 
@@ -52,17 +50,9 @@ class SshCliWrapper(ClientBase, SshClient):
         """
         return f"{self.host.user}@{self.host.host}"
 
-    def popen(self, args: tuple[str, ...]) -> Popen:
-        # https://stackoverflow.com/a/31867499/
-        rv = Popen(args, stderr=PIPE, stdout=PIPE)
-        # Make logged commands copy/pasteable.
-        copyable_args = " ".join(map(shlex.quote, args))
-        log.info("Spawned process %s: %s", rv.pid, copyable_args)
-        return rv
-
     def exec(self, *args: str) -> Result:
         args = (*self.prefix(), self.target(), *args)
-        process = self.popen(args)
+        process = popen(args)
         return wait(process)
 
     @contextmanager
@@ -78,7 +68,7 @@ class SshCliWrapper(ClientBase, SshClient):
             f"{local_port}:{self.host.host}:{remote_port}",
             self.target(),
         )
-        process = self.popen(args)
+        process = popen(args)
         # TODO: this should not be necessary.
         time.sleep(0.2)
 

@@ -2,11 +2,21 @@
 Process-related utilities.
 """
 import logging
-from subprocess import Popen
+import shlex
+from subprocess import PIPE, Popen
 
 from ssh.abstractions import Result
 
 log = logging.getLogger(__name__)
+
+
+def popen(args: tuple[str, ...]) -> Popen:
+    # https://stackoverflow.com/a/31867499/
+    rv = Popen(args, stderr=PIPE, stdout=PIPE)
+    # Make logged commands copy/pasteable.
+    copyable_args = " ".join(map(shlex.quote, args))
+    log.info("Spawned process %s: %s", rv.pid, copyable_args)
+    return rv
 
 
 def wait(process: Popen) -> Result:
