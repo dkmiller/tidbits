@@ -30,7 +30,7 @@ class ClientBase:
         return cls(identity, host)
 
 
-class SshCliWrapper(ClientBase):
+class SshCliWrapper(ClientBase, SshClient):
     def prefix(self):
         """
         Shared prefix of SSH command: `ssh -i * -p * -o * ...`.
@@ -88,7 +88,7 @@ class SshCliWrapper(ClientBase):
             kill(process)
 
 
-class FabricClient(ClientBase):
+class FabricClient(ClientBase, SshClient):
     """
     SSH client implementation using the
     [Paramiko Fabric](https://docs.fabfile.org/en/latest/api/connection.html) library.

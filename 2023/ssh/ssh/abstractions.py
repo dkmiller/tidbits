@@ -22,8 +22,17 @@ class Result:
     stdout: str
     status: int
 
+    def ok_stdout(self) -> str:
+        """
+        Similar to `response.raise_for_status()`. Asserts the exit code is `0`, then returns
+        stripped standard output.
+        """
+        assert self.status == 0, f"{self.stdout}\n{self.stderr}"
+        return self.stdout.strip()
+
 
 # https://stackoverflow.com/a/44800925/
+@dataclass
 class SshClient(ABC):
     """
     Interface for implementation-agnostic SSH client, requiring two pieces of information:
@@ -38,13 +47,16 @@ class SshClient(ABC):
     cancel `Process` objects.
     """
 
+    identity: Path
+    host: SshHost
+
     @classmethod
-    @abstractmethod
     def construct(cls, identity: Path, host: SshHost) -> Self:
         """
         Construct an instance of the implementation from the path to a private key file along with
         host configuration.
         """
+        return cls(identity, host)
 
     @abstractmethod
     def exec(self, *args: str) -> Result:
@@ -62,4 +74,35 @@ class SshClient(ABC):
         """
         Context manager for an SSH tunnel connecting the specified remote port to the local port.
         The tunnel will be destroyed on exiting the context manager.
+        """
+
+
+class SshServer(ABC):
+    """
+    Synchronous nterface for implementation-agnostic SSH server built for unit and integration
+    testing.
+
+    Implementations must manage their own background processes, whether via Docker, `Popen`, or
+    something else.
+    """
+
+    @classmethod
+    @abstractmethod
+    def construct(
+        cls, host: SshHost, public_key: str, ports_to_forward: list[int]
+    ) -> Self:
+        """
+        Construct an instance of the implementation from:
+
+        - SSH host configuration
+        - Pre-specified public key for the unique user to allow
+        - Pre-declared list of ports to allow forwarding for. This is needed because some
+          implementations (Docker) do not allow changing this on the fly.
+        """
+
+    @abstractmethod
+    @contextmanager
+    def serve(self) -> Generator[None, None, None]:
+        """
+        Start up an SSH server which will be destroyed on exiting the context manager.
         """

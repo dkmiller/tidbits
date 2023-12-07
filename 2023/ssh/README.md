@@ -132,3 +132,91 @@ curl -v http://localhost:63752/foo
 - Multiprocessing and async don't help. Plain old `Popen` and context managers are better.
 - Don't try to parallelize "remote server" and "HTTP client" from the SSH client side. Use `screen`
   or something similar to let the long-running remote HTTP server run independently.
+
+```python
+
+
+# TODO: clean this up. It is no longer used.
+def client_server_pairs(func):
+    """
+    Python does not support "parameterized fixtures", and in addition testing SSH client/server
+    interaction is challenging.
+
+    This specialized decorator uses a combination of parameterization, existing fixtures, and
+    type hacking to inject `client:SshClient` and `server:SshServer`
+
+    TODO: find a way to abstract away the boilerplate client/server construction by modifying the
+    wrapped function's signature:
+
+    - https://stackoverflow.com/a/64447219/
+    - https://docs.python.org/3/library/functools.html
+    """
+
+    # TODO: why? You can't have "parameterized fixtures".
+
+    original_sig: inspect.Signature = inspect.signature(func)
+
+    scrubbed_parameters = [
+        p
+        for p in original_sig.parameters.values()
+        if p.name not in ["client", "server"]
+    ]
+
+    injected_params = ["key_pair", "ports", "host", "client_type", "server_type"]
+
+    for name in injected_params:
+        if name not in original_sig.parameters:
+            scrubbed_parameters += [
+                inspect.Parameter(name=name, kind=inspect.Parameter.KEYWORD_ONLY)
+            ]
+
+    sig = original_sig.replace(
+        parameters=scrubbed_parameters
+        # + [
+        #     inspect.Parameter(name="key_pair", kind=inspect.Parameter.KEYWORD_ONLY),
+        #     inspect.Parameter(name="ports", kind=inspect.Parameter.KEYWORD_ONLY),
+        #     inspect.Parameter(name="host", kind=inspect.Parameter.KEYWORD_ONLY),
+        #     inspect.Parameter(name="client_type", kind=inspect.Parameter.KEYWORD_ONLY),
+        #     inspect.Parameter(name="server_type", kind=inspect.Parameter.KEYWORD_ONLY),
+        # ]
+    )
+
+    # raise Exception(inspect.signature(func))
+    # Cartesian product via parametrize: https://stackoverflow.com/q/22171681/
+    @pytest.mark.parametrize("client_type", [FabricClient, SshCliWrapper])
+    @pytest.mark.parametrize("server_type", [OpensshDockerWrapper])
+    @pytest.mark.timeout(10)
+    @wraps(func)
+    # pytest uses signature(*) to determine function signature:
+    # - https://stackoverflow.com/q/51125966/2543689
+    # - https://github.com/pytest-dev/pytest/blob/ef1b91ba8721e85430eead4c2849d8e072fe8350/src/_pytest/python.py#L893
+    # - https://github.com/pytest-dev/pytest/blob/ef1b91ba8721e85430eead4c2849d8e072fe8350/src/_pytest/compat.py#L147
+    def wrapper(*args, **kwargs):
+        # key_pair, ports, host, client_type, server_type,
+        server = kwargs["server_type"].construct(
+            kwargs["host"],
+            kwargs["key_pair"].public.read_text(),
+            [kwargs["ports"].remote],
+        )
+        client = kwargs["client_type"](kwargs["key_pair"].private, kwargs["host"])
+
+        # with server.construct(host, key_pair.public.read_text(), [ports.remote]).serve():
+        #     ssh = client(key_pair.private, host)
+
+        # raise Exception(f"{injected_params} {list(original_sig.parameters.keys())}")
+
+        for name in injected_params:
+            if name not in original_sig.parameters:
+                del kwargs[name]
+
+        with server.serve():
+            return func(*args, client=client, **kwargs)
+
+    wrapper.__signature__ = sig
+
+    # Change function signature: https://stackoverflow.com/a/33112180/
+
+    # https://codereview.stackexchange.com/a/272072
+
+    return wrapper
+```
