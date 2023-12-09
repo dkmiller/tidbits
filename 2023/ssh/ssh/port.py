@@ -1,8 +1,16 @@
 import subprocess
 from dataclasses import dataclass
 from socket import socket
+import logging
+import os
+import signal
+from subprocess import run, PIPE
+from typing import Optional
 
 import pytest
+
+
+log = logging.getLogger(__name__)
 
 
 @dataclass(frozen=True)
@@ -11,9 +19,27 @@ class Ports:
     remote: int
 
 
-def process_holding(port: int):
+def process_holding(port: int) -> Optional[int]:
     # Get only the port from lsof: https://stackoverflow.com/a/62453482/
-    return subprocess.check_output(["lsof", "-t", "-i", f":{port}"])
+    result = run(["lsof", "-t", "-i", f":{port}"], stderr=PIPE, stdout=PIPE)
+    if result.returncode == 0:
+        return int(result.stdout.decode().strip())
+    return None
+
+
+def ensure_free(port: int) -> None:
+    """
+    Ensure no processes are holding the specified port by killing (not just terminating) any that
+    are.
+
+    https://stackoverflow.com/a/17858114/    
+    """
+    pid = process_holding(port)
+    if pid:
+        log.info("Found process %s on port %s, killing it", pid, port)
+        os.kill(pid, signal.SIGKILL)
+    else:
+        log.info("Port %s already free", port)
 
 
 def free_ports() -> Ports:

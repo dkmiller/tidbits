@@ -211,27 +211,37 @@ class ParamikoServer(ServerBase, ServerInterface, SshServer):
 
         server_pair = private_public_key_pair()
         args = (
-            "server",
-            "server",
-            self.host.user,
+            "ssh-testing",
+            "serve",
             self.public_key,
             str(server_pair.private.absolute()),
             "--host",
             self.host.host,
             "--port",
             str(self.host.port),
+            "--user",
+            self.host.user,
         )
+
+        from ssh.port import ensure_free
+        ensure_free(self.host.port)
+
         process = popen(args)
         import time
 
-        time.sleep(0.2)
+        time.sleep(0.5)
         try:
             yield
         finally:
             server_pair.private.unlink()
             server_pair.public.unlink()
 
-            (output, error) = process.communicate(timeout=0.1)
+            # (output, error) = process.communicate(timeout=0.1)
 
-            result = kill(process)
-            log.info("Status: %s\nStdout: %s\nStderr: %s", result.status, output, error)
+            kill(process)
+            ensure_free(self.host.port)
+
+            # log.info("Status: %s\nStdout: %s\nStderr: %s", result.status, output, error)
+
+## Testing:
+# pytest -k 'test_client_can_call_whoami_in_server and SshCliWrapper and ParamikoServer'

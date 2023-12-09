@@ -39,6 +39,10 @@ class SshCliWrapper(ClientBase, SshClient):
             str(self.identity.absolute()),
             "-p",
             str(self.host.port),
+            # Ignore ~/.ssh/config:
+            # https://www.cyberciti.biz/faq/tell-ssh-to-exclude-ignore-config-file/
+            "-F",
+            "/dev/null",
             "-o",
             # https://stackoverflow.com/a/61946687/
             "StrictHostKeyChecking=accept-new",

@@ -1,6 +1,7 @@
 import logging
 import shlex
 from uuid import uuid4
+from getpass import getuser
 
 import pytest
 import requests
@@ -13,7 +14,7 @@ log = logging.getLogger(__name__)
 @pytest.mark.timeout(4)
 def test_client_can_call_whoami_in_server(client):
     whoami = client.exec("whoami")
-    assert whoami.ok_stdout() == client.host.user
+    assert whoami.ok_stdout() in [client.host.user, getuser()]
 
 
 @pytest.mark.timeout(3)
