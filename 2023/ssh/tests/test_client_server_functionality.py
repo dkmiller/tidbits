@@ -41,7 +41,14 @@ def test_client_can_run_which_in_server(client, executable):
     assert which.ok_stdout().split("/")[-1] == executable
 
 
-# TODO: test checking behavior when executable does not exist.
+@pytest.mark.timeout(4)
+def test_client_when_executable_does_not_exist(client):
+    executable = str(uuid4())
+    result = client.exec(executable)
+    # https://www.baeldung.com/linux/status-codes#command-not-found
+    assert result.status == 127
+    assert "command not found" in result.stdout + result.stderr
+    assert executable in result.stdout + result.stderr
 
 
 @pytest.mark.timeout(4)

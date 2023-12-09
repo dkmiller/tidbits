@@ -4,9 +4,12 @@ from contextlib import contextmanager
 from dataclasses import dataclass
 from functools import cached_property
 from pathlib import Path
+from typing import Union
 
 from fabric import Config, Connection
 from fabric.runners import Result as FabricResult
+from invoke.exceptions import UnexpectedExit
+from invoke.runners import Result as InvokeResult
 from paramiko.config import SSHConfig
 from typing_extensions import Self
 
@@ -16,6 +19,8 @@ from ssh.models import SshHost
 from ssh.process import kill, popen, wait
 
 log = logging.getLogger(__name__)
+
+AnyResult = Union[FabricResult, InvokeResult]
 
 
 @dataclass
@@ -110,7 +115,13 @@ class FabricClient(ClientBase, SshClient):
         Warning: this does not handle command escaping.
         """
         command = " ".join(args)
-        res: FabricResult = self.connection.run(command, hide=True)
+
+        # FYI: can return early via `asynchronous=True` or run even if Python quits with
+        # `disown=True`.
+        try:
+            res: AnyResult = self.connection.run(command, hide=True)
+        except UnexpectedExit as e:
+            res = e.result
         return Result(res.stderr, res.stdout, res.return_code)
 
     @contextmanager

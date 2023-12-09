@@ -35,6 +35,7 @@ def ensure_free(port: int) -> None:
     """
     pid = process_holding(port)
     if pid:
+        # TODO: this is too aggressive with Docker.
         log.info("Found process %s on port %s, killing it", pid, port)
         os.kill(pid, signal.SIGKILL)
     else:

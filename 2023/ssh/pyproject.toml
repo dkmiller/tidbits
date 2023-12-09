@@ -5,6 +5,7 @@ version = "0.2.0"
 authors = [
     { name = "Dan Miller", email = "daniel.keegan.miller@gmail.com" }
 ]
+requires-python = ">=3.9"
 dependencies = [
     "cryptography==41.0.5",
     "docker==6.1.3",
