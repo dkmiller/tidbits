@@ -57,7 +57,7 @@ class OpensshDockerWrapper(ServerBase, SshServer):
         """
         dockerfile = str(Path(__file__).parent.parent)
         log.info("Building Docker image from %s", dockerfile)
-        self.client.images.build(path=dockerfile)
+        self.client.images.build(path=dockerfile, tag="ssh")
 
     def start(self) -> Container:
         ports_dict = {self.host.port: self.host.port}

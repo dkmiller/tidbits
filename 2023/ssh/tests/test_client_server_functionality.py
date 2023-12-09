@@ -62,7 +62,7 @@ def test_client_can_write_to_file_in_server(client):
     assert cat_contents.ok_stdout() == file_contents
 
 
-@pytest.mark.timeout(10)
+@pytest.mark.timeout(5)
 def test_remote_screen_session_with_netcat_and_curl(client, ports):
     """
     Connect local -> remote server. Start a screen session with netcat exposed on a specified port
@@ -79,7 +79,10 @@ def test_remote_screen_session_with_netcat_and_curl(client, ports):
     args = screen.session(netcat_command, "netcat")
     client.exec(*args)
 
-    assert ".netcat" in client.exec("screen", "-ls").ok_stdout()
+    screen_ls = client.exec("screen", "-ls")
+    # Strangely, `screen -ls` always returns exit code 1 on a MacBook.
+    assert screen_ls.status in [0, 1]
+    assert ".netcat" in screen_ls.stdout + screen_ls.stderr
 
     curl = client.exec("curl", "-v", f"http://{client.host.host}:{ports.remote}/path")
     assert curl.status == 0
