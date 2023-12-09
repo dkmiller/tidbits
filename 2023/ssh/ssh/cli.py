@@ -4,33 +4,45 @@ from pathlib import Path
 import paramiko
 import typer
 
-from ssh import SshHost
+from ssh import ParamikoServer, SshHost
 from ssh.rsa import private_public_key_pair
 
 # https://stackoverflow.com/a/76375308/
 app = typer.Typer(pretty_exceptions_enable=False)
 
 
-def gen_rsa():
-    private, _ = private_public_key_pair()
-    hex = private.stem.split("_")[-1]
-    print(hex)
+@app.command()
+def rsa():
+    pair = private_public_key_pair()
+    print(
+        # Ignore ~/.ssh/config:
+        # https://www.cyberciti.biz/faq/tell-ssh-to-exclude-ignore-config-file/
+        f"""
+Private key: {pair.private.absolute()}
+
+Public key: {pair.public.absolute()}
+
+ssh-testing serve "$(cat {pair.public.absolute()})" {pair.private.absolute()}
+
+ssh -F /dev/null -o StrictHostKeyChecking=accept-new -i {pair.private} -p 2222 dan@localhost
+          """
+    )
 
 
 @app.command()
-def server(host: str, port: int, user: str, public_key: str):
-    from ssh.server import ParamikoServer
-
-    server = ParamikoServer(SshHost(host, port, user), public_key, [])
+def serve(
+    public_key: str,
+    private_key: str,
+    user: str = "dan",
+    host: str = "localhost",
+    port: int = 2222,
+):
+    server = ParamikoServer(
+        SshHost(host, port, user), public_key, [], private_key=Path(private_key)
+    )
 
     logging.basicConfig(level="INFO")
 
     paramiko.util.log_to_file("demo_server.log")
 
     server.run()
-
-    # run_server("dan", 5555, Path.home().resolve() / ".ssh" / f"id_rsa_{sha}")
-
-
-# TODO: why do I need to CTRL+C to exit after running this?
-# ssh -i ~/.ssh/id_rsa_16505ade1dbd42f38623fd2aef236a27 -p 5555 dan@localhost my-command2

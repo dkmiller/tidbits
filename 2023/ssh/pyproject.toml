@@ -23,8 +23,7 @@ dev = [
 ]
 
 [project.scripts]
-gen-rsa = "ssh.cli:gen_rsa"
-server = "ssh.cli:app"
+ssh-testing = "ssh.cli:app"
 
 [tool.isort]
 profile = "black"

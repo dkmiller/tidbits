@@ -4,6 +4,7 @@ import time
 from contextlib import contextmanager
 from dataclasses import dataclass, field
 from pathlib import Path
+from subprocess import PIPE, run
 from threading import Event
 from typing import Union
 
@@ -125,44 +126,16 @@ class OpensshDockerWrapper(ServerBase, SshServer):
                 other.stop(timeout=1)
 
 
-class ParamikoServer(ServerBase, ServerInterface, SshServer):
-    event: Event = field(default_factory=Event)
-
-    def check_channel_request(self, kind, channelID):
-        return OPEN_SUCCEEDED
-
-    def get_allowed_auths(self, username):
-        return "publickey"
-
-    def run(self):
-        pass
-
-    @contextmanager
-    def serve(self):
-        args = (
-            "server",
-            "--host",
-            self.host.host,
-            "--port",
-            str(self.host.port),
-            "--user",
-            self.host.user,
-            "--public-key",
-            self.public_key,
-        )
-        process = popen(args)
-        yield
-        kill(process)
-
-
 # https://stackoverflow.com/q/68768419/
 # https://docs.paramiko.org/en/3.3/api/server.html
 # https://github.com/paramiko/paramiko/blob/main/demos/demo_server.py
 # TODO: imitate https://github.com/kryptographik/ShuSSH/blob/master/shusshd.py ?
+
+
 @dataclass
-class Server(ServerInterface):
-    user: str
-    event: threading.Event = field(default_factory=threading.Event)
+class ParamikoServer(ServerBase, ServerInterface, SshServer):
+    private_key: Path = None
+    event: Event = field(default_factory=Event)
 
     def check_channel_request(self, kind, channelID):
         return OPEN_SUCCEEDED
@@ -172,7 +145,7 @@ class Server(ServerInterface):
 
     def check_auth_publickey(self, username, key):
         log.info("Check auth for %s", username)
-        if username == self.user:
+        if username == self.host.user:
             return AUTH_SUCCESSFUL
         # TODO: actually check a key!
         return AUTH_FAILED
@@ -194,31 +167,71 @@ class Server(ServerInterface):
 
     def check_channel_exec_request(self, channel, command):
         log.info("Running `%s`", command)
+
+        result = run(command, shell=True, stdout=PIPE, stderr=PIPE)
+        log.info("Result: %s", result)
+        channel.send(result.stdout)
+        channel.send(result.stderr)
+        channel.send_exit_status(result.returncode)
         self.event.set()
         return True
 
     def get_banner(self):
-        return (f"Welcome, {self.user}!\n\r", "EN")
+        return (f"Welcome, {self.host.user}!\n\r", "EN")
 
-
-def run_server(user: str, port: int, private_key: Path):
-    host_key = RSAKey(filename=str(private_key.absolute()))
-    ctx = Server(user=user)
-
-    sock = socket.socket()
-    sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-    sock.bind(("127.0.0.1", port))
-    sock.listen(100)
-    log.info("Listening for connection")
-    while True:
+    # https://gist.github.com/cschwede/3e2c025408ab4af531651098331cce45
+    # https://stackoverflow.com/a/68791717/
+    def run(self):
+        self.known_hosts.reset(self.host)
+        sock = socket.socket()
+        sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+        log.info("Listening on %s", self.host)
+        # https://stackoverflow.com/a/1365284/
+        sock.bind(("127.0.0.1", self.host.port))
+        sock.listen(100)
+        log.info("Listening for connection")
+        # while True:
         client, addr = sock.accept()
         log.info("Listening for SSH connections")
         server = Transport(client)
+        host_key = RSAKey(filename=str(self.private_key.absolute()))
         server.add_server_key(host_key)
-        server.start_server(server=ctx)
+        server.start_server(server=self)
         channel = server.accept(30)
         if channel is None:
             log.info("No auth request was made")
             exit(1)
-        channel.send("[+]*****************  Welcome ***************** \n\r")
-        channel.event.wait(5)
+            # channel.send("[+]*****************  Welcome ***************** \n\r")
+        channel.event.wait(1)
+        channel.close()
+
+    @contextmanager
+    def serve(self):
+        from ssh.rsa import private_public_key_pair
+
+        server_pair = private_public_key_pair()
+        args = (
+            "server",
+            "server",
+            self.host.user,
+            self.public_key,
+            str(server_pair.private.absolute()),
+            "--host",
+            self.host.host,
+            "--port",
+            str(self.host.port),
+        )
+        process = popen(args)
+        import time
+
+        time.sleep(0.2)
+        try:
+            yield
+        finally:
+            server_pair.private.unlink()
+            server_pair.public.unlink()
+
+            (output, error) = process.communicate(timeout=0.1)
+
+            result = kill(process)
+            log.info("Status: %s\nStdout: %s\nStderr: %s", result.status, output, error)

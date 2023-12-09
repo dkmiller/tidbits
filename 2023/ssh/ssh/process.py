@@ -30,7 +30,7 @@ def wait(process: Popen) -> Result:
     return Result(error.decode(), output.decode(), status)
 
 
-def kill(process: Popen) -> None:
+def kill(process: Popen) -> Result:
     # https://stackoverflow.com/a/43276598/
     poll = process.poll()
     pid = process.pid
@@ -39,3 +39,5 @@ def kill(process: Popen) -> None:
     else:
         log.info("Killing %s", pid)
         process.kill()
+
+    return wait(process)
