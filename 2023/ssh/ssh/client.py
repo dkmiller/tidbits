@@ -122,6 +122,8 @@ class FabricClient(ClientBase, SshClient):
             res: AnyResult = self.connection.run(command, hide=True)
         except UnexpectedExit as e:
             res = e.result
+        # break the connection between command executions.
+        self.connection.close()
         return Result(res.stderr, res.stdout, res.return_code)
 
     @contextmanager

@@ -161,9 +161,9 @@ class ParamikoServer(ServerBase, ServerInterface, SshServer):
     ):
         return True
 
-    def check_channel_shell_request(self, channel):
-        self.event.set()
-        return True
+    # def check_channel_shell_request(self, channel):
+    #     self.event.set()
+    #     return True
 
     def check_channel_exec_request(self, channel, command):
         log.info("Running `%s`", command)
@@ -171,13 +171,13 @@ class ParamikoServer(ServerBase, ServerInterface, SshServer):
         result = run(command, shell=True, stdout=PIPE, stderr=PIPE)
         log.info("Result: %s", result)
         channel.send(result.stdout)
-        channel.send(result.stderr)
+        channel.send_stderr(result.stderr)
         channel.send_exit_status(result.returncode)
         self.event.set()
         return True
 
-    def get_banner(self):
-        return (f"Welcome, {self.host.user}!\n\r", "EN")
+    # def get_banner(self):
+    #     return (f"Welcome, {self.host.user}!\n\r", "EN")
 
     # https://gist.github.com/cschwede/3e2c025408ab4af531651098331cce45
     # https://stackoverflow.com/a/68791717/
@@ -190,20 +190,19 @@ class ParamikoServer(ServerBase, ServerInterface, SshServer):
         sock.bind(("127.0.0.1", self.host.port))
         sock.listen(100)
         log.info("Listening for connection")
-        # while True:
-        client, addr = sock.accept()
-        log.info("Listening for SSH connections")
-        server = Transport(client)
-        host_key = RSAKey(filename=str(self.private_key.absolute()))
-        server.add_server_key(host_key)
-        server.start_server(server=self)
-        channel = server.accept(30)
-        if channel is None:
-            log.info("No auth request was made")
-            exit(1)
-            # channel.send("[+]*****************  Welcome ***************** \n\r")
-        channel.event.wait(1)
-        channel.close()
+        while True:
+            client, addr = sock.accept()
+            log.info("Listening for SSH connections")
+            server = Transport(client)
+            host_key = RSAKey(filename=str(self.private_key.absolute()))
+            server.add_server_key(host_key)
+            server.start_server(server=self)
+            channel = server.accept(30)
+            if channel is None:
+                log.info("No auth request was made")
+                exit(1)
+            channel.event.wait(1)
+            channel.close()
 
     @contextmanager
     def serve(self):

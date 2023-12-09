@@ -47,8 +47,9 @@ def test_client_when_executable_does_not_exist(client):
     result = client.exec(executable)
     # https://www.baeldung.com/linux/status-codes#command-not-found
     assert result.status == 127
-    assert "command not found" in result.stdout + result.stderr
-    assert executable in result.stdout + result.stderr
+    assert "command not found" in result.stderr
+    assert executable in result.stderr
+    assert not result.stdout.strip()
 
 
 @pytest.mark.timeout(4)

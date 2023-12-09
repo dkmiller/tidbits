@@ -48,6 +48,7 @@ def user():
 
 @fixture
 def host(user):
+    # TODO: figure out a way to use different ports when the SSH server is not OpenSSH Docker based.
     return SshHost("localhost", 2222, user)
 
 
