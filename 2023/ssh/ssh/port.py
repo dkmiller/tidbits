@@ -1,14 +1,13 @@
-import subprocess
-from dataclasses import dataclass
-from socket import socket
 import logging
 import os
 import signal
-from subprocess import run, PIPE
+import subprocess
+from dataclasses import dataclass
+from socket import socket
+from subprocess import PIPE, run
 from typing import Optional
 
 import pytest
-
 
 log = logging.getLogger(__name__)
 
@@ -32,7 +31,7 @@ def ensure_free(port: int) -> None:
     Ensure no processes are holding the specified port by killing (not just terminating) any that
     are.
 
-    https://stackoverflow.com/a/17858114/    
+    https://stackoverflow.com/a/17858114/
     """
     pid = process_holding(port)
     if pid:

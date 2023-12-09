@@ -224,6 +224,7 @@ class ParamikoServer(ServerBase, ServerInterface, SshServer):
         )
 
         from ssh.port import ensure_free
+
         ensure_free(self.host.port)
 
         process = popen(args)
@@ -242,6 +243,7 @@ class ParamikoServer(ServerBase, ServerInterface, SshServer):
             ensure_free(self.host.port)
 
             # log.info("Status: %s\nStdout: %s\nStderr: %s", result.status, output, error)
+
 
 ## Testing:
 # pytest -k 'test_client_can_call_whoami_in_server and SshCliWrapper and ParamikoServer'

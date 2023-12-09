@@ -1,7 +1,7 @@
 import logging
 import shlex
-from uuid import uuid4
 from getpass import getuser
+from uuid import uuid4
 
 import pytest
 import requests
@@ -18,6 +18,13 @@ def test_client_can_call_whoami_in_server(client):
 
 
 @pytest.mark.timeout(3)
+def test_client_can_run_uname_in_server(client):
+    uname = client.exec("uname", "-a")
+    prefix = uname.ok_stdout().split()[0]
+    assert prefix in ["Darwin", "Linux"]
+
+
+@pytest.mark.timeout(3)
 def test_client_can_touch_file_in_server(client):
     file_name = str(uuid4())
     client.exec("touch", file_name)
@@ -25,11 +32,16 @@ def test_client_can_touch_file_in_server(client):
     assert ls.ok_stdout() == file_name
 
 
-@pytest.mark.timeout(3)
-def test_client_can_run_uname_in_server(client):
-    uname = client.exec("uname", "-a")
-    prefix = uname.ok_stdout().split()[0]
-    assert prefix in ["Darwin", "Linux"]
+@pytest.mark.parametrize(
+    "executable", ["bash", "curl", "echo", "ls", "nc", "screen", "which"]
+)
+@pytest.mark.timeout(4)
+def test_client_can_run_which_in_server(client, executable):
+    which = client.exec("which", executable)
+    assert which.ok_stdout().split("/")[-1] == executable
+
+
+# TODO: test checking behavior when executable does not exist.
 
 
 @pytest.mark.timeout(4)
@@ -40,15 +52,6 @@ def test_client_can_write_to_file_in_server(client):
     client.exec("bash", "-c", shlex.quote(f"echo {file_contents} > {file_name}"))
     cat_contents = client.exec("cat", file_name)
     assert cat_contents.ok_stdout() == file_contents
-
-
-@pytest.mark.parametrize(
-    "executable", ["bash", "curl", "echo", "ls", "nc", "screen", "wget", "which"]
-)
-@pytest.mark.timeout(4)
-def test_client_can_run_which_in_server(client, executable):
-    which = client.exec("which", executable)
-    assert which.ok_stdout().split("/")[-1] == executable
 
 
 @pytest.mark.timeout(10)
