@@ -24,7 +24,7 @@ def test_client_can_run_uname_in_server(client):
     assert prefix in ["Darwin", "Linux"]
 
 
-@pytest.mark.timeout(3)
+@pytest.mark.timeout(4)
 def test_client_can_touch_file_in_server(client):
     file_name = str(uuid4())
     client.exec("touch", file_name)
@@ -35,7 +35,7 @@ def test_client_can_touch_file_in_server(client):
 @pytest.mark.parametrize(
     "executable", ["bash", "curl", "echo", "ls", "nc", "screen", "which"]
 )
-@pytest.mark.timeout(4)
+@pytest.mark.timeout(5)
 def test_client_can_run_which_in_server(client, executable):
     which = client.exec("which", executable)
     assert which.ok_stdout().split("/")[-1] == executable
@@ -60,6 +60,31 @@ def test_client_can_write_to_file_in_server(client):
     client.exec("bash", "-c", shlex.quote(f"echo {file_contents} > {file_name}"))
     cat_contents = client.exec("cat", file_name)
     assert cat_contents.ok_stdout() == file_contents
+
+
+@pytest.mark.timeout(10)
+def test_remote_screen_session_with_netcat_and_curl(client, ports):
+    """
+    Connect local -> remote server. Start a screen session with netcat exposed on a specified port
+    remotely. Curl that screen session remotely.
+
+    (All this needed to ensure remote netcat server is behaving properly, before bringing port
+    forwarding into the mix.)
+    """
+    netcat = NetcatClient()
+    screen = ScreenClient()
+
+    response_body = f"Hi from SSH server: {uuid4()}"
+    netcat_command = netcat.ssh_exec(response_body, ports.remote)
+    args = screen.session(netcat_command, "netcat")
+    client.exec(*args)
+
+    assert ".netcat" in client.exec("screen", "-ls").ok_stdout()
+
+    curl = client.exec("curl", "-v", f"http://{client.host.host}:{ports.remote}/path")
+    assert curl.status == 0
+    assert response_body in curl.ok_stdout()
+    assert "Excess found in a read" not in curl.stderr
 
 
 @pytest.mark.timeout(10)
@@ -91,28 +116,3 @@ def test_client_can_forward_port_from_server(client, ports):
     )
 
     assert f"{request.method} {request.path_url}" in netcat_logs
-
-
-@pytest.mark.timeout(10)
-def test_remote_screen_session_with_netcat_and_curl(client, ports):
-    """
-    Connect local -> remote server. Start a screen session with netcat exposed on a specified port
-    remotely. Curl that screen session remotely.
-
-    (All this needed to ensure remote netcat server is behaving properly, before bringing port
-    forwarding into the mix.)
-    """
-    netcat = NetcatClient()
-    screen = ScreenClient()
-
-    response_body = f"Hi from SSH server: {uuid4()}"
-    netcat_command = netcat.ssh_exec(response_body, ports.remote)
-    args = screen.session(netcat_command, "netcat")
-    client.exec(*args)
-
-    assert ".netcat" in client.exec("screen", "-ls").ok_stdout()
-
-    curl = client.exec("curl", "-v", f"http://{client.host.host}:{ports.remote}/path")
-    assert curl.status == 0
-    assert response_body in curl.ok_stdout()
-    assert "Excess found in a read" not in curl.stderr

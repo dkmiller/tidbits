@@ -1,4 +1,5 @@
 from socket import socket
+from subprocess import PIPE, run
 from uuid import uuid4
 
 import paramiko
@@ -13,6 +14,7 @@ from ssh import (
 )
 from ssh.abstractions import SshClient, SshServer
 from ssh.port import free_ports
+from ssh.process import run_pipe
 from ssh.rsa import private_public_key_pair
 
 # TODO: there should be separate, module-wide fixtures private_key and public_key, the latter
@@ -68,6 +70,18 @@ def build_docker_image():
     # Ensure image is built before tests start so that timeouts are meaningful:
     # https://stackoverflow.com/a/40155582/
     OpensshDockerWrapper(None, None, []).build()
+
+
+@fixture(scope="session", autouse=True)
+def kill_all_screens():
+    """
+    TODO: move this into `screen.py`?
+    """
+    # https://unix.stackexchange.com/a/94528
+    args = ["killall", "SCREEN"]
+    run_pipe(args)
+    yield
+    run_pipe(args)
 
 
 # Replace the nasty decorator:

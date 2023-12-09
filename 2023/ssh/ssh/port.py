@@ -4,10 +4,11 @@ import signal
 import subprocess
 from dataclasses import dataclass
 from socket import socket
-from subprocess import PIPE, run
 from typing import Optional
 
 import pytest
+
+from ssh.process import run_pipe
 
 log = logging.getLogger(__name__)
 
@@ -20,7 +21,7 @@ class Ports:
 
 def process_holding(port: int) -> Optional[int]:
     # Get only the port from lsof: https://stackoverflow.com/a/62453482/
-    result = run(["lsof", "-t", "-i", f":{port}"], stderr=PIPE, stdout=PIPE)
+    result = run_pipe(["lsof", "-t", "-i", f":{port}"])
     if result.returncode == 0:
         return int(result.stdout.decode().strip())
     return None

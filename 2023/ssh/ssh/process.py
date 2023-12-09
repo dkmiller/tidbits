@@ -3,7 +3,7 @@ Process-related utilities.
 """
 import logging
 import shlex
-from subprocess import PIPE, Popen
+from subprocess import PIPE, CompletedProcess, Popen, run
 
 from ssh.abstractions import Result
 
@@ -17,6 +17,13 @@ def popen(args: tuple[str, ...]) -> Popen:
     copyable_args = " ".join(map(shlex.quote, args))
     log.info("Spawned process %s: %s", rv.pid, copyable_args)
     return rv
+
+
+def run_pipe(*args, **kwargs) -> CompletedProcess[bytes]:
+    """
+    Invoke `subprocess.run` with the provided args and piped standard error + output.
+    """
+    return run(*args, stderr=PIPE, stdout=PIPE, **kwargs)
 
 
 def wait(process: Popen) -> Result:

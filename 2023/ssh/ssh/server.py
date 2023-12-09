@@ -4,7 +4,6 @@ import time
 from contextlib import contextmanager
 from dataclasses import dataclass, field
 from pathlib import Path
-from subprocess import PIPE, run
 from threading import Event
 from typing import Union
 
@@ -22,7 +21,7 @@ from paramiko import (
 from ssh.abstractions import SshServer
 from ssh.known_hosts import KnownHostsClient
 from ssh.models import SshHost
-from ssh.process import kill, popen
+from ssh.process import kill, popen, run_pipe
 
 log = logging.getLogger(__name__)
 
@@ -156,10 +155,10 @@ class ParamikoServer(ServerBase, ServerInterface, SshServer):
     def cancel_port_forward_request(self, address, port):
         raise NotImplementedError()
 
-    def check_channel_pty_request(
-        self, channel, term, width, height, pixelwidth, pixelheight, modes
-    ):
-        return True
+    # def check_channel_pty_request(
+    #     self, channel, term, width, height, pixelwidth, pixelheight, modes
+    # ):
+    #     return True
 
     # def check_channel_shell_request(self, channel):
     #     self.event.set()
@@ -168,7 +167,7 @@ class ParamikoServer(ServerBase, ServerInterface, SshServer):
     def check_channel_exec_request(self, channel, command):
         log.info("Running `%s`", command)
 
-        result = run(command, shell=True, stdout=PIPE, stderr=PIPE)
+        result = run_pipe(command, shell=True)
         log.info("Result: %s", result)
         channel.send(result.stdout)
         channel.send_stderr(result.stderr)
@@ -187,7 +186,7 @@ class ParamikoServer(ServerBase, ServerInterface, SshServer):
         sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         log.info("Listening on %s", self.host)
         # https://stackoverflow.com/a/1365284/
-        sock.bind(("127.0.0.1", self.host.port))
+        sock.bind((self.host.host, self.host.port))
         sock.listen(100)
         log.info("Listening for connection")
         while True:
