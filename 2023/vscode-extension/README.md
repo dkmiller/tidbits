@@ -1,3 +1,9 @@
+⌘ + R to reload your extension in the "development" window
+
+https://stackoverflow.com/a/68132353
+
+Store creds: https://stackoverflow.com/a/53315593
+
 # dan-ext README
 
 This is the README for your extension "dan-ext". After writing up a brief description, we recommend including the following sections.

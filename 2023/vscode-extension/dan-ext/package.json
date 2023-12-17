@@ -14,8 +14,8 @@
   "contributes": {
     "commands": [
       {
-        "command": "dan-ext.helloWorld",
-        "title": "Hello World"
+        "command": "dan-ext.danLogin",
+        "title": "Dan Login"
       }
     ]
   },
