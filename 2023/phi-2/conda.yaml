@@ -1,0 +1,12 @@
+# Shape imitates:
+# https://github.com/dkmiller/tidbits/blob/main/2022/08-03_kubeflow/conda.yaml
+name: phi2
+
+dependencies:
+- python=3.10
+- pip=23.3
+
+- pip:
+  - einops==0.7.0
+  - torch==2.1.2
+  - transformers==4.36.1
