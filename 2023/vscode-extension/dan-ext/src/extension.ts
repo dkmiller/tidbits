@@ -36,6 +36,7 @@ export function activate(context: vscode.ExtensionContext) {
 				// Parse params: https://stackoverflow.com/a/47416843
 				var params = url.parse(req.url || '', true).query;
 				var parameterValue = params[parameter];
+				console.log('Parameter value is: ', parameterValue);
 
 				// TODO: find a way of passing the obtained parameter back to
 				// the client.
