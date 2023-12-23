@@ -1,0 +1,16 @@
+[project]
+name = "space-bots"
+readme = "README.md"
+version = "0.0.0"
+dependencies = [
+    "typer==0.9.0"
+]
+[project.optional-dependencies]
+dev = [
+    "isort",
+    "ruff",
+]
+
+# https://stackoverflow.com/a/73066937
+[project.scripts]
+spacebots = "space_bots.cli:app"
