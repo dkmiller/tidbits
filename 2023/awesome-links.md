@@ -19,3 +19,7 @@
 - Google attempts to start adding
   [Web environment integrity](https://www.fsf.org/blogs/community/web-environment-integrity-is-an-all-out-attack-on-the-free-internet)
   into the Chromium browser as a default.
+
+## Frameworks
+
+- https://daveon.design/introducing-fontimize-subset-fonts-to-exactly-and-only-your-websites-used-characters.html
