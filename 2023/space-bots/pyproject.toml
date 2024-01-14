@@ -3,7 +3,8 @@ name = "space-bots"
 readme = "README.md"
 version = "0.0.0"
 dependencies = [
-    "typer==0.9.0"
+    "requests",
+    "typer==0.9.0",
 ]
 [project.optional-dependencies]
 dev = [
@@ -14,3 +15,6 @@ dev = [
 # https://stackoverflow.com/a/73066937
 [project.scripts]
 spacebots = "space_bots.cli:app"
+
+[tool.isort]
+profile = "black"
