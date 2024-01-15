@@ -18,6 +18,9 @@ from paramiko import (
     Transport,
 )
 
+# https://docs.paramiko.org/en/3.3/api/agent.html#paramiko.agent.AgentServerProxy
+from paramiko.agent import AgentServerProxy
+
 from ssh.abstractions import SshServer
 from ssh.known_hosts import KnownHostsClient
 from ssh.models import SshHost
@@ -126,35 +129,61 @@ class OpensshDockerWrapper(ServerBase, SshServer):
 
 
 # https://stackoverflow.com/q/68768419/
-# https://docs.paramiko.org/en/3.3/api/server.html
+#
 # https://github.com/paramiko/paramiko/blob/main/demos/demo_server.py
 # TODO: imitate https://github.com/kryptographik/ShuSSH/blob/master/shusshd.py ?
 
 
 @dataclass
 class ParamikoServer(ServerBase, ServerInterface, SshServer):
+    """
+    https://docs.paramiko.org/en/3.3/api/server.html
+    """
+
     private_key: Path = None
     event: Event = field(default_factory=Event)
 
     def check_channel_request(self, kind, channelID):
+        log.info(f"Check channel request for {kind=} and {channelID=}")
         return OPEN_SUCCEEDED
 
     def get_allowed_auths(self, username):
         return "publickey"
 
     def check_auth_publickey(self, username, key):
-        log.info("Check auth for %s", username)
+        log.info(f"Check auth for {username=} {key=}")
         if username == self.host.user:
             return AUTH_SUCCESSFUL
         # TODO: actually check a key!
         return AUTH_FAILED
 
     def check_port_forward_request(self, address, port):
-        raise NotImplementedError()
+        log.info(f"Check port forward request for {address=} and {port=}")
+        # TODO: https://github.com/paramiko/paramiko/issues/2133
+        # https://stackoverflow.com/q/13579616/
+        return port
+
+    # https://github.com/paramiko/paramiko/issues/2133
+    def check_channel_direct_tcpip_request(self, chanid, origin, destination):
+        log.info(
+            f"Check channel direct tcpip request for {chanid=} {origin=} {destination=}"
+        )
+        return OPEN_SUCCEEDED
 
     def cancel_port_forward_request(self, address, port):
-        raise NotImplementedError()
+        log.info(f"Cancel port forward request for {address=} + {port=}")
 
+    # https://gist.github.com/AstraLuma/14a72a7918a345e5c8cf8bc9f9c2e1f2
+    def check_channel_forward_agent_request(self, channel):
+        log.info(f"Check channel forward agent request {channel=}")
+        # self.agent = AgentServerProxy(channel.transport)
+        # def connect():
+        #     self.agent.connect()
+        #     print("check_channel_forward_agent_request:connect:", self.agent.get_keys())
+        # self.spawn_worker(connect)
+        return True
+
+    # https://github.com/paramiko/paramiko/blob/main/demos/forward.py?
     # def check_channel_pty_request(
     #     self, channel, term, width, height, pixelwidth, pixelheight, modes
     # ):

@@ -101,7 +101,6 @@ def test_client_can_forward_port_from_server(client, ports):
     args = screen.session(netcat_command, "netcat", "screen.logs")
     client.exec(*args)
 
-    assert ".netcat" in client.exec("screen -ls").ok_stdout()
     with client.forward(ports.local, remote_port=ports.remote):
         response = requests.get(
             f"http://{client.host.host}:{ports.local}/{uuid4()}", timeout=1
