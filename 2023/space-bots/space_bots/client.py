@@ -29,8 +29,15 @@ class SpacebotsClient:
             raise RuntimeError(f"HTTP {response.status_code} {response.text}")
         return response.json()
 
-    def fleets(self, user: str):
-        return self.request("GET", f"fleets/{user}")
+    def buy_ships(self, fleet: str, ships: dict[str, int]):
+        return self.request("POST", f"fleets/{fleet}/buy-ships", json={"shipsToBuy": ships})
+
+    def fleets(self, user: str = "my") -> list[StrDict]:
+        # It's annoying that "my" here and "me" below are different.
+        return self.request("GET", f"fleets/{user}")  # type: ignore
+
+    def market(self, system: str, resource: str):
+        return self.request("GET", f"systems/{system}/market/resources/{resource}")
 
     def system(self, system_id: str):
         return self.request("GET", f"systems/{system_id}")
@@ -42,3 +49,20 @@ class SpacebotsClient:
 
     def mine(self, fleet: str):
         return self.request("POST", f"fleets/{fleet}/mine")
+
+    def sell(self, fleet: str, resources: dict[str, int]):
+        return self.request(
+            "POST", f"fleets/{fleet}/direct-sell", json={"resources": resources}
+        )
+
+    def ship_types(self) -> list[StrDict]:
+        return self.request("GET", "ship-types") # type: ignore
+
+    def transfer(self, source: str, ships: dict[str, int], target: Optional[str] = None):
+        body = { "shipsFromFleetToTarget": ships}
+        if target:
+            body["targetFleetId"] = target
+        return self.request("POST", f"fleets/{source}/transfer", json=body)
+
+    def users(self, user: str = "me"):
+        return self.request("GET", f"users/{user}")
