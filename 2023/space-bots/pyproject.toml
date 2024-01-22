@@ -3,8 +3,10 @@ name = "space-bots"
 readme = "README.md"
 version = "0.0.0"
 dependencies = [
+    "dataclass-wizard==0.22.2",
     "humanize==4.9.0",
     "inflect==7.0.0",
+    "injector==0.21.0",
     "plotly==5.18.0",
     "requests",
     "streamlit==1.30.0",
