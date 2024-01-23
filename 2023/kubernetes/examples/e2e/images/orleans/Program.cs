@@ -4,6 +4,7 @@
 
 using Orleans;
 using Orleans.Hosting;
+using OrleansHttp.Grains;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using HelloWorld;
