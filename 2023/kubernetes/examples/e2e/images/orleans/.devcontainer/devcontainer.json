@@ -1,0 +1,31 @@
+// https://github.com/microsoft/vscode-remote-try-dotnet/blob/main/.devcontainer/devcontainer.json
+{
+	"name": "C# (.NET)",
+	"image": "mcr.microsoft.com/devcontainers/dotnet:0-7.0",
+
+	// Features to add to the dev container. More info: https://containers.dev/features.
+	// "features": {},
+
+    "customizations": {
+		"vscode": {
+			"settings": {},
+			"extensions": [
+				"streetsidesoftware.code-spell-checker",
+				"ms-dotnettools.csdevkit"
+			]
+		}
+	},
+	"portsAttributes": {
+		"5000": {
+			"label": "Hello Remote World",
+			"onAutoForward": "notify"
+		},
+		"5001": {
+			"protocol": "https"
+		}
+	},
+
+	"forwardPorts": [5000, 5001]
+	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
+	// "remoteUser": "root"
+}
