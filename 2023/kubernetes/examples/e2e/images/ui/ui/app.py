@@ -3,15 +3,23 @@ from urllib.parse import urljoin
 import requests
 import streamlit as st
 from find_primes import all_primes
-from opentelemetry import trace
+from opentelemetry import metrics, trace
 from streamlit.logger import get_logger
+from streamlit import runtime
+
 from ui.builders import injector
 from ui.models import Context
 
 # https://github.com/streamlit/streamlit/issues/4742
 log = get_logger(__name__)
+meter = metrics.get_meter(__name__)
 # https://www.vultr.com/docs/how-to-use-opentelemetry-with-streamlit-applications/
 tracer = trace.get_tracer(__name__)
+
+
+@st.cache_resource
+def otel_counter(name: str, description: str):
+    return meter.create_counter(name, description=description, unit="bytes")
 
 
 @st.cache_data
@@ -64,3 +72,11 @@ if trace_parent := response.json()["headers"].get("Traceparent"):
     st.write(f"Search in Grafana for `{trace_id}`")
 
 st.write(response.json())
+
+
+with tracer.start_as_current_span("streamlit.stats"):
+    for stat in runtime.get_instance().stats_mgr.get_stats():
+        # https://github.com/open-telemetry/opentelemetry-python/issues/1201
+        otel_counter(stat.category_name, stat.cache_name).add(
+            stat.byte_length,
+        )

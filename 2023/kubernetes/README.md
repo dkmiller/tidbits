@@ -1,10 +1,35 @@
-https://kind.sigs.k8s.io/docs/user/quick-start/#installation
+# Agile Kubernetes development
 
-- https://thoughtbot.com/blog/brewfile-a-gemfile-but-for-homebrew
+Using [kind](https://kind.sigs.k8s.io/docs/user/quick-start/#installation).
+
+## Setup + run
+
+Start with these commands to install the necessary OS-level tooling and the `ptah` CLI:
 
 ```bash
-brew bundle install
+brew bundle install && pip install -e .
 
+helm plugin install https://github.com/databus23/helm-diff
+```
+
+Then, to build and ship things:
+
+```bash
+cd examples/e2e
+
+# Build Docker images + Kubernetes manifests
+ptah build
+
+# Push Docker images to Kind cluster + apply Kubernetes manifests
+ptah ship
+
+# Copy the "admin" access key, port-forward the Kubernetes dashboard, and open it.
+ptah dash
+```
+
+## Miscellaneous commands
+
+```bash
 # https://github.com/roboll/helmfile/issues/1182#issuecomment-790499993
 helm plugin install https://github.com/databus23/helm-diff
 
@@ -52,14 +77,14 @@ curl host.docker.internal:8000
 
 ## Future
 
-- [ ] OpenTelemetry: https://www.reddit.com/r/kubernetes/comments/13ce38b/opentelemetry_visualization/
-      https://github.com/magsther/awesome-opentelemetry
 - [ ] Liveness probe takes screenshot
     - https://github.com/puppeteer/puppeteer/issues/4039
     - https://github.com/puppeteer/puppeteer/issues/1947
     - https://github.com/isholgueras/chrome-headless/issues/1
 
 ## Links
+
+[Brewfile: a Gemfile, but for Homebrew](https://thoughtbot.com/blog/brewfile-a-gemfile-but-for-homebrew)
 
 [`kubectl` Cheat Sheet](https://kubernetes.io/docs/reference/kubectl/cheatsheet/)
 
@@ -68,8 +93,6 @@ curl host.docker.internal:8000
 [Kubernetes &gt; Deployments](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/)
 
 [KiND &mdash; How I Wasted a Day Loading Local Docker Images](https://iximiuz.com/en/posts/kubernetes-kind-load-docker-image/)
-
-----
 
 Ingress + Kind: https://kind.sigs.k8s.io/docs/user/ingress/
 
@@ -96,3 +119,17 @@ https://stackoverflow.com/a/63112795
 https://github.com/davidteather/TikTok-Api/issues/178#issuecomment-657244793
 
 [Use await in python REPL directly](https://stackoverflow.com/a/68218635)
+
+https://github.com/magsther/awesome-opentelemetry
+
+[Tried to use SessionInfo before it was initialized](https://github.com/streamlit/streamlit/issues/879)
+
+https://community.grafana.com/t/error-connecting-otel-collector-and-tempo/72869/4
+
+- Tempo can't collect metrics, only traces.
+
+https://github.com/open-telemetry/opentelemetry-helm-charts/issues/562
+
+[How to Integrate Prometheus and Grafana on Kubernetes Using Helm](https://semaphoreci.com/blog/prometheus-grafana-kubernetes-helm)
+
+https://opentelemetry.io/docs/languages/sdk-configuration/general/#otel_metrics_exporter
