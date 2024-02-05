@@ -2,6 +2,7 @@ import os
 
 from injector import Injector, Module, provider, singleton
 from opentelemetry import trace
+
 from ui.models import Context
 
 tracer = trace.get_tracer(__name__)
