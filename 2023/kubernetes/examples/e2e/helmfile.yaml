@@ -34,11 +34,8 @@ releases:
             isDefault: true
           - name: Prometheus
             type: prometheus
-            # Hmm... copy/pasting the ip:port from pod page worked.
-            # http://10.244.0.14:9090
             # TODO: where does the "80" come from?
             url: http://prometheus-server:80
-            # Tries 10.96.115.138
 
 # https://grafana.com/docs/tempo/latest/setup/helm-chart/
 # https://grafana.com/docs/tempo/latest/setup/set-up-test-app/
@@ -49,3 +46,9 @@ releases:
 - name: prometheus
   chart: prometheus-community/prometheus
   version: 25.11.0
+  # https://github.com/grafana/helm-charts/blob/main/charts/grafana/values.yaml
+  # https://github.com/open-telemetry/opentelemetry-demo/pull/1149/files
+  values:
+  - server:
+      extraFlags:
+        - enable-feature=otlp-write-receiver

@@ -4,8 +4,8 @@ import requests
 import streamlit as st
 from find_primes import all_primes
 from opentelemetry import metrics, trace
-from streamlit.logger import get_logger
 from streamlit import runtime
+from streamlit.logger import get_logger
 
 from ui.builders import injector
 from ui.models import Context
