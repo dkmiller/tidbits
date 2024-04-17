@@ -2,7 +2,6 @@
 
 https://github.com/microsoft/vscode-remote-try-go/tree/main
 
-https://semaphoreci.com/community/tutorials/how-to-deploy-a-go-web-application-with-docker
 
 https://go.dev/doc/tutorial/getting-started
 
@@ -14,4 +13,13 @@ To-do
 
 ```bash
 go run .
+
+go mod tidy
+
+docker build -t go-newlang . && docker run go-newlang --config foo
 ```
+
+## Links
+
+- [How to deploy a Go web application with Docker](https://semaphoreci.com/community/tutorials/how-to-deploy-a-go-web-application-with-docker)
+- [Go by example: command-line flags](https://gobyexample.com/command-line-flags)
