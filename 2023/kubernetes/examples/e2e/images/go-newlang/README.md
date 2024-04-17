@@ -6,6 +6,10 @@ https://semaphoreci.com/community/tutorials/how-to-deploy-a-go-web-application-w
 
 https://go.dev/doc/tutorial/getting-started
 
+To-do
+
+- [ ] https://pkg.go.dev/flag
+
 ## Running
 
 ```bash

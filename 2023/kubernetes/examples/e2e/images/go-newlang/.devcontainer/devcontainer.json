@@ -5,7 +5,8 @@
             "settings": {},
             "extensions": [
                 "streetsidesoftware.code-spell-checker",
-                "golang.go"
+                "golang.go",
+                "ms-azuretools.vscode-docker"
             ]
         }
     },
