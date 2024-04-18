@@ -5,12 +5,13 @@ https://go.dev/doc/tutorial/getting-started
 
 To-do
 
-- [ ]
+- [ ] https://huma.rocks/tutorial/your-first-api/
+- [ ] https://blog.devgenius.io/simple-rest-service-in-golang-with-openapi-spec-and-orm-a447b1086e21
 
 ## Running
 
 ```bash
-go run .
+go run . --config config.yaml
 
 go mod tidy
 

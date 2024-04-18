@@ -4,8 +4,10 @@ import (
 	"flag"
 	"fmt"
 	"log"
+	"net/http"
 	"os"
 
+	"github.com/gin-gonic/gin"
 	"gopkg.in/yaml.v3"
 )
 
@@ -32,4 +34,17 @@ func main() {
 	}
 
 	fmt.Printf("%+v\n", conf)
+
+	r := gin.Default()
+	r.GET("/health", func(c *gin.Context) {
+		c.JSON(http.StatusOK, gin.H{
+			"ok": true,
+		})
+	})
+
+	// TODO: Swagger page seems PITA.
+
+	// http://localhost:1233/health
+	var address = fmt.Sprintf("localhost:%d", conf.Port)
+	r.Run(address)
 }
