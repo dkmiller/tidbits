@@ -36,12 +36,17 @@ class KubernetesClient:
                 continue
 
             for image in self.image_definitions:
-                content = content.replace(f"{image.name}:${{ptah}}", image.uri)
+                prefix = image.uri.split(":")[0]
+                content = content.replace(f"{prefix}:${{ptah}}", image.uri)
 
             relative = str(yaml.relative_to(source))
             target_path = Path(target) / relative
             target_path.parent.mkdir(parents=True, exist_ok=True)
             target_path.write_text(content)
+
+            if "op://" in content:
+                # https://developer.1password.com/docs/cli/reference/commands/inject
+                self.shell("op", "inject", "--force", "--in-file", str(target_path), "--out-file", str(target_path))
 
     def apply(self, target: str) -> None:
         if not any(Path(target).rglob("*.yaml")):

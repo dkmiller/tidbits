@@ -8,7 +8,6 @@ from rich import print
 
 from ptah.core.shell import ShellClient
 
-
 # TODO: why aren't default values being DI'd properly?
 PATH = "kind.yaml"
 
