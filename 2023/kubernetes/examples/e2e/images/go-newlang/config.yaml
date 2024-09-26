@@ -1,0 +1,2 @@
+port: 1233
+target: http://some-service
