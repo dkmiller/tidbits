@@ -12,6 +12,8 @@ https://jwt.io/
 
 https://blog.openresty.com/en/or-lua-module/
 
+https://cloud.google.com/iap/docs/signed-headers-howto
+
 ## Run
 
 First `./run.sh`, then any of the commands below.
@@ -21,7 +23,10 @@ curl localhost:8080
 
 curl -H "Authorization: Bearer $(iap-auth)" localhost:8080
 
-# TODO:  (https://cloud.google.com/iap/docs/signed-headers-howto)
+# JWT is signed using "bogus" key: https://10015.io/tools/jwt-encoder-decoder
+export jwt="eyJ..."
+
+curl -H "x-goog-iap-jwt-assertion: $jwt" localhost:8080
 ```
 
 ## Lua links

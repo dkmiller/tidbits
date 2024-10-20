@@ -4,10 +4,6 @@ local jwt = require "resty.jwt"
 
 local _M = {}
 
-function _M.greet(name)
-    ngx.say("Greetings from ", name)
-end
-
 function _M.proxy_pass()
     -- https://github.com/openresty/lua-nginx-module#ngxreqget_headers
     local goog_iap_jwt_assertion = ngx.req.get_headers()["x-goog-iap-jwt-assertion"]
