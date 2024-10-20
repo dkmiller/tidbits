@@ -11,3 +11,5 @@ RUN echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/o
 
 RUN apt-get update \
   && apt-get -y install openresty
+
+ENV PATH=/usr/local/openresty/nginx/sbin:$PATH
