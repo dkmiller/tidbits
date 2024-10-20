@@ -39,4 +39,5 @@ RUN curl -R -O https://luarocks.github.io/luarocks/releases/luarocks-${LUAROCKS_
     && make install
 
 # https://github.com/SkyLothar/lua-resty-jwt?tab=readme-ov-file#installation-1
-RUN luarocks install lua-resty-jwt
+RUN luarocks install lua-resty-jwt \
+  && luarocks install --server=http://rocks.moonscript.org/manifests/amrhassan json4Lua
