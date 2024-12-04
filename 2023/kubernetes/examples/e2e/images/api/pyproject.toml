@@ -8,11 +8,9 @@ dependencies = [
     "aiohttp==3.8.4",
     "fastapi==0.99.1",
     "fastapi-injector==0.5.1",
-    "uvicorn",
-
     "opentelemetry-distro[otlp]==0.40b0",
-    "opentelemetry-instrumentation-aiohttp-client==0.40b0",
-    "opentelemetry-instrumentation-fastapi==0.40b0",
+    "opentelemetry-instrumentation==0.40b0",
+    "uvicorn",
 ]
 
 [project.scripts]

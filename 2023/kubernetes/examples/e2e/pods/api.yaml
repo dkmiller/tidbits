@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: api
-        image: api:${ptah}
+        image: ghcr.io/dkmiller/tidbits/api:${ptah}
         env:
         # Value from:
         # https://github.com/grafana/helm-charts/tree/main/charts/tempo
@@ -33,3 +33,5 @@ spec:
           httpGet:
             path: /health
             port: 8000
+      imagePullSecrets:
+      - name: ghcr
