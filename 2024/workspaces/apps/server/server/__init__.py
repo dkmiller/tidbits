@@ -5,9 +5,9 @@ from fastapi import FastAPI, HTTPException
 from fastapi_injector import Injected
 from sqlmodel import Session, select
 
-from db import create_db_and_tables
-from injection import attach
-from models import Workspace
+from server.db import create_db_and_tables
+from server.injection import attach
+from server.models import Workspace
 
 
 # https://fastapi.tiangolo.com/advanced/events/#lifespan-function
@@ -24,6 +24,10 @@ attach(app)
 @app.get("/healthz")
 def healthz():
   return "ok"
+
+
+# TODO: app.put for "start"?
+# https://softwareengineering.stackexchange.com/a/388621
 
 
 @app.get("/workspaces")

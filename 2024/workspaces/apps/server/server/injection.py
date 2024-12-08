@@ -12,7 +12,7 @@ T = TypeVar("T")
 class Builder(Module):
     @provider
     def engine(self) -> Engine:
-        import models as _ # Ensure models are picked up...
+        import server.models as _ # Ensure models are picked up...
 
         sqlite_file_name = "workspaces.db"
         sqlite_url = f"sqlite:///{sqlite_file_name}"

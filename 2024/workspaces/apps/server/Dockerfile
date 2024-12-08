@@ -8,4 +8,4 @@ RUN pip install -r requirements.txt
 
 COPY . .
 
-ENTRYPOINT ["fastapi", "dev", "main.py", "--host", "0.0.0.0"]
+ENTRYPOINT ["fastapi", "dev", "server", "--host", "0.0.0.0"]
