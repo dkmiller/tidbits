@@ -10,7 +10,6 @@ docker run \
   --platform=linux/amd64 \
   -p $port:$port \
   --volume $PWD:/home/rstudio/src \
-  -w /src \
   rstudio \
   /usr/lib/rstudio-server/bin/rserver \
   --server-daemonize=0 \
@@ -18,5 +17,3 @@ docker run \
   --auth-validate-users 0 \
   --www-port $port \
   --server-user rstudio
-
-# TODO: --www-root-path
