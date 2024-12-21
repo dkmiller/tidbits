@@ -17,6 +17,11 @@ mpremote connect /dev/cu.usbmodem1101 rtc --set
 mpremote connect /dev/cu.usbmodem1101 ls /
 
 mpremote connect /dev/cu.usbmodem1101 cat /main.py
+
+mpremote cp :/badge.png .
+
+# REPL
+mpremote connect /dev/cu.usbmodem1101
 ```
 
 ## Links
@@ -27,3 +32,4 @@ mpremote connect /dev/cu.usbmodem1101 cat /main.py
 - [Badger 2040: Reference](https://github.com/badger/home/blob/main/2040reference.md)
 - https://docs.micropython.org/en/latest/library/time.html
 - No networking: https://github.com/pimoroni/badger2040/blob/main/docs/reference.md#differences-between-badger-2040-w-and-badger-2040
+- https://learn.pimoroni.com/article/getting-started-with-badger-2040
