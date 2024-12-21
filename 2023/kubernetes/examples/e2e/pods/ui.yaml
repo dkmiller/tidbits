@@ -18,7 +18,18 @@ spec:
       - name: ui
         image: ui:${ptah}
         env:
+
+        # Uncomment these to debug OpenTelemetry connectivity issues.
+        - name: GRPC_VERBOSITY
+          value: debug
+        - name: GRPC_TRACE
+          value: http,call_error,connectivity_state
+
         # TODO: how do we not duplicate this?
+        - name: OTEL_EXPORTER_OTLP_METRICS_ENDPOINT
+          # https://prometheus.io/docs/prometheus/latest/querying/api/
+          # TODO: this value is probably not correct?
+          value: http://prometheus-server:80/api/v1/otlp/v1/metrics
         - name: OTEL_EXPORTER_OTLP_ENDPOINT
           value: http://grafana-tempo:4317
         - name: OTEL_TRACES_EXPORTER
