@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kafka
+spec:
+  selector:
+    matchLabels:
+      app: kafka
+  template:
+    metadata:
+      labels:
+        app: kafka
+    spec:
+      containers:
+      - image: confluentinc/cp-kafka:7.8.0
+        name: kafka
+        env:
+        - name: KAFKA_ZOOKEEPER_CONNECT
+          value: zookeeper:2181
+        - name: KAFKA_ADVERTISED_LISTENERS
+          value: INSIDE://kafka-service:9092
+        - name: KAFKA_LISTENER_SECURITY_PROTOCOL_MAP
+          value: INSIDE:PLAINTEXT
+        - name: KAFKA_INTER_BROKER_LISTENER_NAME
+          value: INSIDE
+        - name: KAFKA_CREATE_TOPICS
+          value: events.returns:1:3
+        - name: KAFKA_MESSAGE_MAX_BYTES
+          value: '2147483647'
+        ports:
+        - containerPort: 9092
+          name: kafka
+
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+  # Without this, we hit:
+  # https://github.com/confluentinc/schema-registry/issues/689
+  name: kafka-service
+spec:
+  selector:
+    app: kafka
+  ports:
+  - port: 9092

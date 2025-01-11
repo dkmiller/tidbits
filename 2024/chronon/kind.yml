@@ -1,0 +1,9 @@
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+name: chronon
+
+nodes:
+- role: control-plane
+  extraMounts:
+  - hostPath: /Users/dan/src/tidbits/2024/chronon/mongodb_data
+    containerPath: /opt/mongo/data/db
