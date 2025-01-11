@@ -35,3 +35,8 @@ outputs/
 
 # macOS
 .DS_Store
+
+# Ptah
+.ptah/
+.build/
+
