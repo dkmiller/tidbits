@@ -28,7 +28,7 @@ spec:
 kind: Service
 apiVersion: v1
 metadata:
-  name: zookeeper-service
+  name: zookeeper
 spec:
   selector:
     app: zookeeper

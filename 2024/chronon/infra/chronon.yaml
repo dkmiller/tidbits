@@ -45,7 +45,7 @@ spec:
           value: >
             -Zuser=admin
             -Zpassword=admin
-            -Zhost=mongodb-service
+            -Zhost=mongodb
             -Zport=27017
             -Zdatabase=admin
         ports:

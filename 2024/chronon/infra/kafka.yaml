@@ -16,7 +16,7 @@ spec:
         name: kafka
         env:
         - name: KAFKA_ZOOKEEPER_CONNECT
-          value: zookeeper-service:2181
+          value: zookeeper:2181
         - name: KAFKA_ADVERTISED_LISTENERS
           value: INSIDE://kafka-service:9092
         - name: KAFKA_LISTENER_SECURITY_PROTOCOL_MAP
@@ -36,6 +36,8 @@ spec:
 kind: Service
 apiVersion: v1
 metadata:
+  # Without this, we hit:
+  # https://github.com/confluentinc/schema-registry/issues/689
   name: kafka-service
 spec:
   selector:

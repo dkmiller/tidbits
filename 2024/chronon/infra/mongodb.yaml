@@ -61,7 +61,7 @@ spec:
 kind: Service
 apiVersion: v1
 metadata:
-  name: mongodb-service
+  name: mongodb
 spec:
   selector:
     app: mongodb
