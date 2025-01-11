@@ -33,6 +33,4 @@ spec:
   selector:
     app: zookeeper
   ports:
-  # https://stackoverflow.com/a/61452441
-  - port: 22181
-    targetPort: 2181
+  - port: 2181
