@@ -1,0 +1,19 @@
+{
+    "image": "mcr.microsoft.com/devcontainers/go:0-1.19-bullseye",
+    "customizations": {
+        "vscode": {
+            "settings": {},
+            "extensions": [
+                "streetsidesoftware.code-spell-checker",
+                "golang.go",
+                "ms-azuretools.vscode-docker"
+            ]
+        }
+    },
+    "portsAttributes": {
+        "9000": {
+            "label": "Hello Remote World",
+            "onAutoForward": "notify"
+        }
+    }
+}
