@@ -32,3 +32,7 @@ outputs/
 
 # Jupyter
 .ipynb_checkpoints/
+
+# Ptah
+.build/
+.ptah/

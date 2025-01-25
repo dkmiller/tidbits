@@ -6,6 +6,6 @@ COPY requirements.txt .
 
 RUN pip install -r requirements.txt
 
-COPY . .
+COPY . /src
 
 ENTRYPOINT ["fastapi", "dev", "server", "--host", "0.0.0.0"]

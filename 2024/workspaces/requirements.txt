@@ -1,1 +1,1 @@
-ptah-cli==0.3.0
+ptah-cli==0.7.0

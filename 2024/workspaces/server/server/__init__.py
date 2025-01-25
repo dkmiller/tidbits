@@ -3,6 +3,7 @@ from typing import Sequence
 
 from fastapi import FastAPI, HTTPException
 from fastapi_injector import Injected
+from kubernetes import client, config
 from sqlmodel import Session, select
 
 from server.db import create_db_and_tables
@@ -61,3 +62,13 @@ def delete_hero(id: str, session: Session = Injected(Session)):
     session.delete(workspace)
     session.commit()
     return {"ok": True}
+
+
+@app.get("/test-k8s")
+def k8s():
+    # https://github.com/kubernetes-client/python/blob/master/examples/in_cluster_config.py
+    config.load_incluster_config()
+
+    v1 = client.CoreV1Api()
+    ret = v1.list_pod_for_all_namespaces(watch=False)
+    return {"pods": list(map(str, ret.items))}

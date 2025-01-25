@@ -1,0 +1,59 @@
+
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: workspaces-role
+rules:
+- apiGroups: [""]
+  resources: ["pods"]
+  verbs: ["list"]
+
+---
+
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: workspaces-account
+  namespace: default
+
+---
+
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: workspaces-role
+subjects:
+- kind: ServiceAccount
+  name: workspaces-account
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: workspaces-role
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: workspaces
+  labels:
+    app: workspaces
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: workspaces
+  template:
+    metadata:
+      labels:
+        app: workspaces
+    spec:
+      # https://stackoverflow.com/a/44510154
+      # https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/
+      serviceAccountName: workspaces-account
+      containers:
+      - name: workspaces
+        image: ptah://server
+        ports:
+        - containerPort: 8000
