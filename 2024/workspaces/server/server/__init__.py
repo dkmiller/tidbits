@@ -1,14 +1,15 @@
 from contextlib import asynccontextmanager
 from typing import Sequence
 
-from fastapi import FastAPI, HTTPException
+from fastapi import Depends, FastAPI, HTTPException
 from fastapi_injector import Injected
-from kubernetes import client, config
+from kubernetes_asyncio.client import CoreV1Api
 from sqlmodel import Session, select
 
 from server.db import create_db_and_tables
 from server.injection import attach
 from server.models import Workspace
+from server.k8s import v1_api
 
 
 # https://fastapi.tiangolo.com/advanced/events/#lifespan-function
@@ -65,10 +66,6 @@ def delete_hero(id: str, session: Session = Injected(Session)):
 
 
 @app.get("/test-k8s")
-def k8s():
-    # https://github.com/kubernetes-client/python/blob/master/examples/in_cluster_config.py
-    config.load_incluster_config()
-
-    v1 = client.CoreV1Api()
-    ret = v1.list_pod_for_all_namespaces(watch=False)
+async def k8s(v1: CoreV1Api = Depends(v1_api)):
+    ret = await v1.list_pod_for_all_namespaces(watch=False)
     return {"pods": list(map(str, ret.items))}

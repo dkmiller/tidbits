@@ -1,4 +1,4 @@
 fastapi[standard]==0.115.5
 fastapi-injector==0.6.2
-kubernetes==32.0.0
+kubernetes-asyncio==32.0.0
 sqlmodel==0.0.22
