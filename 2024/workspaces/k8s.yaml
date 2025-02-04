@@ -5,8 +5,15 @@ metadata:
   name: workspaces-role
 rules:
 - apiGroups: [""]
-  resources: ["pods"]
-  verbs: ["list"]
+  resources:
+  - pods
+  # TODO: add more from
+  # https://kubernetes.io/docs/reference/access-authn-authz/rbac/#aggregated-clusterroles
+  verbs:
+  - create
+  - delete
+  - get
+  - list
 
 ---
 

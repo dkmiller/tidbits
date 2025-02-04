@@ -12,7 +12,7 @@ T = TypeVar("T")
 class Builder(Module):
     @provider
     def engine(self) -> Engine:
-        import server.models as _ # Ensure models are picked up...
+        import server.models as _  # Ensure models are picked up...
 
         sqlite_file_name = "workspaces.db"
         sqlite_url = f"sqlite:///{sqlite_file_name}"
@@ -22,11 +22,11 @@ class Builder(Module):
     @provider
     def session(self, engine: Engine) -> Session:
         return Session(engine)
-    
+
 
 def injector():
     return Injector([Builder()], auto_bind=True)
-    
+
 
 def attach(app):
     attach_injector(app, injector(), options=RequestScopeOptions(enable_cleanup=True))
