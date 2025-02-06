@@ -3,12 +3,27 @@ from kubernetes_asyncio import config
 from kubernetes_asyncio.client import ApiClient, CoreV1Api
 
 from server.models import Workspace
+from server._docker import docker_images
 
 
 config.load_incluster_config()
 
 
-def pod_spec(workspace: Workspace) -> tuple[dict, str]:
+def args(workspace: Workspace):
+    match workspace.image_alias:
+        case "jupyterlab":
+            return ["jupyter", "lab", "--allow-root", "--ip=0.0.0.0", f"--port={workspace.port}", "--IdentityProvider.token=''"]
+        case "vscode":
+            return ["code-server", "--bind-addr", f"0.0.0.0:{workspace.port}", "--auth", "none"]
+        case default:
+            raise RuntimeError(f"Image alias {default} not supported.")
+
+
+def pod_spec(
+        workspace: Workspace,
+        ) -> tuple[dict, str]:
+    image_mapping = docker_images()
+
     return {
         "apiVersion": "v1",
         "kind": "Pod",
@@ -19,9 +34,10 @@ def pod_spec(workspace: Workspace) -> tuple[dict, str]:
         "spec": {
             "containers": [
                 {
-                    "image": "busybox",
+                    "image": image_mapping[workspace.image_alias],
                     "name": "sleep",
-                    "args": ["/bin/sh", "-c", "while true; do date; sleep 5; done"],
+                    "args": args(workspace),
+                    "ports": [{"containerPort": workspace.port}],
                 }
             ]
         },
