@@ -1,1 +1,2 @@
-ptah-cli==0.7.1
+ptah-cli==0.7.2
+pytest-timeout==2.3.1

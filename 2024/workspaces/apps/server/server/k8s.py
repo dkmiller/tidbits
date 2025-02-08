@@ -12,16 +12,29 @@ config.load_incluster_config()
 def args(workspace: Workspace):
     match workspace.image_alias:
         case "jupyterlab":
-            return ["jupyter", "lab", "--allow-root", "--ip=0.0.0.0", f"--port={workspace.port}", "--IdentityProvider.token=''"]
+            return [
+                "jupyter",
+                "lab",
+                "--allow-root",
+                "--ip=0.0.0.0",
+                f"--port={workspace.port}",
+                "--IdentityProvider.token=''",
+            ]
         case "vscode":
-            return ["code-server", "--bind-addr", f"0.0.0.0:{workspace.port}", "--auth", "none"]
+            return [
+                "code-server",
+                "--bind-addr",
+                f"0.0.0.0:{workspace.port}",
+                "--auth",
+                "none",
+            ]
         case default:
             raise RuntimeError(f"Image alias {default} not supported.")
 
 
 def pod_spec(
-        workspace: Workspace,
-        ) -> tuple[dict, str]:
+    workspace: Workspace,
+) -> tuple[dict, str]:
     image_mapping = docker_images()
 
     return {

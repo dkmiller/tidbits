@@ -2,6 +2,14 @@
 
 Kubernetes-based remote IDEs "as a service".
 
+```bash
+pip install -r requirements.txt
+
+ptah deploy
+
+kubectl logs $(kubectl get pods -o json --selector=app=workspaces -o 'jsonpath={.items[0].metadata.name}')
+```
+
 ## Links
 
 - https://fastapi.tiangolo.com/tutorial/sql-databases/

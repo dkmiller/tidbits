@@ -5,6 +5,7 @@ class Workspace(SQLModel, table=True):
     id: str = Field(default=None, primary_key=True)
     name: str = Field(index=True)
     image_alias: str = Field()
+    # variant: str = Field()
     port: int = Field(8888)
 
 

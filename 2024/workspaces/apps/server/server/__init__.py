@@ -88,9 +88,3 @@ async def delete_workspace(
     await v1.delete_namespaced_pod(workspace.id, namespace="default")
     session.commit()
     return {"ok": True}
-
-
-@app.get("/test-k8s")
-async def k8s(namespace: str = "default", v1: CoreV1Api = Depends(v1_api)):
-    ret = await v1.list_namespaced_pod(namespace=namespace)
-    return {"pods": list(map(str, ret.items))}  #
