@@ -29,13 +29,22 @@ def test_wait_for_workspace_to_be_ready(api, workspace):
         print(f"{status=}")
 
 
-# TODO: test UI is available via the proxy.
+# TODO: move this "into" workspace-specific health probe.
+@pytest.mark.timeout(30)
+def test_wait_for_workspace_available_via_proxy(proxy, health):
+    success = False
+    while not success:
+        time.sleep(3)
+        success = proxy.get(health).is_success
+        print(f"{success=}")
 
 
-# Command line equivalent:
-# curl http://localhost:8000/workspaces
 def test_delete_workspace(api, workspace):
     api.delete(f"/workspaces/{workspace['id']}").raise_for_status()
+
+
+def test_workspace_no_longer_exists(api, workspace):
+    assert api.get(f"/workspaces/{workspace['id']}").status_code == 404
 
 
 def test_delete_dangling_workspaces(api):

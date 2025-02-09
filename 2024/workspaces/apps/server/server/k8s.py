@@ -1,6 +1,6 @@
 from fastapi import Depends
 from kubernetes_asyncio import config
-from kubernetes_asyncio.client import ApiClient, CoreV1Api
+from kubernetes_asyncio.client import ApiClient, AppsV1Api, CoreV1Api
 
 from server.models import Workspace
 from server._docker import docker_images
@@ -32,29 +32,61 @@ def args(workspace: Workspace):
             raise RuntimeError(f"Image alias {default} not supported.")
 
 
-def pod_spec(
-    workspace: Workspace,
-) -> tuple[dict, str]:
+def service_spec(workspace: Workspace) -> dict:
+    return {
+        "kind": "Service",
+        "apiVersion": "v1",
+        "metadata": {
+            "name": f"{workspace.id}-service",
+        },
+        "spec": {
+            "selector": {"app": workspace.id},
+            "ports": [{"port": workspace.port}]
+        }
+    }
+
+
+def pod_spec(workspace: Workspace) -> tuple[dict, str]:
+    """
+    Inspired by:
+    https://github.com/dkmiller/tidbits/blob/facb960704671729abfc361284d7a017bc2054a9/2023/kubernetes/examples/e2e/pods/api.yaml
+    """
     image_mapping = docker_images()
 
-    return {
+    pod = {
         "apiVersion": "v1",
         "kind": "Pod",
         "metadata": {
             "name": workspace.id,
-            "labels": {"workspace.name": workspace.name},
+            "labels": {"app": workspace.id, "workspace.name": workspace.name},
         },
         "spec": {
             "containers": [
                 {
                     "image": image_mapping[workspace.image_alias],
-                    "name": "sleep",
+                    "name": "workspace",
                     "args": args(workspace),
                     "ports": [{"containerPort": workspace.port}],
                 }
             ]
         },
-    }, "default"
+    }
+
+    deployment = {
+        "apiVersion": "apps/v1",
+        "kind": "Deployment",
+        "metadata": {"name": f"{workspace.id}-deployment"},
+        "labels": {"app": workspace.id},
+        "spec": {
+            "replicas": 1,
+            "selector": {"matchLabels": {"app": workspace.id}},
+            "template": pod,
+        }
+    }
+
+    svc = service_spec(workspace)
+
+    return {"kind": "List", "items": [deployment, svc]}, "default"
 
 
 async def api_client():
@@ -66,3 +98,8 @@ async def api_client():
 async def v1_api(api: ApiClient = Depends(api_client)):
     # https://fastapi.tiangolo.com/tutorial/dependencies/dependencies-with-yield/#a-database-dependency-with-yield
     yield CoreV1Api(api)
+
+
+async def v1_apps(api: ApiClient = Depends(api_client)):
+    # https://fastapi.tiangolo.com/tutorial/dependencies/dependencies-with-yield/#a-database-dependency-with-yield
+    yield AppsV1Api(api)
