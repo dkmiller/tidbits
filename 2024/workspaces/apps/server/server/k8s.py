@@ -46,6 +46,18 @@ def service_spec(workspace: Workspace) -> dict:
     }
 
 
+def readiness_probe(workspace: Workspace) -> dict:
+    match workspace.image_alias:
+        case "jupyterlab":
+            path = "/api"
+        case "vscode":
+            path = "/healthz"
+        case default:
+            raise RuntimeError(f"Image alias {default} not supported.")
+
+    return {"httpGet": {"path": path, "port": workspace.port}}
+
+
 def pod_spec(workspace: Workspace) -> tuple[dict, str]:
     """
     Inspired by:
@@ -67,6 +79,7 @@ def pod_spec(workspace: Workspace) -> tuple[dict, str]:
                     "name": "workspace",
                     "args": args(workspace),
                     "ports": [{"containerPort": workspace.port}],
+                    "readinessProbe": readiness_probe(workspace),
                 }
             ]
         },

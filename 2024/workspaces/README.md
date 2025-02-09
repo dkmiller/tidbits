@@ -11,7 +11,7 @@ kubectl logs $(kubectl get pods -o json --selector=app=workspaces -o 'jsonpath={
 
 curl -H "content-type: application/json" -d '{"id": "wksp-3", "name": "wksp-3-name", "image_alias": "jupyterlab", "port": 9000}' localhost:8000/workspaces/
 
-curl localhost:8000/workspaces
+curl localhost:8000/workspaces/
 
 # /healthz :: VS Code, /api :: JupyterLab
 curl -v localhost:8002/workspaces/wksp-3/9000/
