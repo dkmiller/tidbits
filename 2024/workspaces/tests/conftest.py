@@ -54,4 +54,6 @@ def workspace(variant) -> dict:
 
 @fixture(scope="module")
 def proxy(workspace):
-    return httpx.Client(base_url=f"http://localhost:8002/{workspace['id']}/{workspace['port']}")
+    return httpx.Client(
+        base_url=f"http://localhost:8002/{workspace['id']}/{workspace['port']}"
+    )

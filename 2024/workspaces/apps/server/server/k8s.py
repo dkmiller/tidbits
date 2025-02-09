@@ -41,8 +41,8 @@ def service_spec(workspace: Workspace) -> dict:
         },
         "spec": {
             "selector": {"app": workspace.id},
-            "ports": [{"port": workspace.port}]
-        }
+            "ports": [{"port": workspace.port}],
+        },
     }
 
 
@@ -81,7 +81,7 @@ def pod_spec(workspace: Workspace) -> tuple[dict, str]:
             "replicas": 1,
             "selector": {"matchLabels": {"app": workspace.id}},
             "template": pod,
-        }
+        },
     }
 
     svc = service_spec(workspace)

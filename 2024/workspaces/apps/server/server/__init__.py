@@ -54,9 +54,7 @@ async def get_workspace(
         status = pods[0].status.phase
     else:
         status = "unknown"
-    rv = WorkspaceResponse.model_validate(
-        workspace, update={"status": status}
-    )
+    rv = WorkspaceResponse.model_validate(workspace, update={"status": status})
     return rv
 
 
@@ -94,8 +92,14 @@ async def delete_workspace(
     # TODO: more consistent way of getting workspace pod and service IDs.
     await asyncio.gather(
         # https://stackoverflow.com/a/74642309
-        apps_api.delete_namespaced_deployment(f"{workspace.id}-deployment", namespace="default"), # type: ignore
-        v1.delete_namespaced_service(f"{workspace.id}-service", namespace="default", propagation_policy="Foreground"), # type: ignore
+        apps_api.delete_namespaced_deployment(
+            f"{workspace.id}-deployment", namespace="default"
+        ),  # type: ignore
+        v1.delete_namespaced_service(
+            f"{workspace.id}-service",
+            namespace="default",
+            propagation_policy="Foreground",
+        ),  # type: ignore
     )
     session.commit()
     return {"ok": True}
