@@ -33,10 +33,9 @@ outputs/
 # Jupyter
 .ipynb_checkpoints/
 
+# Ptah
+.build/
+.ptah/
+
 # macOS
 .DS_Store
-
-# Ptah
-.ptah/
-.build/
-

@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: workspaces
+  labels:
+    app: workspaces
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: workspaces
+  template:
+    metadata:
+      labels:
+        app: workspaces
+    spec:
+      # https://stackoverflow.com/a/44510154
+      # https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/
+      serviceAccountName: workspaces-account
+      containers:
+      - name: workspaces
+        image: ptah://server
+        env:
+        - name: WORKSPACE_DOCKER_IMAGES
+          value: >
+            ptah://jupyterlab
+            ptah://vscode
+        - name: WORKSPACE_VARIANTS
+          value: |
+            {
+              "code": {
+                "docker_image": "ptah://vscode",
+                "args": [
+                  "code-server",
+                  "--bind-addr",
+                  "0.0.0.0:{{port}}",
+                  "--auth",
+                  "none"
+                ]
+              },
+              "jupyter": {
+                "docker_image": "ptah://jupyterlab",
+                "args": [
+                  "jupyter",
+                  "lab",
+                  "--allow-root",
+                  "--ip=0.0.0.0",
+                  "--port={{port}}",
+                  "--IdentityProvider.token=''"
+                ]
+              }
+            }
+        ports:
+        - containerPort: 8000
