@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 
-from injector import inject
 from fastapi import HTTPException, status
+from injector import inject
 
 from server.models import Workspace
 from server.variants import Variants
@@ -39,7 +39,9 @@ class Manifest:
         """
 
         if not (variant := self.variants.resolve(workspace)):
-            raise HTTPException(status.HTTP_400_BAD_REQUEST, f"Unknown {workspace.variant=}")
+            raise HTTPException(
+                status.HTTP_400_BAD_REQUEST, f"Unknown {workspace.variant=}"
+            )
 
         return {
             "apiVersion": "v1",

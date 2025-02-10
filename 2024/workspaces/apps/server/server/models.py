@@ -16,7 +16,9 @@ class Variant(BaseModel):
     """
     Jinja-templated assuming `port` (and later, `path` or `user`).
     """
+
     container_args: list[str]
     docker_image: str
     name: str
     readiness: str
+    # TODO: declare port(s) directly?
