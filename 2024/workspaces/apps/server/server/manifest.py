@@ -1,15 +1,17 @@
-import os
 from dataclasses import dataclass
 
 from injector import inject
+from fastapi import HTTPException, status
 
 from server.models import Workspace
-from server.variants import AbstractVariant
+from server.variants import Variants
 
 
 @inject
 @dataclass
 class Manifest:
+    variants: Variants
+
     def deployment_name(self, workspace: Workspace) -> str:
         return f"{workspace.id}-deployment"
 
@@ -26,11 +28,6 @@ class Manifest:
             },
         }
 
-    def docker_images(self) -> dict:
-        raw = os.environ["WORKSPACE_DOCKER_IMAGES"]
-        uris = [uri.strip() for uri in raw.split(" ") if uri]
-        return {uri.split(":")[0]: uri for uri in uris}
-
     def namespace(self, workspace: Workspace) -> str:
         # TODO: make this configurable.
         return "default"
@@ -41,25 +38,26 @@ class Manifest:
         https://github.com/dkmiller/tidbits/blob/facb960704671729abfc361284d7a017bc2054a9/2023/kubernetes/examples/e2e/pods/api.yaml
         """
 
-        variant = AbstractVariant.variant(workspace.image_alias)
+        if not (variant := self.variants.resolve(workspace)):
+            raise HTTPException(status.HTTP_400_BAD_REQUEST, f"Unknown {workspace.variant=}")
 
         return {
             "apiVersion": "v1",
             "kind": "Pod",
             "metadata": {
                 "name": workspace.id,
-                "labels": {"app": workspace.id, "workspace.name": workspace.name},
+                "labels": {"app": workspace.id},
             },
             "spec": {
                 "containers": [
                     {
-                        "image": self.docker_images()[workspace.image_alias],
+                        "image": variant.docker_image,
                         "name": "workspace",
-                        "args": variant.args(workspace.port),
+                        "args": variant.container_args,
                         "ports": [{"containerPort": workspace.port}],
                         "readinessProbe": {
                             "httpGet": {
-                                "path": variant.readiness(),
+                                "path": variant.readiness,
                                 "port": workspace.port,
                             }
                         },

@@ -1,4 +1,6 @@
 fastapi[standard]==0.115.5
 fastapi-injector==0.6.2
+Jinja2==3.1.5
 kubernetes-asyncio==32.0.0
+pydantic-yaml==1.4.0
 sqlmodel==0.0.22

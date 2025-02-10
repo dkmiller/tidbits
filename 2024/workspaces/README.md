@@ -9,7 +9,7 @@ ptah deploy
 
 kubectl logs $(kubectl get pods -o json --selector=app=workspaces -o 'jsonpath={.items[0].metadata.name}')
 
-curl -H "content-type: application/json" -d '{"id": "wksp-3", "name": "wksp-3-name", "image_alias": "jupyterlab", "port": 9000}' localhost:8000/workspaces/
+curl -H "content-type: application/json" -d '{"id": "wksp-3", "variant": "jupyter", "port": 9000}' localhost:8000/workspaces/
 
 curl localhost:8000/workspaces/
 

@@ -27,27 +27,27 @@ def api():
 
 # Imitate:
 # https://github.com/dkmiller/tidbits/blob/facb960704671729abfc361284d7a017bc2054a9/2023/ssh/conftest.py#L100
-@fixture(params=["jupyterlab", "vscode"], scope="module")
+@fixture(params=["code", "jupyter"], scope="module")
 def variant(request) -> str:
     return request.param
 
 
 @fixture(scope="module")
 def health(variant):
-    if variant == "jupyterlab":
-        return "/api"
-    elif variant == "vscode":
-        return "/healthz"
-    else:
-        raise RuntimeError(f"Unknown variant {variant}")
+    match variant:
+        case "code":
+            return "/healthz"
+        case "jupyter":
+            return "/api"
+        case _:
+            raise RuntimeError(f"Unknown variant {variant}")
 
 
 @fixture(scope="module")
 def workspace(variant) -> dict:
     return {
         "id": f"{variant}-{uid()}",
-        "name": f"{variant}-{uid()}",
-        "image_alias": variant,
+        "variant": variant,
         "port": randint(1024, 49151),
     }
 

@@ -21,34 +21,26 @@ spec:
       - name: workspaces
         image: ptah://server
         env:
-        - name: WORKSPACE_DOCKER_IMAGES
-          value: >
-            ptah://jupyterlab
-            ptah://vscode
         - name: WORKSPACE_VARIANTS
           value: |
-            {
-              "code": {
-                "docker_image": "ptah://vscode",
-                "args": [
-                  "code-server",
-                  "--bind-addr",
-                  "0.0.0.0:{{port}}",
-                  "--auth",
-                  "none"
-                ]
-              },
-              "jupyter": {
-                "docker_image": "ptah://jupyterlab",
-                "args": [
-                  "jupyter",
-                  "lab",
-                  "--allow-root",
-                  "--ip=0.0.0.0",
-                  "--port={{port}}",
-                  "--IdentityProvider.token=''"
-                ]
-              }
-            }
+            - container_args:
+              - code-server
+              - --bind-addr
+              - 0.0.0.0:{{port}}
+              - --auth
+              - "none"
+              docker_image: ptah://vscode
+              name: code
+              readiness: /healthz
+            - container_args:
+              - jupyter
+              - lab
+              - --allow-root
+              - --ip=0.0.0.0
+              - --port={{port}}
+              - --IdentityProvider.token=''
+              docker_image: ptah://jupyterlab
+              name: jupyter
+              readiness: /api
         ports:
         - containerPort: 8000
