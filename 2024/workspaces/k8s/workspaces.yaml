@@ -23,24 +23,24 @@ spec:
         env:
         - name: WORKSPACE_VARIANTS
           value: |
-            - container_args:
+            - name: code
+              docker_image: ptah://vscode
+              container_args:
               - code-server
               - --bind-addr
               - 0.0.0.0:{{port}}
               - --auth
               - "none"
-              docker_image: ptah://vscode
-              name: code
               readiness: /healthz
-            - container_args:
+            - name: jupyter
+              docker_image: ptah://jupyterlab
+              container_args:
               - jupyter
               - lab
               - --allow-root
               - --ip=0.0.0.0
               - --port={{port}}
               - --IdentityProvider.token=''
-              docker_image: ptah://jupyterlab
-              name: jupyter
               readiness: /api
         ports:
         - containerPort: 8000

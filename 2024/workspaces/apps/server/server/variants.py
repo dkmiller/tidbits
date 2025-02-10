@@ -7,6 +7,8 @@ from server.models import Variant, Workspace
 
 
 class Variants:
+    # TODO: accept ONLY variant name?
+    # TODO: cache the parsed mapping variant name --> deserialized object?
     def resolve(self, workspace: Workspace) -> Variant | None:
         template = Template(os.environ["WORKSPACE_VARIANTS"])
         yaml = template.render(port=workspace.port)
