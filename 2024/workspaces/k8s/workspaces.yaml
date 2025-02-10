@@ -30,7 +30,7 @@ spec:
               - --bind-addr
               - 0.0.0.0:{{port}}
               - --auth
-              - "none"
+              - none
               readiness: /healthz
             - name: jupyter
               docker_image: ptah://jupyterlab
