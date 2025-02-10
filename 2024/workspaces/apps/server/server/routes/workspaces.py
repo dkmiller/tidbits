@@ -1,15 +1,10 @@
-import asyncio
 from typing import Sequence
 
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, HTTPException
 from fastapi_injector import Injected
-from kubernetes_asyncio.client import ApiClient, AppsV1Api, CoreV1Api
-from kubernetes_asyncio import utils
-from sqlmodel import Session, select
-
+from server.k8s import K8s
 from server.models import Workspace, WorkspaceResponse
-from server.k8s import api_client, v1_apps, v1_api, pod_spec
-
+from sqlmodel import Session, select
 
 router = APIRouter()
 
@@ -23,19 +18,17 @@ def get_workspaces(session: Session = Injected(Session)) -> Sequence[Workspace]:
 async def get_workspace(
     id: str,
     session: Session = Injected(Session),
-    v1: CoreV1Api = Depends(v1_api),
+    k8s: K8s = Injected(K8s),
 ) -> WorkspaceResponse:
-    workspace = session.get(Workspace, id)
-    if not workspace:
+    if not (workspace := session.get(Workspace, id)):
         raise HTTPException(status_code=404, detail=f"Workspace '{id}' not found")
-    ret = await v1.list_pod_for_all_namespaces()
-    pods = [p for p in ret.items if p.metadata.labels.get("app") == workspace.id]
-    if pods:
-        status = pods[0].status.phase
+
+    if pod := await k8s.get_pod(workspace):
+        status = pod.status.phase
     else:
         status = "unknown"
-    rv = WorkspaceResponse.model_validate(workspace, update={"status": status})
-    return rv
+
+    return WorkspaceResponse.model_validate(workspace, update={"status": status})
 
 
 # TODO: app.put for "start"?
@@ -46,16 +39,14 @@ async def get_workspace(
 async def create_workspace(
     workspace: Workspace,
     session: Session = Injected(Session),
-    api: ApiClient = Depends(api_client),
+    k8s: K8s = Injected(K8s),
 ) -> Workspace:
     if session.get(Workspace, workspace.id):
         raise HTTPException(
             status_code=409, detail=f"Workspace '{workspace.id}' already exists"
         )
     session.add(workspace)
-    manifest, namespace = pod_spec(workspace)
-    objects = await utils.create_from_dict(api, manifest, namespace=namespace)
-    print(f"Created {len(objects)} objects")
+    await k8s.create(workspace)
 
     session.commit()
     session.refresh(workspace)
@@ -66,24 +57,13 @@ async def create_workspace(
 async def delete_workspace(
     id: str,
     session: Session = Injected(Session),
-    v1: CoreV1Api = Depends(v1_api),
-    apps_api: AppsV1Api = Depends(v1_apps),
+    k8s: K8s = Injected(K8s),
 ):
-    workspace = session.get(Workspace, id)
-    if not workspace:
+    if not (workspace := session.get(Workspace, id)):
         raise HTTPException(status_code=404, detail=f"Workspace '{id}' not found")
+
     session.delete(workspace)
-    # TODO: more consistent way of getting workspace pod and service IDs.
-    await asyncio.gather(
-        # https://stackoverflow.com/a/74642309
-        apps_api.delete_namespaced_deployment(
-            f"{workspace.id}-deployment", namespace="default"
-        ),  # type: ignore
-        v1.delete_namespaced_service(
-            f"{workspace.id}-service",
-            namespace="default",
-            propagation_policy="Foreground",
-        ),  # type: ignore
-    )
+    await k8s.delete(workspace)
+
     session.commit()
     return {"ok": True}
