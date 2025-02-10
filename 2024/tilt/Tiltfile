@@ -1,0 +1,4 @@
+docker_build('api-image', 'api', live_update=[sync('api', '/srv')])
+
+k8s_yaml('k8s.yaml')
+k8s_resource('fastapi', port_forwards=8000)

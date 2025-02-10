@@ -2,13 +2,27 @@
 
 TODO: standardized `./{ide}.sh {port}` scripts.
 
+Stop running containers
+
+```bash
+docker stop $(docker ps -a -q)
+```
+
 ## JupyterLab
+
+```bash
+./jupyterlab.sh 8880
+```
 
 https://stackoverflow.com/questions/47492150/how-do-i-set-a-custom-token-for-a-jupyter-notebook#comment136106744_51105004
 
 https://jupyter.org/install#jupyterlab
 
 ## RStudio
+
+```bash
+./rstudio.sh 8880
+```
 
 https://cran.rstudio.com/
 
@@ -19,6 +33,10 @@ https://posit.co/download/rstudio-server/
 https://posit.co/download/rstudio-desktop/
 
 ## VS Code
+
+```bash
+./vscode.sh 8880
+```
 
 https://coder.com/docs/code-server/guide
 
