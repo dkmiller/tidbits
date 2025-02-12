@@ -1,10 +1,8 @@
-import os
 from dataclasses import dataclass
 
 from injector import inject
 
-from server.models import Workspace
-from server.variants import AbstractVariant
+from server.models import Variant, Workspace
 
 
 @inject
@@ -13,7 +11,7 @@ class Manifest:
     def deployment_name(self, workspace: Workspace) -> str:
         return f"{workspace.id}-deployment"
 
-    def deployment_spec(self, workspace: Workspace) -> dict:
+    def deployment_spec(self, workspace: Workspace, variant: Variant) -> dict:
         return {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
@@ -22,45 +20,37 @@ class Manifest:
             "spec": {
                 "replicas": 1,
                 "selector": {"matchLabels": {"app": workspace.id}},
-                "template": self.pod_spec(workspace),
+                "template": self.pod_spec(workspace, variant),
             },
         }
-
-    def docker_images(self) -> dict:
-        raw = os.environ["WORKSPACE_DOCKER_IMAGES"]
-        uris = [uri.strip() for uri in raw.split(" ") if uri]
-        return {uri.split(":")[0]: uri for uri in uris}
 
     def namespace(self, workspace: Workspace) -> str:
         # TODO: make this configurable.
         return "default"
 
-    def pod_spec(self, workspace: Workspace) -> dict:
+    def pod_spec(self, workspace: Workspace, variant: Variant) -> dict:
         """
         Inspired by:
         https://github.com/dkmiller/tidbits/blob/facb960704671729abfc361284d7a017bc2054a9/2023/kubernetes/examples/e2e/pods/api.yaml
         """
-
-        variant = AbstractVariant.variant(workspace.image_alias)
-
         return {
             "apiVersion": "v1",
             "kind": "Pod",
             "metadata": {
                 "name": workspace.id,
-                "labels": {"app": workspace.id, "workspace.name": workspace.name},
+                "labels": {"app": workspace.id},
             },
             "spec": {
                 "containers": [
                     {
-                        "image": self.docker_images()[workspace.image_alias],
+                        "image": variant.docker_image,
                         "name": "workspace",
-                        "args": variant.args(workspace.port),
-                        "ports": [{"containerPort": workspace.port}],
+                        "args": variant.container_args,
+                        "ports": [{"containerPort": port} for port in variant.ports],
                         "readinessProbe": {
                             "httpGet": {
-                                "path": variant.readiness(),
-                                "port": workspace.port,
+                                "path": variant.readiness,
+                                "port": variant.ports[0],
                             }
                         },
                     }
@@ -71,7 +61,7 @@ class Manifest:
     def service_name(self, workspace: Workspace) -> str:
         return f"{workspace.id}-service"
 
-    def service_spec(self, workspace: Workspace) -> dict:
+    def service_spec(self, workspace: Workspace, variant: Variant) -> dict:
         return {
             "kind": "Service",
             "apiVersion": "v1",
@@ -80,11 +70,11 @@ class Manifest:
             },
             "spec": {
                 "selector": {"app": workspace.id},
-                "ports": [{"port": workspace.port}],
+                "ports": [{"port": port} for port in variant.ports],
             },
         }
 
-    def spec(self, workspace: Workspace) -> dict:
-        deployment = self.deployment_spec(workspace)
-        service = self.service_spec(workspace)
+    def spec(self, workspace: Workspace, variant: Variant) -> dict:
+        deployment = self.deployment_spec(workspace, variant)
+        service = self.service_spec(workspace, variant)
         return {"kind": "List", "items": [deployment, service]}

@@ -6,7 +6,7 @@ from kubernetes_asyncio import config, utils
 from kubernetes_asyncio.client import ApiClient, AppsV1Api, CoreV1Api
 
 from server.manifest import Manifest
-from server.models import Workspace
+from server.models import Variant, Workspace
 
 config.load_incluster_config()
 
@@ -24,10 +24,10 @@ class K8s:
             return pods[0]
         return None
 
-    async def create(self, workspace: Workspace):
+    async def create(self, workspace: Workspace, variant: Variant):
         objects = await utils.create_from_dict(
             self.api,
-            self.manifest.spec(workspace),
+            self.manifest.spec(workspace, variant),
             namespace=self.manifest.namespace(workspace),
         )
         print(f"Created {len(objects)} objects")

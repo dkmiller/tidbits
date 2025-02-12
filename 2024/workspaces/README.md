@@ -9,12 +9,12 @@ ptah deploy
 
 kubectl logs $(kubectl get pods -o json --selector=app=workspaces -o 'jsonpath={.items[0].metadata.name}')
 
-curl -H "content-type: application/json" -d '{"id": "wksp-3", "name": "wksp-3-name", "image_alias": "jupyterlab", "port": 9000}' localhost:8000/workspaces/
+curl -H "content-type: application/json" -d '{"id": "wksp-3", "variant": "jupyter"}' localhost:8000/workspaces/
 
 curl localhost:8000/workspaces/
 
 # /healthz :: VS Code, /api :: JupyterLab
-curl -v localhost:8002/workspaces/wksp-3/9000/
+curl -v localhost:8002/workspaces/wksp-3/8080/
 
 curl -X DELETE localhost:8000/workspaces/wksp-3
 

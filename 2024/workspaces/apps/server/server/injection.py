@@ -1,9 +1,11 @@
 import asyncio
 import atexit
+import os
 
 from fastapi_injector import RequestScopeOptions, attach_injector
 from injector import Injector, Module, provider, singleton
 from kubernetes_asyncio.client import ApiClient
+from pydantic_yaml import parse_yaml_raw_as
 from sqlalchemy import Engine
 from sqlmodel import Session, SQLModel, create_engine
 
@@ -25,13 +27,23 @@ class Builder(Module):
     @provider
     def engine(self) -> Engine:
         # Ensure models are picked up.
-        import server.models as _  # noqa: F401
+        from server.models import Variant
 
         sqlite_file_name = "workspaces.db"
         sqlite_url = f"sqlite:///{sqlite_file_name}"
         connect_args = {"check_same_thread": False}
-        rv = create_engine(sqlite_url, connect_args=connect_args)
+        rv = create_engine(sqlite_url, connect_args=connect_args, echo=True)
         SQLModel.metadata.create_all(rv)
+
+        # https://sqlmodel.tiangolo.com/tutorial/insert/#add-model-instances-to-the-session
+        with Session(rv) as session:
+            yaml = os.environ["WORKSPACE_VARIANTS"]
+
+            for variant in parse_yaml_raw_as(list[Variant], yaml):  # type: ignore
+                if not session.get(Variant, variant.name):
+                    session.add(variant)
+            session.commit()
+
         return rv
 
     @provider

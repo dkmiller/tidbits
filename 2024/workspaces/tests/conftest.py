@@ -1,5 +1,4 @@
 import socketserver
-from random import randint
 from uuid import uuid4
 
 import httpx
@@ -21,39 +20,43 @@ def uid():
 
 
 @fixture(scope="module")
-def api():
+def api() -> httpx.Client:
     return httpx.Client(base_url="http://localhost:8000")
 
 
 # Imitate:
 # https://github.com/dkmiller/tidbits/blob/facb960704671729abfc361284d7a017bc2054a9/2023/ssh/conftest.py#L100
-@fixture(params=["jupyterlab", "vscode"], scope="module")
-def variant(request) -> str:
+@fixture(params=["code", "jupyter"], scope="module")
+def variant_template(request) -> str:
     return request.param
 
 
+# Imitate:
+# https://github.com/dkmiller/tidbits/blob/facb960704671729abfc361284d7a017bc2054a9/2023/ssh/conftest.py#L100
 @fixture(scope="module")
-def health(variant):
-    if variant == "jupyterlab":
-        return "/api"
-    elif variant == "vscode":
-        return "/healthz"
-    else:
-        raise RuntimeError(f"Unknown variant {variant}")
+def variant(api, port, variant_template) -> dict:
+    definition = api.get(f"/variants/{variant_template}").raise_for_status().json()
+    definition["name"] += "-" + uid()
+    assert len(definition["ports"]) == 1
+    original_port = str(definition["ports"][0])
+    definition["ports"] = [port]
+    definition["container_args"] = [
+        arg.replace(original_port, str(port)) for arg in definition["container_args"]
+    ]
+
+    return definition
 
 
 @fixture(scope="module")
 def workspace(variant) -> dict:
     return {
-        "id": f"{variant}-{uid()}",
-        "name": f"{variant}-{uid()}",
-        "image_alias": variant,
-        "port": randint(1024, 49151),
+        "id": f"{variant['name']}-{uid()}",
+        "variant": variant["name"],
     }
 
 
 @fixture(scope="module")
-def proxy(workspace):
+def proxy(variant, workspace):
     return httpx.Client(
-        base_url="http://localhost:8002/workspaces/{id}/{port}".format(**workspace)
+        base_url=f"http://localhost:8002/workspaces/{workspace['id']}/{variant['ports'][0]}"
     )
