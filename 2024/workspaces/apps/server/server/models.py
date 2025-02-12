@@ -5,7 +5,6 @@ from sqlmodel import Field, SQLModel
 class Workspace(SQLModel, table=True):
     id: str = Field(default=None, primary_key=True)
     variant: str = Field()
-    port: int = Field(8888)
 
 
 class WorkspaceResponse(Workspace, table=False):
@@ -20,5 +19,8 @@ class Variant(BaseModel):
     container_args: list[str]
     docker_image: str
     name: str
+    ports: list[int]
     readiness: str
-    # TODO: declare port(s) directly?
+    """
+    Implicitly on the FIRST port.
+    """

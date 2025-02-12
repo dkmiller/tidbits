@@ -1,6 +1,5 @@
 from dataclasses import dataclass
 
-from fastapi import HTTPException, status
 from injector import inject
 
 from server.models import Workspace
@@ -38,10 +37,7 @@ class Manifest:
         https://github.com/dkmiller/tidbits/blob/facb960704671729abfc361284d7a017bc2054a9/2023/kubernetes/examples/e2e/pods/api.yaml
         """
 
-        if not (variant := self.variants.resolve(workspace)):
-            raise HTTPException(
-                status.HTTP_400_BAD_REQUEST, f"Unknown {workspace.variant=}"
-            )
+        variant = self.variants.resolve(workspace.variant)
 
         return {
             "apiVersion": "v1",
@@ -56,11 +52,11 @@ class Manifest:
                         "image": variant.docker_image,
                         "name": "workspace",
                         "args": variant.container_args,
-                        "ports": [{"containerPort": workspace.port}],
+                        "ports": [{"containerPort": port} for port in variant.ports],
                         "readinessProbe": {
                             "httpGet": {
                                 "path": variant.readiness,
-                                "port": workspace.port,
+                                "port": variant.ports[0],
                             }
                         },
                     }
@@ -72,6 +68,8 @@ class Manifest:
         return f"{workspace.id}-service"
 
     def service_spec(self, workspace: Workspace) -> dict:
+        variant = self.variants.resolve(workspace.variant)
+
         return {
             "kind": "Service",
             "apiVersion": "v1",
@@ -80,7 +78,7 @@ class Manifest:
             },
             "spec": {
                 "selector": {"app": workspace.id},
-                "ports": [{"port": workspace.port}],
+                "ports": [{"port": port} for port in variant.ports],
             },
         }
 

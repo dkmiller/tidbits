@@ -1,5 +1,4 @@
 import socketserver
-from random import randint
 from uuid import uuid4
 
 import httpx
@@ -21,7 +20,7 @@ def uid():
 
 
 @fixture(scope="module")
-def api():
+def api() -> httpx.Client:
     return httpx.Client(base_url="http://localhost:8000")
 
 
@@ -48,12 +47,13 @@ def workspace(variant) -> dict:
     return {
         "id": f"{variant}-{uid()}",
         "variant": variant,
-        "port": randint(1024, 49151),
     }
 
 
 @fixture(scope="module")
-def proxy(workspace):
+def proxy(api, workspace):
+    variants = api.get("/variants/").raise_for_status().json()
+    variant = [v for v in variants if v["name"] == workspace["variant"]][0]
     return httpx.Client(
-        base_url="http://localhost:8002/workspaces/{id}/{port}".format(**workspace)
+        base_url=f"http://localhost:8002/workspaces/{workspace['id']}/{variant['ports'][0]}"
     )
