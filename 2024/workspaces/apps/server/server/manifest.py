@@ -2,19 +2,16 @@ from dataclasses import dataclass
 
 from injector import inject
 
-from server.models import Workspace
-from server.variants import Variants
+from server.models import Variant, Workspace
 
 
 @inject
 @dataclass
 class Manifest:
-    variants: Variants
-
     def deployment_name(self, workspace: Workspace) -> str:
         return f"{workspace.id}-deployment"
 
-    def deployment_spec(self, workspace: Workspace) -> dict:
+    def deployment_spec(self, workspace: Workspace, variant: Variant) -> dict:
         return {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
@@ -23,7 +20,7 @@ class Manifest:
             "spec": {
                 "replicas": 1,
                 "selector": {"matchLabels": {"app": workspace.id}},
-                "template": self.pod_spec(workspace),
+                "template": self.pod_spec(workspace, variant),
             },
         }
 
@@ -31,14 +28,11 @@ class Manifest:
         # TODO: make this configurable.
         return "default"
 
-    def pod_spec(self, workspace: Workspace) -> dict:
+    def pod_spec(self, workspace: Workspace, variant: Variant) -> dict:
         """
         Inspired by:
         https://github.com/dkmiller/tidbits/blob/facb960704671729abfc361284d7a017bc2054a9/2023/kubernetes/examples/e2e/pods/api.yaml
         """
-
-        variant = self.variants.resolve(workspace.variant)
-
         return {
             "apiVersion": "v1",
             "kind": "Pod",
@@ -67,9 +61,7 @@ class Manifest:
     def service_name(self, workspace: Workspace) -> str:
         return f"{workspace.id}-service"
 
-    def service_spec(self, workspace: Workspace) -> dict:
-        variant = self.variants.resolve(workspace.variant)
-
+    def service_spec(self, workspace: Workspace, variant: Variant) -> dict:
         return {
             "kind": "Service",
             "apiVersion": "v1",
@@ -82,7 +74,7 @@ class Manifest:
             },
         }
 
-    def spec(self, workspace: Workspace) -> dict:
-        deployment = self.deployment_spec(workspace)
-        service = self.service_spec(workspace)
+    def spec(self, workspace: Workspace, variant: Variant) -> dict:
+        deployment = self.deployment_spec(workspace, variant)
+        service = self.service_spec(workspace, variant)
         return {"kind": "List", "items": [deployment, service]}
