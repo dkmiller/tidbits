@@ -1,23 +1,26 @@
 import logging
-import shlex
 import time
 from contextlib import contextmanager
 from dataclasses import dataclass
 from functools import cached_property
 from pathlib import Path
-from subprocess import PIPE, Popen
+from typing import Union
 
 from fabric import Config, Connection
 from fabric.runners import Result as FabricResult
+from invoke.exceptions import UnexpectedExit
+from invoke.runners import Result as InvokeResult
 from paramiko.config import SSHConfig
 from typing_extensions import Self
 
 from ssh.abstractions import Result, SshClient
 from ssh.config import host_config
 from ssh.models import SshHost
-from ssh.process import kill, wait
+from ssh.process import kill, popen, wait
 
 log = logging.getLogger(__name__)
+
+AnyResult = Union[FabricResult, InvokeResult]
 
 
 @dataclass
@@ -41,6 +44,10 @@ class SshCliWrapper(ClientBase, SshClient):
             str(self.identity.absolute()),
             "-p",
             str(self.host.port),
+            # Ignore ~/.ssh/config:
+            # https://www.cyberciti.biz/faq/tell-ssh-to-exclude-ignore-config-file/
+            "-F",
+            "/dev/null",
             "-o",
             # https://stackoverflow.com/a/61946687/
             "StrictHostKeyChecking=accept-new",
@@ -52,17 +59,9 @@ class SshCliWrapper(ClientBase, SshClient):
         """
         return f"{self.host.user}@{self.host.host}"
 
-    def popen(self, args: tuple[str, ...]) -> Popen:
-        # https://stackoverflow.com/a/31867499/
-        rv = Popen(args, stderr=PIPE, stdout=PIPE)
-        # Make logged commands copy/pasteable.
-        copyable_args = " ".join(map(shlex.quote, args))
-        log.info("Spawned process %s: %s", rv.pid, copyable_args)
-        return rv
-
     def exec(self, *args: str) -> Result:
         args = (*self.prefix(), self.target(), *args)
-        process = self.popen(args)
+        process = popen(args)
         return wait(process)
 
     @contextmanager
@@ -78,7 +77,7 @@ class SshCliWrapper(ClientBase, SshClient):
             f"{local_port}:{self.host.host}:{remote_port}",
             self.target(),
         )
-        process = self.popen(args)
+        process = popen(args)
         # TODO: this should not be necessary.
         time.sleep(0.2)
 
@@ -116,7 +115,15 @@ class FabricClient(ClientBase, SshClient):
         Warning: this does not handle command escaping.
         """
         command = " ".join(args)
-        res: FabricResult = self.connection.run(command, hide=True)
+
+        # FYI: can return early via `asynchronous=True` or run even if Python quits with
+        # `disown=True`.
+        try:
+            res: AnyResult = self.connection.run(command, hide=True)
+        except UnexpectedExit as e:
+            res = e.result
+        # break the connection between command executions.
+        self.connection.close()
         return Result(res.stderr, res.stdout, res.return_code)
 
     @contextmanager
