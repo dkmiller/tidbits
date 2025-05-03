@@ -3,7 +3,7 @@ from typing import Sequence
 from fastapi import APIRouter, HTTPException
 from fastapi_injector import Injected
 from server.k8s import K8s
-from server.models import Workspace, WorkspaceResponse
+from server.models import Variant, Workspace, WorkspaceResponse
 from sqlmodel import Session, select
 
 router = APIRouter()
@@ -46,7 +46,14 @@ async def create_workspace(
             status_code=409, detail=f"Workspace '{workspace.id}' already exists"
         )
     session.add(workspace)
-    await k8s.create(workspace)
+
+    if not (variant := session.get(Variant, workspace.variant)):
+        raise HTTPException(
+            status_code=422,
+            detail=f"Variant '{workspace.variant}' is not already defined!",
+        )
+
+    await k8s.create(workspace, variant)
 
     session.commit()
     session.refresh(workspace)
