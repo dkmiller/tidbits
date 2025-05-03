@@ -3,3 +3,5 @@ brew "kubectl"
 # https://helm.sh/docs/intro/install/
 brew "helm"
 brew "helmfile"
+# TODO: '1password-cli' formula is unreadable
+brew "1password-cli"

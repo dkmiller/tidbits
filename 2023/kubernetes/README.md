@@ -50,10 +50,21 @@ Calling "localhost" from _inside_ a Docker image:
 curl host.docker.internal:8000
 ```
 
+## Docker auth
+
+https://developer.1password.com/docs/cli/reference/commands/read
+
+https://docs.github.com/en/packages/learn-github-packages/connecting-a-repository-to-a-package#connecting-a-repository-to-a-container-image-using-the-command-line
+
+
+```bash
+op read op://Private/github.ptah/credential | docker login ghcr.io -u USERNAME --password-stdin
+```
+
+https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry#authenticating-to-the-container-registry
+
 ## Future
 
-- [ ] OpenTelemetry: https://www.reddit.com/r/kubernetes/comments/13ce38b/opentelemetry_visualization/
-      https://github.com/magsther/awesome-opentelemetry
 - [ ] Liveness probe takes screenshot
     - https://github.com/puppeteer/puppeteer/issues/4039
     - https://github.com/puppeteer/puppeteer/issues/1947
