@@ -20,6 +20,7 @@ ruff check --fix . && ruff format .
 - https://github.com/openai/openai-python?tab=readme-ov-file#async-usage
 - https://opentelemetry.io/docs/specs/otel/configuration/sdk-environment-variables/
 - https://opentelemetry.io/docs/languages/sdk-configuration/general/
+- https://fastapi.tiangolo.com/tutorial/middleware/#create-a-middleware
 
 TODO
 
