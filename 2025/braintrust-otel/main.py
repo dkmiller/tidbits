@@ -1,8 +1,9 @@
+import logging
 from contextlib import asynccontextmanager
 from dataclasses import dataclass
 
 from dotenv import dotenv_values
-from fastapi import Depends, FastAPI
+from fastapi import Depends, FastAPI, Request
 from openai import AsyncOpenAI
 from opentelemetry import trace
 from opentelemetry.exporter.otlp.proto.http.trace_exporter import OTLPSpanExporter
@@ -24,6 +25,7 @@ def dotenv() -> dict:
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
+    logging.basicConfig(level="DEBUG")
     OpenAIInstrumentor().instrument()
 
     # It is not straightforward to leverage FastAPI dependencies within the lifespan:
@@ -56,7 +58,8 @@ app = FastAPI(debug=True, lifespan=lifespan)
 
 
 @app.post("/chat")
-async def chat(req: ChatRequest, openai: AsyncOpenAI = Depends(openai)):
+async def chat(chat_request: ChatRequest, openai: AsyncOpenAI = Depends(openai)):
+
     # The OTel instrumentation SDK for OpenAI isn't responses-aware yet.
     response = await openai.chat.completions.create(
         model="gpt-4o-mini",
@@ -64,7 +67,7 @@ async def chat(req: ChatRequest, openai: AsyncOpenAI = Depends(openai)):
             {"role": "developer", "content": "Politely great the user by name"},
             {
                 "role": "user",
-                "content": f"I'm {req.name}",
+                "content": f"I'm {chat_request.name}",
             },
         ],
     )
@@ -73,3 +76,19 @@ async def chat(req: ChatRequest, openai: AsyncOpenAI = Depends(openai)):
 
 # Cannot add middleware after the application has started.
 FastAPIInstrumentor.instrument_app(app)
+
+
+@app.middleware("http")
+async def remove_otel_headers(request: Request, call_next):
+    """
+    Braintrust does not display traces with external `traceparent` headers. So, we add a middleware
+    invoked before the FastAPI OpenTelemetry instrumentor that removes the `traceparent` header
+    from the incoming request, following https://stackoverflow.com/a/69934314.
+    """
+    headers = request.headers.mutablecopy()
+    if "traceparent" in headers:
+        del headers["traceparent"]
+    request._headers = headers
+    request.scope.update(headers=request.headers.raw)
+    response = await call_next(request)
+    return response
