@@ -1,4 +1,3 @@
-import logging
 from contextlib import asynccontextmanager
 from dataclasses import dataclass
 
@@ -25,7 +24,6 @@ def dotenv() -> dict:
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    logging.basicConfig(level="DEBUG")
     OpenAIInstrumentor().instrument()
 
     # It is not straightforward to leverage FastAPI dependencies within the lifespan:
@@ -35,7 +33,6 @@ async def lifespan(app: FastAPI):
         "Authorization": f"Bearer {env['braintrust_api_key']}",
         "x-bt-parent": f"project_id:{env['braintrust_project_id']}",
     }
-    print(f"OTel headers = {headers}")
 
     resource = Resource(attributes={SERVICE_NAME: "braintrust-dan"})
     tracer_provider = TracerProvider(resource=resource)
