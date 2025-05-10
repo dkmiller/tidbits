@@ -1,0 +1,3 @@
+[tool.ruff.lint]
+# https://github.com/astral-sh/ruff/issues/8926#issuecomment-1834048218
+extend-select = ["I"]
