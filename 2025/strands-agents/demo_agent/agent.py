@@ -7,15 +7,14 @@ from strands_tools import calculator, current_time, python_repl
 from sympy import prime
 
 
-logging.getLogger("strands").setLevel(logging.DEBUG)
+logging.getLogger("strands").setLevel("DEBUG")
 
 
-# Configure the tracer
 tracer = get_tracer(
     service_name="dan-strands-agents",
     otlp_endpoint="https://api.honeycomb.io",
-    otlp_headers={"x-honeycomb-team": dotenv_values()["honeycomb_api_key"]},
-    enable_console_export=True,  # Helpful for development
+    otlp_headers={"x-honeycomb-team": dotenv_values()["honeycomb_api_key"]},  # type: ignore
+    enable_console_export=True,
 )
 
 
@@ -40,11 +39,11 @@ def nth_prime(index: int) -> int:
 agent = Agent(model=model, tools=[calculator, current_time, python_repl, nth_prime])
 
 
-# Ask the agent a question that uses the available tools
-message = """
-What is the 30th prime number divided by the 10th prime number. Use only the tools provided.
+# # Ask the agent a question that uses the available tools
+# message = """
+# What is the 30th prime number divided by the 10th prime number. Use only the tools provided.
 
-Output a script that does what we just spoke about! Use your python tools to confirm that the script
-works before outputting it
-"""
-agent(message)
+# Output a script that does what we just spoke about! Use your python tools to confirm that the script
+# works before outputting it
+# """
+# agent(message)

@@ -1,3 +1,5 @@
+fastapi[standard]>=0.115.12
+httpie>=3.2.4
 pyOpenSSL>=25.1.0
 python-dotenv==1.1.0
 strands-agents[openai]==0.1.6
