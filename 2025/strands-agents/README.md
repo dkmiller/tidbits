@@ -8,7 +8,12 @@ https://strandsagents.com/0.1.x/user-guide/deploy/deploy_to_aws_fargate/#contain
 
 https://strandsagents.com/0.1.x/user-guide/observability-evaluation/traces/
 
-- [ ] [MCP](https://strandsagents.com/0.1.x/examples/python/mcp_calculator/)
+[MCP](https://strandsagents.com/0.1.x/examples/python/mcp_calculator/)
+
+- https://gofastmcp.com/deployment/cli#options
+- Feature request: OTel in FastMCP: https://github.com/modelcontextprotocol/python-sdk/issues/421
+- Feature request: OTel in MCP spec: https://github.com/modelcontextprotocol/modelcontextprotocol/issues/246
+- https://gofastmcp.com/deployment/running-server
 
 [Honeycomb &gt;  Send Data with the OpenTelemetry Collector](https://docs.honeycomb.io/send-data/opentelemetry/collector/)
 
@@ -30,13 +35,13 @@ agent -->|uses| llms["Hosted LLMs"]
 ## Running
 
 ``` bash
-fastapi dev demo_agent/api.py
+./serve.sh
 
 # Old school
-curl -H "content-type: application/json" localhost:8000/some_agent -d '{"prompt": "What is the 30th prime number divided by the 10th prime number."}'
+curl -H "content-type: application/json" localhost:8001/some_agent -d '{"prompt": "What is the 30th prime number divided by the 10th prime number."}'
 
 # Modern & simpler, optionally with -v
-http localhost:8000/some_agent prompt="What is the 30th prime number divided by the 10th prime number."
+http localhost:8001/primes_agent prompt="What is the 30th prime number divided by the 10th prime number."
 ```
 
 https://httpie.io/docs/cli/http-method

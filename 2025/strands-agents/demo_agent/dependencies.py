@@ -7,6 +7,10 @@ from strands.models.openai import OpenAIModel
 from strands.telemetry.tracer import get_tracer
 from strands.telemetry import Tracer
 
+
+from mcp.client.streamable_http import streamablehttp_client
+from strands.tools.mcp.mcp_client import MCPClient
+
 from demo_agent.tools import nth_prime
 
 
@@ -33,8 +37,23 @@ def model(dotenv: dict[str, str] = Depends(dotenv)) -> Model:
     )
 
 
-def tools() -> list:
-    return [calculator, current_time, python_repl, nth_prime]
+
+def create_streamable_http_transport():
+   return streamablehttp_client("http://localhost:8000/mcp/")
+
+
+def remote_tools() -> list:
+    streamable_http_mcp_client = MCPClient(create_streamable_http_transport)
+
+    # Use the MCP server in a context manager
+    with streamable_http_mcp_client:
+        # Get the tools from the MCP server
+        tools = streamable_http_mcp_client.list_tools_sync()
+        yield tools
+
+
+def tools(remote: list = Depends(remote_tools)) -> list:
+    return [calculator, current_time, python_repl, nth_prime, *remote]
 
 
 # Via dependency injection, the returned agent can depend on arbitrary information

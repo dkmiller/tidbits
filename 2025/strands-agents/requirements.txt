@@ -1,5 +1,9 @@
 fastapi[standard]>=0.115.12
+
+fastmcp==2.5.2
+
 httpie>=3.2.4
+opentelemetry-instrumentation-fastapi>=0.54b0
 pyOpenSSL>=25.1.0
 python-dotenv==1.1.0
 strands-agents[openai]==0.1.6
