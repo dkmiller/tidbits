@@ -46,9 +46,25 @@ http localhost:8001/primes_agent prompt="What is the 30th prime number divided b
 
 https://httpie.io/docs/cli/http-method
 
+## Future
+
+- [ ] Structured agent API output
+- [ ] Differential privacy and "sensitive" agent state
+- [ ] Automatic conversion between OpenAPI &mapsto; FastMCP https://gofastmcp.com/servers/openapi
+
 ## Alternatives
 
 https://www.reddit.com/r/AI_Agents/comments/1kjowzp/whats_the_best_framework_for_productiongrade_ai/
 
-- https://google.github.io/adk-docs/
+- https://google.github.io/adk-docs/get-started/quickstart/
+    - OTel: https://github.com/google/adk-python/blob/main/src/google/adk/telemetry.py
 - https://microsoft.github.io/autogen/
+    - OTel: https://microsoft.github.io/autogen/stable/user-guide/core-user-guide/framework/telemetry.html
+- https://github.com/huggingface/smolagents
+    - OTel: https://huggingface.co/docs/smolagents/en/tutorials/inspect_runs
+
+Themes: agentic framework should:
+
+- Produce OpenTelemetry-compatible traces
+- Consume MCP servers
+- Stretch: produce _both_ "sane" structured REST APIs and MCP servers
