@@ -1,0 +1,5 @@
+pyOpenSSL>=25.1.0
+python-dotenv==1.1.0
+strands-agents[openai]==0.1.6
+strands-agents-tools>=0.1.2
+sympy==1.14.0
