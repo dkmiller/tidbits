@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 from fastapi import Depends, FastAPI
+from opentelemetry.instrumentation.fastapi import FastAPIInstrumentor
 from strands import Agent
 
 from demo_agent.dependencies import primes_agent, tracer
@@ -21,5 +22,8 @@ def call_primes_agent(
     # Forcibly enable tracing. TODO: do this via middleware etc.?
     _=Depends(tracer),
 ):
-    response = agent(request.prompt)
+    response = agent(prompt=request.prompt)
     return {"result": str(response)}
+
+
+FastAPIInstrumentor.instrument_app(app)
