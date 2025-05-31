@@ -2,10 +2,21 @@ import logging
 from dotenv import dotenv_values
 from strands import Agent, tool
 from strands.models.openai import OpenAIModel
+from strands.telemetry.tracer import get_tracer
 from strands_tools import calculator, current_time, python_repl
 from sympy import prime
 
+
 logging.getLogger("strands").setLevel(logging.DEBUG)
+
+
+# Configure the tracer
+tracer = get_tracer(
+    service_name="dan-strands-agents",
+    otlp_endpoint="https://api.honeycomb.io",
+    otlp_headers={"x-honeycomb-team": dotenv_values()["honeycomb_api_key"]},
+    enable_console_export=True,  # Helpful for development
+)
 
 
 model = OpenAIModel(
@@ -13,9 +24,8 @@ model = OpenAIModel(
         "api_key": dotenv_values()["openai_api_key"],
     },
     model_id="gpt-4o",
-    params={"max_tokens": 1000}
+    params={"max_tokens": 1000},
 )
-
 
 
 @tool
