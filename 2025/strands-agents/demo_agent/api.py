@@ -1,7 +1,8 @@
 from dataclasses import dataclass
-from fastapi import FastAPI
+from fastapi import Depends, FastAPI
+from strands import Agent
 
-from demo_agent.agent import agent
+from demo_agent.dependencies import primes_agent, tracer
 
 
 @dataclass
@@ -12,10 +13,13 @@ class PromptRequest:
 app = FastAPI(title="Strands agents demo")
 
 
-@app.post("/some_agent")
-def some_agent(request: PromptRequest):
-    _agent = agent
-    response = _agent(request.prompt)
-    return {
-        "content": str(response)
-    }
+# TODO: how to get structured agent outputs?
+@app.post("/primes_agent")
+def call_primes_agent(
+    request: PromptRequest,
+    agent: Agent = Depends(primes_agent),
+    # Forcibly enable tracing. TODO: do this via middleware etc.?
+    _=Depends(tracer),
+):
+    response = agent(request.prompt)
+    return {"result": str(response)}
