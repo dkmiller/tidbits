@@ -5,7 +5,8 @@
     "customizations": {
         "vscode": {
             "extensions": [
-                "dbaeumer.vscode-eslint"
+                "leanprover.lean4",
+                "tamasfe.even-better-toml"
             ]
         }
     }
