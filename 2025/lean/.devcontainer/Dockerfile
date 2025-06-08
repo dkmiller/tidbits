@@ -14,33 +14,3 @@ RUN elan default leanprover/lean4:stable
 
 # Trigger a download
 RUN lean --version
-
-
-# RUN mkdir -p /root/.elan \
-#   && chown -R 1000:1000 /root/.elan \
-#   && usermod -a -G {group-name} username
-#   && chmod -R g+rwx vscode /root/.elan
-
-# USER 1000
-# RUN touch /root/.elan/foo
-
-
-
-# ENV PATH="$PATH:/root/.elan/bin"
-# RUN chown -R 1000:1000 /root/.elan
-
-# https://stackoverflow.com/a/45973108
-# RUN mkdir -p /root/.elan \
-#   && chown -R vscode /root/.elan
-
-
-# # USER vscode
-# # RUN touch /root/.elan/foo
-
-
-# # TODO: give user "vscode" access to Elan / Lean installation.
-
-# USER vscode
-# # RUN which lean
-
-# # RUN elan default leanprover/lean4:stable
