@@ -1,11 +1,11 @@
 # Lean
 
-Open this folder in the configured VS Code Dev Container, then run the commands below.
+Open this folder in the configured VS Code Dev Container, then type
+`⌘ + SHIFT + B` or explicitly run the command below to build and run the Lean program
+here.
 
 ``` bash
-lake build
-
-.lake/build/bin/src
+./run.sh
 ```
 
 ## Links
@@ -15,6 +15,7 @@ lake build
 - [Natural number game](https://adam.math.hhu.de/#/g/leanprover-community/nng4)
 - [Theorem proving in Lean 4](https://lean-lang.org/theorem_proving_in_lean4/title_page.html)
 - [Lean projects](https://leanprover-community.github.io/install/project.html)
+- [How to add the custom compile commands in VS Code?](https://stackoverflow.com/a/71747570)
 
 ## Misc commands
 
