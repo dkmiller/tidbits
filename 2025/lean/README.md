@@ -1,7 +1,7 @@
 # Lean
 
 Open this folder in the configured VS Code Dev Container, then type
-`⌘ + SHIFT + B` or explicitly run the command below to build and run the Lean program
+`⌘⇧B` or explicitly run the command below to build and run the Lean program
 here.
 
 ``` bash
@@ -16,6 +16,7 @@ here.
 - [Theorem proving in Lean 4](https://lean-lang.org/theorem_proving_in_lean4/title_page.html)
 - [Lean projects](https://leanprover-community.github.io/install/project.html)
 - [How to add the custom compile commands in VS Code?](https://stackoverflow.com/a/71747570)
+- [Integrate with External Tools via Tasks ](https://code.visualstudio.com/docs/debugtest/tasks#_custom-tasks)
 
 ## Misc commands
 
