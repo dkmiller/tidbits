@@ -1,7 +1,7 @@
 from pathlib import Path
 from typing import Literal
 
-from ._httpx import capture as httpx_capture
+from ._httpx import capture as httpx_capture, mock as httpx_mock
 from .state import RequestRecorder
 
 
@@ -27,6 +27,11 @@ def mock(libraries: list[SupportedLibraries], location: Path):
     Initialize mocking for the configured list of libraries, loading all HTTP calls
     from the provided location.
     """
+    recorder = RequestRecorder.deserialize(location)
+    if "httpx" in libraries:
+        httpx_mock(recorder)
+
+    return recorder
 
 
 def mock_http(serialize: str, overwrite: bool = False):

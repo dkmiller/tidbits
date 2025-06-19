@@ -13,9 +13,8 @@ def test_httpx(tmp_path):
     state.serialize(location)
     assert location.is_file()
 
-    raise Exception(location.read_text())
-
     mock(["httpx"], location)
     response_2 = httpx.get(url)
     # TODO: status code?
+    assert response_2.status_code == response_1.status_code
     assert response_2.text == response_1.text
