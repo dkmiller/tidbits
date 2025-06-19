@@ -16,3 +16,6 @@ dev = [
     "pytest",
     "ruff",
 ]
+
+[tool.ruff]
+extend-include = ["I"]

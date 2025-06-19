@@ -16,6 +16,14 @@ def some_test_involving_httpx():
 - [ ] aiohttp
 - [ ] requests
 
+## Development
+
+``` bash
+ruff check --fix . && ruff format .
+
+pytest
+```
+
 ## Links
 
 - https://github.com/open-telemetry/opentelemetry-python-contrib/blob/main/instrumentation/opentelemetry-instrumentation-httpx/src/opentelemetry/instrumentation/httpx/__init__.py

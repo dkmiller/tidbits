@@ -2,6 +2,7 @@ from pathlib import Path
 from typing import Literal
 
 from ._httpx import capture as httpx_capture
+from .state import RequestRecorder
 
 
 SupportedLibraries = Literal["httpx"]
@@ -12,8 +13,11 @@ def capture(libraries: list[SupportedLibraries], location: Path):
     Set up "wrap" / instrumentation logic that will capture all HTTP calls through the
     configured list of libraries, capturing them in the provided location.
     """
+    recorder = RequestRecorder()
     if "httpx" in libraries:
-        requests = httpx_capture()
+        httpx_capture(recorder)
+
+    return recorder
 
     # TODO: context manager so we know when to "dump" things.
 
