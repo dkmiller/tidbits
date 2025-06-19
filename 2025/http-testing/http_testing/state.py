@@ -21,6 +21,8 @@ class RequestRecorder:
 
     @classmethod
     def deserialize(cls, path: Path) -> RequestRecorder:
+        # Imitates:
+        # https://github.com/dkmiller/ptah/blob/main/ptah/clients/yaml.py
         schema = OmegaConf.structured(cls)
         conf = OmegaConf.load(path)
         merged = OmegaConf.merge(schema, conf)

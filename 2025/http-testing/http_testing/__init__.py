@@ -1,3 +1,5 @@
+from inspect import getfile
+from functools import wraps
 from pathlib import Path
 from typing import Literal
 
@@ -35,8 +37,28 @@ def mock(libraries: list[SupportedLibraries], location: Path):
 
 
 def mock_http(serialize: str, overwrite: bool = False):
-    location = Path(serialize)
-    if overwrite:
-        capture(libraries=["httpx"], location=location)
-    else:
-        mock(libraries=["httpx"], location=location)
+    """
+    The first time this is called it will capture and serialize requests.
+
+    Going forward, forcibly set `overwrite=True` to ensure a new capture.
+    """
+
+    def decorator(func):
+        @wraps(func)
+        def inner(*args, **kwargs):
+            location = Path(getfile(func)).parent / serialize
+            if overwrite or not location.is_file():
+                recorder = capture(libraries=["httpx"], location=location)
+            else:
+                mock(libraries=["httpx"], location=location)
+                recorder = None
+            try:
+                rv = func(*args, **kwargs)
+            finally:
+                if recorder:
+                    recorder.serialize(location)
+            return rv
+
+        return inner
+
+    return decorator
