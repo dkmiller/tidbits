@@ -1,0 +1,7 @@
+state:
+- request:
+    method: GET
+    url: https://www.uuidgenerator.net/api/version1
+  response:
+    status: 200
+    text: 6eb0a80e-4d63-11f0-9fe2-0242ac120002

@@ -1,0 +1,21 @@
+[project]
+name = "http-testing"
+readme = "README.md"
+version = "0.0.0"
+authors = [
+    { name = "Dan Miller", email = "daniel.keegan.miller@gmail.com" }
+]
+requires-python = ">=3.11,<3.14"
+dependencies = [
+    "httpx>=0.20.0",
+    "opentelemetry-instrumentation-httpx>=0.55b1",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest",
+    "ruff",
+]
+
+[tool.ruff]
+extend-include = ["I"]
