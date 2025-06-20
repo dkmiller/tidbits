@@ -8,11 +8,12 @@ from opentelemetry.instrumentation.httpx import _extract_parameters
 from .models import Request, Response
 from .state import RequestRecorder
 
-# In httpx >= 0.20.0, handle_request receives a Request object
-# TODO: reuse opentelemetry-instrumentation-httpx's _extract_parameters ?
+
+def capture_request(args, kwargs) -> Request:
+    method, url, headers, stream, extensions = _extract_parameters(args, kwargs)
+    return Request(method.decode(), str(url))
 
 
-# TODO: accept "request state container" as parameter, use partial() below.
 def _capture_wrapper(
     wrapped: Callable[..., Any],
     instance: HTTPTransport,
@@ -21,13 +22,12 @@ def _capture_wrapper(
     *,
     __recorder: RequestRecorder,
 ):
-    method, url, headers, stream, extensions = _extract_parameters(args, kwargs)
-    _req = Request(method.decode(), str(url))
+    captured_request = capture_request(args, kwargs)
     response = wrapped(*args, **kwargs)
-    # TODO: handle response.stream (?) + headers.
+    # TODO: handle response.stream / bytes (?) + headers.
     response.read()
-    _resp = Response(response.status_code, response.text)
-    __recorder.record(_req, _resp)
+    captured_response = Response(response.status_code, response.text)
+    __recorder.record(captured_request, captured_response)
     return response
 
 
@@ -47,10 +47,11 @@ def _mock_wrapper(
     *,
     __recorder: RequestRecorder,
 ) -> HttpxResponse:
-    method, url, headers, stream, extensions = _extract_parameters(args, kwargs)
-    _req = Request(method.decode(), str(url))
-    if _resp := __recorder.mock(_req):
-        return HttpxResponse(status_code=_resp.status, text=_resp.text)
+    captured_request = capture_request(args, kwargs)
+    if mocked_response := __recorder.mock(captured_request):
+        return HttpxResponse(
+            status_code=mocked_response.status, text=mocked_response.text
+        )
     return wrapped(*args, **kwargs)
 
 

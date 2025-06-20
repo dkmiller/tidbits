@@ -46,6 +46,7 @@ def mock_http(serialize: str, overwrite: bool = False):
     def decorator(func):
         @wraps(func)
         def inner(*args, **kwargs):
+            # TODO: "smart" file naming via method name.
             location = Path(getfile(func)).parent / serialize
             if overwrite or not location.is_file():
                 recorder = capture(libraries=["httpx"], location=location)
