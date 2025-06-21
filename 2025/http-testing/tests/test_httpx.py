@@ -7,10 +7,9 @@ def test_httpx(tmp_path):
     location = tmp_path / "uuid_generator.yaml"
     # https://www.uuidgenerator.net/api
     url = "https://www.uuidgenerator.net/api/version1"
-    state = capture(["httpx"], location)
-    response_1 = httpx.get(url)
+    with capture(["httpx"], location):
+        response_1 = httpx.get(url)
 
-    state.serialize(location)
     assert location.is_file()
 
     mock(["httpx"], location)

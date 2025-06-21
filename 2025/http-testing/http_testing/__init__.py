@@ -1,3 +1,4 @@
+from contextlib import contextmanager, nullcontext
 from inspect import getfile
 from functools import wraps
 from pathlib import Path
@@ -10,6 +11,7 @@ from .state import RequestRecorder
 SupportedLibraries = Literal["httpx"]
 
 
+@contextmanager
 def capture(libraries: list[SupportedLibraries], location: Path):
     """
     Set up "wrap" / instrumentation logic that will capture all HTTP calls through the
@@ -19,9 +21,9 @@ def capture(libraries: list[SupportedLibraries], location: Path):
     if "httpx" in libraries:
         httpx_capture(recorder)
 
-    return recorder
+    yield recorder
 
-    # TODO: context manager so we know when to "dump" things.
+    recorder.serialize(location)
 
 
 def mock(libraries: list[SupportedLibraries], location: Path):
@@ -36,7 +38,13 @@ def mock(libraries: list[SupportedLibraries], location: Path):
     return recorder
 
 
-def mock_http(serialize: str, overwrite: bool = False):
+def _smart_name(func, serialize: str | None):
+    func_path = Path(getfile(func))
+    serialize = serialize or f"http_testing.{func_path.stem}.{func.__name__}.yaml"
+    return func_path.parent / serialize
+
+
+def mock_http(serialize: str | None = None, overwrite: bool = False):
     """
     The first time this is called it will capture and serialize requests.
 
@@ -46,18 +54,16 @@ def mock_http(serialize: str, overwrite: bool = False):
     def decorator(func):
         @wraps(func)
         def inner(*args, **kwargs):
-            # TODO: "smart" file naming via method name.
-            location = Path(getfile(func)).parent / serialize
+            location = _smart_name(func, serialize)
             if overwrite or not location.is_file():
-                recorder = capture(libraries=["httpx"], location=location)
+                context = capture(libraries=["httpx"], location=location)
             else:
+                context = nullcontext()
                 mock(libraries=["httpx"], location=location)
-                recorder = None
-            try:
+
+            with context:
                 rv = func(*args, **kwargs)
-            finally:
-                if recorder:
-                    recorder.serialize(location)
+
             return rv
 
         return inner

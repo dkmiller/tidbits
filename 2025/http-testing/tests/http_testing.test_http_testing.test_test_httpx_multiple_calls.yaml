@@ -1,0 +1,19 @@
+state:
+- request:
+    method: GET
+    url: https://www.uuidgenerator.net/api/version7
+  response:
+    status: 200
+    text: 019793de-9ed3-7e03-b5d0-323d1ca3a79a
+- request:
+    method: GET
+    url: https://www.uuidgenerator.net/api/version4
+  response:
+    status: 200
+    text: 590f9765-0b0b-43d5-81b8-3d5f0d832b03
+- request:
+    method: GET
+    url: https://www.uuidgenerator.net/api/version1
+  response:
+    status: 200
+    text: 4d953abc-4ed1-11f0-9fe2-0242ac120002
