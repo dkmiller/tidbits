@@ -4,22 +4,22 @@ import httpx
 from http_testing import mock_http
 
 
-@mock_http("uuid_generator.yaml")  # , overwrite=True)
+@mock_http()
 def test_uuid():
     response = httpx.get("https://www.uuidgenerator.net/api/version1")
     response.raise_for_status()
-    assert response.text == "6eb0a80e-4d63-11f0-9fe2-0242ac120002"
+    assert response.text == "4d953abc-4ed1-11f0-9fe2-0242ac120002"
 
 
-@mock_http("uuid_generator_multiple.yaml")
+@mock_http()
 def test_test_httpx_multiple_calls():
     response_7 = httpx.get("https://www.uuidgenerator.net/api/version7")
     response_4 = httpx.get("https://www.uuidgenerator.net/api/version4")
     response_1 = httpx.get("https://www.uuidgenerator.net/api/version1")
 
-    assert response_1.text == "6eb0a80e-4d63-11f0-9fe2-0242ac120002"
-    assert response_4.text == "f0513af1-1cf1-4bfe-b2f2-dc46d8e47267"
-    assert response_7.text == "01978a80-7a0a-7301-b845-abba9d5e8d3d"
+    assert response_1.text == "4d953abc-4ed1-11f0-9fe2-0242ac120002"
+    assert response_4.text == "590f9765-0b0b-43d5-81b8-3d5f0d832b03"
+    assert response_7.text == "019793de-9ed3-7e03-b5d0-323d1ca3a79a"
 
     start = time.perf_counter()
     httpx.get("https://httpbun.com/delay/1")
