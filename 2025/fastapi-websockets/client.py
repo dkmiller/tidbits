@@ -15,7 +15,6 @@ AZURE_ENDPOINT = "http://localhost:11000/experimental/"
 WEBSOCKET_BASE = "ws://localhost:11000/experimental/openai"
 
 
-
 async def main() -> None:
     """
     When prompted for user input, type a message and hit enter to send it to the model.
@@ -36,7 +35,7 @@ async def main() -> None:
     async with client.beta.realtime.connect(
         model="gpt-4o-realtime-preview",
     ) as connection:
-        await connection.session.update(session={"modalities": ["text", "audio"]})  
+        await connection.session.update(session={"modalities": ["text", "audio"]})
         user_input = "hi there!"
 
         await connection.conversation.item.create(
@@ -51,7 +50,6 @@ async def main() -> None:
             if event.type == "response.text.delta":
                 print(event.delta, flush=True, end="")
             elif event.type == "response.audio.delta":
-
                 audio_data = base64.b64decode(event.delta)
                 print(f"Received {len(audio_data)} bytes of audio data.")
             elif event.type == "response.audio_transcript.delta":
@@ -60,5 +58,6 @@ async def main() -> None:
                 print()
             elif event.type == "response.done":
                 break
+
 
 asyncio.run(main())
