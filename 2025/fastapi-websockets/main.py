@@ -23,6 +23,11 @@ async def websocket_proxy(env: dict = Depends(dotenv)):
         await rv.aclose()
 
 
+@app.get("/experimental{path:path}")
+async def experimental_get(path: str):
+    return f"Hi {path}"
+
+
 @app.websocket("/experimental{path:path}")
 async def experimental_websocket(
     websocket: WebSocket, path: str, proxy=Depends(websocket_proxy)

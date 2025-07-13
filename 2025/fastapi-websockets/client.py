@@ -8,25 +8,11 @@ from openai import AsyncAzureOpenAI
 logging.basicConfig(level="DEBUG")
 
 
-AZURE_ENDPOINT = "https://eastus2.api.cognitive.microsoft.com/"
-WEBSOCKET_BASE = "wss://eastus2.api.cognitive.microsoft.com/openai"
-
-AZURE_ENDPOINT = "http://localhost:11000/experimental/"
-WEBSOCKET_BASE = "ws://localhost:11000/experimental/openai"
-
-
 async def main() -> None:
-    """
-    When prompted for user input, type a message and hit enter to send it to the model.
-    Enter "q" to quit the conversation.
-    """
-
-    # websocket_base_url
     client = AsyncAzureOpenAI(
-        # TODO: is the first one even necessary?
-        azure_endpoint=AZURE_ENDPOINT,
+        azure_endpoint="placeholder",
         # It adds /realtime.
-        websocket_base_url=WEBSOCKET_BASE,
+        websocket_base_url="ws://localhost:11000/experimental/openai",
         azure_ad_token="placeholder",
         # Placeholder API keys specified here overwrite the "real" proxy-side
         # API keys and cause HTTP 403s.
