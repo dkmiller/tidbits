@@ -2,17 +2,11 @@ import logging
 
 import base64
 import asyncio
-from dotenv import dotenv_values
 from openai import AsyncAzureOpenAI
 
 
 logging.basicConfig(level="DEBUG")
 
-
-
-        # azure_endpoint="https://eastus2.api.cognitive.microsoft.com/",#"ws://localhost:8880/experimental",
-        # # It adds /realtime.
-        # websocket_base_url="wss://eastus2.api.cognitive.microsoft.com/openai",#"ws://localhost:8880/experimental",
 
 AZURE_ENDPOINT = "https://eastus2.api.cognitive.microsoft.com/"
 WEBSOCKET_BASE = "wss://eastus2.api.cognitive.microsoft.com/openai"
@@ -34,7 +28,9 @@ async def main() -> None:
         azure_endpoint=AZURE_ENDPOINT,
         # It adds /realtime.
         websocket_base_url=WEBSOCKET_BASE,
-        api_key=dotenv_values()["api_key"],
+        azure_ad_token="placeholder",
+        # Placeholder API keys specified here overwrite the "real" proxy-side
+        # API keys and cause HTTP 403s.
         api_version="2025-04-01-preview",
     )
     async with client.beta.realtime.connect(

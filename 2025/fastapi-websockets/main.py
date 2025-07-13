@@ -1,5 +1,5 @@
 from dotenv import dotenv_values
-from fastapi import Depends, FastAPI
+from fastapi import Depends, FastAPI, Request
 
 from contextlib import asynccontextmanager
 from typing import AsyncIterator
@@ -13,8 +13,6 @@ def dotenv() -> dict[str, str]:
     return dotenv_values() # type: ignore
 
 
-# ?api-version=2024-10-01-preview&deployment=gpt-4o-realtime-preview
-# base_url="ws://echo.websocket.events/"
 base_url = "wss://eastus2.api.cognitive.microsoft.com/"
 proxy = ReverseWebSocketProxy(
     AsyncClient(headers={"api-key": dotenv()["api_key"]}), base_url=base_url)
@@ -28,9 +26,9 @@ async def close_proxy_event(_: FastAPI) -> AsyncIterator[None]:
 app = FastAPI(lifespan=close_proxy_event)
 
 @app.websocket("/experimental{path:path}")
-async def _(websocket: WebSocket, path: str = "", env: dict = Depends(dotenv)):
-    # raise Exception(path)
-    # raise Exception(env)
+async def _(websocket: WebSocket, path: str, env: dict = Depends(dotenv)):
     return await proxy.proxy(websocket=websocket, path=path)
 
-# Connecting to wss://eastus2.api.cognitive.microsoft.com/openai/realtime?api-version=2025-04-01-preview&deployment=gpt-4o-realtime-preview
+
+# TODO: figure out a middleware to strip incoming api-key headers:
+# https://stackoverflow.com/a/69934314.
