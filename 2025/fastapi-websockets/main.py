@@ -29,10 +29,8 @@ app = FastAPI(lifespan=close_proxy_event)
 
 @app.websocket("/experimental{path:path}")
 async def _(websocket: WebSocket, path: str = "", env: dict = Depends(dotenv)):
-    raise Exception(path)
+    # raise Exception(path)
     # raise Exception(env)
     return await proxy.proxy(websocket=websocket, path=path)
 
-# Then run shell: `uvicorn <your.py>:app --host http://127.0.0.1:8000 --port 8000`
-# visit the app: `ws://127.0.0.1:8000/`
-# you can establish websocket connection with `ws://echo.websocket.events`
+# Connecting to wss://eastus2.api.cognitive.microsoft.com/openai/realtime?api-version=2025-04-01-preview&deployment=gpt-4o-realtime-preview

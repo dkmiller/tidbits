@@ -9,6 +9,19 @@ from openai import AsyncAzureOpenAI
 logging.basicConfig(level="DEBUG")
 
 
+
+        # azure_endpoint="https://eastus2.api.cognitive.microsoft.com/",#"ws://localhost:8880/experimental",
+        # # It adds /realtime.
+        # websocket_base_url="wss://eastus2.api.cognitive.microsoft.com/openai",#"ws://localhost:8880/experimental",
+
+AZURE_ENDPOINT = "https://eastus2.api.cognitive.microsoft.com/"
+WEBSOCKET_BASE = "wss://eastus2.api.cognitive.microsoft.com/openai"
+
+AZURE_ENDPOINT = "http://localhost:11000/experimental/"
+WEBSOCKET_BASE = "ws://localhost:11000/experimental/openai"
+
+
+
 async def main() -> None:
     """
     When prompted for user input, type a message and hit enter to send it to the model.
@@ -18,8 +31,9 @@ async def main() -> None:
     # websocket_base_url
     client = AsyncAzureOpenAI(
         # TODO: is the first one even necessary?
-        azure_endpoint="https://eastus2.api.cognitive.microsoft.com/",#"ws://localhost:8880/experimental",
-        # websocket_base_url="wss://eastus2.api.cognitive.microsoft.com/",#"ws://localhost:8880/experimental",
+        azure_endpoint=AZURE_ENDPOINT,
+        # It adds /realtime.
+        websocket_base_url=WEBSOCKET_BASE,
         api_key=dotenv_values()["api_key"],
         api_version="2025-04-01-preview",
     )

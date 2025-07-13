@@ -8,10 +8,10 @@ https://learn.microsoft.com/en-us/azure/ai-foundry/openai/realtime-audio-quickst
 
 "Pure" Python: https://platform.openai.com/docs/guides/realtime?connection-example=python#connect-with-websockets
 
-- TODO: how to handle secure / insecure websockets?
+How to handle secure / insecure websockets? Explicit `websocket_base_url`
 
 ``` bash
-fastapi dev --port 8880
+fastapi dev --port 11000
 ```
 
 then
