@@ -1,12 +1,16 @@
+import logging
+import os
+
 from braintrust import Eval, init_dataset, traced
 
 from metrics import precision_recall_score
 
+logging.basicConfig(level="DEBUG")
+
 
 @traced
 def fake_agent(input: str) -> list[str]:
-    return ["1",]
-    
+    return ["1"]
 
 
 def dummy_task(input: str) -> list[str]:
@@ -14,9 +18,12 @@ def dummy_task(input: str) -> list[str]:
 
 
 Eval(
-    "project-63b5607c",
-    data=init_dataset(project="project-63b5607c", name="help_article_retrieval_generated_v3"),
+    os.environ["BRAINTRUST_PROJECT_NAME"],
+    data=init_dataset(
+        project=os.environ["BRAINTRUST_PROJECT_NAME"],
+        name=os.environ["BRAINTRUST_DATASET_NAME"],
+    ),
     task=dummy_task,
-    scores=[precision_recall_score,],
+    scores=[precision_recall_score],
     experiment_name="Test with dummy task",
 )
