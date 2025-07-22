@@ -20,7 +20,7 @@ def fake_agent(input: str) -> list[str]:
             otel_span.set_attribute("output", str(result))
 
             # Log to the Braintrust span as well
-            braintrust_span.log(input="bt_input", output="otel_output")
+            braintrust_span.log(input="bt_input", output="bt_output")
             return ["agent result"]
 
 
