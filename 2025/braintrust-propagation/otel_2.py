@@ -1,6 +1,8 @@
 import logging
 import os, json
 
+from contextlib import contextmanager
+
 from braintrust import Eval, init_dataset, current_span
 from braintrust.otel import BraintrustSpanProcessor
 from opentelemetry import trace
@@ -28,8 +30,8 @@ provider.add_span_processor(processor)  # type: ignore
 tracer = trace.get_tracer(__name__)
 
 
-def fake_agent(input: str) -> list[str]:
-    # Get the current Braintrust span and export it to get the parent ID
+@contextmanager
+def otel_braintrust_handoff():
     current_braintrust_span = current_span()
     parent_export = current_braintrust_span.export()
 
@@ -45,28 +47,33 @@ def fake_agent(input: str) -> list[str]:
     provider.add_span_processor(temp_processor)  # type: ignore
 
     try:
-        # Create an OpenTelemetry span that should be a child of the current Braintrust span
-        with tracer.start_as_current_span("fake_agent") as otel_span:
-            # Use the correct Braintrust attribute names for OpenTelemetry
-            result = ["blah"]
-            otel_span.set_attribute("braintrust.input_json", json.dumps(input))
-            otel_span.set_attribute("braintrust.output_json", json.dumps(result))
-            # these other attributes are not necessary but this is how you would set them if you wanted to
-            otel_span.set_attribute("braintrust.metadata", json.dumps({"source": "otel_span"}))
-            otel_span.set_attribute("braintrust.span_attributes", json.dumps({"some_attribute": "some value"}))
-            otel_span.set_attribute("braintrust.scores", json.dumps({"some_score": "some value"}))
-            otel_span.set_attribute("braintrust.expected", json.dumps({"expected": "expected value if you pass it"}))
-
-            return result
+        yield
     finally:
-        # Clean up the temporary processor
         temp_processor.shutdown()
 
 
+@tracer.start_as_current_span("fake_agent_decorator")
+def fake_agent(input: str) -> list[str]:
+        with tracer.start_as_current_span("fake_agent") as span:
+            result = ["blah"]
+            span.set_attribute("some.attribute", "my.attribute.value")
+            span.set_attribute("braintrust.input_json", json.dumps(input))
+            span.set_attribute("braintrust.output_json", json.dumps(result))
+
+            # these other attributes are not necessary but this is how you would set them if you wanted to
+            span.set_attribute("braintrust.metadata", json.dumps({"source": "otel_span"}))
+            span.set_attribute("braintrust.span_attributes", json.dumps({"some_attribute": "some value"}))
+            span.set_attribute("braintrust.scores", json.dumps({"some_score": "some value"}))
+            span.set_attribute("braintrust.expected", json.dumps({"expected": "expected value if you pass it"}))
+
+            return result
+
+
 def dummy_task(input: str) -> list[str]:
+    with otel_braintrust_handoff():
     # The task span will be created by Braintrust Eval framework
     # fake_agent will create a child span of the current active span
-    return fake_agent(input)
+        return fake_agent(input)
 
 test_dataset = [
     {
