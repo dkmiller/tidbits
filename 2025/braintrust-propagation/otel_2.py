@@ -54,19 +54,21 @@ def otel_braintrust_handoff():
 
 @tracer.start_as_current_span("fake_agent_decorator")
 def fake_agent(input: str) -> list[str]:
-        with tracer.start_as_current_span("fake_agent") as span:
-            result = ["blah"]
-            span.set_attribute("some.attribute", "my.attribute.value")
-            span.set_attribute("braintrust.input_json", json.dumps(input))
-            span.set_attribute("braintrust.output_json", json.dumps(result))
+        result = ["blah"]
+        trace.get_current_span().set_attributes({
+             "some.attribute": "my.attribute.value",
+             "braintrust.input_json": json.dumps(input)             
+            })
+        # span.set_attribute("braintrust.input_json", json.dumps(input))
+        # span.set_attribute("braintrust.output_json", json.dumps(result))
 
-            # these other attributes are not necessary but this is how you would set them if you wanted to
-            span.set_attribute("braintrust.metadata", json.dumps({"source": "otel_span"}))
-            span.set_attribute("braintrust.span_attributes", json.dumps({"some_attribute": "some value"}))
-            span.set_attribute("braintrust.scores", json.dumps({"some_score": "some value"}))
-            span.set_attribute("braintrust.expected", json.dumps({"expected": "expected value if you pass it"}))
+        # # these other attributes are not necessary but this is how you would set them if you wanted to
+        # span.set_attribute("braintrust.metadata", json.dumps({"source": "otel_span"}))
+        # span.set_attribute("braintrust.span_attributes", json.dumps({"some_attribute": "some value"}))
+        # span.set_attribute("braintrust.scores", json.dumps({"some_score": "some value"}))
+        # span.set_attribute("braintrust.expected", json.dumps({"expected": "expected value if you pass it"}))
 
-            return result
+        return result
 
 
 def dummy_task(input: str) -> list[str]:
