@@ -12,7 +12,8 @@ pip install -r requirements.txt
 export BRAINTRUST_API_KEY="..."
 export BRAINTRUST_PROJECT_NAME="..."
 export BRAINTRUST_DATASET_NAME="..."
-export OTEL_EXPORTER_OTLP_TRACES_ENDPOINT="..."
+export BRAINTRUST_API_URL="..."
+export OTEL_EXPORTER_OTLP_TRACES_ENDPOINT=$OTEL_EXPORTER_OTLP_TRACES_ENDPOINT/otel/v1/traces
 
 python instrument_braintrust.py
 ```
