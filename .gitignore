@@ -26,6 +26,7 @@ obj
 # Python
 __pycache__
 *.egg-info/
+*.parquet
 *.pkl
 
 # Hydra
