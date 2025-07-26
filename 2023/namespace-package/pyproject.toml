@@ -1,0 +1,11 @@
+# This is not a package file. It contains shared linter configuration for the collection of
+# packages defined here.
+
+[tool.isort]
+profile = "black"
+
+# https://github.com/microsoft/pyright/blob/main/docs/configuration.md#sample-pyprojecttoml-file
+[tool.pyright]
+executionEnvironments = [
+  { root = ".", extraPaths = ["oryx-core/src", "oryx-operations/src", "oryx-cli/src"] }
+]

@@ -1,0 +1,10 @@
+[project]
+name = "oryx"
+version = "0.0.0"
+dependencies = [
+    "oryx-core>=0.0.0",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["oryx.operations"]

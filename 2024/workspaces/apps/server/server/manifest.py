@@ -1,0 +1,80 @@
+from dataclasses import dataclass
+
+from injector import inject
+
+from server.models import Variant, Workspace
+
+
+@inject
+@dataclass
+class Manifest:
+    def deployment_name(self, workspace: Workspace) -> str:
+        return f"{workspace.id}-deployment"
+
+    def deployment_spec(self, workspace: Workspace, variant: Variant) -> dict:
+        return {
+            "apiVersion": "apps/v1",
+            "kind": "Deployment",
+            "metadata": {"name": self.deployment_name(workspace)},
+            "labels": {"app": workspace.id},
+            "spec": {
+                "replicas": 1,
+                "selector": {"matchLabels": {"app": workspace.id}},
+                "template": self.pod_spec(workspace, variant),
+            },
+        }
+
+    def namespace(self, workspace: Workspace) -> str:
+        # TODO: make this configurable.
+        return "default"
+
+    def pod_spec(self, workspace: Workspace, variant: Variant) -> dict:
+        """
+        Inspired by:
+        https://github.com/dkmiller/tidbits/blob/facb960704671729abfc361284d7a017bc2054a9/2023/kubernetes/examples/e2e/pods/api.yaml
+        """
+        return {
+            "apiVersion": "v1",
+            "kind": "Pod",
+            "metadata": {
+                "name": workspace.id,
+                "labels": {"app": workspace.id},
+            },
+            "spec": {
+                "containers": [
+                    {
+                        "image": variant.docker_image,
+                        "name": "workspace",
+                        "args": variant.container_args,
+                        "ports": [{"containerPort": port} for port in variant.ports],
+                        "readinessProbe": {
+                            "httpGet": {
+                                "path": variant.readiness,
+                                "port": variant.ports[0],
+                            }
+                        },
+                    }
+                ]
+            },
+        }
+
+    def service_name(self, workspace: Workspace) -> str:
+        return f"{workspace.id}-service"
+
+    def service_spec(self, workspace: Workspace, variant: Variant) -> dict:
+        return {
+            "kind": "Service",
+            "apiVersion": "v1",
+            "metadata": {
+                "name": self.service_name(workspace),
+            },
+            "spec": {
+                "selector": {"app": workspace.id},
+                "ports": [{"port": port} for port in variant.ports],
+            },
+        }
+
+    def spec(self, workspace: Workspace, variant: Variant) -> dict:
+        deployment = self.deployment_spec(workspace, variant)
+        service = self.service_spec(workspace, variant)
+        return {"kind": "List", "items": [deployment, service]}

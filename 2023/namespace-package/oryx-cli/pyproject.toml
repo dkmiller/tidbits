@@ -1,0 +1,21 @@
+[project]
+name = "oryx-cli"
+version = "0.0.0"
+dependencies = [
+    "oryx-core>=0.0.0",
+    "oryx==0.0.0",
+]
+# Only one (shared) set of optional development dependencies.
+[project.optional-dependencies]
+dev = [
+    "black==23.7.0",
+    "isort==5.12.0",
+    "ruff==0.1.6",
+]
+
+[project.scripts]
+oryx = "oryx.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["oryx.cli"]

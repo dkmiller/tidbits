@@ -27,9 +27,20 @@ obj
 __pycache__
 *.egg-info/
 *.parquet
+*.pkl
 
 # Hydra
 outputs/
 
 # Jupyter
 .ipynb_checkpoints/
+
+# Ptah
+.build/
+.ptah/
+
+# macOS
+.DS_Store
+
+# Environment variables
+.env

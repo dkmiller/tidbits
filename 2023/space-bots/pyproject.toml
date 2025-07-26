@@ -1,0 +1,25 @@
+[project]
+name = "space-bots"
+readme = "README.md"
+version = "0.0.0"
+dependencies = [
+    "humanize==4.9.0",
+    "inflect==7.0.0",
+    "plotly==5.18.0",
+    "requests",
+    "streamlit==1.30.0",
+    "streamlit-pydantic==0.6.0",
+    "typer==0.9.0",
+]
+[project.optional-dependencies]
+dev = [
+    "isort",
+    "ruff==0.1.14",
+]
+
+# https://stackoverflow.com/a/73066937
+[project.scripts]
+spacebots = "space_bots.cli:app"
+
+[tool.isort]
+profile = "black"
