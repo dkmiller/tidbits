@@ -17,4 +17,4 @@ def failing_method():
         with tracer.start_as_current_span("failing-span"):
             raise RuntimeError("failure!")
     except RuntimeError:
-        return "fail silently"
+        return "failed"
