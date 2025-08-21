@@ -2,11 +2,28 @@
 Process-related utilities.
 """
 import logging
-from subprocess import Popen
+import shlex
+from subprocess import PIPE, CompletedProcess, Popen, run
 
 from ssh.abstractions import Result
 
 log = logging.getLogger(__name__)
+
+
+def popen(args: tuple[str, ...]) -> Popen:
+    # https://stackoverflow.com/a/31867499/
+    rv = Popen(args, stderr=PIPE, stdout=PIPE)
+    # Make logged commands copy/pasteable.
+    copyable_args = " ".join(map(shlex.quote, args))
+    log.info("Spawned process %s: %s", rv.pid, copyable_args)
+    return rv
+
+
+def run_pipe(*args, **kwargs) -> CompletedProcess[bytes]:
+    """
+    Invoke `subprocess.run` with the provided args and piped standard error + output.
+    """
+    return run(*args, stderr=PIPE, stdout=PIPE, **kwargs)
 
 
 def wait(process: Popen) -> Result:
@@ -20,7 +37,7 @@ def wait(process: Popen) -> Result:
     return Result(error.decode(), output.decode(), status)
 
 
-def kill(process: Popen) -> None:
+def kill(process: Popen) -> Result:
     # https://stackoverflow.com/a/43276598/
     poll = process.poll()
     pid = process.pid
@@ -29,3 +46,5 @@ def kill(process: Popen) -> None:
     else:
         log.info("Killing %s", pid)
         process.kill()
+
+    return wait(process)
