@@ -1,0 +1,9 @@
+# Repros with 0.18.0, 1.0.0, 1.0.2
+# WORKS with 1.0.5, 1.0.3 (MINIMUM)
+httpcore==1.0.3
+# Dependency conflict with 0.24.1, 0.25.0
+# WORKS with 0.25.1
+httpx==0.25.1
+
+# Failure with: 3.7.1
+anyio==4.0.0
