@@ -25,6 +25,8 @@ def otel_braintrust_handoff():
     """
     current_braintrust_span = current_span()
     parent_export = current_braintrust_span.export()
+    # https://github.com/braintrustdata/braintrust-sdk/blob/b8c2d1ebc7b75ea604e9490fd265a6f797add415/py/src/braintrust/logger.py#L3752
+    print(f"{current_braintrust_span.parent_object_type=}  {current_braintrust_span.root_span_id=} {current_braintrust_span.span_id=} {current_braintrust_span.propagated_event=}")
     temp_processor = BraintrustSpanProcessor(
         parent=parent_export, filter_ai_spans=False
     )
