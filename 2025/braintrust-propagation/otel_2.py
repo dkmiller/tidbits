@@ -9,33 +9,43 @@ from braintrust.otel import BraintrustSpanProcessor
 from opentelemetry import trace
 from opentelemetry.sdk.trace import TracerProvider
 
+
+from airbnb_braintrust import init_sdk
+from airbnb_braintrust.tracking.v2 import use_bt_sdk_context
+from airbnb_braintrust.tracking.v2.context import get_current_gai_context
+from airbnb_braintrust.tracking.v2.otel import opentelemetry_setup_for_bt_eval
+
 from metrics import precision_recall_score
 
 tracer = trace.get_tracer(__name__)
 
 
-provider = TracerProvider()
-trace.set_tracer_provider(provider)
+# provider = TracerProvider()
+# trace.set_tracer_provider(provider)
 
 
-@contextmanager
-def otel_braintrust_handoff():
-    """
-    The task span will be created by Braintrust Eval framework
-    """
-    current_braintrust_span = current_span()
-    parent_export = current_braintrust_span.export()
-    # https://github.com/braintrustdata/braintrust-sdk/blob/b8c2d1ebc7b75ea604e9490fd265a6f797add415/py/src/braintrust/logger.py#L3752
-    print(f"{current_braintrust_span.parent_object_type=}  {current_braintrust_span.root_span_id=} {current_braintrust_span.span_id=} {current_braintrust_span.propagated_event=}")
-    temp_processor = BraintrustSpanProcessor(
-        parent=parent_export, filter_ai_spans=False
-    )
-    trace.get_tracer_provider().add_span_processor(temp_processor)  # type: ignore
+# @contextmanager
+# def otel_braintrust_handoff():
+#     """
+#     The task span will be created by Braintrust Eval framework
+#     """
+#     current_braintrust_span = current_span()
+#     parent_export = current_braintrust_span.export()
+#     # https://github.com/braintrustdata/braintrust-sdk/blob/b8c2d1ebc7b75ea604e9490fd265a6f797add415/py/src/braintrust/logger.py#L3752
+#     print(f"{current_braintrust_span.parent_object_type=}  {current_braintrust_span.root_span_id=} {current_braintrust_span.span_id=} {current_braintrust_span.propagated_event=}")
+#     temp_processor = BraintrustSpanProcessor(
+#         parent=parent_export, filter_ai_spans=False
+#     )
+#     trace.get_tracer_provider().add_span_processor(temp_processor)  # type: ignore
 
-    try:
-        yield
-    finally:
-        temp_processor.shutdown()
+#     try:
+#         yield
+#     finally:
+#         temp_processor.shutdown()
+
+
+init_sdk()
+opentelemetry_setup_for_bt_eval("7a78c093-cf53-4379-a7b5-eaf714f2921b")
 
 
 @tracer.start_as_current_span("fake_agent_decorator")
@@ -60,9 +70,10 @@ def fake_agent(input: str) -> list[str]:
     return result
 
 
+@use_bt_sdk_context()
+@tracer.start_as_current_span("dummy-task")
 def dummy_task(input: str) -> list[str]:
-    with otel_braintrust_handoff():
-        return fake_agent(input)
+    return fake_agent(input)
 
 
 test_dataset = [
