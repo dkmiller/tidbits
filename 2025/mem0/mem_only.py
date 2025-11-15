@@ -7,7 +7,7 @@ m = Memory()
 
 messages = [
     {"role": "user", "content": "Hi, I'm Alex. I love basketball and gaming."},
-    {"role": "assistant", "content": "Hey Alex! I'll remember your interests."}
+    {"role": "assistant", "content": "Hey Alex! I'll remember your interests."},
 ]
 m.add(messages, user_id="alex")
 
