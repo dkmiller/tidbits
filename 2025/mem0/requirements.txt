@@ -1,0 +1,9 @@
+braintrust[otel]==0.3.6
+faiss-cpu==1.12.0
+injector==0.22.0
+mem0ai==1.0.1
+opensearch-py==3.0.0
+python-dotenv==1.2.1
+PyYAML==6.0.3
+strands-agents[openai]==1.16.0
+strands-agents-tools==0.2.15

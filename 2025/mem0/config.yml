@@ -1,0 +1,21 @@
+agent_id: demo_agent
+
+# Hack: Strands Agents Tools mem0_memory implementation hard-codes this embedding
+# dimension.
+embedding_dims: 1024
+
+model_id: gpt-5.1
+
+system_prompt: |
+  You are a personal assistant for the user with ID foo_bar. Always be as concise as
+  possible in your answers. **Never include unnecessary information or extra words** in
+  responses.
+
+  Use your memory to store and retrieve information.
+
+env:
+  BRAINTRUST_PARENT: project_name:dkmiller-first-project
+  MEM0_LLM_PROVIDER: openai
+  MEM0_LLM_MODEL: gpt-4.1-nano-2025-04-14
+  MEM0_EMBEDDER_PROVIDER: openai
+  MEM0_EMBEDDER_MODEL: text-embedding-3-small
