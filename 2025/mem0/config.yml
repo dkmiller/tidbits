@@ -1,6 +1,7 @@
 agent_id: demo_agent
 
-# Strands Agents Tools mem0_memory implementation hard-codes this embedding dimension.
+# Hack: Strands Agents Tools mem0_memory implementation hard-codes this embedding
+# dimension.
 embedding_dims: 1024
 
 model_id: gpt-5.1

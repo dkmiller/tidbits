@@ -39,10 +39,11 @@ class Builder(Module):
             model_id=config.model_id,
         )
 
-        # Pretty gross, but this module looks at environment variables import-time.
+        # Hack: this module looks at environment variables import-time.
         from strands_tools import mem0_memory
 
-        # TODO: even grosser.
+        # Egregious hack: this module does not expose a better way to set advanced
+        # mem0 configuration.
         mem0_memory.Mem0ServiceClient.DEFAULT_CONFIG["embedder"]["config"][
             "embedding_dims"
         ] = config.embedding_dims
