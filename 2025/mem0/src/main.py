@@ -13,10 +13,12 @@ def main(args):
     # Skip printing the output manually because it already happens automatically.
     _ = agent(prompt=args.prompt)
 
+    # TODO: multi-turn flow.
+
 
 if __name__ == "__main__":
     parser = ArgumentParser()
-    parser.add_argument("--log-level", type=str, default="INFO")
+    parser.add_argument("--log-level", type=str, default="WARN")
     parser.add_argument(
         "--prompt",
         type=str,
