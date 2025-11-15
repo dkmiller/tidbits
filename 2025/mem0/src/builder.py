@@ -40,7 +40,7 @@ class Builder(Module):
         )
 
         # Hack: this module looks at environment variables import-time.
-        from strands_tools import mem0_memory
+        from strands_tools import current_time, mem0_memory
 
         # Egregious hack: this module does not expose a better way to set advanced
         # mem0 configuration.
@@ -51,7 +51,7 @@ class Builder(Module):
         rv = Agent(
             model=model,
             system_prompt=config.system_prompt,
-            tools=[mem0_memory],
+            tools=[current_time, mem0_memory],
             agent_id=config.agent_id,
         )
         return rv
