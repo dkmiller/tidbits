@@ -11,6 +11,8 @@ system_prompt: |
   possible in your answers. **Never include unnecessary information or extra words** in
   responses.
 
+  Use your memory to store and retrieve information.
+
 env:
   BRAINTRUST_PARENT: project_name:dkmiller-first-project
   MEM0_LLM_PROVIDER: openai

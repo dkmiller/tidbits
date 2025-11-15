@@ -20,7 +20,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "--prompt",
         type=str,
-        default="Who was the president of the United States in 2009?",
+        default="What is my name?",
     )
     args = parser.parse_args()
 
