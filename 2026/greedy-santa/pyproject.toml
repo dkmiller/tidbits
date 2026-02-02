@@ -1,5 +1,5 @@
 [project]
-name = "polars-expressions"
+name = "greedy-santa"
 readme = "README.md"
 
 version = "0.0.1"
