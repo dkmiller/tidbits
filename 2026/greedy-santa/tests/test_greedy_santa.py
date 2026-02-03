@@ -19,6 +19,7 @@ from greedy_santa import compile
         (lambda row: 1 / row["right"], 1 / pl.col("right")),
         (lambda row: row["a"] ** row["b"], pl.col("a").pow(pl.col("b"))),
         (lambda row: 2 ** row["b"], 2 ** pl.col("b")),
+        (lambda row: row["a"] or row["b"], pl.col("a").or_(pl.col("b"))),
         # (lambda row: int(row["h"]), pl.col("h").str.to_integer),
     ],
 )
