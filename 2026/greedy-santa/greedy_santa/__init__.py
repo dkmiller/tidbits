@@ -43,10 +43,10 @@ class RowTracer:
             key = key.wrapped
 
         if self.wrapped is None:
-            wrapped = pl.col(key)
+            wrapped = pl.col(key)  # type: ignore
         else:
             # TODO: we should have a more reliable way of detecting "list"-type.
-            wrapped = self.wrapped.list.get(key)
+            wrapped = self.wrapped.list.get(key)  # type: ignore
 
         return RowTracer(wrapped)
 
@@ -64,7 +64,7 @@ class RowTracer:
 
     def split(self, sep: str | None = None):
         if isinstance(sep, RowTracer):
-            sep = sep.wrapped
+            sep = sep.wrapped  # type: ignore
         return RowTracer(self.wrapped.str.split(by=sep))
 
     def __iter__(self):
