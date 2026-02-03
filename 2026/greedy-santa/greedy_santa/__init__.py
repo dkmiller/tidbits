@@ -8,8 +8,11 @@ T = TypeVar("T")
 def create_dunder(method: str):
     def dunder(self, *args, **kwargs):
         args = (a.wrapped if isinstance(a, RowTracer) else a for a in args)
-        kwargs = {k: v.wrapped if isinstance(v, RowTracer) else v for k, v in kwargs.items()}
+        kwargs = {
+            k: v.wrapped if isinstance(v, RowTracer) else v for k, v in kwargs.items()
+        }
         return RowTracer(wrapped=getattr(self.wrapped, method)(*args, **kwargs))
+
     return dunder
 
 
@@ -27,7 +30,7 @@ NAIVELY_TRANSLATED_DUNDERS = [
     "__rpow__",
     "__rtruediv__",
     "__sub__",
-    "__truediv__"
+    "__truediv__",
 ]
 
 
@@ -36,19 +39,16 @@ class RowTracer:
         self.wrapped = wrapped
 
     def __getitem__(self, key):
+        if isinstance(key, RowTracer):
+            key = key.wrapped
+
         if self.wrapped is None:
-            # Get or return a "Tracer" object whose identity is $row[key]
-            # self.expressions[f"row[{key}]"] = pl.col(key)
-            return RowTracer(wrapped=pl.col(key))
+            wrapped = pl.col(key)
         else:
-            if isinstance(key, RowTracer):
-                raise NotImplementedError("getitem")
-            else:
-                if isinstance(key, int):
-                    # TODO: we should have a more reliable way of detecting "list"-type.
-                    return RowTracer(wrapped=self.wrapped.list.get(key))
-                else:
-                    raise NotImplementedError("getitem")
+            # TODO: we should have a more reliable way of detecting "list"-type.
+            wrapped = self.wrapped.list.get(key)
+
+        return RowTracer(wrapped)
 
     # TODO: how many of
     # https://docs.pola.rs/api/python/dev/reference/expressions/api/polars.Expr.str.to_integer.html
@@ -56,13 +56,15 @@ class RowTracer:
 
     def __bool__(self):
         raise NotImplementedError("Truthy/falsy conversions are not supported yet")
-    
+
     def __int__(self):
         # TODO: replace builtins?
         # https://stackoverflow.com/a/61042819
         return RowTracer(self.wrapped.str.to_integer())
 
     def split(self, sep: str | None = None):
+        if isinstance(sep, RowTracer):
+            sep = sep.wrapped
         return RowTracer(self.wrapped.str.split(by=sep))
 
     def __iter__(self):

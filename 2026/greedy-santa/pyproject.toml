@@ -6,7 +6,7 @@ version = "0.0.1"
 authors = [
     { name = "Dan Miller", email = "daniel.keegan.miller@gmail.com" }
 ]
-requires-python = ">=3.10,<3.15"
+requires-python = ">=3.12,<3.15"
 dependencies = [
     "polars>=1.37.1"
 ]

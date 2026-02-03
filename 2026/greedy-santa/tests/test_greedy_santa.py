@@ -23,6 +23,10 @@ from greedy_santa import compile
         (lambda row: row["a"] ** row["b"], pl.col("a").pow(pl.col("b"))),
         (lambda row: 2 ** row["b"], 2 ** pl.col("b")),
         (lambda row: -row["b"], -pl.col("b")),
+        (
+            lambda row: row["a"].split(row["s"])[row["i"]],
+            pl.col("a").str.split(by=pl.col("s")).list.get(pl.col("i")),
+        ),
         # (lambda row: int(row["h"]), pl.col("h").str.to_integer),
     ],
 )
@@ -47,3 +51,36 @@ def _for_loop(row):
 def test_unsupported(callable):
     with pytest.raises(NotImplementedError):
         compile(callable)
+
+
+@pytest.mark.parametrize(
+    "callable",
+    [
+        lambda row: row["int_col"] * row["float_col"],
+        lambda row: (row["int_col"] ** row["float_col"])
+        / (row["float_col"] - row["int_col"]),
+        lambda row: row["str_col"].split(".")[0],
+        lambda row: row["str_col"].split(row["sep"])[-1],
+        lambda row: row["str_col"].split(row["sep"])[row["int_col"]],
+    ],
+)
+def test_against_real_data(callable):
+    df = pl.DataFrame(
+        {
+            "int_col": [1, 2, 0],
+            "float_col": [1.2, 2.3, 3.4],
+            "str_col": ["a.b:c.d:e", "b:c.d:e:f", "c.d:e.f:g"],
+            "sep": [".", ":", "."],
+        }
+    )
+
+    # Does the original callable even work?
+    pandas_mapped = df.to_pandas().apply(callable, axis=1)
+    series_mapped = pl.Series(pandas_mapped)
+
+    compiled = compile(callable)
+
+    series_compiled = df.select(compiled).to_series()
+    # Ugh, Polars map_rows expects a lambda on _tuples_, not dicts.
+
+    assert series_compiled.equals(series_mapped)
