@@ -5,6 +5,28 @@ import polars as pl
 T = TypeVar("T")
 
 
+def create_dunder(method: str):
+    def dunder(self, *args, **kwargs):
+        args = (a.wrapped if isinstance(a, RowTracer) else a for a in args)
+        kwargs = {k: v.wrapped if isinstance(v, RowTracer) else v for k, v in kwargs.items()}
+        return RowTracer(wrapped=getattr(self.wrapped, method)(*args, **kwargs))
+    return dunder
+
+
+NAIVELY_TRANSLATED_DUNDERS = [
+    "__add__",
+    "__eq__",
+    "__gt__",
+    "__mul__",
+    "__pow__",
+    "__radd__",
+    "__rpow__",
+    "__rtruediv__",
+    "__sub__",
+    "__truediv__"
+]
+
+
 class RowTracer:
     def __init__(self, wrapped: pl.Expr | None) -> None:
         self.wrapped = wrapped
@@ -30,40 +52,14 @@ class RowTracer:
 
     def __bool__(self):
         raise NotImplementedError("Truthy/falsy conversions are not supported yet")
-
-    def __add__(self, right):
-        if isinstance(right, RowTracer):
-            return RowTracer(self.wrapped + right.wrapped)
-        else:
-            return NotImplementedError("add")
-
+    
     def __int__(self):
         # TODO: replace builtins?
         # https://stackoverflow.com/a/61042819
         return RowTracer(self.wrapped.str.to_integer())
 
-    def __sub__(self, right):
-        if isinstance(right, RowTracer):
-            return RowTracer(self.wrapped - right.wrapped)
-
-    def __mul__(self, right):
-        if isinstance(right, RowTracer):
-            return RowTracer(self.wrapped * right.wrapped)
-
     def split(self, sep: str | None = None):
         return RowTracer(self.wrapped.str.split(by=sep))
-
-        # pl.col("variable").str.split(by="_").list.get(1).alias("row"),
-
-    def __gt__(self, right):
-        if isinstance(right, RowTracer):
-            return RowTracer(self.wrapped > right.wrapped)
-        return RowTracer(self.wrapped > right)
-
-    def __eq__(self, right):
-        if isinstance(right, RowTracer):
-            return RowTracer(self.wrapped == right.wrapped)
-        return RowTracer(self.wrapped == right)
 
     def __iter__(self):
         raise NotImplementedError("For-loops not supported yet")
@@ -73,6 +69,10 @@ class RowTracer:
 
     # TODO: all of
     # https://www.pythonmorsels.com/every-dunder-method/#cheat-sheet
+
+
+for dunder in NAIVELY_TRANSLATED_DUNDERS:
+    setattr(RowTracer, dunder, create_dunder(dunder))
 
 
 def compile[T](callable: Callable[[dict], T]) -> pl.Expr:

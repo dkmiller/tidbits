@@ -7,3 +7,4 @@ Future:
 
 - Compile TorchScript to Polars expressions?
 - Support for [conditionals and/or for-loops](./doc/rfc-0-conditionals.md)
+- Programmatically popular all dunder methods in the "obvious" manner.
