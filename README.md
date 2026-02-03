@@ -7,7 +7,7 @@ temporarily.
 
 ## Backlog of ideas
 
-### Polars: compile Python lambda &mapsto; expression
+### [Polars: compile Python lambda &mapsto; expression](./2026/greedy-santa/README.md)
 
 Conceptually: "PyTorch-style approach for Polars". Allow syntax like
 
@@ -15,4 +15,6 @@ Conceptually: "PyTorch-style approach for Polars". Allow syntax like
 df.apply_compiled(lambda row: row["a"] * row["b"] + 1)
 ```
 
-... where under the hood the lambda gets "traced" (kind of like TorchScript) then compiled to the appropriate Polars expression.
+... where under the hood the lambda gets "traced" (kind of like TorchScript) then
+compiled to the appropriate Polars expression.
+
