@@ -8,8 +8,6 @@ T = TypeVar("T")
 class RowTracer:
     def __init__(self, wrapped: pl.Expr | None) -> None:
         self.wrapped = wrapped
-        # Map "expression identifier / pointer" to raw value.
-        # self.expressions: dict[str, pl.Expr] = {}
 
     def __getitem__(self, key):
         if self.wrapped is None:
@@ -31,9 +29,7 @@ class RowTracer:
     # can we do?
 
     def __bool__(self):
-        raise NotImplementedError("bool")
-        # TODO: if encountering "conversion to truthy", fork:
-        # - one path "if true", another "if false".
+        raise NotImplementedError("Truthy/falsy conversions are not supported yet")
 
     def __add__(self, right):
         if isinstance(right, RowTracer):
@@ -59,7 +55,21 @@ class RowTracer:
 
         # pl.col("variable").str.split(by="_").list.get(1).alias("row"),
 
+    def __gt__(self, right):
+        if isinstance(right, RowTracer):
+            return RowTracer(self.wrapped > right.wrapped)
+        return RowTracer(self.wrapped > right)
 
+    def __eq__(self, right):
+        if isinstance(right, RowTracer):
+            return RowTracer(self.wrapped == right.wrapped)
+        return RowTracer(self.wrapped == right)
+
+    def __iter__(self):
+        raise NotImplementedError("For-loops not supported yet")
+
+    def __next__(self):
+        raise NotImplementedError("For-loops not supported yet")
 
     # TODO: all of
     # https://www.pythonmorsels.com/every-dunder-method/#cheat-sheet

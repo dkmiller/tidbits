@@ -11,10 +11,27 @@ from greedy_santa import compile
         (lambda row: row["c"] - row["d"], pl.col("c") - pl.col("d")),
         (lambda row: row["e"] * row["f"], pl.col("e") * pl.col("f")),
         (lambda row: row["g"].split(":")[0], pl.col("g").str.split(by=":").list.get(0)),
+        (lambda row: row["age"] > 28, pl.col("age") > 28),
         # (lambda row: int(row["h"]), pl.col("h").str.to_integer),
-        (lambda row: "hi" if row else "bye", pl.col("boo")),
     ],
 )
 def test_compile(callable, expected):
     compiled = compile(callable)
     assert compiled.meta.serialize() == expected.meta.serialize()
+
+
+def _for_loop(row):
+    for _ in row["list"]:
+        return "val"
+
+
+@pytest.mark.parametrize(
+    "callable",
+    [
+        lambda row: "hi" if row["h"] == "val" else "bye",
+        _for_loop,
+    ],
+)
+def test_unsupported(callable):
+    with pytest.raises(NotImplementedError):
+        compile(callable)
