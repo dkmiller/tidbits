@@ -7,6 +7,11 @@ temporarily.
 
 ## Backlog of ideas
 
+### [Mirrord](https://metalbear.com/mirrord/)
+
+Run local code in remote Kubernetes context. Another way of doing what
+[Ptah's `sync`](https://ptah.readthedocs.io/) command tries to do.
+
 ### [Polars: compile Python lambda &mapsto; expression](./2026/greedy-santa/README.md)
 
 Conceptually: "PyTorch-style approach for Polars". Allow syntax like
