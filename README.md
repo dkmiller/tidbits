@@ -7,6 +7,10 @@ temporarily.
 
 ## Backlog of ideas
 
+### [gVisor](https://gvisor.dev/docs/)
+
+It _should_ be possible to run sandboxed code inside a Kubernetes + Docker context.
+
 ### [Mirrord](https://metalbear.com/mirrord/)
 
 Run local code in remote Kubernetes context. Another way of doing what
