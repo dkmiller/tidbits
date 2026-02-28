@@ -16,6 +16,11 @@ It _should_ be possible to run sandboxed code inside a Kubernetes + Docker conte
 Run local code in remote Kubernetes context. Another way of doing what
 [Ptah's `sync`](https://ptah.readthedocs.io/) command tries to do.
 
+### [Monty](https://pydantic.dev/articles/pydantic-monty)
+
+Sandboxed execution of a subset of the Python standard library, excellent for agentic
+apps.
+
 ### [Polars: compile Python lambda &mapsto; expression](./2026/greedy-santa/README.md)
 
 Conceptually: "PyTorch-style approach for Polars". Allow syntax like
