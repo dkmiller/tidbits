@@ -32,3 +32,10 @@ df.apply_compiled(lambda row: row["a"] * row["b"] + 1)
 ... where under the hood the lambda gets "traced" (kind of like TorchScript) then
 compiled to the appropriate Polars expression.
 
+### Sandboxed Python code via Web Assembly
+
+[Pyodide only supports browsers and Node.js](https://github.com/pyodide/pyodide/discussions/5145),
+so one option would be that Python calls Node.js (via the CLI) which runs Pyodide.
+Another would be the version of Python compiled for
+[wasmer-python](https://github.com/wasmerio/wasmer-python). Ideally, [Monty](#monty)-style
+APIs, slower execution, but more comprehensive Python language and package ecosystem support.
