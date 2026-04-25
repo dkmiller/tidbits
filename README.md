@@ -19,7 +19,9 @@ Run local code in remote Kubernetes context. Another way of doing what
 ### [Monty](https://pydantic.dev/articles/pydantic-monty)
 
 Sandboxed execution of a subset of the Python standard library, excellent for agentic
-apps.
+apps. Explore using it with agentic applications; where the agent can write code to
+call tools instead of just calling them directly:
+[Executable Code Actions Elicit Better LLM Agents](https://arxiv.org/pdf/2402.01030).
 
 ### [Polars: compile Python lambda &mapsto; expression](./2026/greedy-santa/README.md)
 
