@@ -7,6 +7,14 @@ temporarily.
 
 ## Backlog of ideas
 
+### [Opik](https://github.com/comet-ml/opik) UI
+
+Self-hosted GenAI observability. Use Ptah like below.
+
+### [Langfuse](https://langfuse.com/self-hosting) UI
+
+Especially self-hosted. Use [Ptah](http://ptah.readthedocs.io/).
+
 ### [gVisor](https://gvisor.dev/docs/)
 
 It _should_ be possible to run sandboxed code inside a Kubernetes + Docker context.
