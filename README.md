@@ -7,6 +7,12 @@ temporarily.
 
 ## Backlog of ideas
 
+### LangChain interpreters
+
+Alternative to gVisor / Monty:
+[docs](https://docs.langchain.com/oss/python/deepagents/interpreters),
+[blog](https://www.langchain.com/blog/give-your-agents-an-interpreter)
+
 ### [Opik](https://github.com/comet-ml/opik) UI
 
 Self-hosted GenAI observability. Use Ptah like below.
