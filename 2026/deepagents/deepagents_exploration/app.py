@@ -20,10 +20,9 @@ def healthz():
 
 @app.post("/invoke")
 async def invoke(body: dict):
+    # DeepAgents picks up environment variables on import not invocation, so we must
+    # import the agent after the FastAPI lifespan has initialized the environment.
     from deepagents_exploration.agent import agent
 
     response = await agent.ainvoke(body)  # TODO: better input parsing.
-    return {
-        "full_response": str(response),
-        "last_message": response["messages"][-1].content,
-    }
+    return response  # TODO: does this even work?

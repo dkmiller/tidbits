@@ -14,6 +14,8 @@ async def initialize_environment():
     )
 
     for key, value in values.items():
+        if not value:
+            continue
         if value.startswith("op://"):
             resolved_value = await client.secrets.resolve(value)
             os.environ[key] = resolved_value

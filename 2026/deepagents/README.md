@@ -8,6 +8,8 @@ Setup and running.
 pip install -e "."
 
 fastapi dev
+
+ruff format . && ruff check --fix .
 ```
 
 then...
@@ -15,7 +17,7 @@ then...
 ``` bash
 curl localhost:8000/healthz
 
-curl -H 'Content-Type: application/json' localhost:8000/invoke -d '{"messages": [{"role": "user", "content": "Plan and then write a short science fiction story with a surprising and dark twist at the end"}]}'
+curl -H 'Content-Type: application/json' localhost:8000/invoke -d '{"messages": [{"role": "user", "content": "Plan and then write a short science fiction story with a surprising and dark twist at the end. Write it to a file STORY.md"}]}' | jq -r '.files["/STORY.md"].content'
 ```
 
 
@@ -23,3 +25,4 @@ curl -H 'Content-Type: application/json' localhost:8000/invoke -d '{"messages": 
 
 - [ ] Tool giving [GraphQL-based access](https://docs.github.com/en/graphql/guides/forming-calls-with-graphql)
   to my personal GitHub
+- [ ] Tests or [evals](https://docs.langchain.com/langsmith/evaluation-concepts#evaluators)
