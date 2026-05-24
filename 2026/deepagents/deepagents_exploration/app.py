@@ -1,16 +1,16 @@
-import os
+from contextlib import asynccontextmanager
 from fastapi import FastAPI
 
-from deepagents_exploration.agent import agent
+from deepagents_exploration.config import initialize_environment
 
 
-# TODO: configuration management...
-os.environ["LANGSMITH_TRACING"] = "true"
-os.environ["LANGSMITH_ENDPOINT"] = "https://api.smith.langchain.com"
-os.environ["LANGSMITH_PROJECT"] = "tidbits-deepagents"
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    await initialize_environment()
+    yield
 
 
-app = FastAPI()
+app = FastAPI(lifespan=lifespan)
 
 
 @app.get("/healthz")
@@ -20,5 +20,10 @@ def healthz():
 
 @app.post("/invoke")
 async def invoke(body: dict):
-    response = await agent.ainvoke(body) # TODO: better input parsing.
-    return {"response": str(response)}
+    from deepagents_exploration.agent import agent
+
+    response = await agent.ainvoke(body)  # TODO: better input parsing.
+    return {
+        "full_response": str(response),
+        "last_message": response["messages"][-1].content,
+    }
