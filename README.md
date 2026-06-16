@@ -37,6 +37,10 @@ apps. Explore using it with agentic applications; where the agent can write code
 call tools instead of just calling them directly:
 [Executable Code Actions Elicit Better LLM Agents](https://arxiv.org/pdf/2402.01030).
 
+### [PyO3](https://github.com/pyo3/pyo3)
+
+Easy Rust with Python bindings.
+
 ### [Polars: compile Python lambda &mapsto; expression](./2026/greedy-santa/README.md)
 
 Conceptually: "PyTorch-style approach for Polars". Allow syntax like
