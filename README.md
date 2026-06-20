@@ -7,6 +7,10 @@ temporarily.
 
 ## Backlog of ideas
 
+### [Bevy](https://bevy.org/): game engine
+
+Learn Rust and video game development at the same time.
+
 ### LangChain interpreters
 
 Alternative to gVisor / Monty:
