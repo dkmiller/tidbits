@@ -1,5 +1,7 @@
 import json
 import os
+import random
+import time
 from contextlib import contextmanager
 
 from braintrust import Eval, current_span
@@ -23,6 +25,8 @@ def otel_braintrust_handoff():
     """
     current_braintrust_span = current_span()
     parent_export = current_braintrust_span.export()
+    # https://github.com/braintrustdata/braintrust-sdk/blob/b8c2d1ebc7b75ea604e9490fd265a6f797add415/py/src/braintrust/logger.py#L3752
+    print(f"{current_braintrust_span.parent_object_type=}  {current_braintrust_span.root_span_id=} {current_braintrust_span.span_id=} {current_braintrust_span.propagated_event=}")
     temp_processor = BraintrustSpanProcessor(
         parent=parent_export, filter_ai_spans=False
     )
@@ -39,14 +43,19 @@ def fake_agent(input: str) -> list[str]:
     """
     Pure OpenTelemetry instrumentation of an agent.
     """
-    result = ["blah"]
-    trace.get_current_span().set_attributes(
-        {
-            "some.attribute": "my.attribute.value",
-            "braintrust.input_json": json.dumps(input),
-            "braintrust.output_json": json.dumps(result),
-        }
-    )
+    time.sleep(random.uniform(.1, .4))
+    with tracer.start_as_current_span("inner_span"):
+        time.sleep(random.uniform(.1, .4))
+
+        result = ["blah"]
+        trace.get_current_span().set_attributes(
+            {
+                "some.attribute": "my.attribute.value",
+                "braintrust.input_json": json.dumps(input),
+                "braintrust.output_json": json.dumps(result),
+            }
+        )
+    time.sleep(random.uniform(.1, .4))
 
     return result
 
@@ -156,4 +165,5 @@ Eval(
     task=dummy_task,
     scores=[precision_recall_score],  # type: ignore
     experiment_name="new_otel_test",
+    max_concurrency=5,
 )
