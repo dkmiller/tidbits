@@ -25,6 +25,10 @@ Self-hosted GenAI observability. Use Ptah like below.
 
 Especially self-hosted. Use [Ptah](http://ptah.readthedocs.io/).
 
+### [LLM Gateway](https://docs.llmgateway.io/self-host/docker)
+
+Route between LLMs hosted by multiple providers.
+
 ### [gVisor](https://gvisor.dev/docs/)
 
 It _should_ be possible to run sandboxed code inside a Kubernetes + Docker context.
