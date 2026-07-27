@@ -7,6 +7,10 @@ temporarily.
 
 ## Backlog of ideas
 
+### [Cloudflare durable objects](https://developers.cloudflare.com/durable-objects/get-started/)
+
+Perfect for developing lightweight stateful hosted APIs.
+
 ### [Bevy](https://bevy.org/): game engine
 
 Learn Rust and video game development at the same time.
