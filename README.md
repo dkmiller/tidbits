@@ -25,6 +25,8 @@ Alternative to gVisor / Monty:
 
 Self-hosted GenAI observability. Use Ptah like below.
 
+Alternative: [Traceway](https://docs.tracewayapp.com/server/all-in-one).
+
 ### [Langfuse](https://langfuse.com/self-hosting) UI
 
 Especially self-hosted. Use [Ptah](http://ptah.readthedocs.io/).
