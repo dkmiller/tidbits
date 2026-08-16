@@ -4,6 +4,7 @@ from pathlib import Path
 from cyclopts import App
 
 from llm._jinja import JinjaRenderer
+from llm._openai import ModelInvoker
 
 log = logging.getLogger(__name__)
 
@@ -37,13 +38,14 @@ async def generate(
 
     print(f"{messages=}")
 
-    # invoker = ModelInvoker(
-    #     endpoint="http://dan-miller-dan-v8.ws.airdev.musta.ch:8080/v1",
-    #     model="Qwen3.8-27b-uncensored",
-    #     max_tokens=15000,
-    # )
+    invoker = ModelInvoker(
+        endpoint="http://dan-miller-dan-v8.ws.airdev.musta.ch:8080/v1",
+        model="Qwen3.8-27b-uncensored",
+        max_tokens=15000,
+    )
 
-    # await invoker.invoke2(messages)
+    response = await invoker.invoke(messages)
+    print(response)
 
     # TODO: basic "multi-turn" when files contains the special character
     # RESPOND.
