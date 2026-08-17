@@ -36,6 +36,8 @@ async def generate(
     """
     messages = JinjaRenderer().render_files(root, files)
 
+    # TODO: merge contiguous blocks of prompts of the same role.
+
     print(f"{messages=}")
 
     invoker = ModelInvoker(
