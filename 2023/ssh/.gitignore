@@ -1,1 +1,4 @@
 *.egg-info/
+
+# GUID-named files generated from tests running the Paramiko server.
+*-*-*-*-*

@@ -1,10 +1,10 @@
 import logging
 import socket
-import threading
 import time
 from contextlib import contextmanager
 from dataclasses import dataclass, field
 from pathlib import Path
+from threading import Event
 from typing import Union
 
 import docker
@@ -18,9 +18,13 @@ from paramiko import (
     Transport,
 )
 
+# https://docs.paramiko.org/en/3.3/api/agent.html#paramiko.agent.AgentServerProxy
+from paramiko.agent import AgentServerProxy
+
 from ssh.abstractions import SshServer
 from ssh.known_hosts import KnownHostsClient
 from ssh.models import SshHost
+from ssh.process import kill, popen, run_pipe
 
 log = logging.getLogger(__name__)
 
@@ -56,7 +60,7 @@ class OpensshDockerWrapper(ServerBase, SshServer):
         """
         dockerfile = str(Path(__file__).parent.parent)
         log.info("Building Docker image from %s", dockerfile)
-        self.client.images.build(path=dockerfile)
+        self.client.images.build(path=dockerfile, tag="ssh")
 
     def start(self) -> Container:
         ports_dict = {self.host.port: self.host.port}
@@ -125,69 +129,148 @@ class OpensshDockerWrapper(ServerBase, SshServer):
 
 
 # https://stackoverflow.com/q/68768419/
-# https://docs.paramiko.org/en/3.3/api/server.html
+#
 # https://github.com/paramiko/paramiko/blob/main/demos/demo_server.py
 # TODO: imitate https://github.com/kryptographik/ShuSSH/blob/master/shusshd.py ?
+
+
 @dataclass
-class Server(ServerInterface):
-    user: str
-    event: threading.Event = field(default_factory=threading.Event)
+class ParamikoServer(ServerBase, ServerInterface, SshServer):
+    """
+    https://docs.paramiko.org/en/3.3/api/server.html
+    """
+
+    private_key: Path = None
+    event: Event = field(default_factory=Event)
 
     def check_channel_request(self, kind, channelID):
+        log.info(f"Check channel request for {kind=} and {channelID=}")
         return OPEN_SUCCEEDED
 
     def get_allowed_auths(self, username):
         return "publickey"
 
     def check_auth_publickey(self, username, key):
-        log.info("Check auth for %s", username)
-        if username == self.user:
+        log.info(f"Check auth for {username=} {key=}")
+        if username == self.host.user:
             return AUTH_SUCCESSFUL
         # TODO: actually check a key!
         return AUTH_FAILED
 
     def check_port_forward_request(self, address, port):
-        raise NotImplementedError()
+        log.info(f"Check port forward request for {address=} and {port=}")
+        # TODO: https://github.com/paramiko/paramiko/issues/2133
+        # https://stackoverflow.com/q/13579616/
+        return port
+
+    # https://github.com/paramiko/paramiko/issues/2133
+    def check_channel_direct_tcpip_request(self, chanid, origin, destination):
+        log.info(
+            f"Check channel direct tcpip request for {chanid=} {origin=} {destination=}"
+        )
+        return OPEN_SUCCEEDED
 
     def cancel_port_forward_request(self, address, port):
-        raise NotImplementedError()
+        log.info(f"Cancel port forward request for {address=} + {port=}")
 
-    def check_channel_pty_request(
-        self, channel, term, width, height, pixelwidth, pixelheight, modes
-    ):
+    # https://gist.github.com/AstraLuma/14a72a7918a345e5c8cf8bc9f9c2e1f2
+    def check_channel_forward_agent_request(self, channel):
+        log.info(f"Check channel forward agent request {channel=}")
+        # self.agent = AgentServerProxy(channel.transport)
+        # def connect():
+        #     self.agent.connect()
+        #     print("check_channel_forward_agent_request:connect:", self.agent.get_keys())
+        # self.spawn_worker(connect)
         return True
 
-    def check_channel_shell_request(self, channel):
-        self.event.set()
-        return True
+    # https://github.com/paramiko/paramiko/blob/main/demos/forward.py?
+    # def check_channel_pty_request(
+    #     self, channel, term, width, height, pixelwidth, pixelheight, modes
+    # ):
+    #     return True
+
+    # def check_channel_shell_request(self, channel):
+    #     self.event.set()
+    #     return True
 
     def check_channel_exec_request(self, channel, command):
         log.info("Running `%s`", command)
+
+        result = run_pipe(command, shell=True)
+        log.info("Result: %s", result)
+        channel.send(result.stdout)
+        channel.send_stderr(result.stderr)
+        channel.send_exit_status(result.returncode)
         self.event.set()
         return True
 
-    def get_banner(self):
-        return (f"Welcome, {self.user}!\n\r", "EN")
+    # def get_banner(self):
+    #     return (f"Welcome, {self.host.user}!\n\r", "EN")
+
+    # https://gist.github.com/cschwede/3e2c025408ab4af531651098331cce45
+    # https://stackoverflow.com/a/68791717/
+    def run(self):
+        self.known_hosts.reset(self.host)
+        sock = socket.socket()
+        sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+        log.info("Listening on %s", self.host)
+        # https://stackoverflow.com/a/1365284/
+        sock.bind((self.host.host, self.host.port))
+        sock.listen(100)
+        log.info("Listening for connection")
+        while True:
+            client, addr = sock.accept()
+            log.info("Listening for SSH connections")
+            server = Transport(client)
+            host_key = RSAKey(filename=str(self.private_key.absolute()))
+            server.add_server_key(host_key)
+            server.start_server(server=self)
+            channel = server.accept(30)
+            if channel is None:
+                log.info("No auth request was made")
+                exit(1)
+            channel.event.wait(1)
+            channel.close()
+
+    @contextmanager
+    def serve(self):
+        from ssh.rsa import private_public_key_pair
+
+        server_pair = private_public_key_pair()
+        args = (
+            "ssh-testing",
+            "serve",
+            self.public_key,
+            str(server_pair.private.absolute()),
+            "--host",
+            self.host.host,
+            "--port",
+            str(self.host.port),
+            "--user",
+            self.host.user,
+        )
+
+        from ssh.port import ensure_free
+
+        ensure_free(self.host.port)
+
+        process = popen(args)
+        import time
+
+        time.sleep(0.5)
+        try:
+            yield
+        finally:
+            server_pair.private.unlink()
+            server_pair.public.unlink()
+
+            # (output, error) = process.communicate(timeout=0.1)
+
+            kill(process)
+            ensure_free(self.host.port)
+
+            # log.info("Status: %s\nStdout: %s\nStderr: %s", result.status, output, error)
 
 
-def run_server(user: str, port: int, private_key: Path):
-    host_key = RSAKey(filename=str(private_key.absolute()))
-    ctx = Server(user=user)
-
-    sock = socket.socket()
-    sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-    sock.bind(("127.0.0.1", port))
-    sock.listen(100)
-    log.info("Listening for connection")
-    while True:
-        client, addr = sock.accept()
-        log.info("Listening for SSH connections")
-        server = Transport(client)
-        server.add_server_key(host_key)
-        server.start_server(server=ctx)
-        channel = server.accept(30)
-        if channel is None:
-            log.info("No auth request was made")
-            exit(1)
-        channel.send("[+]*****************  Welcome ***************** \n\r")
-        channel.event.wait(5)
+## Testing:
+# pytest -k 'test_client_can_call_whoami_in_server and SshCliWrapper and ParamikoServer'
