@@ -3,7 +3,7 @@ from dataclasses import dataclass, field
 
 from openai import AsyncOpenAI
 
-from story.models import Dotenv
+from story.models import Dotenv, StorySetup
 
 log = logging.getLogger(__name__)
 
@@ -22,6 +22,20 @@ def llm_factory():
 class Ai:
     model: str = field(default_factory=lambda: Dotenv().model)
     llm: AsyncOpenAI = field(default_factory=llm_factory)
+
+    async def novella(self, system: str, setting, prompt: str) -> str:
+        response = await self.llm.beta.chat.completions.parse(
+            model=self.model,
+            messages=[
+                {"role": "system", "content": system},
+                {"role": "user", "content": prompt},
+                {"role": "user", "content": setting},
+            ],
+            response_format=StorySetup,
+        )
+        print(response)
+        story_setup = response.choices[0].message.parsed
+        print(story_setup)
 
     async def hello(self):
         response = await self.llm.chat.completions.create(
