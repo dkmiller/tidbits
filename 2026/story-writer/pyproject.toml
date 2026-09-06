@@ -1,0 +1,22 @@
+[project]
+name = "story"
+version = "0.0.1"
+authors = [
+    { name = "Dan Miller" }
+]
+requires-python = ">=3.10,<3.15"
+dependencies = [
+    "cyclopts>=4.24.0",
+    "python-dotenv>=1.2.3",
+]
+[project.optional-dependencies]
+dev = [
+    "ruff==0.16.6",
+]
+
+[project.scripts]
+story = "story.cli:app"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
