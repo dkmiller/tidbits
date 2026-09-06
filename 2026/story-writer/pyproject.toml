@@ -7,8 +7,10 @@ authors = [
 requires-python = ">=3.10,<3.15"
 dependencies = [
     "cyclopts>=4.24.0",
+    "openai>=3.8.0",
     "python-dotenv>=1.2.3",
 ]
+
 [project.optional-dependencies]
 dev = [
     "ruff==0.16.6",
@@ -20,3 +22,6 @@ story = "story.cli:app"
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
+
+[tool.ruff.lint]
+extend-select = ["I"]
