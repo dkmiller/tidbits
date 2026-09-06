@@ -16,7 +16,10 @@ class StorySetup(BaseModel):
     setting: str
 
 
-@dataclass
-class Story:
-    setting: str
+class Story(BaseModel):
     chapters: list[str]
+
+
+class Chapter(BaseModel):
+    title: str
+    content: str

@@ -14,6 +14,8 @@ async def write(
     prompt: str,
     system: str = "system.md",
     setting: str = "setting.md",
+    breakdown: str = "breakdown.md",
+    style: str = "style.md",
     root: Annotated[
         Path, Parameter(validator=validators.Path(exists=True))
     ] = Path.cwd(),
@@ -21,7 +23,13 @@ async def write(
 ):
     logging.basicConfig(level=log_level)
 
-    await Ai().novella((root / system).read_text(), setting, prompt)
+    await Ai().novella(
+        system=(root / system).read_text(),
+        setting=(root / setting).read_text(),
+        prompt=prompt,
+        breakdown=(root / breakdown).read_text(),
+        style=(root / style).read_text(),
+    )
 
 
 app()
