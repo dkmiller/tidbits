@@ -4,7 +4,7 @@ Installation and linting
 
 ``` bash
 pip install -e "."
-ruff format .
+ruff check --fix . && ruff format .
 ```
 
 Flow.

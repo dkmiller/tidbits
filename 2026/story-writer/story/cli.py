@@ -6,6 +6,8 @@ from cyclopts import App, Parameter, validators
 
 from story.ai import Ai
 
+CWD = Path.cwd()
+
 app = App()
 
 
@@ -17,8 +19,8 @@ async def write(
     breakdown: str = "breakdown.md",
     style: str = "style.md",
     root: Annotated[
-        Path, Parameter(validator=validators.Path(exists=True))
-    ] = Path.cwd(),
+        Path, Parameter(validator=validators.Path(exists=True, file_okay=False))
+    ] = CWD,
     log_level: str = "INFO",
 ):
     logging.basicConfig(level=log_level)
