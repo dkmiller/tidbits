@@ -15,7 +15,6 @@ async def write(
         Path, Parameter(validator=validators.Path(exists=True))
     ] = Path.cwd(),
     chapters: int = 10,
-    model: str = "grok-4.6-nomoderation",
     log_level: str = "INFO",
 ):
     logging.basicConfig(level=log_level)
@@ -23,7 +22,7 @@ async def write(
     for i in range(chapters):
         print(f"Looping in {root}! {i}")
 
-    await Ai(model=model).hello()
+    await Ai().hello()
 
 
 app()

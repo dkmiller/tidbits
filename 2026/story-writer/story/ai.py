@@ -20,7 +20,7 @@ def llm_factory():
 
 @dataclass
 class Ai:
-    model: str
+    model: str = field(default_factory=lambda: Dotenv().model)
     llm: AsyncOpenAI = field(default_factory=llm_factory)
 
     async def hello(self):
