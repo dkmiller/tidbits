@@ -22,7 +22,7 @@ def llm_factory():
         api_key=dotenv.api_key,
         base_url=dotenv.api_endpoint,
         max_retries=5,
-        timeout=20 * 60,  # Ten minutes.
+        timeout=30 * 60,  # Thirty minutes.
     )
 
     os.environ["LANGSMITH_TRACING"] = "true"
@@ -36,11 +36,14 @@ class Ai:
     model: str = field(default_factory=lambda: Dotenv().model)
     _openai_client: AsyncOpenAI = field(default_factory=llm_factory)
 
-    async def llm(self, format: type[T], messages) -> T:
-        log.debug("Calling %s with %s", self.model, messages)
+    async def llm(self, format: type[T], system: str, user: str) -> T:
+        log.debug("Calling %s with %s :: %s", self.model, system, user)
         response = await self._openai_client.beta.chat.completions.parse(
             model=self.model,
-            messages=messages,
+            messages=[
+                {"role": "system", "content": system},
+                {"role": "user", "content": user},
+            ],
             response_format=format,
         )
         log.debug(response)
@@ -51,13 +54,14 @@ class Ai:
     ) -> str:
         story_setup = await self.llm(
             StorySetup,
-            [
-                {"role": "system", "content": system},
-                {
-                    "role": "user",
-                    "content": f"Use this as inspiration:\n> {prompt} Follow the inspiration above and the guide below to generate the title and setup for a novella:\n\n{setting}",
-                },
-            ],
+            system,
+            f"""Use this as inspiration:
+
+> {prompt}
+
+Follow the inspiration above and the guide below to generate the title and setup for a novella:
+
+{setting}""",
         )
         log.info(
             "Generated story setup:# %s\n\n%s", story_setup.title, story_setup.setting
@@ -65,13 +69,18 @@ class Ai:
 
         chapter_guides = await self.llm(
             Story,
-            [
-                {"role": "system", "content": system},
-                {
-                    "role": "user",
-                    "content": f"Use the story setup below as context:\n\n '{story_setup}'. Now, follow the guide below to generate a chapter breakdown for a novella:\n\n{breakdown}",
-                },
-            ],
+            system,
+            f"""You are provided with a novella setup and authoring guide below.
+Follow them to generate a chapter breakdown for the novella.
+
+## Setup
+
+{story_setup}
+
+## Authoring guide
+
+{breakdown}
+""",
         )
         log.info("Generated guides for %s chapters", len(chapter_guides.chapters))
         for index, chapter in enumerate(chapter_guides.chapters):
@@ -81,13 +90,27 @@ class Ai:
             *[
                 self.llm(
                     Chapter,
-                    [
-                        {"role": "system", "content": style},
-                        {
-                            "role": "user",
-                            "content": f"Use the story setup below as context:\n\n '{story_setup}'.  Now, follow the guide below to generate a title + content for a specific chapter of the novella:\n\n{guide}",
-                        },
-                    ],
+                    system,
+                    f"""You are provided with a novella setup, style guide, and chapter
+prompt below. Follow them to generate the chapter in full: 4000 words or so.
+
+## Novella setup
+
+{story_setup}
+
+## Style guide
+
+{style}
+
+## Chapter prompt
+
+{guide}
+
+---
+
+Follow the novella setup, style guide, and chapter prompt to generate a title + content for
+the chapter.
+""",
                 )
                 for guide in chapter_guides.chapters
             ]
