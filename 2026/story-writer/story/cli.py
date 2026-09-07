@@ -25,13 +25,16 @@ async def write(
 ):
     logging.basicConfig(level=log_level)
 
-    await Ai().novella(
+    novella = await Ai().novella(
         system=(root / system).read_text(),
         setting=(root / setting).read_text(),
         prompt=prompt,
         breakdown=(root / breakdown).read_text(),
         style=(root / style).read_text(),
     )
+
+    print("-" * 80)
+    print(novella)
 
 
 app()

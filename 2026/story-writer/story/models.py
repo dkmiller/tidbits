@@ -8,6 +8,7 @@ from pydantic import BaseModel
 class Dotenv:
     api_endpoint: str = field(default_factory=lambda: dotenv_values()["api_endpoint"])
     api_key: str = field(default_factory=lambda: dotenv_values()["api_key"])
+    langsmith_key: str = field(default_factory=lambda: dotenv_values()["langsmith_key"])
     model: str = field(default_factory=lambda: dotenv_values()["model"])
 
 

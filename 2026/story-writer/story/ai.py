@@ -1,8 +1,10 @@
 import asyncio
 import logging
+import os
 from dataclasses import dataclass, field
 from typing import TypeVar
 
+from langsmith.wrappers import wrap_openai
 from openai import AsyncOpenAI
 
 from story.models import Chapter, Dotenv, Story, StorySetup
@@ -16,11 +18,17 @@ def llm_factory():
     dotenv = Dotenv()
     log.debug("Using API endpoint %s", dotenv.api_endpoint)
 
-    return AsyncOpenAI(
+    rv = AsyncOpenAI(
         api_key=dotenv.api_key,
         base_url=dotenv.api_endpoint,
-        timeout=10 * 60,  # Ten minutes.
+        max_retries=5,
+        timeout=20 * 60,  # Ten minutes.
     )
+
+    os.environ["LANGSMITH_TRACING"] = "true"
+    os.environ["LANGSMITH_PROJECT"] = "tidbits-story"
+    os.environ["LANGSMITH_API_KEY"] = dotenv.langsmith_key
+    return wrap_openai(rv)
 
 
 @dataclass
@@ -47,9 +55,12 @@ class Ai:
                 {"role": "system", "content": system},
                 {
                     "role": "user",
-                    "content": f"Using '{prompt}', follow the guide below to generate the title and setup for a novella:\n\n{setting}",
+                    "content": f"Use this as inspiration:\n> {prompt} Follow the inspiration above and the guide below to generate the title and setup for a novella:\n\n{setting}",
                 },
             ],
+        )
+        log.info(
+            "Generated story setup:# %s\n\n%s", story_setup.title, story_setup.setting
         )
 
         chapter_guides = await self.llm(
@@ -62,6 +73,9 @@ class Ai:
                 },
             ],
         )
+        log.info("Generated guides for %s chapters", len(chapter_guides.chapters))
+        for index, chapter in enumerate(chapter_guides.chapters):
+            log.info("Chapter %s:\n\n%s", index, chapter)
 
         chapters = await asyncio.gather(
             *[
@@ -78,6 +92,7 @@ class Ai:
                 for guide in chapter_guides.chapters
             ]
         )
+        log.info("Generated chapters")
 
         rv = f"# {story_setup.title}\n\n" + "\n".join(
             [f"## {chapter.title}\n\n{chapter.content}" for chapter in chapters]
