@@ -1,12 +1,11 @@
 import asyncio
 import logging
-import os
 from dataclasses import dataclass, field
 from typing import TypeVar
 
-from langsmith.wrappers import wrap_openai
 from openai import AsyncOpenAI
 
+from story.llm import llm_client
 from story.models import Chapter, Dotenv, Story, StorySetup
 
 log = logging.getLogger(__name__)
@@ -14,27 +13,10 @@ log = logging.getLogger(__name__)
 T = TypeVar("T")
 
 
-def llm_factory():
-    dotenv = Dotenv()
-    log.debug("Using API endpoint %s", dotenv.api_endpoint)
-
-    rv = AsyncOpenAI(
-        api_key=dotenv.api_key,
-        base_url=dotenv.api_endpoint,
-        max_retries=5,
-        timeout=30 * 60,  # Thirty minutes.
-    )
-
-    os.environ["LANGSMITH_TRACING"] = "true"
-    os.environ["LANGSMITH_PROJECT"] = "tidbits-story"
-    os.environ["LANGSMITH_API_KEY"] = dotenv.langsmith_key
-    return wrap_openai(rv)
-
-
 @dataclass
 class Ai:
     model: str = field(default_factory=lambda: Dotenv().model)
-    _openai_client: AsyncOpenAI = field(default_factory=llm_factory)
+    _openai_client: AsyncOpenAI = field(default_factory=lambda: llm_client("openai-sdk"))
 
     async def llm(self, format: type[T], system: str, user: str) -> T:
         log.debug("Calling %s with %s :: %s", self.model, system, user)
