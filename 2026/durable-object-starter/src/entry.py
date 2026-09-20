@@ -1,4 +1,4 @@
-from typing import Annotated
+from typing import Annotated, Any
 
 from fastapi import Depends, FastAPI, Request
 from workers import DurableObject, WorkerEntrypoint
@@ -11,12 +11,28 @@ class MyDurableObject(DurableObject):
     def __init__(self, ctx, env):
         super().__init__(ctx, env)
 
-    async def say_hello(self):
-        result = self.ctx.storage.sql.exec(
-            "SELECT 'Hello, World!' as greeting"
-        ).one()
+    def sql(self, query: str) -> Any:
+        return self.ctx.storage.sql.exec(query)#.one() # type: ignore
 
-        return result.greeting
+
+
+    async def say_hello(self, name: str):
+        self.sql("""
+CREATE TABLE IF NOT EXISTS users_v1 (
+    username TEXT PRIMARY KEY
+    ,count INTEGER
+);
+        """)
+
+        result = self.sql(f"""
+INSERT INTO users_v1 (username, count) 
+VALUES ('{name}', 1)
+ON CONFLICT(username) 
+DO UPDATE SET count = users_v1.count + 1
+RETURNING count;
+""").one()
+
+        return result.count
 
 
 class Default(WorkerEntrypoint):
@@ -48,6 +64,6 @@ Resolve a Durable Object instance for an HTTP request.
 
 @app.get("/hi/{name}")
 async def say_hi(name: str, my_obj: MyObject):
-    greeting = await my_obj.say_hello()
+    greeting = await my_obj.say_hello(name)
 
     return {"message": str(greeting), "name": name}

@@ -31,8 +31,16 @@ autocomplete and type information in your editor.
 
 ``` bash
 npx wrangler dev
+
+# Then...
+curl localhost:8787/hi/dan
+
+# Deploy...
+npx wrangler deploy
 ```
 
 ## Links
 
 - https://github.com/cloudflare/python-workers-examples/blob/main/fastapi/src/worker.py
+- https://dbfiddle.dev/sqlite
+- https://durable-object-starter.dkmiller.workers.dev/docs
