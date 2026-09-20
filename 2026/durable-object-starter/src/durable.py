@@ -1,3 +1,4 @@
+from pathlib import Path
 from typing import Any
 
 from workers import DurableObject
@@ -11,26 +12,20 @@ class MyDurableObject(DurableObject):
     def __init__(self, ctx, env):
         super().__init__(ctx, env)
 
-        self.sql("""
-CREATE TABLE IF NOT EXISTS users_v2 (
-    username TEXT PRIMARY KEY
-    ,count INTEGER
-);
-        """)
+        self.sql("creation.sql")
 
-    def sql(self, query: str, *parameters) -> Any:
+    def sql(self, template: str, *parameters) -> Any:
+        """
+        Supports either a path inside ./sql/ or an inline (raw) SQL query.
+        """
+        try:
+            path = Path(__file__).parent / "sql" / template
+            query = path.read_text()
+        except:  # noqa: E722
+            query = template
         return self.ctx.storage.sql.exec(query, *parameters)  # type: ignore
 
     async def say_hello(self, name: str):
-        result = self.sql(
-            """
-INSERT INTO users_v2 (username, count)
-VALUES (?, 1)
-ON CONFLICT(username)
-DO UPDATE SET count = users_v2.count + 1
-RETURNING count;
-""",
-            name,
-        )
+        result = self.sql("increment.sql", name)
 
         return result.one().count
