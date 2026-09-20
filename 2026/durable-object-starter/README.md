@@ -41,6 +41,7 @@ npx wrangler deploy
 
 ## Links
 
+- https://fastapi.tiangolo.com/tutorial/dependencies/#create-a-dependency-or-dependable
 - https://github.com/cloudflare/python-workers-examples/blob/main/fastapi/src/worker.py
 - https://dbfiddle.dev/sqlite
 - https://durable-object-starter.dkmiller.workers.dev/docs
