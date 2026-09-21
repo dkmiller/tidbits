@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Sign up</title>
+        <style>
+            body {
+                font-family: system-ui, sans-serif;
+                max-width: 320px;
+                margin: 4rem auto;
+                padding: 0 1rem;
+            }
+            input,
+            button {
+                font-size: 1rem;
+                padding: 0.5rem;
+                width: 100%;
+                box-sizing: border-box;
+            }
+            input {
+                margin-bottom: 0.75rem;
+            }
+            button {
+                cursor: pointer;
+            }
+            #status {
+                margin-top: 1rem;
+                min-height: 1.2em;
+                color: #444;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Create your account</h1>
+
+        <label for="username">Username</label>
+        <input
+            id="username"
+            type="text"
+            autocomplete="username"
+            placeholder="jane"
+        />
+
+        <button id="register" type="button">Register</button>
+
+        <p id="status"></p>
+
+        <script type="module" src="/app.js"></script>
+    </body>
+</html>

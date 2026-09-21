@@ -29,3 +29,4 @@ curl https://durable-object-starter.dkmiller.workers.dev/hi/dan
 - https://github.com/cloudflare/python-workers-examples/blob/main/fastapi/src/worker.py
 - https://dbfiddle.dev/sqlite
 - https://durable-object-starter.dkmiller.workers.dev/docs
+- :x: Not necessary: https://fastapi.tiangolo.com/tutorial/frontend/

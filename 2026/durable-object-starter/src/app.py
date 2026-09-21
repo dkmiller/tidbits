@@ -1,3 +1,4 @@
+from pathlib import Path
 from typing import Annotated
 
 from fastapi import Depends, FastAPI, Request
@@ -5,6 +6,9 @@ from fastapi import Depends, FastAPI, Request
 from durable import MyDurableObject
 
 app = FastAPI()
+
+
+# app.frontend("/", directory=str((Path(__file__).parent / "web").absolute()))
 
 
 def my_durable_object(request: Request) -> MyDurableObject:
