@@ -7,6 +7,12 @@ temporarily.
 
 ## Backlog of ideas
 
+### Consumer agents
+
+[Hermes](https://github.com/nousresearch/hermes-agent)
+and
+[OpenClaw](https://github.com/openclaw/openclaw).
+
 ### [Bevy](https://bevy.org/): game engine
 
 Learn Rust and video game development at the same time.
