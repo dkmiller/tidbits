@@ -10,6 +10,7 @@ temporarily.
 ### Gender bias in modern LLMs
 
 Reproduce [Surprising gender biases in GPT](https://doi.org/10.1016/j.chbr.2024.100533)
+([raw data](https://osf.io/5j37g/files/3w7g5))
 using LiteLLM and [Lighteval](https://huggingface.co/docs/lighteval/adding-a-custom-task)
 (possibly
 [evaluate](https://huggingface.co/docs/evaluate/en/types_of_evaluations)
