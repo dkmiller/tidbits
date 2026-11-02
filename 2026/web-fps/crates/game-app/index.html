@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>web-fps</title>
+    <link data-trunk rel="rust" data-wasm-opt="z" />
+    <style>
+      html, body { margin: 0; height: 100%; background: #1d2329; overflow: hidden; }
+      canvas#bevy { display: block; width: 100%; height: 100%; outline: none; }
+    </style>
+  </head>
+  <body>
+    <canvas id="bevy" tabindex="0"></canvas>
+    <script>
+      // Request pointer lock inside the click handler itself: browsers only grant it during a
+      // user gesture, and Bevy would otherwise ask a frame later. The game polls the lock state.
+      // Listen for pointerdown, not mousedown: Bevy cancels pointerdown, which suppresses mousedown.
+      const canvas = document.getElementById("bevy");
+      canvas.addEventListener("pointerdown", () => {
+        if (!document.pointerLockElement) canvas.requestPointerLock()?.catch?.(() => {});
+      });
+    </script>
+  </body>
+</html>
