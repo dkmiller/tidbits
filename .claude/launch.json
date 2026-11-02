@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "web-fps",
+      "runtimeExecutable": "sh",
+      "runtimeArgs": ["-c", "cd 2026/web-fps && trunk serve --release --port 8080"],
+      "port": 8080
+    }
+  ]
+}

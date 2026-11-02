@@ -1,0 +1,8 @@
+[package]
+name = "game-core"
+edition.workspace = true
+version.workspace = true
+
+# Pure simulation: must never depend on rendering, windowing, or browser crates.
+[dependencies]
+bevy_math = { workspace = true }
