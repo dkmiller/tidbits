@@ -14,7 +14,7 @@ class MyDurableObject(DurableObject):
 
         self.sql("creation.sql")
 
-    def sql(self, template: str, *parameters) -> Any:
+    def sql(self, template: str, *parameters) -> list[dict[str, Any]]:
         """
         Supports either a path inside ./sql/ or an inline (raw) SQL query.
         """
@@ -23,9 +23,18 @@ class MyDurableObject(DurableObject):
             query = path.read_text()
         except:  # noqa: E722
             query = template
-        return self.ctx.storage.sql.exec(query, *parameters)  # type: ignore
+        cursor = self.ctx.storage.sql.exec(query, *parameters)  # type: ignore
+        return cursor.toArray()  # type: ignore
+        # try:
+        #     exc = None
+        #     arr = rv.toArray()
+        # except Exception as e:
+        #     exc = e
+        #     arr = None
+        # raise Exception(f"{rv=} {type(rv)=} {arr=} {exc=}")
+        # return rv
 
     async def say_hello(self, name: str):
         result = self.sql("increment.sql", name)
 
-        return result.one().count
+        return result[0]["count"]
